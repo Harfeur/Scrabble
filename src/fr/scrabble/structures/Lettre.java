@@ -1,7 +1,9 @@
 package fr.scrabble.structures;
 
-public class Lettre {
-	
+import java.io.Serializable;
+
+public class Lettre implements Serializable {
+	private static final long serialVersionUID=1L;
 	String lettre;
 	int valeur;
 	
