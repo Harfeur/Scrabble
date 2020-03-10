@@ -19,4 +19,8 @@ public class Sac extends ArrayList<Lettre> {
 		return this.remove(r.nextInt(this.size()));
 	}
 	
+	public boolean estVide() {
+		return this.size() == 0;
+	}
+	
 }
