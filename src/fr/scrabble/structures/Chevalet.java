@@ -1,16 +1,20 @@
 package fr.scrabble.structures;
 
-public class Chevalet {
+import java.util.ArrayList;
 
-	Lettre chevalet[];
-	int nb_lettre=0;
+public class Chevalet extends ArrayList<Lettre>{
 	
 	public Chevalet() {
-		this.chevalet = new Lettre[7];
-		this.nb_lettre=0;
+		super(7);
 	}
 	
-	public void remplir() {
-		
+	public void remplir(Sac sac) {
+		while(!sac.estVide() && this.size()<7) {
+			this.add(sac.obtenirLettre());
+		}
+	}
+	
+	public void supprimerLettre(Lettre lettre) {
+		this.remove(lettre);
 	}
 }
