@@ -6,9 +6,11 @@ import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import fr.scrabble.vues.VuePlateau;
+
 public class Scrabble extends Frame {
 
-	public static double SCALE=1.0; 
+	public static double SCALE=2.0; 
 	
 	public Scrabble() {
 
