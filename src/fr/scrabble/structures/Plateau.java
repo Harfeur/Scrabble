@@ -1,5 +1,10 @@
 package fr.scrabble.structures;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
 import fr.scrabble.structures.Case.Multiplicateur;
 
 public class Plateau {
@@ -9,6 +14,34 @@ public class Plateau {
 	public Plateau() {
 		super();
 		this.plateau = new Case[16][16];
+		File fichier=new File("assets/plateau.csv");
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(fichier));
+			String strCurrentLine;
+			int ligne = 0;
+		    while ((strCurrentLine = reader.readLine()) != null) {
+		    	String[] tab = strCurrentLine.split(",");
+		    	for (int col = 0; col < tab.length; col++) {
+		    		Multiplicateur m;
+		    		switch (tab[col]) {
+						case "2W": m = Multiplicateur.MOT_DOUBLE; break;
+						case "3W": m = Multiplicateur.MOT_TRIPLE; break;
+						case "2L": m = Multiplicateur.LETTRE_DOUBLE; break;
+						case "3L": m = Multiplicateur.LETTRE_TRIPLE; break;
+						default: m = Multiplicateur.SIMPLE;
+					}
+					this.plateau[ligne][col] = new Case(m);
+				}
+		    	ligne++;
+		    }
+		} catch(IOException e1) {
+			System.out.print("Erreur");
+			System.exit(0);
+		}
+	}
+	
+	public Case getCase(int ligne, int colonne) {
+		return this.plateau[ligne][colonne];
 	}
 	
 }
