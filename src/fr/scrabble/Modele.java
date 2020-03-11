@@ -40,4 +40,8 @@ public class Modele {
 			this.chevalets[i].remplir(this.sac);
 		}
 	}
+	
+	public void validerProposition(){
+		
+	}
 }
