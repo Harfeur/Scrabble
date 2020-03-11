@@ -1,9 +1,9 @@
 package fr.scrabble.structures;
 
 public class Case {
-	enum Multiplicateur {SIMPLE,LETTRE_DOUBLE,MOT_DOUBLE,LETTRE_TRIPLE,MOT_TRIPLE};
-	Multiplicateur multiplicateur;
-	Lettre lettre;
+	public enum Multiplicateur {SIMPLE,LETTRE_DOUBLE,MOT_DOUBLE,LETTRE_TRIPLE,MOT_TRIPLE};
+	public Multiplicateur multiplicateur;
+	public Lettre lettre;
 	
 	public Case(Multiplicateur multi) {
 		this.multiplicateur=multi;
