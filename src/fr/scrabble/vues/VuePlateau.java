@@ -35,10 +35,14 @@ public class VuePlateau extends Canvas implements Observer {
 						g.fillRect((int) (j*25*Scrabble.SCALE), (int) (i*25*Scrabble.SCALE),(int) (25*Scrabble.SCALE),(int) (25*Scrabble.SCALE));
 					}
 					else {
+						g.setColor(Color.WHITE);
+						g.fillRect((int) (j*25*Scrabble.SCALE), (int) (i*25*Scrabble.SCALE),(int) (25*Scrabble.SCALE),(int) (25*Scrabble.SCALE));
 						g.setFont(new Font("Arial",Font.PLAIN,(int)(25*Scrabble.SCALE)));
-						g.drawString(c.lettre.lettre,(int) (i*25*Scrabble.SCALE),(int) (j*25*Scrabble.SCALE) );
-						g.setFont(new Font("Arial",Font.PLAIN,(int)(10*Scrabble.SCALE)));
-						//g.drawString(c.lettre.valeur, (int) (15+i*25*Scrabble.SCALE), (int) (15+j*25*Scrabble.SCALE));
+						g.setColor(Color.GRAY);
+						g.drawString(c.lettre.lettre,(int) (j*25*Scrabble.SCALE),(int) (i*25*Scrabble.SCALE));
+						g.setFont(new Font("Arial",Font.PLAIN,(int)(5*Scrabble.SCALE)));
+						g.setColor(Color.BLACK);
+						g.drawString("1",(int) (j*25*Scrabble.SCALE),(int) (i*25*Scrabble.SCALE));
 					}
 				}
 			}
