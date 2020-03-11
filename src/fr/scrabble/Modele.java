@@ -9,8 +9,13 @@ import fr.scrabble.structures.*;
 public class Modele {
 	Sac sac;
 	File fichier;
+	Plateau plateau;
+	Chevalet[] chevalets;
 	
 	public Modele() {
+	}
+	
+	public void nouvellePartie(int nbJoueur) {
 		this.fichier=new File("assets/sacs/FR.dat");
 		try {
 			FileInputStream fls = new FileInputStream(fichier);
@@ -28,5 +33,11 @@ public class Modele {
 		
 		System.out.print(this.sac);
 		
+		this.plateau= new Plateau();
+		
+		for (int i=0; i<nbJoueur; i++) {
+			this.chevalets[i]=new Chevalet();
+			this.chevalets[i].remplir(this.sac);
+		}
 	}
 }
