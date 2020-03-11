@@ -1,12 +1,38 @@
 package fr.scrabble;
 
-public class Scrabble {
+import java.awt.BorderLayout;
+import java.awt.Frame;
+import java.awt.LayoutManager;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+public class Scrabble extends Frame {
 
 	public static double SCALE=1.0; 
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		Modele m=new Modele();
+	public Scrabble() {
+
+		Modele m = new Modele();
+		
+		VuePlateau vuePlateau = new VuePlateau();
+
+		LayoutManager layout = new BorderLayout();
+		this.setLayout(layout);
+
+		this.add(vuePlateau, BorderLayout.CENTER);
+		
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				System.exit(0);
+			}
+		});
+		
+		this.pack();
+		this.setVisible(true);
 	}
 
+	
+	public static void main(String[] args) {
+		new Scrabble();
+	}
 }
