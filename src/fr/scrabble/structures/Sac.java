@@ -44,20 +44,24 @@ public class Sac extends Hashtable<Lettre, Integer> {
 	}
 
 	public Lettre obtenirLettre() {
-		Random r = new Random();
-		int nombreAleatoire = r.nextInt(this.nombreDeLettres);
-		int compteur=0;
-		
-		for (Entry<Lettre, Integer> element : this.entrySet()) {
-			compteur = compteur + element.getValue();
-			if (compteur>=nombreAleatoire) {
-				return element.getKey();
+		if(this.estVide()==false) {
+			Random r = new Random();
+			int nombreAleatoire = r.nextInt(this.nombreDeLettres);
+			int compteur=0;
+			this.nombreDeLettres--;
+
+			for (Entry<Lettre, Integer> element : this.entrySet()) {
+				compteur = compteur + element.getValue();
+				if (compteur>=nombreAleatoire) {
+					return element.getKey();
+				}
 			}
 		}
 		return null;
 	}
 
 	public boolean estVide() {
+		return this.nombreDeLettres==0;
 	}
 
 }
