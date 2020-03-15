@@ -28,4 +28,10 @@ public class Modele {
 		return true;
 		
 	}
+
+	public void selectLettre(int num) {
+		// TODO On récupére la lettre num du Chevalet et on la sélectionne
+		// puis on notifie
+		
+	}
 }
