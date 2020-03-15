@@ -6,6 +6,7 @@ import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import fr.scrabble.controleurs.ControleurPlateau;
 import fr.scrabble.vues.VuePlateau;
 
 public class Scrabble extends Frame {
@@ -16,7 +17,9 @@ public class Scrabble extends Frame {
 
 		Modele m = new Modele();
 		
-		VuePlateau vuePlateau = new VuePlateau();
+		ControleurPlateau cp = new ControleurPlateau(m);
+		
+		VuePlateau vuePlateau = new VuePlateau(cp);
 
 		LayoutManager layout = new BorderLayout();
 		this.setLayout(layout);

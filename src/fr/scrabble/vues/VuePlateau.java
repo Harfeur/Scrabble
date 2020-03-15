@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -16,12 +17,13 @@ import fr.scrabble.structures.Plateau;
 public class VuePlateau extends Canvas implements Observer {
 
 	Plateau plateau;
-
+	public static int TAILLE = 25; // Besoin de ça pour le controleur, j'ai tout remplacé
 	
-	public VuePlateau() {
+	public VuePlateau(MouseListener l) {
 		super();
-		this.setPreferredSize(new Dimension((int) (25*15*Scrabble.SCALE),(int) (25*15*Scrabble.SCALE)));
+		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Scrabble.SCALE),(int) (VuePlateau.TAILLE*15*Scrabble.SCALE)));
 		this.plateau = new Plateau();
+		this.addMouseListener(l);
 	}
 	
 	public void paint(Graphics g) {
@@ -32,17 +34,17 @@ public class VuePlateau extends Canvas implements Observer {
 					if(c.lettre==null) {				
 						Multiplicateur m = c.multiplicateur;
 						g.setColor(m.getCouleur());
-						g.fillRect((int) (j*25*Scrabble.SCALE), (int) (i*25*Scrabble.SCALE),(int) (25*Scrabble.SCALE),(int) (25*Scrabble.SCALE));
+						g.fillRect((int) (j*VuePlateau.TAILLE*Scrabble.SCALE), (int) (i*VuePlateau.TAILLE*Scrabble.SCALE),(int) (VuePlateau.TAILLE*Scrabble.SCALE),(int) (VuePlateau.TAILLE*Scrabble.SCALE));
 					}
 					else {
 						g.setColor(Color.WHITE);
-						g.fillRect((int) (j*25*Scrabble.SCALE), (int) (i*25*Scrabble.SCALE),(int) (25*Scrabble.SCALE),(int) (25*Scrabble.SCALE));
-						g.setFont(new Font("Arial",Font.PLAIN,(int)(25*Scrabble.SCALE)));
+						g.fillRect((int) (j*VuePlateau.TAILLE*Scrabble.SCALE), (int) (i*VuePlateau.TAILLE*Scrabble.SCALE),(int) (VuePlateau.TAILLE*Scrabble.SCALE),(int) (VuePlateau.TAILLE*Scrabble.SCALE));
+						g.setFont(new Font("Arial",Font.PLAIN,(int)(VuePlateau.TAILLE*Scrabble.SCALE)));
 						g.setColor(Color.GRAY);
-						g.drawString(c.lettre.lettre,(int) (j*25*Scrabble.SCALE),(int) (i*25*Scrabble.SCALE));
+						g.drawString(c.lettre.lettre,(int) (j*VuePlateau.TAILLE*Scrabble.SCALE),(int) (i*VuePlateau.TAILLE*Scrabble.SCALE));
 						g.setFont(new Font("Arial",Font.PLAIN,(int)(5*Scrabble.SCALE)));
 						g.setColor(Color.BLACK);
-						g.drawString("1",(int) (j*25*Scrabble.SCALE),(int) (i*25*Scrabble.SCALE));
+						g.drawString("1",(int) (j*VuePlateau.TAILLE*Scrabble.SCALE),(int) (i*VuePlateau.TAILLE*Scrabble.SCALE));
 					}
 				}
 			}

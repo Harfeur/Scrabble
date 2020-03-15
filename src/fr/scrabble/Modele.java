@@ -34,4 +34,10 @@ public class Modele {
 		// puis on notifie
 		
 	}
+
+	public void ajoutLettre(int col, int lig) {
+		// TODO Si une lettre est sélectionnée, on l'ajoute dans un Plateau temporaire qui servira à la verification
+		// puis on notifie
+		
+	}
 }
