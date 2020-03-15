@@ -21,7 +21,6 @@ public class Plateau {
 			int ligne = 0;
 			while ((strCurrentLine = reader.readLine()) != null) {
 				String[] tab = strCurrentLine.split(",");
-				System.out.println(tab.length);
 				for (int col = 0; col < 15; col++) {
 					Multiplicateur m;
 					if (tab.length > col) {
@@ -43,7 +42,6 @@ public class Plateau {
 			System.out.print("Erreur");
 			System.exit(0);
 		}
-		System.out.println();
 	}
 
 	public Case getCase(int ligne, int colonne) {
