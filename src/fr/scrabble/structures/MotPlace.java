@@ -20,4 +20,8 @@ public class MotPlace {
 	public void ajoutLettre(Lettre l) {
 		this.mot.add(l);
 	}
+	
+	public int nombreDeLettres() {
+		return this.mot.size();
+	}
 }
