@@ -1,5 +1,6 @@
 package fr.scrabble;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Observable;
 
 import fr.scrabble.structures.*;
@@ -10,6 +11,8 @@ public class Modele extends Observable{
 	Plateau plateau, plateauFictif;
 	Chevalet[] chevalets;
 	int numChevalet;
+	ArrayList<MotPlace> motValide;
+	MotPlace motEnCours;
 	
 	public Modele() {
 	}
@@ -28,32 +31,34 @@ public class Modele extends Observable{
 		}
 		this.numChevalet=0;
 	}
-	
-	public boolean validerProposition(){
-		return true;
-		
-	}
 
+	/* mis a jour de la lettre selectionner*/
 	public void selectLettre(int num) {
-		// TODO On récupére la lettre num du Chevalet et on la sélectionne
-		// puis on notifie
-		this.chevalets[this.numChevalet].selectionnerLettre(num);
-		this.setChanged();
-		this.notifyObservers(this.plateauFictif);
+		if (this.chevalets[this.numChevalet].selectionnerLettre(num)) {
+			this.setChanged();
+			this.notifyObservers(this.chevalets);
+		}
 	}
 
 	/* ajoute la lettre choisi sur le chevalet dans le plateau*/
 	public void ajoutLettre(int col, int lig) {
-		// TODO Si une lettre est sélectionnée, on l'ajoute dans un Plateau temporaire qui servira à la verification
-		// puis on notifie
 		Lettre lettre = this.chevalets[this.numChevalet].obtenirLettre();
 		Case c = this.plateauFictif.getCase(lig, col);
-		c.ajouterLettre(lettre);
+		if (c.lettre == null) {
+			if (this.motEnCours == null) {
+				this.motEnCours= new MotPlace(lettre, c);
+				c.ajouterLettre(lettre);
+			}
+			else if (this.motEnCours.nombreDeLettres() == 1) {
+				if ()
+			}
+		}
 		this.setChanged();
 		this.notifyObservers(this.plateauFictif);
 	}
 	
 	public void verificationMot() {
+		
 	}
 	
 	/*met a jour les changements de joueur*/
@@ -65,5 +70,6 @@ public class Modele extends Observable{
 			this.numChevalet++;
 		}
 		this.plateauFictif = this.plateau.clone();
+		this.motEnCours=null;
 	}
 }
