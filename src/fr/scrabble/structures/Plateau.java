@@ -38,6 +38,7 @@ public class Plateau {
 				}
 				ligne++;
 			}
+			reader.close();
 		} catch(IOException e1) {
 			System.out.print("Erreur");
 			System.exit(0);
@@ -46,6 +47,17 @@ public class Plateau {
 
 	public Case getCase(int ligne, int colonne) {
 		return this.plateau[ligne][colonne];
+	}
+	
+	@Override
+	public Plateau clone() {
+		Plateau p = new Plateau();
+		for (int i = 0; i < 15; i++) {
+			for (int j = 0; i < 15; i++) {
+				p.plateau[i][j] = this.plateau[i][j].clone();
+			}
+		}
+		return p;
 	}
 
 }

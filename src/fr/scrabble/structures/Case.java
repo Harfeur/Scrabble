@@ -35,5 +35,12 @@ public class Case {
 		this.lettre =lettre;
 		// TODO: Exception
 	}
+
+	@Override
+	protected Case clone() {
+		Case c = new Case(this.multiplicateur);
+		c.lettre = this.lettre.clone();
+		return c;
+	}
 	
 }
