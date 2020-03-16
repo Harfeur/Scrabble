@@ -30,8 +30,6 @@ public class Mot extends ArrayList<Lettre> {
 			String strCurrentLine;
 			while ((strCurrentLine = reader.readLine()) != null) {
 				String[] tab=strCurrentLine.split("");
-
-
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

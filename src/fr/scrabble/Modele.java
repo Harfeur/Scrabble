@@ -1,13 +1,15 @@
 package fr.scrabble;
 import java.io.File;
+import java.util.Observable;
 
 import fr.scrabble.structures.*;
 
-public class Modele {
+public class Modele extends Observable {
 	Sac sac;
 	File fichier;
 	Plateau plateau, plateauFictif;
 	Chevalet[] chevalets;
+	int numChevalet;
 	
 	public Modele() {
 	}
@@ -23,6 +25,7 @@ public class Modele {
 			this.chevalets[i]=new Chevalet();
 			this.chevalets[i].remplir(this.sac);
 		}
+		this.numChevalet=0;
 	}
 	
 	public boolean validerProposition(){
@@ -33,15 +36,27 @@ public class Modele {
 	public void selectLettre(int num) {
 		// TODO On récupére la lettre num du Chevalet et on la sélectionne
 		// puis on notifie
-		
+		this.chevalets[this.numChevalet].selectionnerLettre(num);
+		this.setChanged();
 	}
 
 	/* ajoute la lettre choisi sur le chevalet dans le plateau*/
 	public void ajoutLettre(int col, int lig, int numChevalet) {
 		// TODO Si une lettre est sélectionnée, on l'ajoute dans un Plateau temporaire qui servira à la verification
 		// puis on notifie
-		Lettre lettre = this.chevalets[numChevalet].obtenirLettre();
+		Lettre lettre = this.chevalets[this.numChevalet].obtenirLettre();
 		Case c = this.plateauFictif.getCase(lig, col);
 		c.ajouterLettre(lettre);
+		this.setChanged();
+	}
+	
+	/*met a jour les changements de joueur*/
+	public void changementJoueur() {
+		if (this.numChevalet+1 == this.chevalets.length) {
+			this.numChevalet=0;
+		}
+		else {
+			this.numChevalet++;
+		}
 	}
 }

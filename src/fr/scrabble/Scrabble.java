@@ -13,6 +13,7 @@ public class Scrabble extends Frame {
 
 	public static double SCALE=2.0; 
 	
+	@SuppressWarnings("deprecation")
 	public Scrabble() {
 
 		Modele m = new Modele();
@@ -20,6 +21,8 @@ public class Scrabble extends Frame {
 		ControleurPlateau cp = new ControleurPlateau(m);
 		
 		VuePlateau vuePlateau = new VuePlateau(cp);
+		
+		m.addObserver(vuePlateau);
 
 		LayoutManager layout = new BorderLayout();
 		this.setLayout(layout);
