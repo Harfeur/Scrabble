@@ -20,7 +20,7 @@ public class ControleurPlateau implements MouseListener {
 	public void mouseClicked(MouseEvent e) {
 		int col = (int) (e.getX() / (VuePlateau.TAILLE*Scrabble.SCALE));
 		int lig = (int) (e.getY() / (VuePlateau.TAILLE*Scrabble.SCALE));
-		m.ajoutLettre(col,lig);
+		//TODO ajouter le numéro du chevalet qui fait l'action m.ajoutLettre(col,lig);
 	}
 
 	@Override

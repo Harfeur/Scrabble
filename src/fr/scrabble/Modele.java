@@ -6,7 +6,7 @@ import fr.scrabble.structures.*;
 public class Modele {
 	Sac sac;
 	File fichier;
-	Plateau plateau;
+	Plateau plateau, plateauFictif;
 	Chevalet[] chevalets;
 	
 	public Modele() {
@@ -17,6 +17,7 @@ public class Modele {
 		System.out.print(this.sac);
 		
 		this.plateau= new Plateau();
+		this.plateauFictif= new Plateau();
 		
 		for (int i=0; i<nbJoueur; i++) {
 			this.chevalets[i]=new Chevalet();
@@ -35,9 +36,12 @@ public class Modele {
 		
 	}
 
-	public void ajoutLettre(int col, int lig) {
+	/* ajoute la lettre choisi sur le chevalet dans le plateau*/
+	public void ajoutLettre(int col, int lig, int numChevalet) {
 		// TODO Si une lettre est sélectionnée, on l'ajoute dans un Plateau temporaire qui servira à la verification
 		// puis on notifie
-		
+		Lettre lettre = this.chevalets[numChevalet].obtenirLettre();
+		Case c = this.plateauFictif.getCase(lig, col);
+		c.ajouterLettre(lettre);
 	}
 }
