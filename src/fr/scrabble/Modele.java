@@ -4,7 +4,7 @@ import java.util.Observable;
 
 import fr.scrabble.structures.*;
 
-public class Modele extends Observable {
+public class Modele extends Observable{
 	Sac sac;
 	File fichier;
 	Plateau plateau, plateauFictif;
@@ -14,6 +14,7 @@ public class Modele extends Observable {
 	public Modele() {
 	}
 	
+	/*Met le jeu a zero en fonction de nb de joueur*/
 	public void nouvellePartie(int nbJoueur) {
 		this.sac = new Sac("FR");
 		System.out.print(this.sac);
@@ -38,16 +39,21 @@ public class Modele extends Observable {
 		// puis on notifie
 		this.chevalets[this.numChevalet].selectionnerLettre(num);
 		this.setChanged();
+		this.notifyObservers(this.plateauFictif);
 	}
 
 	/* ajoute la lettre choisi sur le chevalet dans le plateau*/
-	public void ajoutLettre(int col, int lig, int numChevalet) {
+	public void ajoutLettre(int col, int lig) {
 		// TODO Si une lettre est sélectionnée, on l'ajoute dans un Plateau temporaire qui servira à la verification
 		// puis on notifie
 		Lettre lettre = this.chevalets[this.numChevalet].obtenirLettre();
 		Case c = this.plateauFictif.getCase(lig, col);
 		c.ajouterLettre(lettre);
 		this.setChanged();
+		this.notifyObservers(this.plateauFictif);
+	}
+	
+	public void verificationMot() {
 	}
 	
 	/*met a jour les changements de joueur*/
@@ -58,5 +64,6 @@ public class Modele extends Observable {
 		else {
 			this.numChevalet++;
 		}
+		this.plateauFictif = this.plateau.clone();
 	}
 }
