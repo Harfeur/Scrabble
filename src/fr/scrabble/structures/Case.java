@@ -5,11 +5,11 @@ import java.awt.Color;
 public class Case {
 	public enum Multiplicateur {
 		
-		SIMPLE (Color.green, "green"),
-		LETTRE_DOUBLE (Color.cyan, "cyan"),
-		MOT_DOUBLE (Color.pink, "pink"),
-		LETTRE_TRIPLE (Color.blue, "blue"),
-		MOT_TRIPLE (Color.red, "red");
+		SIMPLE (new Color(81,138,11), "S"),
+		LETTRE_DOUBLE (new Color(131,198,235), "LD"),
+		MOT_DOUBLE (new Color(209,134,194), "MD"),
+		LETTRE_TRIPLE (new Color(42,103,209), "LT"),
+		MOT_TRIPLE (new Color(186,60,60), "MT");
 		
 		private Color couleur;
 		private String libelle;
