@@ -40,11 +40,11 @@ public class VuePlateau extends Canvas implements Observer {
 						g.setColor(Color.BLACK);
 						g.drawRect((int) (j*VuePlateau.TAILLE*Scrabble.SCALE), (int) (i*VuePlateau.TAILLE*Scrabble.SCALE),(int) (VuePlateau.TAILLE*Scrabble.SCALE),(int) (VuePlateau.TAILLE*Scrabble.SCALE));
 						//Mot score
-						if(m.toString()!="Simple") {
-							Font font_mot_score = new Font("Arial",Font.PLAIN, (int)(14*Scrabble.SCALE));
+						if(m.toString()!="S") {
+							Font font_mot_score = new Font("Arial",Font.BOLD, (int)(14*Scrabble.SCALE));
 							FontMetrics metrics_mot_score = getFontMetrics(font_mot_score);
 							g.setFont(font_mot_score);
-							g.setColor(Color.DARK_GRAY);
+							g.setColor(Color.BLACK);
 							g.drawString(m.toString(),(int) (j*this.TAILLE*Scrabble.SCALE+metrics_mot_score.getDescent()),(int) (i*this.TAILLE*Scrabble.SCALE+metrics_mot_score.getHeight()));
 						}
 					}
@@ -73,9 +73,11 @@ public class VuePlateau extends Canvas implements Observer {
 	}
 
 	@Override
-	public void update(Observable arg0, Object arg1) {
-		// TODO Auto-generated method stub
-		
+	public void update(Observable o, Object arg) {
+		if(arg.getClass() == Plateau.class) {
+			this.plateau = (Plateau) arg;
+		}
+		this.repaint();
 	}
 	
 }
