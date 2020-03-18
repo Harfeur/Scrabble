@@ -6,12 +6,14 @@ import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import fr.scrabble.controleurs.ControleurChevalet;
 import fr.scrabble.controleurs.ControleurPlateau;
+import fr.scrabble.vues.VueChevalet;
 import fr.scrabble.vues.VuePlateau;
 
 public class Scrabble extends Frame {
 
-	public static double SCALE=2.0; 
+	public static double SCALE=1.0; 
 	
 	@SuppressWarnings("deprecation")
 	public Scrabble() {
@@ -21,13 +23,16 @@ public class Scrabble extends Frame {
 		ControleurPlateau cp = new ControleurPlateau(m);
 		
 		VuePlateau vuePlateau = new VuePlateau(cp);
+		VueChevalet vueChevalet = new VueChevalet();
 		
 		m.addObserver(vuePlateau);
-
+		m.addObserver(vueChevalet);
+		
 		LayoutManager layout = new BorderLayout();
 		this.setLayout(layout);
 
 		this.add(vuePlateau, BorderLayout.CENTER);
+		this.add(vueChevalet, BorderLayout.PAGE_END);
 		
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
