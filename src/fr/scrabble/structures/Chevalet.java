@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Chevalet extends ArrayList<Lettre>{
 	
-	int lettreSelectionee;
+	public int lettreSelectionee;
 	
 	public Chevalet() {
 		super(7);
