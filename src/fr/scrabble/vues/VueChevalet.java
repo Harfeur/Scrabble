@@ -28,8 +28,8 @@ public class VueChevalet extends Canvas implements Observer {
 		g.fillRect((int) (87*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*8*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		g.setColor(new Color(87,52,26));
 		g.drawRect((int) (87*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*8*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
-		if(chevalet.lettreSelectionee!=-1) {
-			for(int i=0; i<chevalet.lettreSelectionee;i=i+1) {
+		if(chevalet.size()>0) {
+			for(int i=0; i<chevalet.size();i=i+1) {
 				//Fond
 				g.setColor(new Color(230,207,207));
 				g.fillRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
