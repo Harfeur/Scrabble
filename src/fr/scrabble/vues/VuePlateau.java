@@ -40,14 +40,22 @@ public class VuePlateau extends Canvas implements Observer {
 						g.setColor(Color.BLACK);
 						g.drawRect((int) (j*VuePlateau.TAILLE*Scrabble.SCALE), (int) (i*VuePlateau.TAILLE*Scrabble.SCALE),(int) (VuePlateau.TAILLE*Scrabble.SCALE),(int) (VuePlateau.TAILLE*Scrabble.SCALE));
 						//Mot score
-						if(m.toString()!="S") {
-							Font font_mot_score = new Font("Arial",Font.BOLD, (int)(14*Scrabble.SCALE));
+						String score_l="";
+						String score_d="";
+						switch(m.toString()) {
+							case "LD": score_l="LETTRE";score_d="DOUBLE";break;
+							case "LT": score_l="LETTRE";score_d="TRIPLE";break;
+							case "MD": score_l="MOT";score_d="DOUBLE";break;
+							case "MT": score_l="MOT";score_d="TRIPLE";break;
+						} 
+						Font font_mot_score = new Font("Arial",Font.BOLD, (int)(5*Scrabble.SCALE));
 							FontMetrics metrics_mot_score = getFontMetrics(font_mot_score);
 							g.setFont(font_mot_score);
 							g.setColor(Color.BLACK);
-							g.drawString(m.toString(),(int) (j*this.TAILLE*Scrabble.SCALE+metrics_mot_score.getDescent()),(int) (i*this.TAILLE*Scrabble.SCALE+metrics_mot_score.getHeight()));
+							g.drawString(score_l,(int) (Scrabble.SCALE*2+j*this.TAILLE*Scrabble.SCALE),(int) (Scrabble.SCALE*5+i*this.TAILLE*Scrabble.SCALE+metrics_mot_score.getHeight()));
+							g.setColor(Color.BLACK);
+							g.drawString(score_d,(int) (Scrabble.SCALE*2+j*this.TAILLE*Scrabble.SCALE+metrics_mot_score.getDescent()),(int) (Scrabble.SCALE*10+i*this.TAILLE*Scrabble.SCALE+metrics_mot_score.getHeight()));
 						}
-					}
 					else {
 						//Fond
 						g.setColor(new Color(230,207,207));
