@@ -19,17 +19,36 @@ public class VueChevalet extends Canvas implements Observer {
 	
 	public VueChevalet() {
 		super();
-		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Scrabble.SCALE),(int) (VuePlateau.TAILLE*5*Scrabble.SCALE)));
+		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Scrabble.SCALE),(int) (VuePlateau.TAILLE*3*Scrabble.SCALE)));
 	}
 	
 	public void paint(Graphics g) {
-		if(this.chevalet!=null) {
-			if(this.chevalet.lettreSelectionee==-1) {
+		//Fond
+		g.setColor(new Color(117,82,56));
+		g.fillRect((int) (87*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*8*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+		g.setColor(new Color(87,52,26));
+		g.drawRect((int) (87*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*8*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+		if(chevalet.lettreSelectionee!=-1) {
+			for(int i=0; i<chevalet.lettreSelectionee;i=i+1) {
 				//Fond
-				//g.setColor(Color.BLUE);
-				//g.fillRect((int) (VuePlateau.TAILLE*20*Scrabble.SCALE), (int) (VuePlateau.TAILLE*20*Scrabble.SCALE), (int) (TAILLE*15*Scrabble.SCALE),(int) (TAILLE*5*Scrabble.SCALE));
+				g.setColor(new Color(230,207,207));
+				g.fillRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+				g.setColor(new Color(200,77,77));
+				g.drawRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+				//Lettre
+				Font font_lettre = new Font("Arial",Font.PLAIN,(int)(this.TAILLE*Scrabble.SCALE)) ;
+				FontMetrics metrics_lettre = getFontMetrics(font_lettre);
+				g.setFont(font_lettre);
+				g.setColor(Color.BLACK);
+				g.drawString(chevalet.obtenirLettre().lettre,(int) (i*TAILLE*Scrabble.SCALE+metrics_lettre.getDescent()),(int) (TAILLE*Scrabble.SCALE+metrics_lettre.getAscent()));
+				//Valeur
+				Font font_valeur = new Font("Arial",Font.PLAIN,(int)(5*Scrabble.SCALE)) ;
+				FontMetrics metrics_valeur = getFontMetrics(font_valeur);
+				g.setFont(font_valeur);
+				g.setColor(Color.BLACK);
+				g.drawString(chevalet.obtenirLettre().valeur+"",(int) (i*TAILLE*Scrabble.SCALE+metrics_valeur.getDescent()),(int) (TAILLE*Scrabble.SCALE+metrics_valeur.getAscent()));
 			}
-		}
+		}		
 	}
 
 	@Override
