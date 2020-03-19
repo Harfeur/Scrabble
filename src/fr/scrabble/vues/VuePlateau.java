@@ -84,8 +84,8 @@ public class VuePlateau extends Canvas implements Observer {
 	public void update(Observable o, Object arg) {
 		if(arg.getClass() == Plateau.class) {
 			this.plateau = (Plateau) arg;
+			this.repaint();
 		}
-		this.repaint();
 	}
 	
 }

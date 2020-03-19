@@ -10,6 +10,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import fr.scrabble.Scrabble;
+import fr.scrabble.controleurs.ControleurChevalet;
 import fr.scrabble.structures.*;
 
 public class VueChevalet extends Canvas implements Observer {
@@ -17,13 +18,14 @@ public class VueChevalet extends Canvas implements Observer {
 	Chevalet chevalet;
 	public static int TAILLE=25;
 	
-	public VueChevalet() {
+	public VueChevalet(ControleurChevalet cc) {
 		super();
 		this.chevalet =new Chevalet();
 		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Scrabble.SCALE),(int) (VuePlateau.TAILLE*3*Scrabble.SCALE)));
 		Sac sac = new Sac("FR");
 		this.chevalet = new Chevalet();
-		this.chevalet.remplir(sac);
+		this.chevalet.remplir(sac); //Le chevalet doit être envoyé par le modèle, et non pas créé ici
+		this.addMouseListener(cc);
 	}
 	
 	public void paint(Graphics g) {
@@ -54,11 +56,22 @@ public class VueChevalet extends Canvas implements Observer {
 			}
 		}		
 	}
+	
+	@Override
+	public void update(Graphics g) {
+		super.update(g);
+		//TODO C'est ici que l'on écrit les lettres et qu'on les dessines. En gros tout le code de paint() est ici.
+		
+		// + le fond change de couleur pour la lettre selectionee : this.chevalet.lettreSelectionee
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		
+		// Cette fonction change le chevalet selon le modèle
+		if (arg.getClass() == Chevalet.class) {
+			this.chevalet = (Chevalet) arg;
+			this.repaint();
+		}
 	}
 	
 	

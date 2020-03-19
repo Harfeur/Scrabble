@@ -33,6 +33,7 @@ public class Chevalet extends ArrayList<Lettre>{
 	 * @return Lettre La lettre selectionee
 	 */
 	public Lettre obtenirLettre() {
+		if (this.lettreSelectionee == -1) return null;
 		Lettre lettre = this.remove(lettreSelectionee);
 		this.lettreSelectionee = -1;
 		return lettre;

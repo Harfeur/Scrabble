@@ -19,11 +19,12 @@ public class Scrabble extends Frame {
 	public Scrabble() {
 
 		Modele m = new Modele();
-		
+
 		ControleurPlateau cp = new ControleurPlateau(m);
+		ControleurChevalet cc = new ControleurChevalet(m); // On ajoute le controleur
 		
 		VuePlateau vuePlateau = new VuePlateau(cp);
-		VueChevalet vueChevalet = new VueChevalet();
+		VueChevalet vueChevalet = new VueChevalet(cc);
 		
 		m.addObserver(vuePlateau);
 		m.addObserver(vueChevalet);
@@ -39,6 +40,8 @@ public class Scrabble extends Frame {
 				System.exit(0);
 			}
 		});
+		
+		m.nouvellePartie(4); // On cree une partie
 		
 		this.pack();
 		this.setVisible(true);
