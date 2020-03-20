@@ -1,8 +1,11 @@
 package fr.scrabble;
 
 import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Frame;
 import java.awt.LayoutManager;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -11,7 +14,7 @@ import fr.scrabble.controleurs.ControleurPlateau;
 import fr.scrabble.vues.VueChevalet;
 import fr.scrabble.vues.VuePlateau;
 
-public class Scrabble extends Frame {
+public class Scrabble extends Frame implements ActionListener {
 
 	public static double SCALE=1.0; 
 	
@@ -33,7 +36,10 @@ public class Scrabble extends Frame {
 		this.setLayout(layout);
 
 		this.add(vuePlateau, BorderLayout.CENTER);
-		this.add(vueChevalet, BorderLayout.PAGE_END);
+		this.add(vueChevalet, BorderLayout.SOUTH);
+		Button bv = new Button("Valider");
+		bv.addActionListener(this);
+		this.add(bv,BorderLayout.EAST);
 		
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -50,5 +56,12 @@ public class Scrabble extends Frame {
 	
 	public static void main(String[] args) {
 		new Scrabble();
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
