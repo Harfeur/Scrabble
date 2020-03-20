@@ -61,8 +61,16 @@ public class VueChevalet extends Canvas implements Observer {
 	public void update(Graphics g) {
 		super.update(g);
 		//TODO C'est ici que l'on écrit les lettres et qu'on les dessines. En gros tout le code de paint() est ici.
-		
 		// + le fond change de couleur pour la lettre selectionee : this.chevalet.lettreSelectionee
+		for(int i=0 ; i<this.chevalet.size() ;i=i+1) {
+			if(this.chevalet.lettreSelectionee==i) {
+				g.setColor(new Color(219,212,4));
+				g.fillRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+				g.setColor(new Color(200,77,77));
+				g.drawRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+			}
+		}
+		this.repaint();
 	}
 
 	@Override
