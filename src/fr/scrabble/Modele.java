@@ -59,11 +59,9 @@ public class Modele extends Observable{
 		if (c.lettre == null) {
 			if (this.motEnCours == null) {
 				this.motEnCours= new MotPlace(lettre, c);
-				c.ajouterLettre(lettre);
 			}
-			else if (this.motEnCours.nombreDeLettres() == 1) {
-				// TODO À compléter
-			}
+			this.motEnCours.ajoutLettre(lettre);
+			c.ajouterLettre(lettre);
 		}
 		this.setChanged();
 		this.notifyObservers(this.plateauFictif);
