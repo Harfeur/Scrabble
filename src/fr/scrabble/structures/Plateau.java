@@ -21,7 +21,6 @@ public class Plateau {
 			int ligne = 0;
 			while ((strCurrentLine = reader.readLine()) != null) {
 				String[] tab = strCurrentLine.split(",");
-				System.out.println(tab.length);
 				for (int col = 0; col < 15; col++) {
 					Multiplicateur m;
 					if (tab.length > col) {
@@ -39,15 +38,26 @@ public class Plateau {
 				}
 				ligne++;
 			}
+			reader.close();
 		} catch(IOException e1) {
 			System.out.print("Erreur");
 			System.exit(0);
 		}
-		System.out.println();
 	}
 
 	public Case getCase(int ligne, int colonne) {
 		return this.plateau[ligne][colonne];
+	}
+	
+	@Override
+	public Plateau clone() {
+		Plateau p = new Plateau();
+		for (int i = 0; i < 15; i++) {
+			for (int j = 0; i < 15; i++) {
+				p.plateau[i][j] = this.plateau[i][j].clone();
+			}
+		}
+		return p;
 	}
 
 }

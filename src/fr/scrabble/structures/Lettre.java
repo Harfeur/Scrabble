@@ -17,6 +17,10 @@ public class Lettre implements Serializable {
 		return lettre+"("+valeur+")";
 	}
 	
-	
+	@Override
+	public Lettre clone() {
+		Lettre l = new Lettre(this.lettre, this.valeur);
+		return l;
+	}
 	
 }
