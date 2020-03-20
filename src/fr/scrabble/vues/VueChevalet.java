@@ -70,7 +70,6 @@ public class VueChevalet extends Canvas implements Observer {
 				g.drawRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 			}
 		}
-		this.repaint();
 	}
 
 	@Override

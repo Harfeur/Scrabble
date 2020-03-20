@@ -37,7 +37,7 @@ public class Scrabble extends Frame{
 		LayoutManager layout = new BorderLayout();
 		this.setLayout(layout);
 
-		this.add(vuePlateau, BorderLayout.CENTER);
+		this.add(vuePlateau, BorderLayout.NORTH);
 		this.add(vueChevalet, BorderLayout.SOUTH);
 		this.add(vueBouton,BorderLayout.EAST);
 		
