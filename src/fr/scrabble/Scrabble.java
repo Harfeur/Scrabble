@@ -4,28 +4,29 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Frame;
 import java.awt.LayoutManager;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import fr.scrabble.controleurs.ControleurBouton;
 import fr.scrabble.controleurs.ControleurChevalet;
 import fr.scrabble.controleurs.ControleurPlateau;
 import fr.scrabble.vues.VueBouton;
 import fr.scrabble.vues.VueChevalet;
 import fr.scrabble.vues.VuePlateau;
 
-public class Scrabble extends Frame {
+
+@SuppressWarnings("serial")
+public class Scrabble extends Frame{
 
 	public static double SCALE=1.0; 
-	Modele m;
-	@SuppressWarnings("deprecation")
+
 	public Scrabble() {
 
-		m = new Modele();
+		Modele m = new Modele();
 
 		ControleurPlateau cp = new ControleurPlateau(m);
-		ControleurChevalet cc = new ControleurChevalet(m); // On ajoute le controleur
+		ControleurChevalet cc = new ControleurChevalet(m);
+		ControleurBouton cb = new ControleurBouton(m);
 		
 		VuePlateau vuePlateau = new VuePlateau(cp);
 		VueChevalet vueChevalet = new VueChevalet(cc);
@@ -47,7 +48,7 @@ public class Scrabble extends Frame {
 			}
 		});
 		
-		m.nouvellePartie(4); // On cree une partie
+		m.nouvellePartie(4);
 		
 	
 		this.pack();
