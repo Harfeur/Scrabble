@@ -1,7 +1,6 @@
 package fr.scrabble;
 
 import java.awt.BorderLayout;
-import java.awt.Button;
 import java.awt.Frame;
 import java.awt.LayoutManager;
 import java.awt.event.WindowAdapter;
@@ -30,7 +29,7 @@ public class Scrabble extends Frame{
 		
 		VuePlateau vuePlateau = new VuePlateau(cp);
 		VueChevalet vueChevalet = new VueChevalet(cc);
-		VueBouton vueBouton = new VueBouton();
+		VueBouton vueBouton = new VueBouton(cb);
 		
 		m.addObserver(vuePlateau);
 		m.addObserver(vueChevalet);
