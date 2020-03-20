@@ -64,10 +64,23 @@ public class VueChevalet extends Canvas implements Observer {
 		// + le fond change de couleur pour la lettre selectionee : this.chevalet.lettreSelectionee
 		for(int i=0 ; i<this.chevalet.size() ;i=i+1) {
 			if(this.chevalet.lettreSelectionee==i) {
+				//Fond
 				g.setColor(new Color(219,212,4));
 				g.fillRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 				g.setColor(new Color(200,77,77));
 				g.drawRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+				//Lettre
+				Font font_lettre = new Font("Arial",Font.PLAIN,(int)(this.TAILLE*Scrabble.SCALE)) ;
+				FontMetrics metrics_lettre = getFontMetrics(font_lettre);
+				g.setFont(font_lettre);
+				g.setColor(Color.BLACK);
+				g.drawString(this.chevalet.get(i).lettre,(int) (i*TAILLE*Scrabble.SCALE+metrics_lettre.getDescent()),(int) (TAILLE*Scrabble.SCALE+metrics_lettre.getAscent()));
+				//Valeur
+				Font font_valeur = new Font("Arial",Font.PLAIN,(int)(5*Scrabble.SCALE)) ;
+				FontMetrics metrics_valeur = getFontMetrics(font_valeur);
+				g.setFont(font_valeur);
+				g.setColor(Color.BLACK);
+				g.drawString(this.chevalet.get(i).valeur+"",(int) (i*TAILLE*Scrabble.SCALE+metrics_valeur.getDescent()),(int) (TAILLE*Scrabble.SCALE+metrics_valeur.getAscent()));
 			}
 		}
 	}
