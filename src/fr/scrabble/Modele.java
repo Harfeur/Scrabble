@@ -6,6 +6,7 @@ import java.util.Observable;
 import fr.scrabble.structures.*;
 
 public class Modele extends Observable{
+	
 	Sac sac;
 	File fichier;
 	Plateau plateau, plateauFictif;
@@ -13,6 +14,7 @@ public class Modele extends Observable{
 	int numChevalet;
 	ArrayList<MotPlace> motValide;
 	MotPlace motEnCours;
+	ArrayList<Placement> placementEnCours;
 	int ligA, colA;
 	
 	public Modele() {
@@ -24,8 +26,9 @@ public class Modele extends Observable{
 		
 		this.plateau= new Plateau();
 		this.plateauFictif= new Plateau();
+		this.placementEnCours = new ArrayList<Placement>();
 		
-		this.chevalets = new Chevalet[nbJoueur]; // Tu avais oublié l'initialisation
+		this.chevalets = new Chevalet[nbJoueur];
 		
 		for (int i=0; i<nbJoueur; i++) {
 			this.chevalets[i]=new Chevalet();
@@ -48,33 +51,43 @@ public class Modele extends Observable{
 	public void selectLettre(int num) {
 		if (this.chevalets[this.numChevalet].selectionnerLettre(num)) {
 			this.setChanged();
-			this.notifyObservers(this.chevalets);
+			this.notifyObservers(this.chevalets[this.numChevalet]);
 		}
 	}
 
 	/* ajoute la lettre choisi sur le chevalet dans le plateau*/
 	public void ajoutLettre(int col, int lig) {
 		Lettre lettre = this.chevalets[this.numChevalet].obtenirLettre();
-		if (lettre == null) return; //SI lettre null ça veut dire que aucune lettre est selectionee donc on fait rien
 		Case c = this.plateauFictif.getCase(lig, col);
-		if (c.lettre == null) {
-			if (this.motEnCours == null) {
-				this.motEnCours= new MotPlace(lettre, c);	
-				c.ajouterLettre(lettre);
+		if (lettre == null) {
+			// Si aucune lettre n'est selectionee du chevalet, alors on supprime la lettre du plateau
+			// que si c'est une lettre qui est en train d'etre placee
+			Placement caseCliquee = new Placement(null, c, lig, col);
+			if (this.placementEnCours.contains(caseCliquee)) {
+				c.lettre = null;
+				this.placementEnCours.remove(caseCliquee);
 			}
-			else {
-				this.motEnCours.ajoutLettre(lettre);
-				c.ajouterLettre(lettre);
-			}
+		} else {
+			// Sinon, on ajoute la lettre sur le plateau, et dans notre liste des placments
+			// du tour en cours
+			this.placementEnCours.add(new Placement(lettre, c, lig, col));
+			c.ajouterLettre(lettre);
 		}
 		this.setChanged();
 		this.notifyObservers(this.plateauFictif);
 		
 		this.setChanged();
-		this.notifyObservers(this.chevalets[this.numChevalet]); //On notifie aussi la supppression de la lettre dans le chevalet
+		this.notifyObservers(this.chevalets[this.numChevalet]);
 	}
 	
 	public void verificationMot() {
+		// On vérifie que toutes les lettres de this.placementEnCours sont soient verticales soient horizontales
+		// dans le cas où on a une size() >= 2
+		
+		// Puis, on crée un this.motEnCours selon l'ordre des lettres et les lettres déjà présentes (si on allonge un mot par exemple)
+		
+		
+		/*
 		if (this.motEnCours.valideMot()) {
 			this.plateau = this.plateauFictif.clone();
 			this.chevalets[this.numChevalet].remplir(sac);
@@ -82,7 +95,7 @@ public class Modele extends Observable{
 		}
 		else {
 			this.plateauFictif = this.plateau.clone();
-		}
+		} */
 	}
 	
 	/*met a jour les changements de joueur*/
@@ -93,6 +106,7 @@ public class Modele extends Observable{
 		else {
 			this.numChevalet++;
 		}
-		this.motEnCours=null;
+		// On initialise à zéro le placement
+		this.placementEnCours = new ArrayList<Placement>();
 	}
 }
