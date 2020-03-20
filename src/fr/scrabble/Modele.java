@@ -13,6 +13,7 @@ public class Modele extends Observable{
 	int numChevalet;
 	ArrayList<MotPlace> motValide;
 	MotPlace motEnCours;
+	int ligA, colA;
 	
 	public Modele() {
 	}
@@ -58,10 +59,13 @@ public class Modele extends Observable{
 		Case c = this.plateauFictif.getCase(lig, col);
 		if (c.lettre == null) {
 			if (this.motEnCours == null) {
-				this.motEnCours= new MotPlace(lettre, c);
+				this.motEnCours= new MotPlace(lettre, c);	
+				c.ajouterLettre(lettre);
 			}
-			this.motEnCours.ajoutLettre(lettre);
-			c.ajouterLettre(lettre);
+			else {
+				this.motEnCours.ajoutLettre(lettre);
+				c.ajouterLettre(lettre);
+			}
 		}
 		this.setChanged();
 		this.notifyObservers(this.plateauFictif);
@@ -71,7 +75,14 @@ public class Modele extends Observable{
 	}
 	
 	public void verificationMot() {
-		
+		if (this.motEnCours.valideMot()) {
+			this.plateau = this.plateauFictif.clone();
+			this.chevalets[this.numChevalet].remplir(sac);
+			this.changementJoueur();
+		}
+		else {
+			this.plateauFictif = this.plateau.clone();
+		}
 	}
 	
 	/*met a jour les changements de joueur*/
@@ -82,7 +93,6 @@ public class Modele extends Observable{
 		else {
 			this.numChevalet++;
 		}
-		this.plateauFictif = this.plateau.clone();
 		this.motEnCours=null;
 	}
 }

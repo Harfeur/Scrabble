@@ -24,4 +24,8 @@ public class MotPlace {
 	public int nombreDeLettres() {
 		return this.mot.size();
 	}
+	
+	public boolean valideMot() {
+		return true;
+	}
 }

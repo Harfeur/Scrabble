@@ -17,11 +17,11 @@ import fr.scrabble.vues.VuePlateau;
 public class Scrabble extends Frame implements ActionListener {
 
 	public static double SCALE=1.0; 
-	
+	Modele m;
 	@SuppressWarnings("deprecation")
 	public Scrabble() {
 
-		Modele m = new Modele();
+		m = new Modele();
 
 		ControleurPlateau cp = new ControleurPlateau(m);
 		ControleurChevalet cc = new ControleurChevalet(m); // On ajoute le controleur
@@ -49,6 +49,7 @@ public class Scrabble extends Frame implements ActionListener {
 		
 		m.nouvellePartie(4); // On cree une partie
 		
+	
 		this.pack();
 		this.setVisible(true);
 	}
@@ -62,6 +63,8 @@ public class Scrabble extends Frame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		
+		if(arg0.getActionCommand()=="Valider") {
+			this.m.verificationMot();
+		}
 	}
 }
