@@ -11,10 +11,11 @@ import java.awt.event.WindowEvent;
 
 import fr.scrabble.controleurs.ControleurChevalet;
 import fr.scrabble.controleurs.ControleurPlateau;
+import fr.scrabble.vues.VueBouton;
 import fr.scrabble.vues.VueChevalet;
 import fr.scrabble.vues.VuePlateau;
 
-public class Scrabble extends Frame implements ActionListener {
+public class Scrabble extends Frame {
 
 	public static double SCALE=1.0; 
 	Modele m;
@@ -28,6 +29,7 @@ public class Scrabble extends Frame implements ActionListener {
 		
 		VuePlateau vuePlateau = new VuePlateau(cp);
 		VueChevalet vueChevalet = new VueChevalet(cc);
+		VueBouton vueBouton = new VueBouton();
 		
 		m.addObserver(vuePlateau);
 		m.addObserver(vueChevalet);
@@ -37,9 +39,7 @@ public class Scrabble extends Frame implements ActionListener {
 
 		this.add(vuePlateau, BorderLayout.CENTER);
 		this.add(vueChevalet, BorderLayout.SOUTH);
-		Button bv = new Button("Valider");
-		bv.addActionListener(this);
-		this.add(bv,BorderLayout.EAST);
+		this.add(vueBouton,BorderLayout.EAST);
 		
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
@@ -57,14 +57,5 @@ public class Scrabble extends Frame implements ActionListener {
 	
 	public static void main(String[] args) {
 		new Scrabble();
-	}
-
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		// TODO Auto-generated method stub
-		if(arg0.getActionCommand()=="Valider") {
-			this.m.verificationMot();
-		}
 	}
 }
