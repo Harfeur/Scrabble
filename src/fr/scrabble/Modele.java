@@ -45,7 +45,6 @@ public class Modele extends Observable{
 		this.setChanged();
 		this.notifyObservers(this.plateau);
 		
-		System.out.println(this.chevalets[numChevalet]);
 	}
 
 	/* mis a jour de la lettre selectionner*/
@@ -84,6 +83,8 @@ public class Modele extends Observable{
 	public void verificationMot() {
 		// On vérifie que toutes les lettres de this.placementEnCours sont soient verticales soient horizontales
 		// dans le cas où on a une size() >= 2
+		Placement lettre = this.placementEnCours.get(0);
+		
 		
 		// Puis, on crée un this.motEnCours selon l'ordre des lettres et les lettres déjà présentes (si on allonge un mot par exemple)
 		
@@ -97,16 +98,20 @@ public class Modele extends Observable{
 		else {
 			this.plateauFictif = this.plateau.clone();
 		} */
+		this.changementJoueur();
 	}
 	
 	/*met a jour les changements de joueur*/
 	public void changementJoueur() {
+		this.chevalets[this.numChevalet].remplir(sac);
 		if (this.numChevalet+1 == this.chevalets.length) {
 			this.numChevalet=0;
 		}
 		else {
 			this.numChevalet++;
 		}
+		this.setChanged();
+		this.notifyObservers(this.plateau);
 		this.setChanged();
 		this.notifyObservers(this.numChevalet);
 		this.setChanged();
