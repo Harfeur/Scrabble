@@ -31,7 +31,28 @@ public class MotPlace {
 	 * @return boolean vrai si placement possible et fait
 	 */
 	public boolean ajoutLettre(Lettre l, int lig, int col) {
-		this.mot.add(l);
+		if (this.mot.size() == 1) {
+			
+			if (lig == this.lig+1 && col == this.col)
+				this.sens = Sens.DROITE;
+			
+			else if (lig == this.lig && col == this.col+1)
+				this.sens = Sens.BAS;
+			
+			else return false;
+			
+			this.mot.add(l);
+		} else {
+			
+			if (this.sens == Sens.DROITE && lig == this.lig + this.mot.size() && col == this.col)
+				this.mot.add(l);
+			
+			else if (this.sens == Sens.BAS && lig == this.lig && col == this.col + this.mot.size())
+				this.mot.add(l);
+			
+			else return false;
+		}
+		
 		return true;
 	}
 	
