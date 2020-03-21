@@ -18,6 +18,7 @@ public class Modele extends Observable{
 	int ligA, colA;
 	
 	public Modele() {
+		
 	}
 	
 	/*Met le jeu a zero en fonction de nb de joueur*/
