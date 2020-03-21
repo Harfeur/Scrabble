@@ -2,6 +2,7 @@ package fr.scrabble.structures;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class Chevalet extends ArrayList<Lettre>{
 	
 	public int lettreSelectionee;

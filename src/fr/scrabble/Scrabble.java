@@ -17,7 +17,7 @@ import fr.scrabble.vues.VuePlateau;
 @SuppressWarnings("serial")
 public class Scrabble extends Frame{
 
-	public static double SCALE=1.0; 
+	public static double SCALE=1.0;
 
 	public Scrabble() {
 

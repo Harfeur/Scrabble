@@ -2,13 +2,12 @@ package fr.scrabble.structures;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.Hashtable;
 import java.util.Random;
 import java.util.Map.Entry;
+
 @SuppressWarnings("serial")
 public class Sac extends Hashtable<Lettre, Integer> {
 	
@@ -31,6 +30,7 @@ public class Sac extends Hashtable<Lettre, Integer> {
 		    	
 		    	this.ajouterLettre(nouvLettre, nombre);
 		    }
+		    reader.close();
 
 		} catch(IOException e1) {
 			System.out.print("Erreur");
