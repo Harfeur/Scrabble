@@ -107,6 +107,10 @@ public class Modele extends Observable{
 		else {
 			this.numChevalet++;
 		}
+		this.setChanged();
+		this.notifyObservers(this.numChevalet);
+		this.setChanged();
+		this.notifyObservers(this.chevalets[this.numChevalet]);
 		// On initialise à zéro le placement
 		this.placementEnCours = new ArrayList<Placement>();
 	}
