@@ -19,7 +19,12 @@ public class VueLigne extends Canvas {
 	}
 	
 	public void paint(Graphics g) {
-		for (int i = 0; i < 15; i++) {
+		//Fond (case : 0,0)
+		g.setColor(new Color(51,108,11));
+		g.fillRect(0,0 ,(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+		g.setColor(Color.BLACK);
+		g.drawRect(0,0,(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+		for (int i = 1; i < 16; i++) {
 			//Fond
 			g.setColor(new Color(51,108,11));
 			g.fillRect((int) (i*TAILLE*Scrabble.SCALE),0 ,(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
@@ -30,8 +35,7 @@ public class VueLigne extends Canvas {
 			FontMetrics metrics_lettre = getFontMetrics(font_lettre);
 			g.setFont(font_lettre);
 			g.setColor(Color.BLACK);
-			g.drawString((i+1)+"",(int) (i*TAILLE*Scrabble.SCALE+metrics_lettre.getDescent()),metrics_lettre.getAscent());
-			System.out.println(i);
+			g.drawString(i+"",(int) (i*TAILLE*Scrabble.SCALE+metrics_lettre.getDescent()),metrics_lettre.getAscent());
 		}
 	}
 }

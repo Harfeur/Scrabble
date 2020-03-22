@@ -29,6 +29,7 @@ public class Scrabble extends Frame{
 		VueChevalet vueChevalet = new VueChevalet(cc);
 		VueBouton vueBouton = new VueBouton(cb);
 		VueLigne vueLigne = new VueLigne();
+		VueColonne vueColonne = new VueColonne();
 		
 		m.addObserver(vuePlateau);
 		m.addObserver(vueChevalet);
@@ -38,8 +39,9 @@ public class Scrabble extends Frame{
 
 		this.add(vuePlateau, BorderLayout.CENTER);
 		this.add(vueChevalet, BorderLayout.SOUTH);
-		this.add(vueBouton,BorderLayout.EAST);
+		this.add(vueBouton, BorderLayout.EAST);
 		this.add(vueLigne, BorderLayout.NORTH);
+		this.add(vueColonne, BorderLayout.WEST);
 		
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
