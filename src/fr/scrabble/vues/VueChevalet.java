@@ -22,9 +22,6 @@ public class VueChevalet extends Canvas implements Observer {
 		super();
 		this.chevalet =new Chevalet();
 		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Scrabble.SCALE),(int) (VuePlateau.TAILLE*3*Scrabble.SCALE)));
-		Sac sac = new Sac("FR");
-		this.chevalet = new Chevalet();
-		this.chevalet.remplir(sac); //Le chevalet doit être envoyé par le modèle, et non pas créé ici
 		this.addMouseListener(cc);
 	}
 	
