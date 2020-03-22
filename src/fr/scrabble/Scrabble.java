@@ -9,9 +9,7 @@ import java.awt.event.WindowEvent;
 import fr.scrabble.controleurs.ControleurBouton;
 import fr.scrabble.controleurs.ControleurChevalet;
 import fr.scrabble.controleurs.ControleurPlateau;
-import fr.scrabble.vues.VueBouton;
-import fr.scrabble.vues.VueChevalet;
-import fr.scrabble.vues.VuePlateau;
+import fr.scrabble.vues.*;
 
 
 @SuppressWarnings("serial")
@@ -30,6 +28,7 @@ public class Scrabble extends Frame{
 		VuePlateau vuePlateau = new VuePlateau(cp);
 		VueChevalet vueChevalet = new VueChevalet(cc);
 		VueBouton vueBouton = new VueBouton(cb);
+		VueLigne vueLigne = new VueLigne();
 		
 		m.addObserver(vuePlateau);
 		m.addObserver(vueChevalet);
@@ -37,9 +36,10 @@ public class Scrabble extends Frame{
 		LayoutManager layout = new BorderLayout();
 		this.setLayout(layout);
 
-		this.add(vuePlateau, BorderLayout.NORTH);
+		this.add(vuePlateau, BorderLayout.CENTER);
 		this.add(vueChevalet, BorderLayout.SOUTH);
 		this.add(vueBouton,BorderLayout.EAST);
+		this.add(vueLigne, BorderLayout.NORTH);
 		
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
