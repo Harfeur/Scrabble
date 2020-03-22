@@ -13,9 +13,8 @@ public class Modele extends Observable{
 	Chevalet[] chevalets;
 	int numChevalet;
 	ArrayList<MotPlace> motValide;
-	MotPlace motEnCours;
+	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
-	int ligA, colA;
 	Dictionnaire dico;
 	
 	public Modele() {
@@ -92,14 +91,18 @@ public class Modele extends Observable{
 		}
 		Case premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
 		//mot sens bas
-		MotPlace motBas = new MotPlace( premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
+		motBas = new MotPlace( premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
 		while(this.plateauFictif.getCase(premierLettre.getLine()-l+1,premierLettre.getColumn()).lettre != null) {
 			premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
 			motBas.ajoutLettre(premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
 			l--;
 		}
+		
 		if(motBas.valideMot(this.dico)) {
-			System.out.println("ok");
+			System.out.println("Sens Bas ok");
+		}
+		else {
+			System.out.println("Sens Bas non ok");
 		}
 
 		int c=1;
@@ -108,7 +111,20 @@ public class Modele extends Observable{
 			c++;
 		}
 		Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
+		//mot sens droite
+		motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
+		while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()-c+1).lettre != null) {
+			premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
+			motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
+			c--;
+		}
 		
+		if(motDroite.valideMot(this.dico)) {
+			System.out.println("Sens Droite ok");
+		}
+		else {
+			System.out.println("Sens Droite non ok");
+		}
 		
 		
 		// Puis, on crée un this.motEnCours selon l'ordre des lettres et les lettres déjà présentes (si on allonge un mot par exemple)
