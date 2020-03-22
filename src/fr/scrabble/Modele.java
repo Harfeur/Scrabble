@@ -16,6 +16,7 @@ public class Modele extends Observable{
 	MotPlace motEnCours;
 	ArrayList<Placement> placementEnCours;
 	int ligA, colA;
+	Dictionnaire dico;
 	
 	public Modele() {
 		
@@ -24,7 +25,7 @@ public class Modele extends Observable{
 	/*Met le jeu a zero en fonction de nb de joueur*/
 	public void nouvellePartie(int nbJoueur) {
 		this.sac = new Sac("FR");
-		
+		this.dico = new Dictionnaire("FR");
 		this.plateau= new Plateau();
 		this.plateauFictif= new Plateau();
 		this.placementEnCours = new ArrayList<Placement>();
@@ -83,7 +84,31 @@ public class Modele extends Observable{
 	public void verificationMot() {
 		// On vérifie que toutes les lettres de this.placementEnCours sont soient verticales soient horizontales
 		// dans le cas où on a une size() >= 2
-		Placement lettre = this.placementEnCours.get(0);
+		Placement premierLettre = this.placementEnCours.get(0);
+		int l=1;
+		//Vérif bas
+		while(this.plateauFictif.getCase(premierLettre.getLine()-l,premierLettre.getColumn()).lettre != null) {
+			l++;
+		}
+		Case premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
+		//mot sens bas
+		MotPlace motBas = new MotPlace( premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
+		while(this.plateauFictif.getCase(premierLettre.getLine()-l+1,premierLettre.getColumn()).lettre != null) {
+			premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
+			motBas.ajoutLettre(premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
+			l--;
+		}
+		if(motBas.valideMot(this.dico)) {
+			System.out.println("ok");
+		}
+
+		int c=1;
+		//Vérif droite
+		while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()-c).lettre != null) {
+			c++;
+		}
+		Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
+		
 		
 		
 		// Puis, on crée un this.motEnCours selon l'ordre des lettres et les lettres déjà présentes (si on allonge un mot par exemple)
@@ -97,7 +122,7 @@ public class Modele extends Observable{
 		}
 		else {
 			this.plateauFictif = this.plateau.clone();
-		} */
+		} Clone ne marche pas*/
 		this.changementJoueur();
 	}
 	
@@ -111,7 +136,7 @@ public class Modele extends Observable{
 			this.numChevalet++;
 		}
 		this.setChanged();
-		this.notifyObservers(this.plateau);
+		this.notifyObservers(this.plateauFictif);
 		this.setChanged();
 		this.notifyObservers(this.numChevalet);
 		this.setChanged();
