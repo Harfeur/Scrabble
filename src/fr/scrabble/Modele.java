@@ -13,17 +13,19 @@ public class Modele extends Observable{
 	Chevalet[] chevalets;
 	int numChevalet;
 	ArrayList<MotPlace> motValide;
-	MotPlace motEnCours;
+	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
-	int ligA, colA;
+	Dictionnaire dico;
+	boolean motbasOK, motdroiteOk;
 	
 	public Modele() {
+		
 	}
 	
 	/*Met le jeu a zero en fonction de nb de joueur*/
 	public void nouvellePartie(int nbJoueur) {
 		this.sac = new Sac("FR");
-		
+		this.dico = new Dictionnaire("FR");
 		this.plateau= new Plateau();
 		this.plateauFictif= new Plateau();
 		this.placementEnCours = new ArrayList<Placement>();
@@ -44,7 +46,6 @@ public class Modele extends Observable{
 		this.setChanged();
 		this.notifyObservers(this.plateau);
 		
-		System.out.println(this.chevalets[numChevalet]);
 	}
 
 	/* mis a jour de la lettre selectionner*/
@@ -64,6 +65,7 @@ public class Modele extends Observable{
 			// que si c'est une lettre qui est en train d'etre placee
 			Placement caseCliquee = new Placement(null, c, lig, col);
 			if (this.placementEnCours.contains(caseCliquee)) {
+				this.chevalets[this.numChevalet].remettreLettre(c.lettre);
 				c.lettre = null;
 				this.placementEnCours.remove(caseCliquee);
 			}
@@ -83,29 +85,72 @@ public class Modele extends Observable{
 	public void verificationMot() {
 		// On vérifie que toutes les lettres de this.placementEnCours sont soient verticales soient horizontales
 		// dans le cas où on a une size() >= 2
+		Placement premierLettre = this.placementEnCours.get(0);
+		int l=1;
+		//Vérif bas
+		while(this.plateauFictif.getCase(premierLettre.getLine()-l,premierLettre.getColumn()).lettre != null) {
+			l++;
+		}
+		Case premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
+		//mot sens bas
+		motBas = new MotPlace( premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
+		while(this.plateauFictif.getCase(premierLettre.getLine()-l+1,premierLettre.getColumn()).lettre != null) {
+			premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
+			motBas.ajoutLettre(premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
+			l--;
+		}
 		
-		// Puis, on crée un this.motEnCours selon l'ordre des lettres et les lettres déjà présentes (si on allonge un mot par exemple)
+		if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
+			motbasOK=true;
+		}
+
+		int c=1;
+		//Vérif droite
+		while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()-c).lettre != null) {
+			c++;
+		}
+		Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
+		//mot sens droite
+		motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
+		while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()-c+1).lettre != null) {
+			premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
+			motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
+			c--;
+		}
+		
+		if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
+			motdroiteOk=true;
+		}
 		
 		
-		/*
-		if (this.motEnCours.valideMot()) {
+		if (this.motbasOK && this.motdroiteOk) {
 			this.plateau = this.plateauFictif.clone();
 			this.chevalets[this.numChevalet].remplir(sac);
 			this.changementJoueur();
 		}
 		else {
 			this.plateauFictif = this.plateau.clone();
-		} */
+		} 
+		this.changementJoueur();
 	}
 	
 	/*met a jour les changements de joueur*/
 	public void changementJoueur() {
+		this.chevalets[this.numChevalet].remplir(sac);
 		if (this.numChevalet+1 == this.chevalets.length) {
 			this.numChevalet=0;
 		}
 		else {
 			this.numChevalet++;
 		}
+		this.motbasOK=false;
+		this.motdroiteOk=false;
+		this.setChanged();
+		this.notifyObservers(this.plateauFictif);
+		this.setChanged();
+		this.notifyObservers(this.numChevalet);
+		this.setChanged();
+		this.notifyObservers(this.chevalets[this.numChevalet]);
 		// On initialise à zéro le placement
 		this.placementEnCours = new ArrayList<Placement>();
 	}

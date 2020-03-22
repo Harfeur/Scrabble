@@ -2,6 +2,7 @@ package fr.scrabble.structures;
 
 import java.util.ArrayList;
 
+@SuppressWarnings("serial")
 public class Chevalet extends ArrayList<Lettre>{
 	
 	public int lettreSelectionee;
@@ -15,6 +16,10 @@ public class Chevalet extends ArrayList<Lettre>{
 		while(!sac.estVide() && this.size()<7) {
 			this.add(sac.obtenirLettre());
 		}
+	}
+	
+	public void remettreLettre(Lettre l) {
+		this.add(l);
 	}
 	
 	/**

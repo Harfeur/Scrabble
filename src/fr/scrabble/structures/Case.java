@@ -39,7 +39,8 @@ public class Case {
 	@Override
 	protected Case clone() {
 		Case c = new Case(this.multiplicateur);
-		c.lettre = this.lettre.clone();
+		if (this.lettre != null)
+			c.lettre = this.lettre.clone();
 		return c;
 	}
 	

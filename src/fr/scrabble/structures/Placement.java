@@ -45,4 +45,15 @@ public class Placement {
 		return true;
 	}
 	
+	public Lettre getLetter() {
+		return this.l;
+	}
+	
+	public int getLine() {
+		return this.lig;
+	}
+	
+	public int getColumn() {
+		return this.col;
+	}
 }
