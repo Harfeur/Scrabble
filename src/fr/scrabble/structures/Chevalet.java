@@ -18,6 +18,10 @@ public class Chevalet extends ArrayList<Lettre>{
 		}
 	}
 	
+	public void remettreLettre(Lettre l) {
+		this.add(l);
+	}
+	
 	/**
 	 * Cette methode modifie l'attribut lettreSelectionee
 	 * @param num Lettre qui doit etre selectionee

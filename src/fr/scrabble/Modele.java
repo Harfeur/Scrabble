@@ -16,6 +16,7 @@ public class Modele extends Observable{
 	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
 	Dictionnaire dico;
+	boolean motbasOK, motdroiteOk;
 	
 	public Modele() {
 		
@@ -64,6 +65,7 @@ public class Modele extends Observable{
 			// que si c'est une lettre qui est en train d'etre placee
 			Placement caseCliquee = new Placement(null, c, lig, col);
 			if (this.placementEnCours.contains(caseCliquee)) {
+				this.chevalets[this.numChevalet].remettreLettre(c.lettre);
 				c.lettre = null;
 				this.placementEnCours.remove(caseCliquee);
 			}
@@ -98,11 +100,8 @@ public class Modele extends Observable{
 			l--;
 		}
 		
-		if(motBas.valideMot(this.dico)) {
-			System.out.println("Sens Bas ok");
-		}
-		else {
-			System.out.println("Sens Bas non ok");
+		if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
+			motbasOK=true;
 		}
 
 		int c=1;
@@ -119,26 +118,19 @@ public class Modele extends Observable{
 			c--;
 		}
 		
-		if(motDroite.valideMot(this.dico)) {
-			System.out.println("Sens Droite ok");
-		}
-		else {
-			System.out.println("Sens Droite non ok");
+		if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
+			motdroiteOk=true;
 		}
 		
 		
-		// Puis, on crée un this.motEnCours selon l'ordre des lettres et les lettres déjà présentes (si on allonge un mot par exemple)
-		
-		
-		/*
-		if (this.motEnCours.valideMot()) {
+		if (this.motbasOK && this.motdroiteOk) {
 			this.plateau = this.plateauFictif.clone();
 			this.chevalets[this.numChevalet].remplir(sac);
 			this.changementJoueur();
 		}
 		else {
 			this.plateauFictif = this.plateau.clone();
-		} Clone ne marche pas*/
+		} 
 		this.changementJoueur();
 	}
 	
@@ -151,6 +143,8 @@ public class Modele extends Observable{
 		else {
 			this.numChevalet++;
 		}
+		this.motbasOK=false;
+		this.motdroiteOk=false;
 		this.setChanged();
 		this.notifyObservers(this.plateauFictif);
 		this.setChanged();
