@@ -17,6 +17,7 @@ public class VueChevalet extends Canvas implements Observer {
 
 	Chevalet chevalet;
 	public static int TAILLE=25;
+	int numchevalet=1;
 	
 	public VueChevalet(ControleurChevalet cc) {
 		super();
@@ -31,6 +32,12 @@ public class VueChevalet extends Canvas implements Observer {
 		g.fillRect((int) (0*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*7*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		g.setColor(new Color(87,52,26));
 		g.drawRect((int) (0*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*7*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+		//Numero joueur
+		Font font_joueur = new Font("Arial",Font.PLAIN,(int)(15*Scrabble.SCALE)) ;
+		FontMetrics metrics_joueur = getFontMetrics(font_joueur);
+		g.setFont(font_joueur);
+		g.setColor(Color.BLACK);
+		g.drawString("Joueur "+numchevalet,metrics_joueur.getDescent(),metrics_joueur.getAscent());
 		if(this.chevalet.size()>0) {
 			for(int i=0; i<this.chevalet.size();i=i+1) {
 				//Fond
@@ -89,6 +96,10 @@ public class VueChevalet extends Canvas implements Observer {
 		// Cette fonction change le chevalet selon le modèle
 		if (arg.getClass() == Chevalet.class) {
 			this.chevalet = (Chevalet) arg;
+			this.repaint();
+		}
+		if (arg.getClass() == int.class) {
+			this.numchevalet = (int) arg;
 			this.repaint();
 		}
 	}
