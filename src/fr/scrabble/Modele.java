@@ -120,7 +120,6 @@ public class Modele extends Observable{
 				motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
 				c--;
 			}
-			System.out.println(this.motDroite.toString());
 			if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 				motdroiteOk++;
 			}
@@ -134,8 +133,7 @@ public class Modele extends Observable{
 		else {
 			Placement deuxiemLettre = this.placementEnCours.get(1);
 			// Si les lettres sont dans la meme ligne
-			if(premierLettre.getLine()==deuxiemLettre.getLine()) {
-				System.out.println("meme ligne");
+			if(premierLettre.getColumn()==deuxiemLettre.getColumn()) {
 				int l=1;
 				//Vérif bas
 				while(this.plateauFictif.getCase(premierLettre.getLine()-l,premierLettre.getColumn()).lettre != null) {
@@ -167,7 +165,6 @@ public class Modele extends Observable{
 						motDroite.ajoutLettre(premD.lettre, elem.getLine(), elem.getColumn()-c+1);
 						c--;
 					}
-					System.out.println(this.motDroite.toString());
 					if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 						motdroiteOk++;
 					}
@@ -177,9 +174,8 @@ public class Modele extends Observable{
 					Test2=true;
 				}
 			}
-			//lettre dans la meme colonne
-			if(premierLettre.getColumn()==deuxiemLettre.getColumn()) {
-				System.out.println("meme colonne");
+			//lettre dans la meme ligne
+			if(premierLettre.getLine()==deuxiemLettre.getLine()) {
 				for(Placement elem : this.placementEnCours) {
 					int l=1;
 					//Vérif bas
@@ -194,7 +190,6 @@ public class Modele extends Observable{
 						motBas.ajoutLettre(premB.lettre, elem.getLine()-l+1, elem.getColumn());
 						l--;
 					}
-					
 					if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 						motbasOk++;
 					}
@@ -212,7 +207,6 @@ public class Modele extends Observable{
 					motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
 					c--;
 				}
-				System.out.println(this.motDroite.toString());
 				if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 					motdroiteOk++;
 				}
@@ -223,23 +217,20 @@ public class Modele extends Observable{
 				}
 			}
 		}
-		
-		System.out.println(this.motbasOk);
-		System.out.println(this.motdroiteOk);
 		if (this.Test1 && this.Test2) {
 			System.out.println("Plateau Valide");
 			this.chevalets[this.numChevalet].remplir(sac);
 			this.changementJoueur();
 		}
 		else {
-			System.out.println("Invalide");
+			System.out.println("Plateau Non Valide");
 			for(Placement elem: this.placementEnCours) {
 				this.chevalets[this.numChevalet].remettreLettre(elem.getLetter());
 				elem.getCase().lettre=null;
 			}
 			this.setChanged();
 			this.notifyObservers(this.chevalets[this.numChevalet]);
-			this.plateauFictif=this.plateau;
+			this.plateauFictif=this.plateau.clone();
 			this.setChanged();
 			this.notifyObservers(this.plateauFictif);
 		} 
