@@ -249,6 +249,8 @@ public class Modele extends Observable{
 		this.motdroiteOk=0;
 		this.plateau=this.plateauFictif.clone();
 		this.setChanged();
+		this.notifyObservers(this.sac);
+		this.setChanged();
 		this.notifyObservers(this.plateau);
 		this.setChanged();
 		this.notifyObservers(this.numChevalet);
