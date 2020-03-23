@@ -64,4 +64,8 @@ public class Sac extends Hashtable<Lettre, Integer> {
 		return this.nombreDeLettres==0;
 	}
 
+	public int nbLettre() {
+		return this.nombreDeLettres;
+	}
+
 }
