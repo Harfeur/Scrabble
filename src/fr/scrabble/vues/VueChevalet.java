@@ -39,11 +39,13 @@ public class VueChevalet extends Canvas implements Observer {
 				g.setColor(new Color(200,77,77));
 				g.drawRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 				//Lettre
-				Font font_lettre = new Font("Arial",Font.PLAIN,(int)(this.TAILLE*Scrabble.SCALE)) ;
-				FontMetrics metrics_lettre = getFontMetrics(font_lettre);
-				g.setFont(font_lettre);
-				g.setColor(Color.BLACK);
-				g.drawString(this.chevalet.get(i).lettre,(int) (i*TAILLE*Scrabble.SCALE+metrics_lettre.getDescent()),(int) (TAILLE*Scrabble.SCALE+metrics_lettre.getAscent()));
+				if(this.chevalet.get(i).valeur!=0) {
+					Font font_lettre = new Font("Arial",Font.PLAIN,(int)(this.TAILLE*Scrabble.SCALE)) ;
+					FontMetrics metrics_lettre = getFontMetrics(font_lettre);
+					g.setFont(font_lettre);
+					g.setColor(Color.BLACK);
+					g.drawString(this.chevalet.get(i).lettre,(int) (i*TAILLE*Scrabble.SCALE+metrics_lettre.getDescent()),(int) (TAILLE*Scrabble.SCALE+metrics_lettre.getAscent()));
+				}
 				//Valeur
 				Font font_valeur = new Font("Arial",Font.PLAIN,(int)(5*Scrabble.SCALE)) ;
 				FontMetrics metrics_valeur = getFontMetrics(font_valeur);
