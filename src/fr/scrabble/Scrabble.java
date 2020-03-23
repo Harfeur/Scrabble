@@ -9,6 +9,7 @@ import java.awt.event.WindowEvent;
 import fr.scrabble.controleurs.ControleurBouton;
 import fr.scrabble.controleurs.ControleurChevalet;
 import fr.scrabble.controleurs.ControleurPlateau;
+import fr.scrabble.controleurs.ControleurPlay;
 import fr.scrabble.vues.*;
 
 
@@ -24,10 +25,11 @@ public class Scrabble extends Frame{
 		ControleurPlateau cp = new ControleurPlateau(m);
 		ControleurChevalet cc = new ControleurChevalet(m);
 		ControleurBouton cb = new ControleurBouton(m);
+		ControleurPlay cplay = new ControleurPlay(m);
 		
 		VuePlateau vuePlateau = new VuePlateau(cp);
 		VueChevalet vueChevalet = new VueChevalet(cc);
-		VueBouton vueBouton = new VueBouton(cb);
+		VueBouton vueBouton = new VueBouton(cb, cplay);
 		VueLigne vueLigne = new VueLigne();
 		VueColonne vueColonne = new VueColonne();
 		
@@ -48,9 +50,6 @@ public class Scrabble extends Frame{
 				System.exit(0);
 			}
 		});
-		
-		m.nouvellePartie(4);
-		
 	
 		this.pack();
 		this.setVisible(true);
