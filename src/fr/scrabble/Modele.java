@@ -236,7 +236,7 @@ public class Modele extends Observable{
 		} 
 	}
 	
-	/*met a jour les changements de joueur*/
+	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
 		this.chevalets[this.numChevalet].remplir(sac);
 		if (this.numChevalet+1 == this.chevalets.length) {
@@ -247,8 +247,9 @@ public class Modele extends Observable{
 		}
 		this.motbasOk=0;
 		this.motdroiteOk=0;
+		this.plateau=this.plateauFictif.clone();
 		this.setChanged();
-		this.notifyObservers(this.plateauFictif);
+		this.notifyObservers(this.plateau);
 		this.setChanged();
 		this.notifyObservers(this.numChevalet);
 		this.setChanged();

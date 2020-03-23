@@ -53,11 +53,10 @@ public class Plateau {
 	public Plateau clone() {
 		Plateau p = new Plateau();
 		for (int i = 0; i < 15; i++) {
-			for (int j = 0; i < 15; i++) {
+			for (int j = 0; j < 15; j++) {
 				p.plateau[i][j] = this.plateau[i][j].clone();
 			}
 		}
 		return p;
 	}
-
 }
