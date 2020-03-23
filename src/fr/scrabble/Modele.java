@@ -16,7 +16,8 @@ public class Modele extends Observable{
 	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
 	Dictionnaire dico;
-	boolean motbasOK, motdroiteOk;
+	int motbasOk, motdroiteOk;
+	boolean Test1, Test2;
 	
 	public Modele() {
 		
@@ -83,58 +84,159 @@ public class Modele extends Observable{
 	}
 	
 	public void verificationMot() {
-		// On vérifie que toutes les lettres de this.placementEnCours sont soient verticales soient horizontales
-		// dans le cas où on a une size() >= 2
+		Test1=false;
+		Test2=false;
 		Placement premierLettre = this.placementEnCours.get(0);
-		int l=1;
-		//Vérif bas
-		while(this.plateauFictif.getCase(premierLettre.getLine()-l,premierLettre.getColumn()).lettre != null) {
-			l++;
-		}
-		Case premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
-		//mot sens bas
-		motBas = new MotPlace( premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
-		while(this.plateauFictif.getCase(premierLettre.getLine()-l+1,premierLettre.getColumn()).lettre != null) {
-			premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
-			motBas.ajoutLettre(premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
-			l--;
-		}
-		
-		if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
-			motbasOK=true;
-		}
+		//Pour un seul ajout
+		if(this.placementEnCours.size()==1) {
+			int l=1;
+			//Vérif bas
+			while(this.plateauFictif.getCase(premierLettre.getLine()-l,premierLettre.getColumn()).lettre != null) {
+				l++;
+			}
+			Case premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
+			//mot sens bas
+			motBas = new MotPlace( premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
+			while(this.plateauFictif.getCase(premierLettre.getLine()-l+1,premierLettre.getColumn()).lettre != null) {
+				premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
+				motBas.ajoutLettre(premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
+				l--;
+			}
+			
+			if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
+				motbasOk++;
+			}
 
-		int c=1;
-		//Vérif droite
-		while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()-c).lettre != null) {
-			c++;
+			int c=1;
+			//Vérif droite
+			while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()-c).lettre != null) {
+				c++;
+			}
+			Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
+			//mot sens droite
+			motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
+			while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()-c+1).lettre != null) {
+				premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
+				motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
+				c--;
+			}
+			if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
+				motdroiteOk++;
+			}
+			
+			if(motbasOk==1 && motdroiteOk==1) {
+				Test1=true;
+				Test2=true;
+			}
 		}
-		Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
-		//mot sens droite
-		motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
-		while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()-c+1).lettre != null) {
-			premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
-			motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
-			c--;
+		// Plusieurs lettres ajoutées
+		else {
+			Placement deuxiemLettre = this.placementEnCours.get(1);
+			// Si les lettres sont dans la meme ligne
+			if(premierLettre.getColumn()==deuxiemLettre.getColumn()) {
+				int l=1;
+				//Vérif bas
+				while(this.plateauFictif.getCase(premierLettre.getLine()-l,premierLettre.getColumn()).lettre != null) {
+					l++;
+				}
+				Case premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
+				//mot sens bas
+				motBas = new MotPlace( premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
+				while(this.plateauFictif.getCase(premierLettre.getLine()-l+1,premierLettre.getColumn()).lettre != null) {
+					premB = this.plateauFictif.getCase(premierLettre.getLine()-l+1, premierLettre.getColumn());
+					motBas.ajoutLettre(premB.lettre, premierLettre.getLine()-l+1, premierLettre.getColumn());
+					l--;
+				}
+				
+				if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
+					motbasOk++;
+				}
+				for(Placement elem : this.placementEnCours) {
+					int c=1;
+					//Vérif droite
+					while(this.plateauFictif.getCase(elem.getLine(),elem.getColumn()-c).lettre != null) {
+						c++;
+					}
+					Case premD = this.plateauFictif.getCase(elem.getLine(), elem.getColumn()-c+1);
+					//mot sens droite
+					motDroite = new MotPlace( premD.lettre, elem.getLine(), elem.getColumn()-c+1);
+					while(this.plateauFictif.getCase(elem.getLine(),elem.getColumn()-c+1).lettre != null) {
+						premD = this.plateauFictif.getCase(elem.getLine(), elem.getColumn()-c+1);
+						motDroite.ajoutLettre(premD.lettre, elem.getLine(), elem.getColumn()-c+1);
+						c--;
+					}
+					if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
+						motdroiteOk++;
+					}
+				}
+				if(motbasOk==1 && motdroiteOk==this.placementEnCours.size()) {
+					Test1=true;
+					Test2=true;
+				}
+			}
+			//lettre dans la meme ligne
+			if(premierLettre.getLine()==deuxiemLettre.getLine()) {
+				for(Placement elem : this.placementEnCours) {
+					int l=1;
+					//Vérif bas
+					while(this.plateauFictif.getCase(elem.getLine()-l,elem.getColumn()).lettre != null) {
+						l++;
+					}
+					Case premB = this.plateauFictif.getCase(elem.getLine()-l+1, elem.getColumn());
+					//mot sens bas
+					motBas = new MotPlace( premB.lettre, elem.getLine()-l+1, elem.getColumn());
+					while(this.plateauFictif.getCase(elem.getLine()-l+1,elem.getColumn()).lettre != null) {
+						premB = this.plateauFictif.getCase(elem.getLine()-l+1, elem.getColumn());
+						motBas.ajoutLettre(premB.lettre, elem.getLine()-l+1, elem.getColumn());
+						l--;
+					}
+					if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
+						motbasOk++;
+					}
+				}
+				int c=1;
+				//Vérif droite
+				while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()-c).lettre != null) {
+					c++;
+				}
+				Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
+				//mot sens droite
+				motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
+				while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()-c+1).lettre != null) {
+					premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()-c+1);
+					motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()-c+1);
+					c--;
+				}
+				if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
+					motdroiteOk++;
+				}
+				
+				if(motbasOk==this.placementEnCours.size() && motdroiteOk==1) {
+					Test1=true;
+					Test2=true;
+				}
+			}
 		}
-		
-		if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
-			motdroiteOk=true;
-		}
-		
-		
-		if (this.motbasOK && this.motdroiteOk) {
-			this.plateau = this.plateauFictif.clone();
+		if (this.Test1 && this.Test2) {
+			System.out.println("Plateau Valide");
 			this.chevalets[this.numChevalet].remplir(sac);
 			this.changementJoueur();
 		}
 		else {
-			this.plateauFictif = this.plateau.clone();
+			System.out.println("Plateau Non Valide");
+			for(Placement elem: this.placementEnCours) {
+				this.chevalets[this.numChevalet].remettreLettre(elem.getLetter());
+				elem.getCase().lettre=null;
+			}
+			this.setChanged();
+			this.notifyObservers(this.chevalets[this.numChevalet]);
+			this.plateauFictif=this.plateau.clone();
+			this.setChanged();
+			this.notifyObservers(this.plateauFictif);
 		} 
-		this.changementJoueur();
 	}
 	
-	/*met a jour les changements de joueur*/
+	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
 		this.chevalets[this.numChevalet].remplir(sac);
 		if (this.numChevalet+1 == this.chevalets.length) {
@@ -143,10 +245,11 @@ public class Modele extends Observable{
 		else {
 			this.numChevalet++;
 		}
-		this.motbasOK=false;
-		this.motdroiteOk=false;
+		this.motbasOk=0;
+		this.motdroiteOk=0;
+		this.plateau=this.plateauFictif.clone();
 		this.setChanged();
-		this.notifyObservers(this.plateauFictif);
+		this.notifyObservers(this.plateau);
 		this.setChanged();
 		this.notifyObservers(this.numChevalet);
 		this.setChanged();
