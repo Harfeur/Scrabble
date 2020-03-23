@@ -1,9 +1,9 @@
 package fr.scrabble.structures;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.Hashtable;
 import java.util.Random;
 import java.util.Map.Entry;
@@ -16,9 +16,9 @@ public class Sac extends Hashtable<Lettre, Integer> {
 	public Sac(String langue) {
 		super();
 		this.nombreDeLettres = 0;
-		File fichier=new File("assets/sacs/"+langue+".csv");
+		URL fichier = Sac.class.getResource("/resources/sacs/"+langue+".csv");
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(fichier));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(fichier.openStream()));
 			String strCurrentLine;
 		    while ((strCurrentLine = reader.readLine()) != null) {
 		    	String[] tab=strCurrentLine.split(",");
