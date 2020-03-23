@@ -18,7 +18,7 @@ public class VueChevalet extends Canvas implements Observer {
 	Chevalet chevalet;
 	Sac sac;
 	public static int TAILLE=25;
-	int numchevalet;
+	Integer numchevalet;
 	
 	
 	public VueChevalet(ControleurChevalet cc) {
@@ -39,13 +39,13 @@ public class VueChevalet extends Canvas implements Observer {
 		FontMetrics metrics_joueur = getFontMetrics(font_joueur);
 		g.setFont(font_joueur);
 		g.setColor(Color.BLACK);
-		g.drawString("Joueur "+numchevalet,metrics_joueur.getDescent(),metrics_joueur.getAscent());
+		g.drawString("Joueur "+numchevalet+1,metrics_joueur.getDescent(),metrics_joueur.getAscent());
 		//Lettre restante
 		Font font_lr = new Font("Arial",Font.PLAIN,(int)(15*Scrabble.SCALE)) ;
 		FontMetrics metrics_lr = getFontMetrics(font_lr);
 		g.setFont(font_lr);
 		g.setColor(Color.BLACK);
-		g.drawString("Lettre restante (sac) : "+this.sac.nombreDeLettres,(int) (10*Scrabble.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
+		g.drawString("Lettre restante (sac) : "+this.sac.nombreDeLettres,(int) (3*TAILLE*Scrabble.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
 		if(this.chevalet.size()>0) {
 			for(int i=0; i<this.chevalet.size();i=i+1) {
 				//Fond
@@ -106,8 +106,8 @@ public class VueChevalet extends Canvas implements Observer {
 			this.chevalet = (Chevalet) arg;
 			this.repaint();
 		}
-		if (arg.getClass() == int.class) {
-			this.numchevalet = (int) arg;
+		if (arg.getClass() == Integer.class) {
+			this.numchevalet = (Integer) arg;
 			this.repaint();
 		}
 		if (arg.getClass() == Sac.class) {

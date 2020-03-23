@@ -11,7 +11,7 @@ public class Modele extends Observable{
 	File fichier;
 	Plateau plateau, plateauFictif;
 	Chevalet[] chevalets;
-	int numChevalet;
+	Integer numChevalet;
 	ArrayList<MotPlace> motValide;
 	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
