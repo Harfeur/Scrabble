@@ -36,11 +36,13 @@ public class VueChevalet extends Canvas implements Observer {
 		g.setColor(new Color(87,52,26));
 		g.drawRect((int) (0*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*7*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		//Numero joueur
-		Font font_joueur = new Font("Arial",Font.PLAIN,(int)(15*Scrabble.SCALE)) ;
-		FontMetrics metrics_joueur = getFontMetrics(font_joueur);
-		g.setFont(font_joueur);
-		g.setColor(Color.BLACK);
-		g.drawString("Joueur "+numchevalet,metrics_joueur.getDescent(),metrics_joueur.getAscent());
+		if(numchevalet!=null) {
+			Font font_joueur = new Font("Arial",Font.PLAIN,(int)(15*Scrabble.SCALE)) ;
+			FontMetrics metrics_joueur = getFontMetrics(font_joueur);
+			g.setFont(font_joueur);
+			g.setColor(Color.BLACK);
+			g.drawString("Joueur "+(numchevalet+1),metrics_joueur.getDescent(),metrics_joueur.getAscent());
+		}
 		//Lettre restante
 		Font font_lr = new Font("Arial",Font.PLAIN,(int)(15*Scrabble.SCALE)) ;
 		FontMetrics metrics_lr = getFontMetrics(font_lr);
