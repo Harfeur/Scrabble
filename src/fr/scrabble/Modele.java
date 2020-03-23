@@ -38,11 +38,13 @@ public class Modele extends Observable{
 			this.chevalets[i].remplir(this.sac);
 		}
 		this.numChevalet=0;
-
 		// Après avoir cree les elements, on notifie les deux vues
 		
 		this.setChanged();
 		this.notifyObservers(this.chevalets[numChevalet]);
+		
+		this.setChanged();
+		this.notifyObservers(this.numChevalet);
 		
 		this.setChanged();
 		this.notifyObservers(this.plateau);
