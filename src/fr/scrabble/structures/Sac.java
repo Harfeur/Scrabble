@@ -11,7 +11,7 @@ import java.util.Map.Entry;
 @SuppressWarnings("serial")
 public class Sac extends Hashtable<Lettre, Integer> {
 	
-	int nombreDeLettres;
+	public int nombreDeLettres;
 
 	public Sac(String langue) {
 		super();
