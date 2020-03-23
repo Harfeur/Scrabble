@@ -47,6 +47,9 @@ public class Modele extends Observable{
 		this.setChanged();
 		this.notifyObservers(this.plateau);
 		
+		this.setChanged();
+		this.notifyObservers(this.sac);
+		
 	}
 
 	/* mis a jour de la lettre selectionner*/
