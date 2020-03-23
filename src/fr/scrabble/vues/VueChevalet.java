@@ -32,9 +32,9 @@ public class VueChevalet extends Canvas implements Observer {
 	public void paint(Graphics g) {
 		//Fond
 		g.setColor(new Color(117,82,56));
-		g.fillRect((int) (0*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*7*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+		g.fillRect(0, (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*7*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		g.setColor(new Color(87,52,26));
-		g.drawRect((int) (0*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*7*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+		g.drawRect(0, (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*7*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		//Numero joueur
 		if(numchevalet!=null) {
 			Font font_joueur = new Font("Arial",Font.PLAIN,(int)(15*Scrabble.SCALE)) ;
@@ -49,6 +49,7 @@ public class VueChevalet extends Canvas implements Observer {
 		g.setFont(font_lr);
 		g.setColor(Color.BLACK);
 		g.drawString("Lettre restante (sac) : "+this.sac.nombreDeLettres,(int) (4*TAILLE*Scrabble.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
+		//Affichage lettre sur chevalet
 		if(this.chevalet.size()>0) {
 			for(int i=0; i<this.chevalet.size();i=i+1) {
 				//Fond
@@ -78,7 +79,6 @@ public class VueChevalet extends Canvas implements Observer {
 	public void update(Graphics g) {
 		super.update(g);
 		//TODO C'est ici que l'on écrit les lettres et qu'on les dessines. En gros tout le code de paint() est ici.
-		// + le fond change de couleur pour la lettre selectionee : this.chevalet.lettreSelectionee
 		for(int i=0 ; i<this.chevalet.size() ;i=i+1) {
 			if(this.chevalet.lettreSelectionee==i) {
 				//Fond
@@ -107,15 +107,15 @@ public class VueChevalet extends Canvas implements Observer {
 		// Cette fonction change le chevalet selon le modèle
 		if (arg.getClass() == Chevalet.class) {
 			this.chevalet = (Chevalet) arg;
-			this.repaint();
+			this.repaint(0, (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*7*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		}
 		if (arg.getClass() == Integer.class) {
 			this.numchevalet = (Integer) arg;
-			this.repaint();
+			this.repaint(0,0,(int) (TAILLE*3*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		}
 		if (arg.getClass() == Sac.class) {
 			this.sac = (Sac) arg;
-			this.repaint();
+			this.repaint((int) (TAILLE*9*Scrabble.SCALE), 0, (int) (TAILLE*2*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		}
 	}
 	

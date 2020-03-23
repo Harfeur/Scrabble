@@ -84,7 +84,12 @@ public class VuePlateau extends Canvas implements Observer {
 	public void update(Observable o, Object arg) {
 		if(arg.getClass() == Plateau.class) {
 			this.plateau = (Plateau) arg;
-			this.repaint();
+			for (int i = 0; i < 15; i++) {
+				for (int j = 0; j < 15; j++) {
+					Case c = this.plateau.getCase(i,j);	
+					this.repaint((int) (j*VuePlateau.TAILLE*Scrabble.SCALE), (int) (i*VuePlateau.TAILLE*Scrabble.SCALE),(int) (VuePlateau.TAILLE*Scrabble.SCALE),(int) (VuePlateau.TAILLE*Scrabble.SCALE));
+				}
+			}
 		}
 	}
 	
