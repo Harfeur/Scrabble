@@ -20,5 +20,4 @@ public class ControleurPlay implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		m.nouvellePartie(4,langue);
 	}
-
 }

@@ -13,10 +13,13 @@ public class VueBouton extends Panel {
 		super();
 		Button b = new Button("Valider");
 		Button d = new Button("Demarrer");
+		Button p = new Button("Passer");
 		b.addActionListener(cb);
 		d.addActionListener(cplay);
+		p.addActionListener(cb);
 		this.add(d);
 		this.add(b);
+		this.add(p);
 	}
 	
 }
