@@ -16,7 +16,8 @@ public class Modele extends Observable{
 	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
 	Dictionnaire dico;
-	int motbasOk, motdroiteOk;
+	String lettreChoisi;
+	int motbasOk, motdroiteOk, passe=0;
 	boolean Test1, Test2, premierTour;
 
 	public Modele() {
@@ -81,7 +82,7 @@ public class Modele extends Observable{
 			// Sinon, on ajoute la lettre sur le plateau, et dans notre liste des placments
 			// du tour en cours
 			if(lettre.valeur == 0) {
-				lettre.lettre="A";
+				lettre.lettre=lettreChoisi;
 			}
 			this.placementEnCours.add(new Placement(lettre, c, lig, col));
 			c.ajouterLettre(lettre);
@@ -337,7 +338,6 @@ public class Modele extends Observable{
 			}
 			if (this.Test1 && this.Test2 && lettrecotecote == this.placementEnCours.size() && premierTour==true) {
 				System.out.println("Plateau Valide");
-				this.chevalets[this.numChevalet].remplir(sac);
 				this.changementJoueur();
 			}
 			else {
@@ -376,7 +376,16 @@ public class Modele extends Observable{
 	
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
-		this.chevalets[this.numChevalet].remplir(sac);
+		if(this.chevalets[this.numChevalet].size()==7) {
+			this.passe++;
+		}
+		else {
+			this.chevalets[this.numChevalet].remplir(sac);
+			this.passe=0;
+		}
+		if(this.passe==this.chevalets.length) {
+			System.out.println("JEU TERMINE");
+		}
 		if (this.numChevalet+1 == this.chevalets.length) {
 			this.numChevalet=0;
 		}
@@ -400,6 +409,6 @@ public class Modele extends Observable{
 
 	public void lettreJoker(String lettre) {
 		// TODO Auto-generated method stub
-		System.out.println(lettre);
+		lettreChoisi=lettre;
 	}
 }
