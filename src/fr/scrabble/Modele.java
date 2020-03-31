@@ -20,13 +20,13 @@ public class Modele extends Observable{
 	boolean Test1, Test2, premierTour;
 
 	public Modele() {
-
+		super();
 	}
 
 	/*Met le jeu a zero en fonction de nb de joueur*/
-	public void nouvellePartie(int nbJoueur) {
-		this.sac = new Sac("FR");
-		this.dico = new Dictionnaire("FR");
+	public void nouvellePartie(int nbJoueur, String langue) {
+		this.sac = new Sac(langue);
+		this.dico = new Dictionnaire(langue);
 		this.plateau= new Plateau();
 		this.plateauFictif= new Plateau();
 		this.placementEnCours = new ArrayList<Placement>();
@@ -362,5 +362,10 @@ public class Modele extends Observable{
 		this.notifyObservers(this.chevalets[this.numChevalet]);
 		// On initialise à zéro le placement
 		this.placementEnCours = new ArrayList<Placement>();
+	}
+
+	public void lettreJoker(String lettre) {
+		// TODO Auto-generated method stub
+		System.out.println(lettre);
 	}
 }
