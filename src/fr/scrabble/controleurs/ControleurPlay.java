@@ -16,7 +16,6 @@ public class ControleurPlay implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		m.nouvellePartie(4);
+		m.nouvellePartie(4, "FR");
 	}
-
 }

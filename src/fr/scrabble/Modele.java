@@ -24,9 +24,9 @@ public class Modele extends Observable{
 	}
 
 	/*Met le jeu a zero en fonction de nb de joueur*/
-	public void nouvellePartie(int nbJoueur) {
-		this.sac = new Sac("FR");
-		this.dico = new Dictionnaire("FR");
+	public void nouvellePartie(int nbJoueur, String langue) {
+		this.sac = new Sac(langue);
+		this.dico = new Dictionnaire(langue);
 		this.plateau= new Plateau();
 		this.plateauFictif= new Plateau();
 		this.placementEnCours = new ArrayList<Placement>();
@@ -81,7 +81,6 @@ public class Modele extends Observable{
 			// Sinon, on ajoute la lettre sur le plateau, et dans notre liste des placments
 			// du tour en cours
 			if(lettre.valeur == 0) {
-				System.out.println("Veuillez choisir");
 				lettre.lettre="A";
 			}
 			this.placementEnCours.add(new Placement(lettre, c, lig, col));
@@ -139,6 +138,9 @@ public class Modele extends Observable{
 				if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 					motbasOk++;
 				}
+				else {
+					System.out.print(motBas.toString());
+				}
 
 				//mot droite
 				int c=0;
@@ -166,6 +168,9 @@ public class Modele extends Observable{
 				}
 				if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 					motdroiteOk++;
+				}
+				else {
+					System.out.print(motDroite.toString());
 				}
 
 				if(motbasOk==1 && motdroiteOk==1) {
@@ -211,6 +216,9 @@ public class Modele extends Observable{
 					if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 						motbasOk++;
 					}
+					else {
+						System.out.print(motBas.toString());
+					}
 
 					for(Placement elem : this.placementEnCours) {
 						//mot droite
@@ -239,6 +247,9 @@ public class Modele extends Observable{
 						}
 						if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 							motdroiteOk++;
+						}
+						else {
+							System.out.print(motDroite.toString());
 						}
 					}
 					if(motbasOk==1 && motdroiteOk==this.placementEnCours.size()) {
@@ -277,6 +288,9 @@ public class Modele extends Observable{
 						if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 							motbasOk++;
 						}
+						else {
+							System.out.print(motBas.toString());
+						}
 					}
 
 					//mot droite
@@ -311,6 +325,9 @@ public class Modele extends Observable{
 					if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 						motdroiteOk++;
 					}
+					else {
+						System.out.print(motDroite.toString());
+					}
 
 					if(motbasOk==this.placementEnCours.size() && motdroiteOk==1) {
 						Test1=true;
@@ -325,10 +342,25 @@ public class Modele extends Observable{
 			}
 			else {
 				System.out.println("Plateau Non Valide");
+				if(this.Test1==false) {
+					System.out.println("Mot Bas Non Valide");
+				}
+				if(this.Test2==false) {
+					System.out.println("Mot Droite Non Valide");
+				}
+				if(lettrecotecote != this.placementEnCours.size()) {
+					System.out.println("lettre pas cote cote");
+					
+				}
+				if(premierTour==false) {
+					System.out.println("commence au milieu");
+					
+				}
 				for(Placement elem: this.placementEnCours) {
 					this.chevalets[this.numChevalet].remettreLettre(elem.getLetter());
 					elem.getCase().lettre=null;
 				}
+				this.placementEnCours=new ArrayList<Placement>();
 				this.setChanged();
 				this.notifyObservers(this.chevalets[this.numChevalet]);
 				this.plateauFictif=this.plateau.clone();
@@ -340,6 +372,8 @@ public class Modele extends Observable{
 			System.out.println("Les lettres ne sont pas sur la même ligne ou colonne");
 		}
 	}
+	
+	
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
 		this.chevalets[this.numChevalet].remplir(sac);
