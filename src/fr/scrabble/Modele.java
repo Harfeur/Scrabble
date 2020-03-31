@@ -377,7 +377,7 @@ public class Modele extends Observable{
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
 		if(this.chevalets[this.numChevalet].size()==7) {
-			this.passe++;
+			this.passe=passe+1;
 		}
 		else {
 			this.chevalets[this.numChevalet].remplir(sac);
