@@ -10,7 +10,7 @@ public class MotPlace {
 
 	enum Sens {DROITE, BAS};
 	
-	ArrayList<Lettre> mot;
+	public ArrayList<Lettre> mot;
 	int lig, col;
 	Sens sens;
 

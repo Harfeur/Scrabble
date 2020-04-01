@@ -8,11 +8,11 @@ public class Score {
 		this.score=0;
 	}
 	
-	public void majScore(Lettre lettre) {
-		this.score=this.score+lettre.valeur;
+	public void majScore(int valeur) {
+		this.score=this.score+valeur;
 	}
 	
-	public int nbScore() {
+	public int getScore() {
 		return score;
 	}
 }
