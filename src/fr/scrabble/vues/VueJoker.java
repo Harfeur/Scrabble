@@ -3,6 +3,7 @@ package fr.scrabble.vues;
 import java.awt.List;
 import java.awt.Panel;
 import java.awt.event.ItemListener;
+import java.util.Collections;
 import java.util.Iterator;
 
 import fr.scrabble.structures.Lettre;
@@ -20,7 +21,9 @@ public class VueJoker extends Panel {
 		while(itr.hasNext()) 
         {
             Lettre key = itr.next();
-            li.add(key.lettre); 
+            if (!key.equals("JOKER")) {
+            	li.add(key.lettre); 
+            }          
         }
 		this.add(li);
 	}
