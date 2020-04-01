@@ -113,7 +113,6 @@ public class VueChevalet extends Canvas implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println(arg.hashCode());
 		// Cette fonction change le chevalet selon le modèle
 		if (arg.getClass() == Chevalet.class) {
 			this.chevalet = (Chevalet) arg;
@@ -124,7 +123,7 @@ public class VueChevalet extends Canvas implements Observer {
 			this.repaint(0,0,(int) (TAILLE*3*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		}
 		if(arg.getClass() == Score.class) {
-			this.score = (Integer) arg;
+			this.score = (Score) arg;
 			this.repaint(0,0,(int) (TAILLE*3*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		}
 		if (arg.getClass() == Sac.class) {
