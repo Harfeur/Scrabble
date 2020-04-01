@@ -17,8 +17,9 @@ public class VueChevalet extends Canvas implements Observer {
 
 	Chevalet chevalet;
 	Sac sac;
-	public static int TAILLE=25;
+	public static int TAILLE=35;
 	Integer numchevalet;
+	Score score;
 	
 	
 	public VueChevalet(ControleurChevalet cc) {
@@ -42,6 +43,13 @@ public class VueChevalet extends Canvas implements Observer {
 			g.setFont(font_joueur);
 			g.setColor(Color.BLACK);
 			g.drawString("Joueur "+(numchevalet+1),metrics_joueur.getDescent(),metrics_joueur.getAscent());
+		}
+		if(score!=null) {
+			Font font_score = new Font("Arial",Font.PLAIN,(int)(15*Scrabble.SCALE)) ;
+			FontMetrics metrics_score = getFontMetrics(font_score);
+			g.setFont(font_score);
+			g.setColor(Color.BLACK);
+			g.drawString("Score :"+score.getScore(),metrics_score.getDescent(),(int) (16*Scrabble.SCALE+metrics_score.getAscent()));
 		}
 		//Lettre restante
 		Font font_lr = new Font("Arial",Font.PLAIN,(int)(15*Scrabble.SCALE)) ;
@@ -104,6 +112,7 @@ public class VueChevalet extends Canvas implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println(arg.hashCode());
 		// Cette fonction change le chevalet selon le modèle
 		if (arg.getClass() == Chevalet.class) {
 			this.chevalet = (Chevalet) arg;
@@ -111,6 +120,10 @@ public class VueChevalet extends Canvas implements Observer {
 		}
 		if (arg.getClass() == Integer.class) {
 			this.numchevalet = (Integer) arg;
+			this.repaint(0,0,(int) (TAILLE*3*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
+		}
+		if(arg.getClass() == Score.class) {
+			this.score = (Integer) arg;
 			this.repaint(0,0,(int) (TAILLE*3*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 		}
 		if (arg.getClass() == Sac.class) {
