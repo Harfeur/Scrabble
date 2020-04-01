@@ -12,6 +12,7 @@ public class Modele extends Observable{
 	Plateau plateau, plateauFictif;
 	Chevalet[] chevalets;
 	Integer numChevalet;
+	Score[] score;
 	ArrayList<MotPlace> motValide;
 	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
@@ -35,16 +36,21 @@ public class Modele extends Observable{
 		this.premierTour=false;
 		
 		this.chevalets = new Chevalet[nbJoueur];
+		this.score = new Score[nbJoueur];
 
 		for (int i=0; i<nbJoueur; i++) {
 			this.chevalets[i]=new Chevalet();
 			this.chevalets[i].remplir(this.sac);
+			this.score[i]= new Score();
 		}
 		this.numChevalet=0;
 		// Après avoir cree les elements, on notifie les deux vues
 
 		this.setChanged();
 		this.notifyObservers(this.chevalets[numChevalet]);
+		
+		this.setChanged();
+		this.notifyObservers(this.score[numChevalet]);
 
 		this.setChanged();
 		this.notifyObservers(this.numChevalet);
