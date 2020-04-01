@@ -21,6 +21,7 @@ public class VueChevalet extends Canvas implements Observer {
 	Integer numchevalet;
 	Score score;
 	
+	//essaie de push
 	
 	public VueChevalet(ControleurChevalet cc) {
 		super();
