@@ -194,22 +194,22 @@ public class Modele extends Observable{
 				}
 				if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 					motdroiteOk++;
-					Multiplicateur m = premB.multiplicateur;
+					Multiplicateur md = premD.multiplicateur;
 					int score_motDroite=0;
-					switch(m.toString()) {
-						case "S": for(int i=0;i<motBas.mot.size();i=i+1) { 
-									this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);};break;
-						case "LD":for(int i=0;i<motBas.mot.size();i=i+1) {
-									this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
+					switch(md.toString()) {
+						case "S": for(int i=0;i<motDroite.mot.size();i=i+1) { 
+									this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);};break;
+						case "LD":for(int i=0;i<motDroite.mot.size();i=i+1) {
+									this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
 									this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur);};break;
-						case "LT": for(int i=0;i<motBas.mot.size();i=i+1) {
-									this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
+						case "LT": for(int i=0;i<motDroite.mot.size();i=i+1) {
+									this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
 									this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur*2);};break;
-						case "MD": for(int i=0;i<motBas.mot.size();i=i+1) { 
-									score_motDroite=score_motDroite+motBas.mot.get(i).valeur;}
+						case "MD": for(int i=0;i<motDroite.mot.size();i=i+1) { 
+									score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
 									this.score[this.numChevalet].majScore(score_motDroite*2);break;
-						case "MT": for(int i=0;i<motBas.mot.size();i=i+1) { 
-									score_motDroite=score_motDroite+motBas.mot.get(i).valeur;}
+						case "MT": for(int i=0;i<motDroite.mot.size();i=i+1) { 
+									score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
 									this.score[this.numChevalet].majScore(score_motDroite*3);break;
 					} 
 				}
@@ -260,7 +260,7 @@ public class Modele extends Observable{
 					if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 						motbasOk++;
 						Multiplicateur m = premB.multiplicateur;
-						int score_mot=0;
+						int score_motBas=0;
 						switch(m.toString()) {
 							case "S": for(int i=0;i<motBas.mot.size();i=i+1) { 
 										this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);};break;
@@ -271,11 +271,11 @@ public class Modele extends Observable{
 										this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
 										this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur*2);};break;
 							case "MD": for(int i=0;i<motBas.mot.size();i=i+1) { 
-										score_mot=score_mot+motBas.mot.get(i).valeur;}
-										this.score[this.numChevalet].majScore(score_mot*2);break;
+										score_motBas=score_motBas+motBas.mot.get(i).valeur;}
+										this.score[this.numChevalet].majScore(score_motBas*2);break;
 							case "MT": for(int i=0;i<motBas.mot.size();i=i+1) { 
-										score_mot=score_mot+motBas.mot.get(i).valeur;}
-										this.score[this.numChevalet].majScore(score_mot*3);break;
+										score_motBas=score_motBas+motBas.mot.get(i).valeur;}
+										this.score[this.numChevalet].majScore(score_motBas*3);break;
 						} 
 					}
 					else {
@@ -309,23 +309,23 @@ public class Modele extends Observable{
 						}
 						if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 							motdroiteOk++;
-							Multiplicateur m = premB.multiplicateur;
-							int score_mot=0;
+							Multiplicateur m = premD.multiplicateur;
+							int score_motDroite=0;
 							switch(m.toString()) {
-								case "S": for(int i=0;i<motBas.mot.size();i=i+1) { 
-											this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);};break;
-								case "LD":for(int i=0;i<motBas.mot.size();i=i+1) {
-											this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
+								case "S": for(int i=0;i<motDroite.mot.size();i=i+1) { 
+											this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);};break;
+								case "LD":for(int i=0;i<motDroite.mot.size();i=i+1) {
+											this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
 											this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur);};break;
-								case "LT": for(int i=0;i<motBas.mot.size();i=i+1) {
-											this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
+								case "LT": for(int i=0;i<motDroite.mot.size();i=i+1) {
+											this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
 											this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur*2);};break;
-								case "MD": for(int i=0;i<motBas.mot.size();i=i+1) { 
-											score_mot=score_mot+motBas.mot.get(i).valeur;}
-											this.score[this.numChevalet].majScore(score_mot*2);break;
-								case "MT": for(int i=0;i<motBas.mot.size();i=i+1) { 
-											score_mot=score_mot+motBas.mot.get(i).valeur;}
-											this.score[this.numChevalet].majScore(score_mot*3);break;
+								case "MD": for(int i=0;i<motDroite.mot.size();i=i+1) { 
+											score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
+											this.score[this.numChevalet].majScore(score_motDroite*2);break;
+								case "MT": for(int i=0;i<motDroite.mot.size();i=i+1) { 
+											score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
+											this.score[this.numChevalet].majScore(score_motDroite*3);break;
 							} 
 						}
 						else {
@@ -422,23 +422,24 @@ public class Modele extends Observable{
 					}
 					if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 						motdroiteOk++;
+
 						Multiplicateur m = premD.multiplicateur;
-						int score_mot=0;
+						int score_motDroite=0;
 						switch(m.toString()) {
-							case "S": for(int i=0;i<motBas.mot.size();i=i+1) { 
-										this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);};break;
-							case "LD":for(int i=0;i<motBas.mot.size();i=i+1) {
-										this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
+							case "S": for(int i=0;i<motDroite.mot.size();i=i+1) { 
+										this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);};break;
+							case "LD":for(int i=0;i<motDroite.mot.size();i=i+1) {
+										this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
 										this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur);};break;
-							case "LT": for(int i=0;i<motBas.mot.size();i=i+1) {
-										this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
+							case "LT": for(int i=0;i<motDroite.mot.size();i=i+1) {
+										this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
 										this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur*2);};break;
-							case "MD": for(int i=0;i<motBas.mot.size();i=i+1) { 
-										score_mot=score_mot+motBas.mot.get(i).valeur;}
-										this.score[this.numChevalet].majScore(score_mot*2);break;
-							case "MT": for(int i=0;i<motBas.mot.size();i=i+1) { 
-										score_mot=score_mot+motBas.mot.get(i).valeur;}
-										this.score[this.numChevalet].majScore(score_mot*3);break;
+							case "MD": for(int i=0;i<motDroite.mot.size();i=i+1) { 
+										score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
+										this.score[this.numChevalet].majScore(score_motDroite*2);break;
+							case "MT": for(int i=0;i<motDroite.mot.size();i=i+1) { 
+										score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
+										this.score[this.numChevalet].majScore(score_motDroite*3);break;
 						} 
 					}
 					else {
@@ -491,6 +492,7 @@ public class Modele extends Observable{
 	
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
+		System.out.println("Joueur : "+this.numChevalet+"---------- Score : "+this.score[this.numChevalet].getScore());
 		if(this.chevalets[this.numChevalet].size()==7) {
 			this.passe=passe+1;
 		}
