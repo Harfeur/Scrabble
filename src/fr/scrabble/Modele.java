@@ -1,9 +1,9 @@
 package fr.scrabble;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Observable;
 
-import fr.scrabble.controleurs.ControleurJoker;
 import fr.scrabble.structures.*;
 import fr.scrabble.structures.Case.Multiplicateur;
 import fr.scrabble.vues.VueJoker;
@@ -72,7 +72,7 @@ public class Modele extends Observable{
 			this.setChanged();
 			this.notifyObservers(this.chevalets[this.numChevalet]);
 			if (this.chevalets[this.numChevalet].get(num).valeur == 0) {
-				new VueJoker("FR", new ControleurJoker(this));
+				new VueJoker("FR", this);
 				this.setChanged();
 				this.notifyObservers("cacher");
 			}
@@ -571,6 +571,10 @@ public class Modele extends Observable{
 	
 	
 	private void calculerScore() {
+
+		Hashtable<String, Integer> motsVerticaux = new Hashtable<String, Integer>();
+		Hashtable<String, Integer> motsHorizontaux = new Hashtable<String, Integer>();
+		
 		for (Placement placement : this.placementEnCours) {
 			Lettre lettre = placement.getLetter();
 			
@@ -578,7 +582,7 @@ public class Modele extends Observable{
 			int lig = placement.getLine()-1;
 			int score = lettre.valeur;
 			String mot = lettre.lettre;			
-			int scoreMD=1,scoreMT=1;
+			int multiplicateur = 1;
 			
 			while (lig >= 0 && this.plateauFictif.getCase(lig, placement.getColumn()).lettre != null) {
 				
@@ -596,9 +600,9 @@ public class Modele extends Observable{
 							case "LT":
 								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;
 								break;
-							case "MD": scoreMD++;
+							case "MD": multiplicateur*=2;
 								break;
-							case "MT": scoreMT++;
+							case "MT": multiplicateur*=3;
 								break;
 							default:
 								score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
@@ -632,9 +636,9 @@ public class Modele extends Observable{
 							case "LT":
 								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;
 								break;
-							case "MD": scoreMD++;
+							case "MD": multiplicateur*=2;
 								break;
-							case "MT": scoreMT++;
+							case "MT": multiplicateur*=3;
 								break;
 							default:
 								score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
@@ -649,17 +653,20 @@ public class Modele extends Observable{
 				
 				lig++;
 			}
-			score=score*scoreMD*scoreMT;
+			score*=multiplicateur;
+			
+			if (mot.length() > 1 && !motsVerticaux.containsKey(mot))
+				motsVerticaux.put(mot, score);
 			
 			//On cherche le mot horizontal
 			int col = placement.getColumn()-1;
-			int scoreHori = lettre.valeur;
-			String motHori = lettre.lettre;
-			int scoreMD_H=1,scoreMT_H=1;
+			score = lettre.valeur;
+			mot = lettre.lettre;
+			multiplicateur = 1;
 			
 			while (col >= 0 && this.plateauFictif.getCase(placement.getLine(), col).lettre != null) {
 				
-				motHori = this.plateauFictif.getCase(placement.getLine(),col).lettre.lettre + motHori;
+				mot = this.plateauFictif.getCase(placement.getLine(),col).lettre.lettre + mot;
 				boolean lettreJoueur = false;
 				
 				for (Placement placement2 : this.placementEnCours) {
@@ -668,30 +675,30 @@ public class Modele extends Observable{
 						Multiplicateur m = this.plateauFictif.getCase(placement.getLine(), col).multiplicateur;
 						switch(m.toString()) {				
 							case "LD":
-								scoreHori +=this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*2;
+								score +=this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*2;
 								break;
 							case "LT":
-								scoreHori +=this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*3;
+								score +=this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*3;
 								break;
-							case "MD": scoreMD_H++;
+							case "MD": multiplicateur*=2;
 								break;
-							case "MT": scoreMT_H++;
+							case "MT": multiplicateur*=3;
 								break;
 							default:
-								scoreHori += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
 								break;
 						}
 					}
 				}
 				
 				if(!lettreJoueur) {
-					scoreHori += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+					score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
 				}
 				col--;
 			}
 			while (col <= 15 && this.plateauFictif.getCase(placement.getLine(), col).lettre != null) {
 				
-				motHori = motHori + this.plateauFictif.getCase(placement.getLine(),col).lettre.lettre;
+				mot = mot + this.plateauFictif.getCase(placement.getLine(),col).lettre.lettre;
 				boolean lettreJoueur = false;
 				
 				for (Placement placement2 : this.placementEnCours) {
@@ -700,37 +707,46 @@ public class Modele extends Observable{
 						Multiplicateur m = this.plateauFictif.getCase(placement.getLine(), col).multiplicateur;
 						switch(m.toString()) {				
 							case "LD":
-								scoreHori += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*2;
+								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*2;
 								break;
 							case "LT":
-								scoreHori += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*3;
+								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*3;
 								break;
-							case "MD": scoreMD_H++;
+							case "MD": multiplicateur*=2;
 								break;
-							case "MT": scoreMT_H++;
+							case "MT": multiplicateur*=3;
 								break;
 							default:
-								scoreHori += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
 								break;
 						}
 					}
 				}
 				
 				if(!lettreJoueur) {
-					scoreHori += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+					score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
 				}
 				col++;
 			}
 
-			scoreHori=scoreHori*scoreMD_H*scoreMT_H;
+			score*=multiplicateur;
+			
+			if (mot.length() > 1 && !motsHorizontaux.containsKey(mot))
+				motsHorizontaux.put(mot, score);
+			
+		}
+
+		for (Integer score : motsHorizontaux.values()) {
 			this.score[this.numChevalet].majScore(score);
-			this.score[this.numChevalet].majScore(scoreHori);
+		}
+		for (Integer score : motsVerticaux.values()) {
+			this.score[this.numChevalet].majScore(score);
 		}
 	}
 
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
-		//System.out.println("Joueur : "+this.numChevalet+" ---------- Score : "+this.score[this.numChevalet].getScore());
+		System.out.println("Joueur : "+this.numChevalet+" ---------- Score : "+this.score[this.numChevalet].getScore());
 		if(this.chevalets[this.numChevalet].size()==7) {
 			this.passe=passe+1;
 		}
