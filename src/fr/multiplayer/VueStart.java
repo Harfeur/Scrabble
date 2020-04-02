@@ -18,7 +18,7 @@ public class VueStart extends JPanel implements ActionListener {
 	
 	Client client;
 	JFrame f;
-	String prenom,ip;
+	JTextField prenom_t,ip_t;
 
 	public VueStart(Client client) {
 		super();
@@ -26,9 +26,9 @@ public class VueStart extends JPanel implements ActionListener {
 		f = new JFrame("Start"); 
 		
 		JLabel prenom_l = new JLabel("Prénom");
-		JTextField prenom_t = new JTextField("Bernadette");
+		this.prenom_t = new JTextField("Bernadette");
 		JLabel ip_l = new JLabel("Adresse IP");
-		JTextField ip_t = new JTextField("###.##.##.##.##");
+		this.ip_t = new JTextField("127.0.0.1");
 		JButton valider = new JButton("Valider");
 		
 		valider.addActionListener(this);
@@ -39,14 +39,14 @@ public class VueStart extends JPanel implements ActionListener {
 		this.add(ip_t);
 		this.add(valider);
 		
-		this.prenom=prenom_t.getText();
-		this.ip=ip_t.getText();
-		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		//TODO Puis fermer la fenetre
+		
+		String prenom = this.prenom_t.getText();
+		String ip = this.ip_t.getText();
 		client.demarrer(ip, prenom);
 	}
 	
