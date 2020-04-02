@@ -300,7 +300,7 @@ public class Modele extends Observable{
 							
 							if(premierLettre.getLine()+l+1==15) {
 								break;
-							}
+							}*/
 						}/*
 						if(score_MD>0 || score_MT>0) {
 							int score_motBas=0;
