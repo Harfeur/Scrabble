@@ -1,4 +1,4 @@
-package fr.multiplayer;
+package fr.scrabble.multiplayer;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -13,6 +13,9 @@ import java.net.Socket;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
+import fr.scrabble.multiplayer.vues.VueStart;
+
+@SuppressWarnings("serial")
 public class Client extends JFrame {
 	
 	Socket connection;
@@ -75,10 +78,6 @@ public class Client extends JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public static void main(String[] args) {
-		new Client();
 	}
 
 }

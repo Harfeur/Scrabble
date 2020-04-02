@@ -14,12 +14,12 @@ import fr.scrabble.vues.*;
 
 
 @SuppressWarnings("serial")
-public class Scrabble extends JFrame implements Observer{
+public class Solo extends JFrame implements Observer{
 
 	public static double SCALE=1.5;
 	public String langue;
 
-	public Scrabble() {
+	public Solo() {
 		
 		this.langue = "FR";
 
@@ -28,14 +28,12 @@ public class Scrabble extends JFrame implements Observer{
 		ControleurPlateau cp = new ControleurPlateau(m);
 		ControleurChevalet cc = new ControleurChevalet(m);
 		ControleurBouton cb = new ControleurBouton(m);
-		ControleurPlay cplay = new ControleurPlay(m, langue, null);
 		
 		VuePlateau vuePlateau = new VuePlateau(cp);
 		VueChevalet vueChevalet = new VueChevalet(cc);
-		VueBouton vueBouton = new VueBouton(cb, cplay);
+		VueBouton vueBouton = new VueBouton(cb);
 		VueLigne vueLigne = new VueLigne();
 		VueColonne vueColonne = new VueColonne();
-		//VueJoker vueJoker = new VueJoker(langue, cj);
 		
 		m.addObserver(vuePlateau);
 		m.addObserver(vueChevalet);
@@ -52,6 +50,8 @@ public class Scrabble extends JFrame implements Observer{
 		contentPane.add(vueColonne, BorderLayout.WEST);
 		
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
+		m.nouvellePartie(4, this.langue);
 	
 		this.pack();
 		
@@ -62,12 +62,6 @@ public class Scrabble extends JFrame implements Observer{
 	    this.setLocation(x, y);
 		this.setVisible(true);
 	}
-
-	
-	public static void main(String[] args) {
-		new Scrabble();
-	}
-
 
 	@Override
 	public void update(Observable o, Object arg) {

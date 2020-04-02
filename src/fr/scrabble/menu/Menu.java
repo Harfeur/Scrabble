@@ -1,16 +1,18 @@
-package fr.scrabble;
+package fr.scrabble.menu;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 import javax.swing.*;
 
-import fr.scrabble.controleurs.ControleurBouton;
 import fr.scrabble.controleurs.ControleurPlay;
-import fr.scrabble.vues.VueBoutonMulti;
-import fr.scrabble.vues.VueBoutonSolo;
-import fr.scrabble.vues.VueMenu;
+import fr.scrabble.menu.vues.VueBoutonMulti;
+import fr.scrabble.menu.vues.VueBoutonSolo;
+import fr.scrabble.menu.vues.VueMenu;
 
-import java.awt.*;
-
-
+@SuppressWarnings("serial")
 public class Menu extends JFrame{
 
     private JLayeredPane lpane = new JLayeredPane();
@@ -18,13 +20,10 @@ public class Menu extends JFrame{
     private JPanel bouton1 = new JPanel();
     private JPanel bouton2 = new JPanel();
     
-    
     public Menu () {
     	super("Menu");
     	
-    	Modele m = new Modele();
-    	
-    	ControleurPlay cplay = new ControleurPlay(m, "FR", this);
+    	ControleurPlay cplay = new ControleurPlay(this);
     	
     	
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,14 +43,21 @@ public class Menu extends JFrame{
         bouton2.setBackground(Color.GREEN);
         bouton2.setBounds(200, 100, 100, 100);
         bouton2.setOpaque(false);
-        bouton2.add(new VueBoutonMulti());
+        bouton2.add(new VueBoutonMulti(cplay));
             
             
         lpane.add(fond, new Integer(0), 0);
         lpane.add(bouton1, new Integer(1), 0);
         lpane.add(bouton2, new Integer(1), 0);
-        this.pack();
-        this.setVisible(true);
+        
+		this.pack();
+		
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+	    
+	    this.setLocation(x, y);
+		this.setVisible(true);
     }
     
     public void fermer() {

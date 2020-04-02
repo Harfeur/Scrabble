@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.MouseInputListener;
 
 import fr.scrabble.Modele;
-import fr.scrabble.Scrabble;
+import fr.scrabble.Solo;
 import fr.scrabble.vues.VueChevalet;
 
 public class ControleurChevalet implements MouseInputListener {
@@ -19,7 +19,7 @@ public class ControleurChevalet implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int num = (int) (e.getX() / (VueChevalet.TAILLE*Scrabble.SCALE));
+		int num = (int) (e.getX() / (VueChevalet.TAILLE*Solo.SCALE));
 		m.selectLettre(num);
 	}
 

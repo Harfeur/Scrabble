@@ -1,17 +1,15 @@
-package fr.multiplayer;
+package fr.scrabble.multiplayer.vues;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.awt.event.*;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-
+import fr.scrabble.multiplayer.Client;
 
 @SuppressWarnings("serial")
 public class VueStart extends JPanel implements ActionListener {

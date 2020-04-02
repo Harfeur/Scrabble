@@ -3,20 +3,16 @@ package fr.scrabble.controleurs;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.scrabble.Menu;
-import fr.scrabble.Modele;
-import fr.scrabble.Scrabble;
+import fr.scrabble.Solo;
+import fr.scrabble.menu.Menu;
+import fr.scrabble.multiplayer.Client;
 
 public class ControleurPlay implements ActionListener {
 	
-	private Modele m;
-	private String langue;
 	private Menu menu;
 	
-	public ControleurPlay(Modele m, String langue, Menu menu) {
+	public ControleurPlay(Menu menu) {
 		super();
-		this.m = m;
-		this.langue = langue;
 		this.menu=menu;
 	}
 
@@ -24,10 +20,11 @@ public class ControleurPlay implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand()=="Solo") {
 			menu.fermer();
-			new Scrabble();
+			new Solo();
 		}
-		else {
-			m.nouvellePartie(4,langue);
+		if (e.getActionCommand()=="Multijoueur") {
+			menu.fermer();
+			new Client();
 		}
 		
 	}

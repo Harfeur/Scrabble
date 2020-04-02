@@ -1,12 +1,11 @@
 package fr.scrabble.controleurs;
 
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import javax.swing.event.MouseInputListener;
 
 import fr.scrabble.Modele;
-import fr.scrabble.Scrabble;
+import fr.scrabble.Solo;
 import fr.scrabble.vues.VuePlateau;
 
 public class ControleurPlateau implements MouseInputListener {
@@ -20,8 +19,8 @@ public class ControleurPlateau implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int col = (int) (e.getX() / (VuePlateau.TAILLE*Scrabble.SCALE));
-		int lig = (int) (e.getY() / (VuePlateau.TAILLE*Scrabble.SCALE));
+		int col = (int) (e.getX() / (VuePlateau.TAILLE*Solo.SCALE));
+		int lig = (int) (e.getY() / (VuePlateau.TAILLE*Solo.SCALE));
 		m.ajoutLettre(col, lig);
 	}
 

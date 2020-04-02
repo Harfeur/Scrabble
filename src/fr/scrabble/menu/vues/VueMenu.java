@@ -1,23 +1,15 @@
-package fr.scrabble.vues;
+package fr.scrabble.menu.vues;
 
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Panel;
-import java.awt.Rectangle;
-import java.awt.Button;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import fr.scrabble.Menu;
-import fr.scrabble.Scrabble;
+import fr.scrabble.menu.Menu;
 
+@SuppressWarnings("serial")
 public class VueMenu extends JPanel{
 	Image im;
 	

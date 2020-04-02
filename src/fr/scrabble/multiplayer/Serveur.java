@@ -1,4 +1,4 @@
-package fr.multiplayer;
+package fr.scrabble.multiplayer;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -40,7 +40,7 @@ public class Serveur {
 			boolean attente = true;
 			while (attente) {
 				Socket connection = this.serverSoc.accept();
-				String ip = connection.getLocalAddress().getHostAddress();
+				String ip = connection.getRemoteSocketAddress().toString();
 				PrintWriter out = new PrintWriter(connection.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				String message = in.readLine();
@@ -53,6 +53,7 @@ public class Serveur {
 						this.ips.add(ip);
 						this.outs.add(out);
 						out.println("ok");
+						System.out.println(ip + " : " + message);
 					}
 				}
 			}

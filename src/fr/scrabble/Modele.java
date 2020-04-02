@@ -781,7 +781,6 @@ public class Modele extends Observable{
 	}
 
 	public void lettreJoker(String lettre) {
-		// TODO Auto-generated method stub
 		lettreChoisi=lettre;
 		this.setChanged();
 		this.notifyObservers("afficher");
