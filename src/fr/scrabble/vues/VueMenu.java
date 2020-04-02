@@ -17,7 +17,7 @@ import fr.scrabble.Scrabble;
 
 public class VueMenu extends Panel{
 	Image im;
-	public Button b;
+	VueBoutonSolo b;
 	public VueMenu() {
 		try {
 			im = ImageIO.read(Menu.class.getResource("/resources/scrabble.jpg"));
@@ -26,17 +26,13 @@ public class VueMenu extends Panel{
 			e1.printStackTrace();
 		}
 		this.setPreferredSize(new Dimension(400,400));
-		b=new Button("Démarrer"); 
-		b.setForeground(new Color(0,0,0));
-		b.setBackground(Color.LIGHT_GRAY);
-		Font f = new Font(Font.SERIF,Font.HANGING_BASELINE,25);
-		b.setFont(f);
+		b = new VueBoutonSolo();
 		this.add(b);
 	}
 	
 	public void paint(Graphics g) {
 		g.drawImage(im, 0, 0, 400, 400, 0, 0, 400, 400, getParent());
-		g.setColor(new Color(117,82,56));
+		super.paint(g);
 	}
 	}
 

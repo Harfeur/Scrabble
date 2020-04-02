@@ -543,8 +543,9 @@ public class Modele extends Observable{
 				if(this.Test2==false) {
 					System.out.println("Mot Droite Non Valide");
 				}
-				if(lettrecotecote != this.placementEnCours.size()) {
+				if(lettrecotecote < this.placementEnCours.size()) {
 					System.out.println("lettre pas cote cote");
+					System.out.println(lettrecotecote);
 					
 				}
 				if(premierTour==false) {
