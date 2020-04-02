@@ -1,36 +1,54 @@
 package fr.multiplayer;
 
-import javax.swing.JFormattedTextField;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
+import java.awt.GridLayout;
+import java.awt.LayoutManager;
+import java.awt.event.*;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
+
 
 @SuppressWarnings("serial")
 public class VueStart extends JPanel implements ActionListener {
 	
 	Client client;
 	JFrame f;
+	JTextField prenom_t,ip_t;
 
 	public VueStart(Client client) {
 		super();
 		this.client = client;
-		//TODO Afficher deux zones de texte (prénom, ip) et un bouton (Valider)
+		f = new JFrame("Start"); 
+		
 		JLabel prenom_l = new JLabel("Prénom");
-		JTextField prenom_t = new JTextField("Bernadette");
+		this.prenom_t = new JTextField("Bernadette");
+		JLabel ip_l = new JLabel("Adresse IP");
+		this.ip_t = new JTextField("127.0.0.1");
+		JButton valider = new JButton("Valider");
+		
+		valider.addActionListener(this);
+			
 		this.add(prenom_l);
+		this.add(prenom_t);
+		this.add(ip_l);
+		this.add(ip_t);
+		this.add(valider);
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//TODO Lire zone de texte lorsque bouton pressé puis envoyer à client.demarrer(message);
 		//TODO Puis fermer la fenetre
+		
+		String prenom = this.prenom_t.getText();
+		String ip = this.ip_t.getText();
+		client.demarrer(ip, prenom);
 	}
-
+	
+	
 }

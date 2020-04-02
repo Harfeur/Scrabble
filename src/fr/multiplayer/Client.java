@@ -1,13 +1,19 @@
 package fr.multiplayer;
 
-import java.awt.Frame;
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Client extends Frame {
+import javax.swing.JFrame;
+import javax.swing.WindowConstants;
+
+public class Client extends JFrame {
 	
 	Socket connection;
 	PrintWriter out;
@@ -28,8 +34,21 @@ public class Client extends Frame {
 		//VueRejeté
 		
 		// On affiche que celle qu'on a besoin
-		this.add(vs);
+		Container contentPane = this.getContentPane();
+		
+		contentPane.setLayout(new BorderLayout());
+		
+		contentPane.add(vs);
+		
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		
 		this.pack();
+		
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+	    
+	    this.setLocation(x, y);
 		this.setVisible(true);
 	}
 	
@@ -43,6 +62,7 @@ public class Client extends Frame {
 	        out.println(prenom);
 	        String resp = in.readLine();
 	        if (resp.equals("ok")) {
+	        	System.out.println("Connecté");
 	        	//TODO On change la fenetre pour afficher le texte "En attente du lancement" ainsi qu'un bouton "Lancer maintenant"
 	        	/*
 	        	 * this.remove(this.vs);
