@@ -133,36 +133,45 @@ public class Modele extends Observable{
 				motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
 
 				if(premierLettre.getLine()<14) {
+					int score_MD=0,score_MT=0;
 					while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
 						premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
 						motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
-						l++;
+						l++;						
+						//score
+						Multiplicateur m = premB.multiplicateur;
+						switch(m.toString()) {
+							case "S": this.score[this.numChevalet].majScore(premB.lettre.valeur);break;
+										
+							case "LD": this.score[this.numChevalet].majScore(premB.lettre.valeur*2);break;
+										
+							case "LT": this.score[this.numChevalet].majScore(premB.lettre.valeur*3);break;
+										
+							case "MD": score_MD++;break;
+										
+							case "MT": score_MT++;break;
+						} 
+						
 						if(premierLettre.getLine()+l+1==15) {
 							break;
+						}
+					}
+					if(score_MD>0 || score_MT>0) {
+						int score_motBas=0;
+						for(int i=0;i<motBas.mot.size();i=i+1) { 
+							score_motBas=score_motBas+motBas.mot.get(i).valeur;
+						}
+						if(score_MD>0) {
+							this.score[this.numChevalet].majScore(score_motBas*2);
+						}
+						if(score_MT>0) {						
+							this.score[this.numChevalet].majScore(score_motBas*3);
 						}
 					}
 				}
 
 				if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 					motbasOk++;
-					Multiplicateur m = premB.multiplicateur;
-					int score_motBas=0;
-					switch(m.toString()) {
-						case "S": for(int i=0;i<motBas.mot.size();i=i+1) { 
-									this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);};break;
-						case "LD":for(int i=0;i<motBas.mot.size();i=i+1) {
-									this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
-									this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur);};break;
-						case "LT": for(int i=0;i<motBas.mot.size();i=i+1) {
-									this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
-									this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur*2);};break;
-						case "MD": for(int i=0;i<motBas.mot.size();i=i+1) { 
-									score_motBas=score_motBas+motBas.mot.get(i).valeur;}
-									this.score[this.numChevalet].majScore(score_motBas*2);break;
-						case "MT": for(int i=0;i<motBas.mot.size();i=i+1) { 
-									score_motBas=score_motBas+motBas.mot.get(i).valeur;}
-									this.score[this.numChevalet].majScore(score_motBas*3);break;
-					} 
 				}
 				else {
 					System.out.print(motBas.toString());
@@ -183,35 +192,44 @@ public class Modele extends Observable{
 				motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
 
 				if(premierLettre.getColumn()<14) {
+					int score_MD=0,score_MT=0;
 					while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
 						premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
 						motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
 						c++;
+						//score
+						Multiplicateur m = premD.multiplicateur;
+						switch(m.toString()) {
+							case "S": this.score[this.numChevalet].majScore(premD.lettre.valeur);break;
+										
+							case "LD": this.score[this.numChevalet].majScore(premD.lettre.valeur*2);break;
+										
+							case "LT": this.score[this.numChevalet].majScore(premD.lettre.valeur*3);break;
+										
+							case "MD": score_MD++;break;
+										
+							case "MT": score_MT++;break;
+						} 
+						
 						if(premierLettre.getColumn()+c+1==15) {
 							break;
+						}
+					}
+					if(score_MD>0 || score_MT>0) {
+						int score_motDroite=0;
+						for(int i=0;i<motDroite.mot.size();i=i+1) { 
+							score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;
+						}
+						if(score_MD>0) {
+							this.score[this.numChevalet].majScore(score_motDroite*2);
+						}
+						if(score_MT>0) {						
+							this.score[this.numChevalet].majScore(score_motDroite*3);
 						}
 					}
 				}
 				if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 					motdroiteOk++;
-					Multiplicateur md = premD.multiplicateur;
-					int score_motDroite=0;
-					switch(md.toString()) {
-						case "S": for(int i=0;i<motDroite.mot.size();i=i+1) { 
-									this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);};break;
-						case "LD":for(int i=0;i<motDroite.mot.size();i=i+1) {
-									this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
-									this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur);};break;
-						case "LT": for(int i=0;i<motDroite.mot.size();i=i+1) {
-									this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
-									this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur*2);};break;
-						case "MD": for(int i=0;i<motDroite.mot.size();i=i+1) { 
-									score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
-									this.score[this.numChevalet].majScore(score_motDroite*2);break;
-						case "MT": for(int i=0;i<motDroite.mot.size();i=i+1) { 
-									score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
-									this.score[this.numChevalet].majScore(score_motDroite*3);break;
-					} 
 				}
 				else {
 					System.out.print(motDroite.toString());
@@ -220,6 +238,9 @@ public class Modele extends Observable{
 				if(motbasOk==1 && motdroiteOk==1) {
 					Test1=true;
 					Test2=true;
+				}
+				else {
+					this.score[this.numChevalet].faux();
 				}
 			}	
 			//plusieurs lettres
@@ -242,6 +263,7 @@ public class Modele extends Observable{
 					motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
 
 					if(premierLettre.getLine()<14) {
+						int score_MD=0, score_MT=0;
 						while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
 							for(Placement elem: this.placementEnCours) {
 								if(elem.getCase()==premB) {
@@ -251,32 +273,41 @@ public class Modele extends Observable{
 							premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
 							motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
 							l++;
+							
+							//score
+							Multiplicateur m = premB.multiplicateur;
+							switch(m.toString()) {
+								case "S": this.score[this.numChevalet].majScore(premB.lettre.valeur);break;
+											
+								case "LD": this.score[this.numChevalet].majScore(premB.lettre.valeur*2);break;
+											
+								case "LT": this.score[this.numChevalet].majScore(premB.lettre.valeur*3);break;
+											
+								case "MD": score_MD++;break;
+											
+								case "MT": score_MT++;break;
+							} 
+							
 							if(premierLettre.getLine()+l+1==15) {
 								break;
+							}
+						}
+						if(score_MD>0 || score_MT>0) {
+							int score_motBas=0;
+							for(int i=0;i<motBas.mot.size();i=i+1) { 
+								score_motBas=score_motBas+motBas.mot.get(i).valeur;
+							}
+							if(score_MD>0) {
+								this.score[this.numChevalet].majScore(score_motBas*2);
+							}
+							if(score_MT>0) {						
+								this.score[this.numChevalet].majScore(score_motBas*3);
 							}
 						}
 					}
 					
 					if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 						motbasOk++;
-						Multiplicateur m = premB.multiplicateur;
-						int score_motBas=0;
-						switch(m.toString()) {
-							case "S": for(int i=0;i<motBas.mot.size();i=i+1) { 
-										this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);};break;
-							case "LD":for(int i=0;i<motBas.mot.size();i=i+1) {
-										this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
-										this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur);};break;
-							case "LT": for(int i=0;i<motBas.mot.size();i=i+1) {
-										this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
-										this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur*2);};break;
-							case "MD": for(int i=0;i<motBas.mot.size();i=i+1) { 
-										score_motBas=score_motBas+motBas.mot.get(i).valeur;}
-										this.score[this.numChevalet].majScore(score_motBas*2);break;
-							case "MT": for(int i=0;i<motBas.mot.size();i=i+1) { 
-										score_motBas=score_motBas+motBas.mot.get(i).valeur;}
-										this.score[this.numChevalet].majScore(score_motBas*3);break;
-						} 
 					}
 					else {
 						System.out.print(motBas.toString());
@@ -298,35 +329,45 @@ public class Modele extends Observable{
 						motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
 
 						if(premierLettre.getColumn()<14) {
+							int score_MD=0, score_MT=0;
 							while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
 								premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
 								motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
 								c++;
+								
+								//score
+								Multiplicateur m = premD.multiplicateur;
+								switch(m.toString()) {
+									case "S": this.score[this.numChevalet].majScore(premD.lettre.valeur);break;
+												
+									case "LD": this.score[this.numChevalet].majScore(premD.lettre.valeur*2);break;
+												
+									case "LT": this.score[this.numChevalet].majScore(premD.lettre.valeur*3);break;
+												
+									case "MD": score_MD++;break;
+												
+									case "MT": score_MT++;break;
+								} 
+								
 								if(premierLettre.getColumn()+c+1==15) {
 									break;
+								}
+							}
+							if(score_MD>0 || score_MT>0) {
+								int score_motDroite=0;
+								for(int i=0;i<motDroite.mot.size();i=i+1) { 
+									score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;
+								}
+								if(score_MD>0) {
+									this.score[this.numChevalet].majScore(score_motDroite*2);
+								}
+								if(score_MT>0) {						
+									this.score[this.numChevalet].majScore(score_motDroite*3);
 								}
 							}
 						}
 						if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 							motdroiteOk++;
-							Multiplicateur m = premD.multiplicateur;
-							int score_motDroite=0;
-							switch(m.toString()) {
-								case "S": for(int i=0;i<motDroite.mot.size();i=i+1) { 
-											this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);};break;
-								case "LD":for(int i=0;i<motDroite.mot.size();i=i+1) {
-											this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
-											this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur);};break;
-								case "LT": for(int i=0;i<motDroite.mot.size();i=i+1) {
-											this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
-											this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur*2);};break;
-								case "MD": for(int i=0;i<motDroite.mot.size();i=i+1) { 
-											score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
-											this.score[this.numChevalet].majScore(score_motDroite*2);break;
-								case "MT": for(int i=0;i<motDroite.mot.size();i=i+1) { 
-											score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
-											this.score[this.numChevalet].majScore(score_motDroite*3);break;
-							} 
 						}
 						else {
 							System.out.print(motDroite.toString());
@@ -335,6 +376,9 @@ public class Modele extends Observable{
 					if(motbasOk==1 && motdroiteOk==this.placementEnCours.size()) {
 						Test1=true;
 						Test2=true;
+					}
+					else {
+						this.score[this.numChevalet].faux();
 					}
 				}
 				//lettre dans la meme ligne
@@ -355,36 +399,46 @@ public class Modele extends Observable{
 						motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
 
 						if(premierLettre.getLine()<14) {
+							int score_MD=0, score_MT=0;
 							while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
 								premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
 								motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
 								l++;
+								
+								//score
+								Multiplicateur m = premB.multiplicateur;
+								switch(m.toString()) {
+									case "S": this.score[this.numChevalet].majScore(premB.lettre.valeur);break;
+												
+									case "LD": this.score[this.numChevalet].majScore(premB.lettre.valeur*2);break;
+												
+									case "LT": this.score[this.numChevalet].majScore(premB.lettre.valeur*3);break;
+												
+									case "MD": score_MD++;break;
+												
+									case "MT": score_MT++;break;
+								} 
+								
 								if(premierLettre.getLine()+l+1==15) {
 									break;
+								}
+							}
+							if(score_MD>0 || score_MT>0) {
+								int score_motBas=0;
+								for(int i=0;i<motBas.mot.size();i=i+1) { 
+									score_motBas=score_motBas+motBas.mot.get(i).valeur;
+								}
+								if(score_MD>0) {
+									this.score[this.numChevalet].majScore(score_motBas*2);
+								}
+								if(score_MT>0) {						
+									this.score[this.numChevalet].majScore(score_motBas*3);
 								}
 							}
 						}
 
 						if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 							motbasOk++;
-							Multiplicateur m = premB.multiplicateur;
-							int score_mot=0;
-							switch(m.toString()) {
-								case "S": for(int i=0;i<motBas.mot.size();i=i+1) { 
-											this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);};break;
-								case "LD":for(int i=0;i<motBas.mot.size();i=i+1) {
-											this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
-											this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur);};break;
-								case "LT": for(int i=0;i<motBas.mot.size();i=i+1) {
-											this.score[this.numChevalet].majScore(motBas.mot.get(i).valeur);
-											this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur*2);};break;
-								case "MD": for(int i=0;i<motBas.mot.size();i=i+1) { 
-											score_mot=score_mot+motBas.mot.get(i).valeur;}
-											this.score[this.numChevalet].majScore(score_mot*2);break;
-								case "MT": for(int i=0;i<motBas.mot.size();i=i+1) { 
-											score_mot=score_mot+motBas.mot.get(i).valeur;}
-											this.score[this.numChevalet].majScore(score_mot*3);break;
-							} 
 						}
 						else {
 							System.out.print(motBas.toString());
@@ -406,6 +460,7 @@ public class Modele extends Observable{
 					motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
 
 					if(premierLettre.getColumn()<14) {
+						int score_MD=0, score_MT=0;
 						while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
 							for(Placement elem: this.placementEnCours) {
 								if(elem.getCase()==premD) {
@@ -415,32 +470,40 @@ public class Modele extends Observable{
 							premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
 							motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
 							c++;
+							
+							//score
+							Multiplicateur m = premD.multiplicateur;
+							switch(m.toString()) {
+								case "S": this.score[this.numChevalet].majScore(premD.lettre.valeur);break;
+											
+								case "LD": this.score[this.numChevalet].majScore(premD.lettre.valeur*2);break;
+											
+								case "LT": this.score[this.numChevalet].majScore(premD.lettre.valeur*3);break;
+											
+								case "MD": score_MD++;break;
+											
+								case "MT": score_MT++;break;
+							} 
+							
 							if(premierLettre.getColumn()+c+1==15) {
 								break;
+							}
+						}
+						if(score_MD>0 || score_MT>0) {
+							int score_motDroite=0;
+							for(int i=0;i<motDroite.mot.size();i=i+1) { 
+								score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;
+							}
+							if(score_MD>0) {
+								this.score[this.numChevalet].majScore(score_motDroite*2);
+							}
+							if(score_MT>0) {						
+								this.score[this.numChevalet].majScore(score_motDroite*3);
 							}
 						}
 					}
 					if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 						motdroiteOk++;
-
-						Multiplicateur m = premD.multiplicateur;
-						int score_motDroite=0;
-						switch(m.toString()) {
-							case "S": for(int i=0;i<motDroite.mot.size();i=i+1) { 
-										this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);};break;
-							case "LD":for(int i=0;i<motDroite.mot.size();i=i+1) {
-										this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
-										this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur);};break;
-							case "LT": for(int i=0;i<motDroite.mot.size();i=i+1) {
-										this.score[this.numChevalet].majScore(motDroite.mot.get(i).valeur);
-										this.score[this.numChevalet].majScore(premierLettre.getLetter().valeur*2);};break;
-							case "MD": for(int i=0;i<motDroite.mot.size();i=i+1) { 
-										score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
-										this.score[this.numChevalet].majScore(score_motDroite*2);break;
-							case "MT": for(int i=0;i<motDroite.mot.size();i=i+1) { 
-										score_motDroite=score_motDroite+motDroite.mot.get(i).valeur;}
-										this.score[this.numChevalet].majScore(score_motDroite*3);break;
-						} 
 					}
 					else {
 						System.out.print(motDroite.toString());
@@ -449,6 +512,9 @@ public class Modele extends Observable{
 					if(motbasOk==this.placementEnCours.size() && motdroiteOk==1) {
 						Test1=true;
 						Test2=true;
+					}
+					else {
+						this.score[this.numChevalet].faux();
 					}
 				}
 			}

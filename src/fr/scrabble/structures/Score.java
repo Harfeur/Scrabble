@@ -15,4 +15,8 @@ public class Score {
 	public int getScore() {
 		return score;
 	}
+	
+	public void faux() {
+		this.score=0;
+	}
 }
