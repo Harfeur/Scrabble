@@ -578,7 +578,18 @@ public class Modele extends Observable{
 			String mot = lettre.lettre;
 			while (lig >= 0 && this.plateauFictif.getCase(lig, placement.getColumn()).lettre != null) {
 				mot = this.plateauFictif.getCase(lig, placement.getColumn()).lettre.lettre + mot;
-				score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+				if(this.placementEnCours.contains(this.plateauFictif.getCase(lig, placement.getColumn()).lettre)) {
+					Multiplicateur m = this.plateauFictif.getCase(lig, placement.getColumn()).multiplicateur;
+					switch(m.toString()) {				
+						case "LD": score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*2;break;
+									
+						case "LT": score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;break;
+						default : score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;break;
+					}
+				}
+				else {
+					score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+				}
 				lig--;
 			}
 			lig = placement.getLine()+1;
