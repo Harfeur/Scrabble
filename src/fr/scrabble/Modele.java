@@ -572,27 +572,44 @@ public class Modele extends Observable{
 	private void calculerScore() {
 		for (Placement placement : this.placementEnCours) {
 			Lettre lettre = placement.getLetter();
+			
 			//On cherche le mot vertical
 			int lig = placement.getLine()-1;
 			int score = lettre.valeur;
 			String mot = lettre.lettre;
+			
 			while (lig >= 0 && this.plateauFictif.getCase(lig, placement.getColumn()).lettre != null) {
+				
 				mot = this.plateauFictif.getCase(lig, placement.getColumn()).lettre.lettre + mot;
-				if(this.placementEnCours.contains(this.plateauFictif.getCase(lig, placement.getColumn()).lettre)) {
-					Multiplicateur m = this.plateauFictif.getCase(lig, placement.getColumn()).multiplicateur;
-					switch(m.toString()) {				
-						case "LD": score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*2;break;
-									
-						case "LT": score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;break;
-						default : score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;break;
+				boolean lettreJoueur = false;
+				
+				for (Placement placement2 : this.placementEnCours) {
+					if (placement2.getLetter().equals(this.plateauFictif.getCase(lig, placement.getColumn()).lettre)) {
+						lettreJoueur = true;
+						Multiplicateur m = this.plateauFictif.getCase(lig, placement.getColumn()).multiplicateur;
+						switch(m.toString()) {				
+							case "LD":
+								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*2;
+								break;
+							case "LT":
+								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;
+								break;
+							default:
+								score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+								break;
+						}
 					}
 				}
-				else {
+				
+				if(!lettreJoueur) {
 					score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
 				}
+				
 				lig--;
 			}
+			
 			lig = placement.getLine()+1;
+			
 			while (lig <= 15 && this.plateauFictif.getCase(lig, placement.getColumn()).lettre != null) {
 				mot = mot +this.plateauFictif.getCase(lig, placement.getColumn()).lettre.lettre;
 				score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
