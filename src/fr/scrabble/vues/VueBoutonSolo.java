@@ -1,25 +1,18 @@
 package fr.scrabble.vues;
 
 
-import java.awt.*;
+import javax.swing.JButton;
 
 @SuppressWarnings("serial")
-public class VueBoutonSolo  extends Button{
+public class VueBoutonSolo  extends JButton{
 
 	public VueBoutonSolo() {
-		Button b=new Button("Solo"); 
-		b.setForeground(new Color(0,0,0));
-		b.setBackground(Color.LIGHT_GRAY);
-		Font f = new Font(Font.SERIF,Font.HANGING_BASELINE,25);
-		b.setFont(f);
-		b.setLocation(100, 30);
-		
-		Button m=new Button("Multijoueur"); 
-		m.setForeground(new Color(0,0,0));
-		m.setBackground(Color.LIGHT_GRAY);
-		Font fo = new Font(Font.SERIF,Font.HANGING_BASELINE,25);
-		m.setFont(fo);
-		m.setLocation(30, 100);
+		JButton bouton = new JButton("Solo");
+		bouton.setLocation(100,100);
+		bouton.setSize(50, 50);
+		bouton.setOpaque(false);
+		this.add(bouton);
+
 		
 	}
 }
