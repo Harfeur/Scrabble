@@ -1,19 +1,17 @@
 package fr.scrabble.vues;
 
-import java.awt.Button;
-import java.awt.Panel;
+import java.awt.event.ActionListener;
 
-import fr.scrabble.controleurs.ControleurBouton;
-import fr.scrabble.controleurs.ControleurPlay;
+import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class VueBouton extends Panel {
+public class VueBouton extends JPanel {
 
-	public VueBouton(ControleurBouton cb, ControleurPlay cplay) {
+	public VueBouton(ActionListener cb, ActionListener cplay) {
 		super();
-		Button b = new Button("Valider");
-		Button d = new Button("Demarrer");
-		Button p = new Button("Passer");
+		JButton b = new JButton("Valider");
+		JButton d = new JButton("Demarrer");
+		JButton p = new JButton("Passer");
 		b.addActionListener(cb);
 		d.addActionListener(cplay);
 		p.addActionListener(cb);

@@ -1,15 +1,17 @@
 package fr.scrabble.vues;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
+import javax.swing.*;
+
 import fr.scrabble.Scrabble;
 
-public class VueLigne extends Canvas {
+@SuppressWarnings("serial")
+public class VueLigne extends JPanel {
 
 	public static int TAILLE = 25; 
 	
@@ -18,6 +20,7 @@ public class VueLigne extends Canvas {
 		this.setPreferredSize(new Dimension((int) (TAILLE*15*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE)));
 	}
 	
+	@Override
 	public void paint(Graphics g) {
 		//Fond (case : 0,0)
 		g.setColor(new Color(51,108,11));

@@ -1,6 +1,8 @@
 package fr.scrabble.vues;
 
-import java.awt.Canvas;
+import javax.swing.*;
+import javax.swing.event.MouseInputListener;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,10 +12,10 @@ import java.util.Observable;
 import java.util.Observer;
 
 import fr.scrabble.Scrabble;
-import fr.scrabble.controleurs.ControleurChevalet;
 import fr.scrabble.structures.*;
 
-public class VueChevalet extends Canvas implements Observer {
+@SuppressWarnings("serial")
+public class VueChevalet extends JPanel implements Observer {
 
 	Chevalet chevalet;
 	Sac sac;
@@ -23,7 +25,7 @@ public class VueChevalet extends Canvas implements Observer {
 	
 	//essaie de push
 	
-	public VueChevalet(ControleurChevalet cc) {
+	public VueChevalet(MouseInputListener cc) {
 		super();
 		this.chevalet =new Chevalet();
 		this.sac = new Sac("FR");
@@ -31,7 +33,9 @@ public class VueChevalet extends Canvas implements Observer {
 		this.addMouseListener(cc);
 	}
 	
+	@Override
 	public void paint(Graphics g) {
+		super.paint(g);
 		//Fond
 		g.setColor(new Color(117,82,56));
 		g.fillRect(0, (int) (TAILLE*Scrabble.SCALE), (int) (TAILLE*7*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
@@ -68,7 +72,7 @@ public class VueChevalet extends Canvas implements Observer {
 				g.drawRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 				//Lettre
 				if(this.chevalet.get(i).valeur!=0) {
-					Font font_lettre = new Font("Arial",Font.PLAIN,(int)(this.TAILLE*Scrabble.SCALE)) ;
+					Font font_lettre = new Font("Arial",Font.PLAIN,(int)(VueChevalet.TAILLE*Scrabble.SCALE)) ;
 					FontMetrics metrics_lettre = getFontMetrics(font_lettre);
 					g.setFont(font_lettre);
 					g.setColor(Color.BLACK);
@@ -81,13 +85,7 @@ public class VueChevalet extends Canvas implements Observer {
 				g.setColor(Color.BLACK);
 				g.drawString(this.chevalet.get(i).valeur+"",(int) (i*TAILLE*Scrabble.SCALE+metrics_valeur.getDescent()),(int) (TAILLE*Scrabble.SCALE+metrics_valeur.getAscent()));
 			}
-		}		
-	}
-	
-	@Override
-	public void update(Graphics g) {
-		super.update(g);
-		//TODO C'est ici que l'on écrit les lettres et qu'on les dessines. En gros tout le code de paint() est ici.
+		}
 		for(int i=0 ; i<this.chevalet.size() ;i=i+1) {
 			if(this.chevalet.lettreSelectionee==i) {
 				//Fond
@@ -96,7 +94,7 @@ public class VueChevalet extends Canvas implements Observer {
 				g.setColor(new Color(200,77,77));
 				g.drawRect((int) (i*TAILLE*Scrabble.SCALE), (int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE),(int) (TAILLE*Scrabble.SCALE));
 				//Lettre
-				Font font_lettre = new Font("Arial",Font.PLAIN,(int)(this.TAILLE*Scrabble.SCALE)) ;
+				Font font_lettre = new Font("Arial",Font.PLAIN,(int)(VueChevalet.TAILLE*Scrabble.SCALE)) ;
 				FontMetrics metrics_lettre = getFontMetrics(font_lettre);
 				g.setFont(font_lettre);
 				g.setColor(Color.BLACK);

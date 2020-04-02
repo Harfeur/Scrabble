@@ -3,11 +3,13 @@ package fr.scrabble.controleurs;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.event.MouseInputListener;
+
 import fr.scrabble.Modele;
 import fr.scrabble.Scrabble;
 import fr.scrabble.vues.VuePlateau;
 
-public class ControleurPlateau implements MouseListener {
+public class ControleurPlateau implements MouseInputListener {
 	
 	private Modele m;
 	
@@ -25,18 +27,38 @@ public class ControleurPlateau implements MouseListener {
 
 	@Override
 	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

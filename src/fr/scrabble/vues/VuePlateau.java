@@ -1,12 +1,13 @@
 package fr.scrabble.vues;
 
-import java.awt.Canvas;
+import javax.swing.*;
+import javax.swing.event.MouseInputListener;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.event.MouseListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,19 +16,22 @@ import fr.scrabble.structures.Case;
 import fr.scrabble.structures.Case.Multiplicateur;
 import fr.scrabble.structures.Plateau;
 
-public class VuePlateau extends Canvas implements Observer {
+@SuppressWarnings("serial")
+public class VuePlateau extends JPanel implements Observer {
 
 	Plateau plateau;
 	public static int TAILLE = 25; 
 	
-	public VuePlateau(MouseListener l) {
+	public VuePlateau(MouseInputListener l) {
 		super();
 		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Scrabble.SCALE),(int) (VuePlateau.TAILLE*15*Scrabble.SCALE)));
 		this.plateau = new Plateau();
 		this.addMouseListener(l);
 	}
 	
+	@Override
 	public void paint(Graphics g) {
+		super.paint(g);
 		if(this.plateau!=null) {
 			for (int i = 0; i < 15; i++) {
 				for (int j = 0; j < 15; j++) {

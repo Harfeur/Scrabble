@@ -1,35 +1,46 @@
 package fr.scrabble.vues;
 
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.List;
-import java.awt.Panel;
 import java.awt.Toolkit;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.ArrayList;
 
-import fr.scrabble.structures.Lettre;
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import fr.scrabble.Modele;
 import fr.scrabble.structures.Sac;
 
 @SuppressWarnings("serial")
-public class VueJoker extends Frame implements ItemListener {
+public class VueJoker extends JFrame implements ListSelectionListener {
 	
-	public VueJoker(String langue, ItemListener il) {
+	JList<String> li;
+	Modele modele;
+	
+	public VueJoker(String langue, Modele m) {
 		super("Choix de la valeur");
-		Panel panel = new Panel();
+		
+		this.modele = m;
+		
+		JPanel panel = new JPanel();
 		
 		Sac sac = new Sac(langue);
 		
-		List li = new List(10, false);
-		li.addItemListener(il);
+    	ArrayList<String> strings = new ArrayList<String>();
+		
 		for(int i=0;i<sac.size();i++) 
         {
-            if (!sac.get(i).lettre.equals("JOKER")) {
-            	li.add(sac.get(i).lettre); 
+            if (!sac.get(i).lettre.equals("JOKER") && !strings.contains(sac.get(i).lettre)) {
+            	strings.add(sac.get(i).lettre);
             }          
         }
+		
+		li = new JList<String>(strings.toArray(new String[strings.size()]));
+		ListSelectionModel listSelectionModel = li.getSelectionModel();
+	    listSelectionModel.addListSelectionListener(this);
+		
 		panel.add(li);
 		this.add(panel);
 	
@@ -44,7 +55,9 @@ public class VueJoker extends Frame implements ItemListener {
 	}
 
 	@Override
-	public void itemStateChanged(ItemEvent e) {
+	public void valueChanged(ListSelectionEvent e) {
+		String lettre = li.getSelectedValue();
+		this.modele.lettreJoker(lettre);
 		this.setVisible(false);
 		this.dispose();
 	}

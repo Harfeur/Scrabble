@@ -1,15 +1,17 @@
 package fr.scrabble.vues;
 
-import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 
+import javax.swing.*;
+
 import fr.scrabble.Scrabble;
 
-public class VueColonne extends Canvas {
+@SuppressWarnings("serial")
+public class VueColonne extends JPanel {
 
 	public static int TAILLE = 25; 
 	String[] alphabet = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O"};

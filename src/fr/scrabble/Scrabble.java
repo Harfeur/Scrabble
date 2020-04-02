@@ -1,12 +1,11 @@
 package fr.scrabble;
 
+import javax.swing.*;
+
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.Frame;
-import java.awt.LayoutManager;
 import java.awt.Toolkit;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,7 +14,7 @@ import fr.scrabble.vues.*;
 
 
 @SuppressWarnings("serial")
-public class Scrabble extends Frame implements Observer{
+public class Scrabble extends JFrame implements Observer{
 
 	public static double SCALE=1.5;
 	public String langue;
@@ -30,7 +29,6 @@ public class Scrabble extends Frame implements Observer{
 		ControleurChevalet cc = new ControleurChevalet(m);
 		ControleurBouton cb = new ControleurBouton(m);
 		ControleurPlay cplay = new ControleurPlay(m, langue);
-		ControleurJoker cj = new ControleurJoker(m);
 		
 		VuePlateau vuePlateau = new VuePlateau(cp);
 		VueChevalet vueChevalet = new VueChevalet(cc);
@@ -43,20 +41,15 @@ public class Scrabble extends Frame implements Observer{
 		m.addObserver(vueChevalet);
 		m.addObserver(this);
 		
-		LayoutManager layout = new BorderLayout();
-		this.setLayout(layout);
+		Container contentPane = this.getContentPane();
 		
-		this.add(vuePlateau, BorderLayout.CENTER);
-		this.add(vueChevalet, BorderLayout.SOUTH);
-		this.add(vueBouton, BorderLayout.EAST);
-		this.add(vueLigne, BorderLayout.NORTH);
-		this.add(vueColonne, BorderLayout.WEST);
-
-		this.addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
+		contentPane.setLayout(new BorderLayout());
+		
+		contentPane.add(vuePlateau, BorderLayout.CENTER);
+		contentPane.add(vueChevalet, BorderLayout.SOUTH);
+		contentPane.add(vueBouton, BorderLayout.EAST);
+		contentPane.add(vueLigne, BorderLayout.NORTH);
+		contentPane.add(vueColonne, BorderLayout.WEST);
 	
 		this.pack();
 		
