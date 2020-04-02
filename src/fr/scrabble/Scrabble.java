@@ -1,17 +1,21 @@
 package fr.scrabble;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.LayoutManager;
+import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Observable;
+import java.util.Observer;
 
 import fr.scrabble.controleurs.*;
 import fr.scrabble.vues.*;
 
 
 @SuppressWarnings("serial")
-public class Scrabble extends Frame{
+public class Scrabble extends Frame implements Observer{
 
 	public static double SCALE=1.0;
 	public String langue;
@@ -33,10 +37,11 @@ public class Scrabble extends Frame{
 		VueBouton vueBouton = new VueBouton(cb, cplay);
 		VueLigne vueLigne = new VueLigne();
 		VueColonne vueColonne = new VueColonne();
-		VueJoker vueJoker = new VueJoker(langue, cj);
+		//VueJoker vueJoker = new VueJoker(langue, cj);
 		
 		m.addObserver(vuePlateau);
 		m.addObserver(vueChevalet);
+		m.addObserver(this);
 		
 		LayoutManager layout = new BorderLayout();
 		this.setLayout(layout);
@@ -54,11 +59,31 @@ public class Scrabble extends Frame{
 		});
 	
 		this.pack();
+		
+		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
+	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
+	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
+	    
+	    this.setLocation(x, y);
 		this.setVisible(true);
 	}
 
 	
 	public static void main(String[] args) {
 		new Scrabble();
+	}
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (arg.getClass() == String.class) {
+			String str = (String) arg;
+			if (str.equals("cacher")) {
+				this.setVisible(false);
+			}
+			if (str.equals("afficher")) {
+				this.setVisible(true);
+			}
+		}
 	}
 }
