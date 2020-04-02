@@ -4,12 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.Hashtable;
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.Map.Entry;
 
 @SuppressWarnings("serial")
-public class Sac extends Hashtable<Lettre, Integer> {
+public class Sac extends ArrayList<Lettre> {
 	
 	public int nombreDeLettres;
 
@@ -28,7 +27,7 @@ public class Sac extends Hashtable<Lettre, Integer> {
 		    	int nombre = Integer.parseInt(tab[2]);
 		    	this.nombreDeLettres= this.nombreDeLettres+nombre;
 		    	
-		    	this.ajouterLettre(nouvLettre, nombre);
+		    	this.ajouterLettre(nouvLettre);
 		    }
 		    reader.close();
 
@@ -39,23 +38,18 @@ public class Sac extends Hashtable<Lettre, Integer> {
 
 	}
 
-	public void ajouterLettre(Lettre lettre, int nombre) {
-		this.put(lettre, nombre);
+	public void ajouterLettre(Lettre lettre) {
+		this.add(lettre.clone());
 	}
 
 	public Lettre obtenirLettre() {
 		if(this.estVide()==false) {
 			Random r = new Random();
 			int nombreAleatoire = r.nextInt(this.nombreDeLettres);
-			int compteur=0;
 			this.nombreDeLettres--;
 
-			for (Entry<Lettre, Integer> element : this.entrySet()) {
-				compteur = compteur + element.getValue();
-				if (compteur>=nombreAleatoire) {
-					return element.getKey();
-				}
-			}
+			Lettre l = this.get(nombreAleatoire);
+			this.remove(nombreAleatoire);
 		}
 		return null;
 	}
