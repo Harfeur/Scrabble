@@ -27,7 +27,7 @@ public class Sac extends ArrayList<Lettre> {
 		    	int nombre = Integer.parseInt(tab[2]);
 		    	this.nombreDeLettres= this.nombreDeLettres+nombre;
 		    	
-		    	this.ajouterLettre(nouvLettre);
+		    	this.ajouterLettre(nouvLettre, nombre);
 		    }
 		    reader.close();
 
@@ -38,8 +38,9 @@ public class Sac extends ArrayList<Lettre> {
 
 	}
 
-	public void ajouterLettre(Lettre lettre) {
-		this.add(lettre.clone());
+	public void ajouterLettre(Lettre lettre, int nombre) {
+		for (int i = 0; i < nombre; i++)
+			this.add(lettre.clone());
 	}
 
 	public Lettre obtenirLettre() {
@@ -50,6 +51,7 @@ public class Sac extends ArrayList<Lettre> {
 
 			Lettre l = this.get(nombreAleatoire);
 			this.remove(nombreAleatoire);
+			return l;
 		}
 		return null;
 	}
