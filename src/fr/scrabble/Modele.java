@@ -3,8 +3,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import fr.scrabble.controleurs.ControleurJoker;
 import fr.scrabble.structures.*;
 import fr.scrabble.structures.Case.Multiplicateur;
+import fr.scrabble.vues.VueJoker;
 
 public class Modele extends Observable{
 
@@ -69,6 +71,11 @@ public class Modele extends Observable{
 		if (this.chevalets[this.numChevalet].selectionnerLettre(num)) {
 			this.setChanged();
 			this.notifyObservers(this.chevalets[this.numChevalet]);
+			if (this.chevalets[this.numChevalet].get(num).valeur == 0) {
+				new VueJoker("FR", new ControleurJoker(this));
+				this.setChanged();
+				this.notifyObservers("cacher");
+			}
 		}
 	}
 
@@ -595,5 +602,7 @@ public class Modele extends Observable{
 	public void lettreJoker(String lettre) {
 		// TODO Auto-generated method stub
 		lettreChoisi=lettre;
+		this.setChanged();
+		this.notifyObservers("afficher");
 	}
 }
