@@ -50,6 +50,8 @@ public class Scrabble extends JFrame implements Observer{
 		contentPane.add(vueBouton, BorderLayout.EAST);
 		contentPane.add(vueLigne, BorderLayout.NORTH);
 		contentPane.add(vueColonne, BorderLayout.WEST);
+		
+		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 	
 		this.pack();
 		
