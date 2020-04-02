@@ -12,7 +12,7 @@ import fr.scrabble.vues.VueMenu;
 
 public class Menu extends Frame{
 	 VueMenu menu;
-	@SuppressWarnings("deprecation")
+	 
 	public Menu(){
 		
 		menu = new VueMenu();
@@ -29,8 +29,6 @@ public class Menu extends Frame{
 		
 	}
 	
-	
-
 	public static void main(String[] args) {
 		new Menu();
 	}
