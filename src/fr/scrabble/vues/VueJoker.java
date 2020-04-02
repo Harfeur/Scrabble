@@ -24,12 +24,10 @@ public class VueJoker extends Frame implements ItemListener {
 		
 		List li = new List(10, false);
 		li.addItemListener(il);
-		Iterator<Lettre> itr = sac.keySet().iterator();
-		while(itr.hasNext()) 
+		for(int i=0;i<sac.size();i++) 
         {
-            Lettre key = itr.next();
-            if (!key.lettre.equals("JOKER")) {
-            	li.add(key.lettre); 
+            if (!sac.get(i).lettre.equals("JOKER")) {
+            	li.add(sac.get(i).lettre); 
             }          
         }
 		panel.add(li);
