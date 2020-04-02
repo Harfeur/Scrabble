@@ -28,7 +28,7 @@ public class Scrabble extends JFrame implements Observer{
 		ControleurPlateau cp = new ControleurPlateau(m);
 		ControleurChevalet cc = new ControleurChevalet(m);
 		ControleurBouton cb = new ControleurBouton(m);
-		ControleurPlay cplay = new ControleurPlay(m, langue);
+		ControleurPlay cplay = new ControleurPlay(m, langue, null);
 		
 		VuePlateau vuePlateau = new VuePlateau(cp);
 		VueChevalet vueChevalet = new VueChevalet(cc);
