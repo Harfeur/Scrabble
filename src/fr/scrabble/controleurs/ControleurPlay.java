@@ -18,11 +18,11 @@ public class ControleurPlay implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand()=="Solo") {
+		if (e.getActionCommand()=="Hors ligne") {
 			menu.fermer();
 			new Solo();
 		}
-		if (e.getActionCommand()=="Multijoueur") {
+		if (e.getActionCommand()=="En ligne") {
 			menu.fermer();
 			new Client();
 		}

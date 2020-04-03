@@ -29,19 +29,21 @@ public class Menu extends JFrame{
     	this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setPreferredSize(new Dimension(400, 400));
         this.setLayout(new BorderLayout());
+        this.setCursor(HAND_CURSOR);
+        this.setAutoRequestFocus(false);
+        
         this.add(lpane, BorderLayout.CENTER);
         lpane.setBounds(0, 0, 400, 400);
-
         fond.setBounds(0, 0, 600, 400);
         fond.setOpaque(true);
-            
+        
         bouton1.setBackground(Color.GREEN);
-        bouton1.setBounds(50, 100, 100, 100);
+        bouton1.setBounds(0, 125, 200, 200);
         bouton1.setOpaque(false);
         bouton1.add(new VueBoutonSolo(cplay));
         
         bouton2.setBackground(Color.GREEN);
-        bouton2.setBounds(200, 100, 100, 100);
+        bouton2.setBounds(175, 125, 200, 200);
         bouton2.setOpaque(false);
         bouton2.add(new VueBoutonMulti(cplay));
             
