@@ -7,11 +7,11 @@ import fr.scrabble.Solo;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.multiplayer.Client;
 
-public class ControleurPlay implements ActionListener {
+public class ControleurBoutons implements ActionListener {
 	
 	private Menu menu;
 	
-	public ControleurPlay(Menu menu) {
+	public ControleurBoutons(Menu menu) {
 		super();
 		this.menu=menu;
 	}

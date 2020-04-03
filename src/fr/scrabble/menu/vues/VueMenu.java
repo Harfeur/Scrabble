@@ -17,28 +17,17 @@ public class VueMenu extends JPanel{
 		try {
 			im = ImageIO.read(Menu.class.getResource("/resources/scrabble.jpg"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		/*bouton = new VueBoutonSolo();
-		Rectangle r = new Rectangle();
-		r.height=50;
-		r.width=50;
-		r.x=100;
-		r.y=100;
-        bouton.setBounds(r);
-        this.add(bouton);
-        this.setSize(50, 50);*/
+		
+		this.setBounds(0, 0, 600, 400);
+		this.setOpaque(true);
 	}
 	
+	@Override
 	public void paint(Graphics g) {
 		super.paintComponents(g);
 		g.drawImage(im, 0, 0, 400, 400, this.getParent());
-		
-	       
-       
-        
-	}
 	}
 
-
+}
