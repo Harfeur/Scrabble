@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.event.MouseInputListener;
 
 import fr.scrabble.Modele;
-import fr.scrabble.Solo;
+import fr.scrabble.menu.Menu;
 import fr.scrabble.vues.VuePlateau;
 
 public class ControleurPlateau implements MouseInputListener {
@@ -19,9 +19,10 @@ public class ControleurPlateau implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int col = (int) (e.getX() / (VuePlateau.TAILLE*Solo.SCALE));
-		int lig = (int) (e.getY() / (VuePlateau.TAILLE*Solo.SCALE));
-		m.ajoutLettre(col, lig);
+		int col = (int) (e.getX() / (VuePlateau.TAILLE*Menu.SCALE));
+		int lig = (int) (e.getY() / (VuePlateau.TAILLE*Menu.SCALE));
+		if (lig < 15 && col < 15)
+			m.ajoutLettre(col, lig);
 	}
 
 	@Override

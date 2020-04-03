@@ -8,7 +8,7 @@ import java.awt.Graphics;
 
 import javax.swing.*;
 
-import fr.scrabble.Solo;
+import fr.scrabble.menu.Menu;
 
 @SuppressWarnings("serial")
 public class VueColonne extends JPanel {
@@ -18,22 +18,22 @@ public class VueColonne extends JPanel {
 	
 	public VueColonne() {
 		super();
-		this.setPreferredSize(new Dimension((int) (TAILLE*Solo.SCALE),(int) (TAILLE*15*Solo.SCALE)));
+		this.setPreferredSize(new Dimension((int) (TAILLE*Menu.SCALE),(int) (TAILLE*15*Menu.SCALE)));
 	}
 	
 	public void paint(Graphics g) {
 		for (int i = 0; i < 15; i++) {
 			//Fond
 			g.setColor(new Color(51,108,11));
-			g.fillRect(0,(int) (i*TAILLE*Solo.SCALE) ,(int) (TAILLE*Solo.SCALE),(int) (TAILLE*Solo.SCALE));
+			g.fillRect(0,(int) (i*TAILLE*Menu.SCALE) ,(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 			g.setColor(Color.BLACK);
-			g.drawRect(0,(int) (i*TAILLE*Solo.SCALE),(int) (TAILLE*Solo.SCALE),(int) (TAILLE*Solo.SCALE));
+			g.drawRect(0,(int) (i*TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 			//Chiffre
-			Font font_lettre = new Font("Arial",Font.PLAIN,(int)(18*Solo.SCALE)) ;
+			Font font_lettre = new Font("Arial",Font.PLAIN,(int)(18*Menu.SCALE)) ;
 			FontMetrics metrics_lettre = getFontMetrics(font_lettre);
 			g.setFont(font_lettre);
 			g.setColor(Color.BLACK);
-			g.drawString(alphabet[i],metrics_lettre.getDescent(),(int) (i*TAILLE*Solo.SCALE+metrics_lettre.getAscent()));
+			g.drawString(alphabet[i],metrics_lettre.getDescent(),(int) (i*TAILLE*Menu.SCALE+metrics_lettre.getAscent()));
 		}
 	}
 }

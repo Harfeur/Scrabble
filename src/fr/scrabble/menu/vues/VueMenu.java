@@ -20,14 +20,14 @@ public class VueMenu extends JPanel{
 			e1.printStackTrace();
 		}
 		
-		this.setBounds(0, 0, 600, 400);
+		this.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
 		this.setOpaque(true);
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		super.paintComponents(g);
-		g.drawImage(im, 0, 0, 400, 400, this.getParent());
+		g.drawImage(im, 0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE), this.getParent());
 	}
 
 }

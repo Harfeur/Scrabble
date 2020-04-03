@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
+import fr.scrabble.menu.Menu;
+
 @SuppressWarnings("serial")
 public class VueBoutonHorsLigne  extends JPanel {
 
@@ -20,11 +22,11 @@ public class VueBoutonHorsLigne  extends JPanel {
 		b.addActionListener(solo);
 		b.setBorderPainted(false);
 		b.setContentAreaFilled(false);
-		b.setPreferredSize(new Dimension(150, 50));
+		b.setPreferredSize(new Dimension((int) (225*Menu.SCALE), (int) (75*Menu.SCALE)));
 	
 		// Creation du Panel
 		this.setBackground(Color.GREEN);
-		this.setBounds(0, 125, 200, 200);
+		this.setBounds(0, (int) (190*Menu.SCALE), (int) (300*Menu.SCALE), (int) (300*Menu.SCALE));
 		this.setOpaque(false);
 		this.add(b);
 	}
