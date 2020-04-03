@@ -56,4 +56,8 @@ public class Placement {
 	public int getColumn() {
 		return this.col;
 	}
+	
+	public Case getCase() {
+		return this.c;
+	}
 }

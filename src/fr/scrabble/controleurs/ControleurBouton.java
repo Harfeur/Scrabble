@@ -16,7 +16,13 @@ public class ControleurBouton implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		m.verificationMot();
+		if (e.getActionCommand()=="Valider") {
+			m.verificationMot();
+		}
+		if (e.getActionCommand()=="Passer") {
+			m.changementJoueur();
+		}
+		
 	}
 
 }

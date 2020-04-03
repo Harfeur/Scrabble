@@ -1,24 +1,23 @@
 package fr.scrabble.structures;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.Hashtable;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.Map.Entry;
 
 @SuppressWarnings("serial")
-public class Sac extends Hashtable<Lettre, Integer> {
+public class Sac extends ArrayList<Lettre> {
 	
-	int nombreDeLettres;
+	public int nombreDeLettres;
 
 	public Sac(String langue) {
 		super();
 		this.nombreDeLettres = 0;
-		File fichier=new File("assets/sacs/"+langue+".csv");
+		URL fichier = Sac.class.getResource("/resources/sacs/"+langue+".csv");
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(fichier));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(fichier.openStream()));
 			String strCurrentLine;
 		    while ((strCurrentLine = reader.readLine()) != null) {
 		    	String[] tab=strCurrentLine.split(",");
@@ -40,28 +39,29 @@ public class Sac extends Hashtable<Lettre, Integer> {
 	}
 
 	public void ajouterLettre(Lettre lettre, int nombre) {
-		this.put(lettre, nombre);
+		for (int i = 0; i < nombre; i++)
+			this.add(lettre.clone());
 	}
 
 	public Lettre obtenirLettre() {
 		if(this.estVide()==false) {
 			Random r = new Random();
 			int nombreAleatoire = r.nextInt(this.nombreDeLettres);
-			int compteur=0;
 			this.nombreDeLettres--;
 
-			for (Entry<Lettre, Integer> element : this.entrySet()) {
-				compteur = compteur + element.getValue();
-				if (compteur>=nombreAleatoire) {
-					return element.getKey();
-				}
-			}
+			Lettre l = this.get(nombreAleatoire);
+			this.remove(nombreAleatoire);
+			return l;
 		}
 		return null;
 	}
 
 	public boolean estVide() {
 		return this.nombreDeLettres==0;
+	}
+
+	public int nbLettre() {
+		return this.nombreDeLettres;
 	}
 
 }

@@ -1,9 +1,9 @@
 package fr.scrabble.structures;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 import fr.scrabble.structures.Case.Multiplicateur;
 
@@ -14,9 +14,9 @@ public class Plateau {
 	public Plateau() {
 		super();
 		this.plateau = new Case[15][15];
-		File fichier=new File("assets/plateau.csv");
+		URL fichier=Plateau.class.getResource("/resources/plateau.csv");
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(fichier));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(fichier.openStream()));
 			String strCurrentLine;
 			int ligne = 0;
 			while ((strCurrentLine = reader.readLine()) != null) {
@@ -53,11 +53,10 @@ public class Plateau {
 	public Plateau clone() {
 		Plateau p = new Plateau();
 		for (int i = 0; i < 15; i++) {
-			for (int j = 0; i < 15; i++) {
+			for (int j = 0; j < 15; j++) {
 				p.plateau[i][j] = this.plateau[i][j].clone();
 			}
 		}
 		return p;
 	}
-
 }
