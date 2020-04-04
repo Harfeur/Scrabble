@@ -28,15 +28,11 @@ public class Serveur {
 		this.joueurs = new ArrayList<String>();
 		this.ips = new ArrayList<String>();
 		this.outs = new ArrayList<PrintWriter>();
-		try {
-			this.serverSoc = new ServerSocket(8080);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
-	private void ouvrirConnection() {
+	public void ouvrirConnection() {
 		try {
+			this.serverSoc = new ServerSocket(8080);
 			boolean attente = true;
 			while (attente) {
 				Socket connection = this.serverSoc.accept();
@@ -63,11 +59,6 @@ public class Serveur {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
- 
-    public static void main(String[] args) {
-		Serveur s = new Serveur();
-		s.ouvrirConnection();
 	}
 	
 }

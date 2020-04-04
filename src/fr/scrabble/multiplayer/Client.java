@@ -1,22 +1,12 @@
 package fr.scrabble.multiplayer;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
-
-import fr.scrabble.multiplayer.vues.VueStart;
-
-@SuppressWarnings("serial")
-public class Client extends JFrame {
+public class Client {
 	
 	Socket connection;
 	PrintWriter out;
@@ -24,35 +14,9 @@ public class Client extends JFrame {
 	String ip;
 	String prenom;
 	
-	//Vues
-	VueStart vs;
-	
 	
 	public Client() {
-		super("Scrabble Multijoueur");
 		
-		// On initialise les vues que l'on va utiliser
-		VueStart vs = new VueStart(this);
-		//VueAttente
-		//VueRejeté
-		
-		// On affiche que celle qu'on a besoin
-		Container contentPane = this.getContentPane();
-		
-		contentPane.setLayout(new BorderLayout());
-		
-		contentPane.add(vs);
-		
-		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
-		this.pack();
-		
-		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
-	    int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
-	    int y = (int) ((dimension.getHeight() - this.getHeight()) / 2);
-	    
-	    this.setLocation(x, y);
-		this.setVisible(true);
 	}
 	
 	public void demarrer(String ip, String prenom) {

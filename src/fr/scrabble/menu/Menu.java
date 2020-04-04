@@ -19,6 +19,9 @@ import fr.scrabble.controleurs.ControleurPlateau;
 import fr.scrabble.menu.vues.VueBoutonHorsLigne;
 import fr.scrabble.menu.vues.VueBoutonMulti;
 import fr.scrabble.menu.vues.VueMenu;
+import fr.scrabble.multiplayer.Client;
+import fr.scrabble.multiplayer.Serveur;
+import fr.scrabble.multiplayer.vues.VueStart;
 import fr.scrabble.vues.VueBouton;
 import fr.scrabble.vues.VueChevalet;
 import fr.scrabble.vues.VueColonne;
@@ -33,8 +36,13 @@ public class Menu extends JFrame implements Observer {
 	
 	Container containerMenu;
 	Container containerHorsLigne;
+	Container containerClient;
+	Container containerServeur;
 
 	Modele modeleHorsLigne;
+	
+	Client client;
+	Serveur serveur;
 	
 	public Menu () {
 		super("Menu");
@@ -82,6 +90,28 @@ public class Menu extends JFrame implements Observer {
 		this.containerHorsLigne.add(vueChevalet, BorderLayout.SOUTH);
 		this.containerHorsLigne.add(vueBouton, BorderLayout.EAST);
 		
+		// Création du conteneur du Client - En ligne
+		this.containerClient = new Container();
+		
+		this.client = new Client();
+		
+		VueStart vs = new VueStart(this.client);
+		
+		this.containerClient.setLayout(new BorderLayout());
+		
+		this.containerClient.add(vs, BorderLayout.CENTER);
+		
+		// Création du conteneur du Serveur - En ligne
+		this.containerServeur = new Container();
+		
+		this.serveur = new Serveur();
+		
+		/*
+		VueServeur vueServeur = new VueServeur();
+		
+		this.containerServeur.add(vueServeur);
+		*/
+		
 		// Création et paramétrage de la fenêtre
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setPreferredSize(new Dimension((int) (600*Menu.SCALE), (int) (600*Menu.SCALE)));
@@ -104,6 +134,8 @@ public class Menu extends JFrame implements Observer {
 	public void removeAll() {
 		this.remove(this.containerMenu);
 		this.remove(this.containerHorsLigne);
+		this.remove(this.containerClient);
+		this.remove(this.containerServeur);
 	}
 
 	public void vueMenu() {
@@ -123,10 +155,23 @@ public class Menu extends JFrame implements Observer {
 		
 		this.setVisible(true);
 	}
-
-	public void fermer() {
-		this.setVisible(false);
-		this.dispose();
+	
+	public void vueClient() {
+		this.removeAll();
+		
+		this.add(this.containerClient);
+		
+		this.setVisible(true);
+	}
+	
+	public void vueServeur() {
+		this.removeAll();
+		
+		this.add(this.containerServeur);
+		
+		this.serveur.ouvrirConnection();
+		
+		this.setVisible(true);
 	}
 
 	public static void main(String[] args) {

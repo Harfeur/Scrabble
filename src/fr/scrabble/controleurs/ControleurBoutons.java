@@ -21,8 +21,7 @@ public class ControleurBoutons implements ActionListener {
 			menu.vueHorsLigne();
 		}
 		if (e.getActionCommand()=="En ligne") {
-			menu.fermer();
-			new Client();
+			menu.vueClient();
 		}
 		
 	}
