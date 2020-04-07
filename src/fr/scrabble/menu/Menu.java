@@ -21,6 +21,8 @@ import fr.scrabble.menu.vues.VueBoutonMulti;
 import fr.scrabble.menu.vues.VueMenu;
 import fr.scrabble.multiplayer.Client;
 import fr.scrabble.multiplayer.Serveur;
+import fr.scrabble.multiplayer.vues.VueAttente;
+import fr.scrabble.multiplayer.vues.VueRejete;
 import fr.scrabble.multiplayer.vues.VueStart;
 import fr.scrabble.vues.VueBouton;
 import fr.scrabble.vues.VueChevalet;
@@ -39,12 +41,14 @@ public class Menu extends JFrame implements Observer {
 	Container containerEnLigne;
 	Container containerClient;
 	Container containerServeur;
+	Container containerAttente;
+	Container containerRejete;
 
 	Modele modeleHorsLigne;
 	
 	Client client;
 	Serveur serveur;
-	private Modele modeleEnLigne;
+	Modele modeleEnLigne;
 	
 	public Menu () {
 		super("Menu");
@@ -56,6 +60,8 @@ public class Menu extends JFrame implements Observer {
 		this.containerHorsLigne = new Container();
 		this.containerEnLigne = new Container();
 		this.containerServeur = new Container();
+		this.containerAttente = new Container();
+		this.containerRejete = new Container();
 				
 		// Création du conteneur du Serveur - En ligne
 		
@@ -90,6 +96,8 @@ public class Menu extends JFrame implements Observer {
 		this.remove(this.containerClient);
 		this.remove(this.containerServeur);
 		this.remove(this.containerEnLigne);
+		this.remove(this.containerAttente);
+		this.remove(this.containerRejete);
 	}
 
 	public void vueMenu() {
@@ -188,7 +196,7 @@ public class Menu extends JFrame implements Observer {
 		
 		this.containerClient = new Container();
 		
-		this.client = new Client();
+		this.client = new Client(this);
 		
 		VueStart vs = new VueStart(this.client);
 		
@@ -198,6 +206,26 @@ public class Menu extends JFrame implements Observer {
 		
 		this.add(this.containerClient);
 		
+		this.setVisible(true);
+	}
+
+	public void vueAttente() {
+		this.removeAll();
+		
+		this.containerAttente = new Container();
+		this.containerAttente.add(new VueAttente(this.client));
+		
+		this.add(this.containerAttente);
+		this.setVisible(true);
+	}
+
+	public void vueRejete() {
+		this.removeAll();
+		
+		this.containerRejete = new Container();
+		this.containerRejete.add(new VueRejete());
+		
+		this.add(this.containerRejete);
 		this.setVisible(true);
 	}
 	

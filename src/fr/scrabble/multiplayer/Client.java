@@ -6,7 +6,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
 
+import fr.scrabble.menu.Menu;
+
 public class Client {
+	
+	Menu menu;
 	
 	Socket connection;
 	PrintWriter out;
@@ -15,11 +19,11 @@ public class Client {
 	String prenom;
 	
 	
-	public Client() {
-		
+	public Client(Menu menu) {
+		this.menu = menu;
 	}
 	
-	public void demarrer(String ip, String prenom) {
+	public void rejoindre(String ip, String prenom) {
 		try {
 			this.ip = ip;
 			this.prenom = prenom;
@@ -30,18 +34,23 @@ public class Client {
 	        String resp = in.readLine();
 	        if (resp.equals("ok")) {
 	        	System.out.println("Connecté");
-	        	//TODO On change la fenetre pour afficher le texte "En attente du lancement" ainsi qu'un bouton "Lancer maintenant"
-	        	/*
-	        	 * this.remove(this.vs);
-	        	 * this.add(this.va);
-	        	 * this.pack();
-	        	 */
+	        	this.menu.vueAttente();
+	        	resp = in.readLine();
+	        	while (!resp.equals("starting")) {
+	        		resp = in.readLine();
+	        	}
+	        	System.out.println("Le jeu démarre");
+	        	menu.vueEnLigne();
 	        } else {
-				//TODO Fin du programme, on affiche "Partie injoignable (pleine ou serveur fermé)" puis on laisse l'utilisateur fermer la fenetre
+	        	this.menu.vueRejete();
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void demarrer() {
+		out.println("gameStart");
 	}
 
 }
