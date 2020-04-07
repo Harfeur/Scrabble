@@ -36,6 +36,7 @@ public class Menu extends JFrame implements Observer {
 	
 	Container containerMenu;
 	Container containerHorsLigne;
+	Container containerEnLigne;
 	Container containerClient;
 	Container containerServeur;
 
@@ -43,68 +44,20 @@ public class Menu extends JFrame implements Observer {
 	
 	Client client;
 	Serveur serveur;
+	private Modele modeleEnLigne;
 	
 	public Menu () {
 		super("Menu");
 
 		this.langue = "FR";
 		
-		// Création du conteneur du Menu
 		this.containerMenu = new JLayeredPane();
-		
-		ControleurBoutons cplay = new ControleurBoutons(this);
-
-		VueMenu fondMenu = new VueMenu();
-		VueBoutonHorsLigne vueBoutonHorsLigne = new VueBoutonHorsLigne(cplay);
-		VueBoutonMulti vueBoutonMultijoueur = new VueBoutonMulti(cplay);
-
-		containerMenu.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
-		containerMenu.add(fondMenu, 0, 0);
-		containerMenu.add(vueBoutonHorsLigne, 1, 0);
-		containerMenu.add(vueBoutonMultijoueur, 1, 0);
-		
-		// Création du conteneur du mode Hors Ligne
-		this.modeleHorsLigne = new Modele();
-
-		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
-		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
-		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
-
-		VuePlateau vuePlateau = new VuePlateau(cp);
-		VueChevalet vueChevalet = new VueChevalet(cc);
-		VueBouton vueBouton = new VueBouton(cb);
-		VueLigne vueLigne = new VueLigne();
-		VueColonne vueColonne = new VueColonne();
-
-		this.modeleHorsLigne.addObserver(vuePlateau);
-		this.modeleHorsLigne.addObserver(vueChevalet);
-		this.modeleHorsLigne.addObserver(this);
-
-		this.containerHorsLigne = new Container();
-
-		this.containerHorsLigne.setLayout(new BorderLayout());
-
-		this.containerHorsLigne.add(vuePlateau, BorderLayout.CENTER);
-		this.containerHorsLigne.add(vueLigne, BorderLayout.NORTH);
-		this.containerHorsLigne.add(vueColonne, BorderLayout.WEST);
-		this.containerHorsLigne.add(vueChevalet, BorderLayout.SOUTH);
-		this.containerHorsLigne.add(vueBouton, BorderLayout.EAST);
-		
-		// Création du conteneur du Client - En ligne
 		this.containerClient = new Container();
-		
-		this.client = new Client();
-		
-		VueStart vs = new VueStart(this.client);
-		
-		this.containerClient.setLayout(new BorderLayout());
-		
-		this.containerClient.add(vs, BorderLayout.CENTER);
-		
-		// Création du conteneur du Serveur - En ligne
+		this.containerHorsLigne = new Container();
+		this.containerEnLigne = new Container();
 		this.containerServeur = new Container();
-		
-		this.serveur = new Serveur();
+				
+		// Création du conteneur du Serveur - En ligne
 		
 		/*
 		VueServeur vueServeur = new VueServeur();
@@ -136,10 +89,24 @@ public class Menu extends JFrame implements Observer {
 		this.remove(this.containerHorsLigne);
 		this.remove(this.containerClient);
 		this.remove(this.containerServeur);
+		this.remove(this.containerEnLigne);
 	}
 
 	public void vueMenu() {
 		this.removeAll();
+		
+		this.containerMenu = new JLayeredPane();
+
+		ControleurBoutons cplay = new ControleurBoutons(this);
+
+		VueMenu fondMenu = new VueMenu();
+		VueBoutonHorsLigne vueBoutonHorsLigne = new VueBoutonHorsLigne(cplay);
+		VueBoutonMulti vueBoutonMultijoueur = new VueBoutonMulti(cplay);
+
+		containerMenu.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
+		containerMenu.add(fondMenu, 0, 0);
+		containerMenu.add(vueBoutonHorsLigne, 1, 0);
+		containerMenu.add(vueBoutonMultijoueur, 1, 0);
 		
 		this.add(containerMenu);
 		
@@ -149,6 +116,32 @@ public class Menu extends JFrame implements Observer {
 	public void vueHorsLigne() {
 		this.removeAll();
 		
+		this.modeleHorsLigne = new Modele();
+
+		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
+		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
+		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
+
+		VuePlateau vuePlateau = new VuePlateau(cp);
+		VueChevalet vueChevalet = new VueChevalet(cc);
+		VueBouton vueBouton = new VueBouton(cb);
+		VueLigne vueLigne = new VueLigne();
+		VueColonne vueColonne = new VueColonne();
+
+		this.modeleHorsLigne.addObserver(vuePlateau);
+		this.modeleHorsLigne.addObserver(vueChevalet);
+		this.modeleHorsLigne.addObserver(this);
+
+		this.containerHorsLigne = new Container();
+
+		this.containerHorsLigne.setLayout(new BorderLayout());
+
+		this.containerHorsLigne.add(vuePlateau, BorderLayout.CENTER);
+		this.containerHorsLigne.add(vueLigne, BorderLayout.NORTH);
+		this.containerHorsLigne.add(vueColonne, BorderLayout.WEST);
+		this.containerHorsLigne.add(vueChevalet, BorderLayout.SOUTH);
+		this.containerHorsLigne.add(vueBouton, BorderLayout.EAST);
+		
 		this.add(this.containerHorsLigne);
 		
 		this.modeleHorsLigne.nouvellePartie(4, this.langue);
@@ -156,8 +149,52 @@ public class Menu extends JFrame implements Observer {
 		this.setVisible(true);
 	}
 	
+	public void vueEnLigne() {
+		this.removeAll();
+		
+		this.modeleEnLigne = new Modele();
+		
+		ControleurPlateau cp = new ControleurPlateau(modeleEnLigne);
+		ControleurChevalet cc = new ControleurChevalet(modeleEnLigne);
+		ControleurBouton cb = new ControleurBouton(modeleEnLigne);
+
+		VuePlateau vuePlateau = new VuePlateau(cp);
+		VueChevalet vueChevalet = new VueChevalet(cc);
+		VueBouton vueBouton = new VueBouton(cb);
+		VueLigne vueLigne = new VueLigne();
+		VueColonne vueColonne = new VueColonne();
+
+		this.modeleEnLigne.addObserver(vuePlateau);
+		this.modeleEnLigne.addObserver(vueChevalet);
+		this.modeleEnLigne.addObserver(this);
+
+		this.containerEnLigne = new Container();
+
+		this.containerEnLigne.setLayout(new BorderLayout());
+
+		this.containerEnLigne.add(vuePlateau, BorderLayout.CENTER);
+		this.containerEnLigne.add(vueLigne, BorderLayout.NORTH);
+		this.containerEnLigne.add(vueColonne, BorderLayout.WEST);
+		this.containerEnLigne.add(vueChevalet, BorderLayout.SOUTH);
+		this.containerEnLigne.add(vueBouton, BorderLayout.EAST);
+		
+		this.add(this.containerEnLigne);
+		
+		this.setVisible(true);
+	}
+	
 	public void vueClient() {
 		this.removeAll();
+		
+		this.containerClient = new Container();
+		
+		this.client = new Client();
+		
+		VueStart vs = new VueStart(this.client);
+		
+		this.containerClient.setLayout(new BorderLayout());
+		
+		this.containerClient.add(vs, BorderLayout.CENTER);
 		
 		this.add(this.containerClient);
 		
@@ -166,6 +203,10 @@ public class Menu extends JFrame implements Observer {
 	
 	public void vueServeur() {
 		this.removeAll();
+		
+		this.containerServeur = new Container();
+		
+		this.serveur = new Serveur();
 		
 		this.add(this.containerServeur);
 		
