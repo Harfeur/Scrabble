@@ -35,12 +35,14 @@ public class Client {
 	        if (resp.equals("ok")) {
 	        	System.out.println("Connecté");
 	        	this.menu.vueAttente();
+	        	/*
 	        	resp = in.readLine();
 	        	while (!resp.equals("starting")) {
 	        		resp = in.readLine();
 	        	}
 	        	System.out.println("Le jeu démarre");
 	        	menu.vueEnLigne();
+	        	*/
 	        } else {
 	        	this.menu.vueRejete();
 			}
