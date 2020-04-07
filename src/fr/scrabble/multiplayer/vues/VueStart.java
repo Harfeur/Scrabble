@@ -21,14 +21,12 @@ public class VueStart extends JPanel implements ActionListener {
 	
 	Client client;
 	JTextField prenom_t,ip_t;
-	Menu menu = new Menu();
-	JFrame f;
 
 	public VueStart(Client client) {
 		super();
 		this.client = client;
 		
-		Font font = new Font("Arial",Font.BOLD,(int) (25*menu.SCALE));
+		Font font = new Font("Arial",Font.BOLD,(int) (25*Menu.SCALE));
 		JLabel prenom_l = new JLabel("Prénom :");
 		prenom_l.setFont(font);
 		

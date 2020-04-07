@@ -16,14 +16,13 @@ import javafx.scene.paint.Color;
 public class VueAttente extends JPanel implements ActionListener{
 
 	Client client;
-	Menu menu = new Menu();
 	
 	public VueAttente(Client client) {
 		super(new BorderLayout());
 		this.client = client;
 		
 		JLabel txt = new JLabel("En attente");
-		txt.setFont(new Font("Arial",Font.BOLD,(int) (25*menu.SCALE)));
+		txt.setFont(new Font("Arial",Font.BOLD,(int) (25*Menu.SCALE)));
 		
 		JButton lancerPartie = new JButton("Lancer la partie");
 		
@@ -36,8 +35,7 @@ public class VueAttente extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		//client.demarrer();
-		System.out.println("coucou");
+		client.demarrer();
 	}
 
 }
