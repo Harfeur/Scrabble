@@ -95,12 +95,20 @@ public class Modele extends Observable{
 		} else {
 			// Sinon, on ajoute la lettre sur le plateau, et dans notre liste des placments
 			// du tour en cours
-			if(lettre.valeur == 0) {
-				lettre.lettre=lettreChoisi;
+			if(c.lettre == null) {
+				// Si la case est vide
+				if(lettre.valeur == 0) {
+					lettre.lettre=lettreChoisi;
+				}
+				this.placementEnCours.add(new Placement(lettre, c, lig, col));
+				c.ajouterLettre(lettre);
 			}
-			this.placementEnCours.add(new Placement(lettre, c, lig, col));
-			c.ajouterLettre(lettre);
+			else {
+				this.chevalets[this.numChevalet].remettreLettre(lettre);
+			}
+			
 		}
+		System.out.print(this.placementEnCours.toString());
 		this.setChanged();
 		this.notifyObservers(this.plateauFictif);
 
