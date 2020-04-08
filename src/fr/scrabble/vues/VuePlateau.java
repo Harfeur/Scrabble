@@ -27,6 +27,13 @@ public class VuePlateau extends JPanel implements Observer {
 		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Menu.SCALE),(int) (VuePlateau.TAILLE*15*Menu.SCALE)));
 		this.plateau = new Plateau();
 		this.addMouseListener(l);
+
+		// Creation du Panel
+		VueColonne colonne = new VueColonne();
+		VueLigne ligne = new VueLigne();
+		
+		this.setBackground(Color.GREEN);
+        this.setBounds((int) (colonne.getWidth()), (int) (ligne.getHeight()), (int) (VuePlateau.TAILLE*15*Menu.SCALE), (int) (VuePlateau.TAILLE*15*Menu.SCALE));
 	}
 	
 	@Override

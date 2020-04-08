@@ -19,6 +19,7 @@ public class VueColonne extends JPanel {
 	public VueColonne() {
 		super();
 		this.setPreferredSize(new Dimension((int) (TAILLE*Menu.SCALE),(int) (TAILLE*15*Menu.SCALE)));
+		this.setBounds(0,(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE), (int) (TAILLE*15*Menu.SCALE));
 	}
 	
 	public void paint(Graphics g) {

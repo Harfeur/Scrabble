@@ -31,6 +31,7 @@ public class VueChevalet extends JPanel implements Observer {
 		this.sac = new Sac("FR");
 		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Menu.SCALE),(int) (VuePlateau.TAILLE*3*Menu.SCALE)));
 		this.addMouseListener(cc);
+		this.setBounds(0, (int) (VuePlateau.TAILLE*15*Menu.SCALE+(TAILLE*Menu.SCALE)), (int) (VuePlateau.TAILLE*15*Menu.SCALE), (int) (VuePlateau.TAILLE*3*Menu.SCALE));
 	}
 	
 	@Override

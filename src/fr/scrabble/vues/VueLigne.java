@@ -18,6 +18,7 @@ public class VueLigne extends JPanel {
 	public VueLigne() {
 		super();
 		this.setPreferredSize(new Dimension((int) (TAILLE*15*Menu.SCALE),(int) (TAILLE*Menu.SCALE)));
+		this.setBounds(0,0,(int) (TAILLE*16*Menu.SCALE), (int) (TAILLE*Menu.SCALE));
 	}
 	
 	@Override
