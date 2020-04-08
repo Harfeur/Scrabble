@@ -53,7 +53,7 @@ public class Modele extends Observable{
 		this.notifyObservers(this.chevalets[numChevalet]);
 		
 		this.setChanged();
-		this.notifyObservers(this.score[numChevalet]);
+		this.notifyObservers(this.score);
 
 		this.setChanged();
 		this.notifyObservers(this.numChevalet);
@@ -108,7 +108,6 @@ public class Modele extends Observable{
 			}
 			
 		}
-		System.out.print(this.placementEnCours.toString());
 		this.setChanged();
 		this.notifyObservers(this.plateauFictif);
 
@@ -783,7 +782,7 @@ public class Modele extends Observable{
 		this.setChanged();
 		this.notifyObservers(this.chevalets[this.numChevalet]);
 		this.setChanged();
-		this.notifyObservers(this.score[numChevalet]);
+		this.notifyObservers(this.score);
 		// On initialise à zéro le placement
 		this.placementEnCours = new ArrayList<Placement>();
 	}

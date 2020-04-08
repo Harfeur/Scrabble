@@ -127,17 +127,18 @@ public class Menu extends JFrame implements Observer {
 
 		this.modeleHorsLigne.addObserver(vuePlateau);
 		this.modeleHorsLigne.addObserver(vueChevalet);
+		this.modeleHorsLigne.addObserver(vueScore);
 		this.modeleHorsLigne.addObserver(this);
 
 		this.containerHorsLigne = new JLayeredPane();
 
 		
-		this.containerHorsLigne.add(vuePlateau);
-		this.containerHorsLigne.add(vueLigne);
-		this.containerHorsLigne.add(vueColonne);
-		this.containerHorsLigne.add(vueChevalet);
-		this.containerHorsLigne.add(vueBouton);
-		//this.containerHorsLigne.add(vueScore, BorderLayout.EAST);
+		this.containerHorsLigne.add(vuePlateau,0);
+		this.containerHorsLigne.add(vueLigne,0);
+		this.containerHorsLigne.add(vueColonne,0);
+		this.containerHorsLigne.add(vueChevalet,0);
+		this.containerHorsLigne.add(vueBouton,0);
+		this.containerHorsLigne.add(vueScore,1);
 		
 		this.add(this.containerHorsLigne);
 		
