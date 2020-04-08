@@ -12,23 +12,11 @@ import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
 import fr.scrabble.Modele;
-import fr.scrabble.controleurs.ControleurBouton;
-import fr.scrabble.controleurs.ControleurBoutons;
-import fr.scrabble.controleurs.ControleurChevalet;
-import fr.scrabble.controleurs.ControleurPlateau;
-import fr.scrabble.menu.vues.VueBoutonHorsLigne;
-import fr.scrabble.menu.vues.VueBoutonMulti;
-import fr.scrabble.menu.vues.VueMenu;
-import fr.scrabble.multiplayer.Client;
-import fr.scrabble.multiplayer.Serveur;
-import fr.scrabble.multiplayer.vues.VueAttente;
-import fr.scrabble.multiplayer.vues.VueRejete;
-import fr.scrabble.multiplayer.vues.VueStart;
-import fr.scrabble.vues.VueBouton;
-import fr.scrabble.vues.VueChevalet;
-import fr.scrabble.vues.VueColonne;
-import fr.scrabble.vues.VueLigne;
-import fr.scrabble.vues.VuePlateau;
+import fr.scrabble.controleurs.*;
+import fr.scrabble.menu.vues.*;
+import fr.scrabble.multiplayer.*;
+import fr.scrabble.multiplayer.vues.*;
+import fr.scrabble.vues.*;
 
 @SuppressWarnings("serial")
 public class Menu extends JFrame implements Observer {
@@ -65,11 +53,9 @@ public class Menu extends JFrame implements Observer {
 				
 		// Création du conteneur du Serveur - En ligne
 		
-		/*
 		VueServeur vueServeur = new VueServeur();
 		
 		this.containerServeur.add(vueServeur);
-		*/
 		
 		// Création et paramétrage de la fenêtre
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -110,11 +96,13 @@ public class Menu extends JFrame implements Observer {
 		VueMenu fondMenu = new VueMenu();
 		VueBoutonHorsLigne vueBoutonHorsLigne = new VueBoutonHorsLigne(cplay);
 		VueBoutonMulti vueBoutonMultijoueur = new VueBoutonMulti(cplay);
+		VueBoutonServeur vueBoutonServeur = new VueBoutonServeur(cplay);
 
 		containerMenu.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
 		containerMenu.add(fondMenu, 0, 0);
 		containerMenu.add(vueBoutonHorsLigne, 1, 0);
 		containerMenu.add(vueBoutonMultijoueur, 1, 0);
+		containerMenu.add(vueBoutonServeur, 1, 0);
 		
 		this.add(containerMenu);
 		

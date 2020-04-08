@@ -23,6 +23,9 @@ public class ControleurBoutons implements ActionListener {
 		if (e.getActionCommand()=="En ligne") {
 			menu.vueClient();
 		}
+		if (e.getActionCommand()=="Serveur") {
+			menu.vueServeur();
+		}
 		
 	}
 }
