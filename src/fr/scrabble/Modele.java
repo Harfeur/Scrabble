@@ -10,12 +10,13 @@ import fr.scrabble.vues.VueJoker;
 
 public class Modele extends Observable{
 
-	Sac sac;
+	public Sac sac;
 	File fichier;
-	Plateau plateau, plateauFictif;
-	Chevalet[] chevalets;
-	Integer numChevalet;
-	Score[] score;
+	public Plateau plateau;
+	Plateau plateauFictif;
+	public Chevalet[] chevalets;
+	public Integer numChevalet;
+	public Score[] score;
 	ArrayList<MotPlace> motValide;
 	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
