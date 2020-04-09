@@ -24,6 +24,7 @@ public class UserThread extends Thread {
 	public void envoyer(Object obj) {
 		try {
 			this.out.writeObject(obj);
+			this.out.reset();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -40,8 +41,24 @@ public class UserThread extends Thread {
 				out.writeObject("gameJoined");
 				while ((inputLine = in.readLine()) != null) {
 					System.out.println(this.username + " : " + inputLine);
-					if (inputLine.equals("gameStart")) {
+					switch (inputLine) {
+					case "gameStart":
 						this.serveur.demarrer();
+						break;
+					case "verifMot":
+						this.serveur.verificationMot(this.username);
+						break;
+					case "changeJoueur":
+						this.serveur.changementJoueur(this.username);
+						break;
+					case "selectLettre":
+						this.serveur.selectLettre(this.username, Integer.parseInt(in.readLine()));
+						break;
+					case "ajoutLettre":
+						this.serveur.ajoutLettre(this.username, Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
+						break;
+					default:
+						break;
 					}
 				}
 			}

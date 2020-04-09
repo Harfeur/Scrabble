@@ -36,7 +36,7 @@ public class Menu extends JFrame implements Observer {
 	
 	Client client;
 	Serveur serveur;
-	Modele modeleEnLigne;
+	ModeleEnLigne modeleEnLigne;
 	
 	public Menu () {
 		super("Menu");
@@ -150,7 +150,7 @@ public class Menu extends JFrame implements Observer {
 	public void vueEnLigne() {
 		this.removeAll();
 		
-		this.modeleEnLigne = new Modele();
+		this.modeleEnLigne = new ModeleEnLigne(this.client);
 		
 		ControleurPlateau cp = new ControleurPlateau(modeleEnLigne);
 		ControleurChevalet cc = new ControleurChevalet(modeleEnLigne);
@@ -165,6 +165,7 @@ public class Menu extends JFrame implements Observer {
 
 		this.client.addObserver(vuePlateau);
 		this.client.addObserver(vueChevalet);
+		this.client.addObserver(vueScore);
 		this.client.addObserver(this);
 
 		this.containerEnLigne = new JLayeredPane();

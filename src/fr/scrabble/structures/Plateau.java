@@ -9,8 +9,9 @@ import java.net.URL;
 import fr.scrabble.structures.Case.Multiplicateur;
 
 public class Plateau implements Serializable{
-	private static final long serialVersionUID=1L;
 
+	private static final long serialVersionUID = -8869397609730203863L;
+	
 	Case[][] plateau;
 
 	public Plateau() {

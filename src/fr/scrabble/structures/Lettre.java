@@ -3,7 +3,9 @@ package fr.scrabble.structures;
 import java.io.Serializable;
 
 public class Lettre implements Serializable {
-	private static final long serialVersionUID=1L;
+	
+	private static final long serialVersionUID = 4138175046747357913L;
+	
 	public String lettre;
 	public int valeur;
 	

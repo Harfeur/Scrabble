@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.io.Serializable;
 
 public class Case implements Serializable{
-	private static final long serialVersionUID=1L;
-	public enum Multiplicateur {
+	
+	private static final long serialVersionUID = -482796625632545523L;
+
+	public enum Multiplicateur implements Serializable{
 		
 		SIMPLE (new Color(81,138,11), "S"),
 		LETTRE_DOUBLE (new Color(131,198,235), "LD"),
@@ -15,6 +17,8 @@ public class Case implements Serializable{
 		
 		private Color couleur;
 		private String libelle;
+		
+		private static final long serialVersionUID = 315206622012546523L;
 		
 		private Multiplicateur(Color c, String l) {
 			this.couleur = c;

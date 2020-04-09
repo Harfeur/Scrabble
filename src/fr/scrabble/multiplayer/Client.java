@@ -1,7 +1,5 @@
 package fr.scrabble.multiplayer;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,6 +7,7 @@ import java.net.Socket;
 import java.util.Observable;
 
 import fr.scrabble.menu.Menu;
+import fr.scrabble.structures.Sac;
 
 public class Client extends Observable implements Runnable {
 	
@@ -55,6 +54,10 @@ public class Client extends Observable implements Runnable {
 	
 	public void demarrer() {
 		out.println("gameStart");
+	}
+	
+	public void message(String message) {
+		out.println(message);
 	}
 
 	@Override
