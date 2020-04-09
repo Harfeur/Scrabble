@@ -88,7 +88,7 @@ public class Serveur extends ArrayList<UserThread> {
 			user.envoyer(this.modele.plateau);
 			user.envoyer(this.modele.sac);
 			user.envoyer(this.modele.score);
-			user.envoyer(this.modele.numChevalet);
+			user.envoyer(i);
 			user.envoyer(this.modele.chevalets[this.modele.numChevalet]);
 		}
 	}
