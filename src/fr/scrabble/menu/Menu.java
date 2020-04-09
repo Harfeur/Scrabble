@@ -161,20 +161,20 @@ public class Menu extends JFrame implements Observer {
 		VueBouton vueBouton = new VueBouton(cb);
 		VueLigne vueLigne = new VueLigne();
 		VueColonne vueColonne = new VueColonne();
+		VueScore vueScore = new VueScore();
 
-		this.modeleEnLigne.addObserver(vuePlateau);
-		this.modeleEnLigne.addObserver(vueChevalet);
-		this.modeleEnLigne.addObserver(this);
+		this.client.addObserver(vuePlateau);
+		this.client.addObserver(vueChevalet);
+		this.client.addObserver(this);
 
-		this.containerEnLigne = new Container();
+		this.containerEnLigne = new JLayeredPane();
 
-		this.containerEnLigne.setLayout(new BorderLayout());
-
-		this.containerEnLigne.add(vuePlateau, BorderLayout.CENTER);
-		this.containerEnLigne.add(vueLigne, BorderLayout.NORTH);
-		this.containerEnLigne.add(vueColonne, BorderLayout.WEST);
-		this.containerEnLigne.add(vueChevalet, BorderLayout.SOUTH);
-		this.containerEnLigne.add(vueBouton, BorderLayout.EAST);
+		this.containerEnLigne.add(vuePlateau,0);
+		this.containerEnLigne.add(vueLigne,0);
+		this.containerEnLigne.add(vueColonne,0);
+		this.containerEnLigne.add(vueChevalet,0);
+		this.containerEnLigne.add(vueBouton,0);
+		this.containerEnLigne.add(vueScore,1);
 		
 		this.add(this.containerEnLigne);
 		

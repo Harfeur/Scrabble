@@ -1,46 +1,49 @@
 package fr.scrabble.multiplayer;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 
-import fr.scrabble.structures.Plateau;
-import fr.scrabble.structures.Sac;
-import fr.scrabble.structures.Score;
+import fr.scrabble.Modele;
 
-public class Serveur {
+@SuppressWarnings("serial")
+public class Serveur extends ArrayList<UserThread> {
 	
-	Plateau plateau;
-	Sac sac;
-	ArrayList<Score> scores;
-	ArrayList<String> joueurs, ips;
+	// Valeurs à partgaer
+	Modele modele;
 	Integer joueurEnCours;
-
-	ArrayList<PrintWriter> outs;
-	ServerSocket serverSoc;
+	
+	// Stats de partie
+	boolean gameStarted;
+	ArrayList<String> joueurs;
+	
 	
 	public Serveur() {
 		super();
+		this.gameStarted = false;
 		this.joueurs = new ArrayList<String>();
-		this.ips = new ArrayList<String>();
-		this.outs = new ArrayList<PrintWriter>();
 	}
 
 	public void ouvrirConnection() {
 		try {
-			this.serverSoc = new ServerSocket(8080);
+			ServerSocket serverSoc = new ServerSocket(8080);
+			UserThread user;
+			while (true) {
+	            user = new UserThread(serverSoc.accept(), this);
+	            user.start();
+	            this.add(user);
+			}
+			/*
 			boolean attente = true;
 			while (attente) {
 				Socket connection = this.serverSoc.accept();
 				String ip = connection.getRemoteSocketAddress().toString();
+				ip = ip.substring(ip.indexOf("/") + 1);
+				ip = ip.substring(0, ip.indexOf(":"));
 				PrintWriter out = new PrintWriter(connection.getOutputStream(), true);
 				BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 				String message = in.readLine();
-				System.out.println(ip);
+				System.out.println(message);
 				if (message.equals("gameStart")) attente = false;
 				else {
 					if (ips.size() == 4) out.println("full");
@@ -56,8 +59,37 @@ public class Serveur {
 			for (PrintWriter out : this.outs) {
 				out.println("starting");
 			}
+			*/
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		Serveur s = new Serveur();
+		s.ouvrirConnection();
+	}
+
+	public boolean ajouterJoueur(String username) {
+		if (!this.gameStarted && !this.joueurs.contains(username) && this.joueurs.size() < 4) {
+			this.joueurs.add(username);
+			return true;
+		}
+		return false;
+	}
+
+	public void demarrer() {
+		this.joueurEnCours = 0;
+		this.modele = new Modele();
+		this.modele.nouvellePartie(this.size(), "FR");
+		for (int i = 0; i < this.size(); ++i) {
+			UserThread user = this.get(i);
+			user.envoyer("starting");
+			user.envoyer(this.modele.plateau);
+			user.envoyer(this.modele.sac);
+			user.envoyer(this.modele.score);
+			user.envoyer(this.modele.numChevalet);
+			user.envoyer(this.modele.chevalets[this.modele.numChevalet]);
 		}
 	}
 	
