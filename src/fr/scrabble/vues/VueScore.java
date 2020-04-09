@@ -31,12 +31,14 @@ public class VueScore extends JPanel implements Observer {
 		g.setColor(Color.darkGray);
 		g.drawRect(0, 0,(int) (VuePlateau.TAILLE*4*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*4*Menu.SCALE)-1);
 		if(score!=null) {
+			int j=0;
 			for (int i=0; i<score.length;i++) {
 				Font font_score = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;
 				FontMetrics metrics_score = getFontMetrics(font_score);
 				g.setFont(font_score);
 				g.setColor(Color.BLACK);
-				g.drawString("Joueur "+(i+1)+" : "+score[i].getScore(),metrics_score.getDescent()+2,(i+2)*metrics_score.getAscent());
+				g.drawString("Joueur "+(i+1)+" : "+score[i].getScore(),metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
+				j=j+2;
 			
 			}
 		}
