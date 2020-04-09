@@ -11,7 +11,6 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
-import fr.scrabble.controleurs.*;
 import fr.scrabble.game.Modele;
 import fr.scrabble.game.controleurs.ControleurBouton;
 import fr.scrabble.game.controleurs.ControleurChevalet;
@@ -25,7 +24,6 @@ import fr.scrabble.game.vues.VueScore;
 import fr.scrabble.menu.vues.*;
 import fr.scrabble.online.*;
 import fr.scrabble.online.vues.*;
-import fr.scrabble.vues.*;
 
 @SuppressWarnings("serial")
 public class Menu extends JFrame implements Observer {
