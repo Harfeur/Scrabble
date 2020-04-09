@@ -1,4 +1,4 @@
-package fr.scrabble.multiplayer;
+package fr.scrabble.online;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import fr.scrabble.Modele;
+import fr.scrabble.game.Modele;
 import fr.scrabble.structures.Chevalet;
 import fr.scrabble.structures.Sac;
 

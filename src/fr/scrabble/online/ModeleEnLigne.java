@@ -1,6 +1,6 @@
-package fr.scrabble.multiplayer;
+package fr.scrabble.online;
 
-import fr.scrabble.Modele;
+import fr.scrabble.game.Modele;
 
 public class ModeleEnLigne extends Modele {
 	

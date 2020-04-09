@@ -1,10 +1,9 @@
-package fr.scrabble.controleurs;
+package fr.scrabble.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.scrabble.menu.Menu;
-import fr.scrabble.multiplayer.Client;
+import fr.scrabble.online.Client;
 
 public class ControleurBoutons implements ActionListener {
 	

@@ -1,12 +1,12 @@
-package fr.scrabble.controleurs;
+package fr.scrabble.game.controleurs;
 
 import java.awt.event.MouseEvent;
 
 import javax.swing.event.MouseInputListener;
 
-import fr.scrabble.Modele;
+import fr.scrabble.game.Modele;
+import fr.scrabble.game.vues.VueChevalet;
 import fr.scrabble.menu.Menu;
-import fr.scrabble.vues.VueChevalet;
 
 public class ControleurChevalet implements MouseInputListener {
 

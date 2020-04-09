@@ -1,4 +1,4 @@
-package fr.scrabble.vues;
+package fr.scrabble.game.vues;
 
 import java.awt.Color;
 import java.awt.Dimension;

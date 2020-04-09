@@ -1,4 +1,4 @@
-package fr.scrabble.multiplayer.vues;
+package fr.scrabble.online.vues;
 
 import java.awt.Font;
 import java.awt.Graphics;

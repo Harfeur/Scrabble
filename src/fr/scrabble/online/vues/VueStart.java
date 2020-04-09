@@ -1,4 +1,4 @@
-package fr.scrabble.multiplayer.vues;
+package fr.scrabble.online.vues;
 
 import javax.swing.JButton;
 import java.awt.Font;
@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import fr.scrabble.menu.Menu;
-import fr.scrabble.multiplayer.Client;
+import fr.scrabble.online.Client;
 
 @SuppressWarnings("serial")
 public class VueStart extends JPanel implements ActionListener {

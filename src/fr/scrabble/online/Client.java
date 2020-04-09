@@ -1,4 +1,4 @@
-package fr.scrabble.multiplayer;
+package fr.scrabble.online;
 
 import java.io.ObjectInputStream;
 import java.io.IOException;

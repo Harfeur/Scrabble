@@ -11,11 +11,20 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 
-import fr.scrabble.Modele;
 import fr.scrabble.controleurs.*;
+import fr.scrabble.game.Modele;
+import fr.scrabble.game.controleurs.ControleurBouton;
+import fr.scrabble.game.controleurs.ControleurChevalet;
+import fr.scrabble.game.controleurs.ControleurPlateau;
+import fr.scrabble.game.vues.VueBouton;
+import fr.scrabble.game.vues.VueChevalet;
+import fr.scrabble.game.vues.VueColonne;
+import fr.scrabble.game.vues.VueLigne;
+import fr.scrabble.game.vues.VuePlateau;
+import fr.scrabble.game.vues.VueScore;
 import fr.scrabble.menu.vues.*;
-import fr.scrabble.multiplayer.*;
-import fr.scrabble.multiplayer.vues.*;
+import fr.scrabble.online.*;
+import fr.scrabble.online.vues.*;
 import fr.scrabble.vues.*;
 
 @SuppressWarnings("serial")

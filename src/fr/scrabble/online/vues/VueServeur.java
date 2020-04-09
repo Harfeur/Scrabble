@@ -1,4 +1,4 @@
-package fr.scrabble.multiplayer.vues;
+package fr.scrabble.online.vues;
 
 import javax.swing.JPanel;
 

@@ -1,12 +1,12 @@
-package fr.scrabble;
+package fr.scrabble.game;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Observable;
 
+import fr.scrabble.game.vues.VueJoker;
 import fr.scrabble.structures.*;
 import fr.scrabble.structures.Case.Multiplicateur;
-import fr.scrabble.vues.VueJoker;
 
 public class Modele extends Observable{
 

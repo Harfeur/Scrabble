@@ -1,4 +1,4 @@
-package fr.scrabble.multiplayer.vues;
+package fr.scrabble.online.vues;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.scrabble.menu.Menu;
-import fr.scrabble.multiplayer.Client;
+import fr.scrabble.online.Client;
 import javafx.scene.paint.Color;
 
 public class VueAttente extends JPanel implements ActionListener{

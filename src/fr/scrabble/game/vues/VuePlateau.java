@@ -1,4 +1,4 @@
-package fr.scrabble.vues;
+package fr.scrabble.game.vues;
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
