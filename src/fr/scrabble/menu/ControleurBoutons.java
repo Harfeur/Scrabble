@@ -17,7 +17,7 @@ public class ControleurBoutons implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand()=="Hors ligne") {
-			menu.vueHorsLigne();
+			menu.vueInstructionHorsLigne();
 		}
 		if (e.getActionCommand()=="En ligne") {
 			menu.vueClient();
@@ -25,6 +25,8 @@ public class ControleurBoutons implements ActionListener {
 		if (e.getActionCommand()=="Serveur") {
 			menu.vueServeur();
 		}
-		
+		if (e.getActionCommand()=="Commencer") {
+			menu.vueHorsLigne(4, "FR");
+		}
 	}
 }

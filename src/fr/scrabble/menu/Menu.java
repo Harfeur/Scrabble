@@ -1,6 +1,7 @@
 package fr.scrabble.menu;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -18,6 +19,7 @@ import fr.scrabble.game.controleurs.ControleurPlateau;
 import fr.scrabble.game.vues.VueBouton;
 import fr.scrabble.game.vues.VueChevalet;
 import fr.scrabble.game.vues.VueColonne;
+import fr.scrabble.game.vues.VueInstructionBouton;
 import fr.scrabble.game.vues.VueLigne;
 import fr.scrabble.game.vues.VuePlateau;
 import fr.scrabble.game.vues.VueScore;
@@ -30,9 +32,11 @@ public class Menu extends JFrame implements Observer {
 
 	public static double SCALE=1.5;
 	public String langue;
+	public int nbJoueur;
 	
 	Container containerMenu;
 	Container containerHorsLigne;
+	Container containerInstructionHorsLigne;
 	Container containerEnLigne;
 	Container containerClient;
 	Container containerServeur;
@@ -41,18 +45,21 @@ public class Menu extends JFrame implements Observer {
 
 	Modele modeleHorsLigne;
 	
+	boolean vueHorsLigneSombre=true;
+	
 	Client client;
 	Serveur serveur;
 	ModeleEnLigne modeleEnLigne;
 	
 	public Menu () {
 		super("Menu");
-
 		this.langue = "FR";
+		this.nbJoueur = 4;
 		
 		this.containerMenu = new JLayeredPane();
 		this.containerClient = new Container();
 		this.containerHorsLigne = new Container();
+		this.containerInstructionHorsLigne = new Container();
 		this.containerEnLigne = new Container();
 		this.containerServeur = new Container();
 		this.containerAttente = new Container();
@@ -116,8 +123,10 @@ public class Menu extends JFrame implements Observer {
 		this.setVisible(true);
 	}
 
-	public void vueHorsLigne() {
+	public void vueHorsLigne(int nb, String l) {
 		this.removeAll();
+		this.langue=l;
+		this.nbJoueur=nb;
 		
 		this.modeleHorsLigne = new Modele();
 
@@ -140,20 +149,37 @@ public class Menu extends JFrame implements Observer {
 		this.containerHorsLigne = new JLayeredPane();
 
 		
-		this.containerHorsLigne.add(vuePlateau,0);
-		this.containerHorsLigne.add(vueLigne,0);
-		this.containerHorsLigne.add(vueColonne,0);
-		this.containerHorsLigne.add(vueChevalet,0);
-		this.containerHorsLigne.add(vueBouton,0);
-		this.containerHorsLigne.add(vueScore,1);
+		this.containerHorsLigne.add(vuePlateau);
+		this.containerHorsLigne.add(vueLigne);
+		this.containerHorsLigne.add(vueColonne);
+		this.containerHorsLigne.add(vueChevalet);
+		this.containerHorsLigne.add(vueBouton);
+		this.containerHorsLigne.add(vueScore);
 		
 		this.add(this.containerHorsLigne);
 		
-		this.modeleHorsLigne.nouvellePartie(4, this.langue);
+		this.modeleHorsLigne.nouvellePartie(this.nbJoueur, this.langue);
 		
 		this.setVisible(true);
 	}
 	
+	public void vueInstructionHorsLigne() {
+		this.removeAll();
+		
+		ControleurBoutons cplay = new ControleurBoutons(this);
+		this.containerInstructionHorsLigne = new JLayeredPane();
+		
+		VueMenu fondMenu = new VueMenu();
+		VueInstructionBouton vueInstru = new VueInstructionBouton(cplay);
+		
+		containerInstructionHorsLigne.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
+		containerInstructionHorsLigne.add(fondMenu, 0, 0);
+		containerInstructionHorsLigne.add(vueInstru, 1, 0);
+		
+		this.add(containerInstructionHorsLigne);
+		
+		this.setVisible(true);
+	}
 	public void vueEnLigne() {
 		this.removeAll();
 		
