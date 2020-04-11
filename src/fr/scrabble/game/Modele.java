@@ -30,7 +30,7 @@ public class Modele extends Observable{
 	}
 
 	/*Met le jeu a zero en fonction de nb de joueur*/
-	public void nouvellePartie(int nbJoueur, String langue) {
+	public void nouvellePartie(int nbJoueur, String langue, ArrayList<String> prenoms) {
 		this.sac = new Sac(langue);
 		this.dico = new Dictionnaire(langue);
 		this.plateau= new Plateau();
@@ -45,7 +45,7 @@ public class Modele extends Observable{
 		for (int i=0; i<nbJoueur; i++) {
 			this.chevalets[i]=new Chevalet();
 			this.chevalets[i].remplir(this.sac);
-			this.score[i]= new Score();
+			this.score[i]= new Score(prenoms.get(i));
 		}
 		this.numChevalet=0;
 		// Après avoir cree les elements, on notifie les deux vues
@@ -510,8 +510,11 @@ public class Modele extends Observable{
 			}
 			score*=multiplicateur;
 			
-			if (mot.length() > 1 && !motsVerticaux.containsKey(mot))
+			if (mot.length() > 1 && !motsVerticaux.containsKey(mot)) {
 				motsVerticaux.put(mot, score);
+				this.setChanged();
+				this.notifyObservers(mot);
+			}
 			
 			//On cherche le mot horizontal
 			int col = placement.getColumn()-1;
@@ -551,6 +554,9 @@ public class Modele extends Observable{
 				}
 				col--;
 			}
+			
+			col = placement.getColumn()+1;
+			
 			while (col <= 15 && this.plateauFictif.getCase(placement.getLine(), col).lettre != null) {
 				
 				mot = mot + this.plateauFictif.getCase(placement.getLine(),col).lettre.lettre;
@@ -586,15 +592,20 @@ public class Modele extends Observable{
 
 			score*=multiplicateur;
 			
-			if (mot.length() > 1 && !motsHorizontaux.containsKey(mot))
+			if (mot.length() > 1 && !motsHorizontaux.containsKey(mot)) {
 				motsHorizontaux.put(mot, score);
+				this.setChanged();
+				this.notifyObservers(mot);
+			}
 			
 		}
 
 		for (Integer score : motsHorizontaux.values()) {
+			System.out.println("Score H : " + score);
 			this.score[this.numChevalet].majScore(score);
 		}
 		for (Integer score : motsVerticaux.values()) {
+			System.out.println("Score V : " + score);
 			this.score[this.numChevalet].majScore(score);
 		}
 	}

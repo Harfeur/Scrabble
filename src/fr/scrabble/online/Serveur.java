@@ -63,21 +63,25 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			UserThread user = this.get(i);
 			user.envoyer("starting");
 		}
-		this.modele.nouvellePartie(this.size(), "FR");
+		this.modele.nouvellePartie(this.size(), "FR", this.joueurs);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println(arg);
+		//System.out.println(arg);
 		if (arg.getClass() == Chevalet.class) {
 			UserThread user = this.get(this.joueurEnCours);
 			user.envoyer(this.modele.chevalets[this.modele.numChevalet]);
 		} else if (arg.getClass() == Integer.class) {
 			this.joueurEnCours = (Integer) arg;
 		} else if (arg.getClass() == String.class) {
-			return;
-		}
-		else {
+			String str = (String) arg;
+			str = this.joueurs.get(this.joueurEnCours) + " a joué " + arg;
+			for (int i = 0; i < this.size(); ++i) {
+				UserThread user = this.get(i);
+				user.envoyer(str);
+			}
+		} else {
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
 				user.envoyer(arg);

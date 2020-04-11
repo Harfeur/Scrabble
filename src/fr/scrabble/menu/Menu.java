@@ -6,6 +6,7 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -124,7 +125,7 @@ public class Menu extends JFrame implements Observer {
 		this.setVisible(true);
 	}
 
-	public void vueHorsLigne(int nb, String l) {
+	public void vueHorsLigne(int nb, String l, ArrayList<String> prenoms) {
 		this.removeAll();
 		this.langue=l;
 		this.nbJoueur=nb;
@@ -159,7 +160,7 @@ public class Menu extends JFrame implements Observer {
 		
 		this.add(this.containerHorsLigne);
 		
-		this.modeleHorsLigne.nouvellePartie(this.nbJoueur, this.langue);
+		this.modeleHorsLigne.nouvellePartie(this.nbJoueur, this.langue, prenoms);
 		
 		this.setVisible(true);
 	}

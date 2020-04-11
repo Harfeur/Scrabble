@@ -37,7 +37,7 @@ public class VueScore extends JPanel implements Observer {
 				FontMetrics metrics_score = getFontMetrics(font_score);
 				g.setFont(font_score);
 				g.setColor(Color.BLACK);
-				g.drawString("Joueur "+(i+1)+" : "+score[i].getScore(),metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
+				g.drawString(score[i].prenom + " : "+score[i].getScore(),metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
 				j=j+2;
 			
 			}
