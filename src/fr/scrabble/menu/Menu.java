@@ -240,8 +240,15 @@ public class Menu extends JFrame implements Observer {
 		this.removeAll();
 		
 		this.containerAttente = new Container();
-		this.containerAttente.setLayout(new BorderLayout());
-		this.containerAttente.add(new VueAttente(this.client), BorderLayout.CENTER);
+		
+		VueMenu fondMenu = new VueMenu();
+		VueAttente va = new VueAttente(this.client);
+		
+		this.containerAttente = new JLayeredPane();
+		
+		this.containerAttente.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
+		this.containerAttente.add(fondMenu, 0, 0);
+		this.containerAttente.add(va, 1, 0);
 		
 		this.add(this.containerAttente);
 		this.setVisible(true);

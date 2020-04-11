@@ -1,6 +1,8 @@
 package fr.scrabble.online.vues;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,25 +13,30 @@ import javax.swing.JPanel;
 
 import fr.scrabble.menu.Menu;
 import fr.scrabble.online.Client;
-import javafx.scene.paint.Color;
 
 public class VueAttente extends JPanel implements ActionListener{
 
 	Client client;
 	
 	public VueAttente(Client client) {
-		super(new BorderLayout());
-		this.client = client;
+		super();
+		this.client = client;  
 		
 		JLabel txt = new JLabel("En attente");
-		txt.setFont(new Font("Arial",Font.BOLD,(int) (25*Menu.SCALE)));
-		
 		JButton lancerPartie = new JButton("Lancer la partie");
+		
+		Font font = new Font("Arial",Font.BOLD,(int) (15*Menu.SCALE));
+		txt.setFont(font);
+		lancerPartie.setFont(font);		
 		
 		lancerPartie.addActionListener(this);
 		
-		this.add(txt, BorderLayout.CENTER);
-		this.add(lancerPartie, BorderLayout.SOUTH);
+		this.setBackground(new Color(128, 255, 170));
+        this.setBounds((int) (230*Menu.SCALE),(int) (240*Menu.SCALE),(int) (150*Menu.SCALE),(int) (60*Menu.SCALE));
+		
+		this.add(txt);
+		this.add(lancerPartie);
+		
 		
 	}
 	
