@@ -98,6 +98,7 @@ public class Menu extends JFrame implements Observer {
 		this.remove(this.containerEnLigne);
 		this.remove(this.containerAttente);
 		this.remove(this.containerRejete);
+		this.remove(this.containerInstructionHorsLigne);
 	}
 
 	public void vueMenu() {
@@ -274,7 +275,7 @@ public class Menu extends JFrame implements Observer {
 		
 		this.add(this.containerServeur);
 		
-		this.serveur.ouvrirConnection();
+		new Thread(this.serveur).start();
 		
 		this.setVisible(true);
 	}

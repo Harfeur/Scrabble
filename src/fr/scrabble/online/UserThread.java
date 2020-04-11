@@ -37,7 +37,9 @@ public class UserThread extends Thread {
 			this.username = in.readLine();
 
 			String inputLine;
+			System.out.println(String.format("Tentative de connexion de %s (%s)", this.username, this.clientSocket.getInetAddress().getHostAddress()));
 			if (this.serveur.ajouterJoueur(this.username)) {
+				System.out.println(String.format("%s connecté avec succès", this.username));
 				out.writeObject("gameJoined");
 				while ((inputLine = in.readLine()) != null) {
 					System.out.println(this.username + " : " + inputLine);
@@ -63,6 +65,7 @@ public class UserThread extends Thread {
 				}
 			}
 			else {
+				System.out.println(String.format("Echec de connexion pour %s", this.username));
 				out.writeObject("full");
 			}
 			in.close();

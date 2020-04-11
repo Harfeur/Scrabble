@@ -11,7 +11,7 @@ import fr.scrabble.structures.Chevalet;
 import fr.scrabble.structures.Sac;
 
 @SuppressWarnings("serial")
-public class Serveur extends ArrayList<UserThread> implements Observer {
+public class Serveur extends ArrayList<UserThread> implements Observer, Runnable {
 	
 	// Valeurs à partgaer
 	Modele modele;
@@ -107,6 +107,11 @@ public class Serveur extends ArrayList<UserThread> implements Observer {
 	public void ajoutLettre(String username, int col, int lig) {
 		if (this.joueurs.get(this.joueurEnCours).equals(username))
 			this.modele.ajoutLettre(col, lig);
+	}
+
+	@Override
+	public void run() {
+		this.ouvrirConnection();
 	}
 	
 }
