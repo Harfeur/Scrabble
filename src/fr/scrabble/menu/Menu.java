@@ -261,7 +261,16 @@ public class Menu extends JFrame implements Observer {
 		this.removeAll();
 		
 		this.containerRejete = new Container();
-		this.containerRejete.add(new VueRejete());
+		ControleurBoutons cplay = new ControleurBoutons(this);
+		
+		VueMenu fondMenu = new VueMenu();
+		VueRejete vr = new VueRejete(cplay);
+		
+		this.containerRejete = new JLayeredPane();
+		
+		this.containerRejete.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
+		this.containerRejete.add(fondMenu, 0, 0);
+		this.containerRejete.add(vr, 1, 0);
 		
 		this.add(this.containerRejete);
 		this.setVisible(true);

@@ -28,5 +28,8 @@ public class ControleurBoutons implements ActionListener {
 		if (e.getActionCommand()=="Commencer") {
 			menu.vueHorsLigne(4, "FR");
 		}
+		if (e.getActionCommand()=="Accueil") {
+			menu.vueMenu();
+		}
 	}
 }
