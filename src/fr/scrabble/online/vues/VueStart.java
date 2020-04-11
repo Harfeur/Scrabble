@@ -1,6 +1,9 @@
 package fr.scrabble.online.vues;
 
 import javax.swing.JButton;
+
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.*;
 
@@ -21,7 +24,7 @@ public class VueStart extends JPanel implements ActionListener {
 		super();
 		this.client = client;
 		
-		Font font = new Font("Arial",Font.BOLD,(int) (20*Menu.SCALE));
+		Font font = new Font("Arial",Font.BOLD,(int) (15*Menu.SCALE));
 		
 		JLabel prenom_l = new JLabel("Prénom : ");
 		JLabel ip_l = new JLabel("Adresse IP : ");	
@@ -38,6 +41,9 @@ public class VueStart extends JPanel implements ActionListener {
 		valider.setFont(font);
 		
 		valider.addActionListener(this);
+		
+		this.setBackground(new Color(128, 255, 170));
+        this.setBounds((int) (240*Menu.SCALE),(int) (240*Menu.SCALE),(int) (150*Menu.SCALE),(int) (120*Menu.SCALE));
 		
 		this.add(prenom_l);
 		this.add(prenom_t);

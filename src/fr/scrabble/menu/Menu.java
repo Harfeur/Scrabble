@@ -222,11 +222,14 @@ public class Menu extends JFrame implements Observer {
 		
 		this.client = new Client(this);
 		
+		VueMenu fondMenu = new VueMenu();
 		VueStart vs = new VueStart(this.client);
 		
-		this.containerClient.setLayout(new BorderLayout());
+		this.containerClient = new JLayeredPane();
 		
-		this.containerClient.add(vs, BorderLayout.CENTER);
+		this.containerClient.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
+		this.containerClient.add(fondMenu, 0, 0);
+		this.containerClient.add(vs, 1, 0);
 		
 		this.add(this.containerClient);
 		
