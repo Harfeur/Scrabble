@@ -268,6 +268,7 @@ public class Menu extends JFrame implements Observer {
 		this.removeAll();
 		
 		this.containerServeur = new Container();
+		this.containerServeur.add(new VueServeur());
 		
 		this.serveur = new Serveur();
 		
