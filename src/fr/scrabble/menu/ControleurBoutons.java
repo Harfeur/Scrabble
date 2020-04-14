@@ -2,11 +2,12 @@ package fr.scrabble.menu;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import fr.scrabble.online.Client;
 
 public class ControleurBoutons implements ActionListener {
-	
+	private ArrayList prenom;
 	private Menu menu;
 	
 	public ControleurBoutons(Menu menu) {
@@ -26,7 +27,7 @@ public class ControleurBoutons implements ActionListener {
 			menu.vueServeur();
 		}
 		if (e.getActionCommand()=="Commencer") {
-			menu.vueHorsLigne(4, "FR");
+			menu.vueHorsLigne(4, "FR",prenom);
 		}
 		if (e.getActionCommand()=="Accueil") {
 			menu.vueMenu();
