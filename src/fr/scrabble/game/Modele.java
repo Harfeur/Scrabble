@@ -203,9 +203,6 @@ public class Modele extends Observable{
 					Test1=true;
 					Test2=true;
 				}
-				else {
-					this.score[this.numChevalet].faux();
-				}
 			}	
 			//plusieurs lettres
 			else {
@@ -292,9 +289,6 @@ public class Modele extends Observable{
 						Test1=true;
 						Test2=true;
 					}
-					else {
-						this.score[this.numChevalet].faux();
-					}
 				}
 				//lettre dans la meme ligne
 				if(premierLettre.getLine()==deuxiemLettre.getLine()) {
@@ -379,9 +373,6 @@ public class Modele extends Observable{
 					if(motbasOk==this.placementEnCours.size() && motdroiteOk==1) {
 						Test1=true;
 						Test2=true;
-					}
-					else {
-						this.score[this.numChevalet].faux();
 					}
 				}
 			}
