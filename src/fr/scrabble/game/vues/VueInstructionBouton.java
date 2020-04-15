@@ -1,12 +1,11 @@
 package fr.scrabble.game.vues;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.GridLayout;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -16,14 +15,17 @@ import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import fr.scrabble.menu.ControleurBoutons;
 import fr.scrabble.menu.Menu;
 
-public class VueInstructionBouton extends JPanel{
-	
+public class VueInstructionBouton extends JPanel implements ItemListener{
+
 	public VueInstructionBouton(ActionListener valider) {
 		super();
 		this.setLayout(null);
 		ComboBox customCombobox = new ComboBox();
+		
+		customCombobox.addItemListener((ItemListener) valider);
 		
 		ChoixNbJoueur deux = new ChoixNbJoueur("2 joueurs");
 		ChoixNbJoueur trois = new ChoixNbJoueur("3 joueurs");
@@ -38,7 +40,9 @@ public class VueInstructionBouton extends JPanel{
 		groupe.add(deux);
 		groupe.add(trois);
 		groupe.add(quatre);
-		
+		deux.addActionListener(valider);
+		trois.addActionListener(valider);
+		quatre.addActionListener(valider);
         this.setPreferredSize(new Dimension(600,600));
         this.setBounds(70, 50, (int) (500*Menu.SCALE), (int) (500*Menu.SCALE));
         this.setOpaque(false);
@@ -76,6 +80,12 @@ public class VueInstructionBouton extends JPanel{
         this.add(pan1);
         this.add(langue);
         this.add(valide);
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
