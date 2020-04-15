@@ -122,7 +122,8 @@ public class Modele extends Observable{
 		int lig=0;
 		int col =0;
 		int lettrecotecote=1;
-		Placement premierLettre = this.placementEnCours.get(0);
+		if(this.placementEnCours.size()>0) {
+			Placement premierLettre = this.placementEnCours.get(0);	
 		for (Placement elem : this.placementEnCours) {
 			lig=lig+elem.getLine();
 			col=col+elem.getColumn();
@@ -412,6 +413,7 @@ public class Modele extends Observable{
 		}
 		else {
 			System.out.println("Les lettres ne sont pas sur la même ligne ou colonne");
+		}
 		}
 	}
 	
