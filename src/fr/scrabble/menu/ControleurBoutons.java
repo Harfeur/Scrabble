@@ -11,14 +11,16 @@ import javax.swing.JComboBox;
 import fr.scrabble.online.Client;
 
 public class ControleurBoutons implements ActionListener, ItemListener {
-	private ArrayList prenom;
+	private ArrayList<String> prenom;
 	private Menu menu;
 	private int nbjoueur=1;
 	private String langue;
-	private JComboBox c;
+	private JComboBox<String> c;
 	public ControleurBoutons(Menu menu) {
 		super();
 		this.menu=menu;
+		this.langue = "FR";
+		this.prenom = new ArrayList<String>();
 	}
 
 	@Override
@@ -42,6 +44,10 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 			menu.vueServeur();
 		}
 		if (e.getActionCommand()=="Commencer") {
+			prenom.add("Joueur 1");
+			prenom.add("Joueur 2");
+			prenom.add("Joueur 3");
+			prenom.add("Joueur 4");
 			menu.vueHorsLigne(this.nbjoueur, this.langue,prenom);
 		}
 		if (e.getActionCommand()=="Accueil") {
