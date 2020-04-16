@@ -127,31 +127,22 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 			this.nbjoueur=3;
 		}else if (quatre.isSelected()==true) {
 			this.nbjoueur=4;
+		}else {
+			//Boîte du message préventif
+			JOptionPane jop2 = new JOptionPane();
+			JOptionPane.showMessageDialog(null, "Nombre de joueur non choisi", "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		return nbjoueur;
 	}
 	
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		int nombrejoueur = getNbJoueur();
-		if (nombrejoueur==2) {
-		}
-		else if (nombrejoueur==3) {
-			this.nbjoueur=3;
-		}
-		else if (nombrejoueur==4) {
-			this.nbjoueur=4;
-		}else {
-			//Boîte du message préventif
-			JOptionPane jop2 = new JOptionPane();
-			JOptionPane.showMessageDialog(null, "Nombre de joueur non choisi", "Attention", JOptionPane.WARNING_MESSAGE);
-		}
+	public void actionPerformed(ActionEvent e) {		
 		this.prenom.add(this.j1.getText());
 		this.prenom.add(this.j2.getText());
 		this.prenom.add(this.j3.getText());
 		this.prenom.add(this.j4.getText());
-		this.cb.setInstruc(this.nbjoueur, this.prenom);
+		this.cb.setInstruc(getNbJoueur(), this.prenom);
 	}
 	
 	
