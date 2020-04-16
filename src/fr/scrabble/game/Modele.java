@@ -8,6 +8,7 @@ import fr.scrabble.game.vues.VueJoker;
 import fr.scrabble.structures.*;
 import fr.scrabble.structures.Case.Multiplicateur;
 
+@SuppressWarnings("deprecation")
 public class Modele extends Observable{
 
 	public Sac sac;

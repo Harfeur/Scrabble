@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 import javax.swing.ButtonGroup;
@@ -13,12 +12,11 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
-import fr.scrabble.menu.ControleurBoutons;
 import fr.scrabble.menu.Menu;
 
-public class VueInstructionBouton extends JPanel implements ItemListener{
+@SuppressWarnings("serial")
+public class VueInstructionBouton extends JPanel {
 
 	public VueInstructionBouton(ActionListener valider) {
 		super();
@@ -82,12 +80,6 @@ public class VueInstructionBouton extends JPanel implements ItemListener{
         this.add(valide);
 	}
 
-	@Override
-	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }
 
 @SuppressWarnings("serial")
@@ -98,9 +90,10 @@ class ChoixNbJoueur extends JRadioButton {
 	}
 }
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "serial", "rawtypes" })
 class ComboBox extends JComboBox {
 	String langue[] = {"Français", "English"};
+	@SuppressWarnings("unchecked")
 	public ComboBox() {
 		super();
 

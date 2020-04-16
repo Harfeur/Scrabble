@@ -7,6 +7,7 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 
 import fr.scrabble.online.Client;
 
@@ -44,11 +45,18 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 			menu.vueServeur();
 		}
 		if (e.getActionCommand()=="Commencer") {
-			prenom.add("Joueur 1");
-			prenom.add("Joueur 2");
-			prenom.add("Joueur 3");
-			prenom.add("Joueur 4");
-			menu.vueHorsLigne(this.nbjoueur, this.langue,prenom);
+			if(this.nbjoueur<2) {
+				//Boîte du message préventif
+				JOptionPane jop2 = new JOptionPane();
+				JOptionPane.showMessageDialog(null, "Nombre de joueur non choisi", "Attention", JOptionPane.WARNING_MESSAGE);
+			}
+			else {
+				prenom.add("Joueur 1");
+				prenom.add("Joueur 2");
+				prenom.add("Joueur 3");
+				prenom.add("Joueur 4");
+				menu.vueHorsLigne(this.nbjoueur, this.langue,prenom);
+			}
 		}
 		if (e.getActionCommand()=="Accueil") {
 			menu.vueMenu();
