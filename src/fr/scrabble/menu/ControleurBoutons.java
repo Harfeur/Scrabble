@@ -55,9 +55,14 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 	    this.changerLangue((String) e.getItem());
 	}
 	
-	public void setInstruc(int nb, ArrayList<String> l) {
+	public void lancerPartie(int nb, ArrayList<String> l) {
 		this.nbjoueur=nb;
 		this.prenom=l;
 		menu.vueHorsLigne(this.nbjoueur, this.langue,prenom);
+	}
+	
+	public void NombreJoueur(int nbjoueur) {
+		this.nbjoueur=nbjoueur;
+		menu.vueNomJoueurHorsLigne(this.nbjoueur);
 	}
 }

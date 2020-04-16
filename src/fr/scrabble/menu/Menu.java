@@ -37,6 +37,7 @@ public class Menu extends JFrame implements Observer {
 	
 	Container containerMenu;
 	Container containerHorsLigne;
+	Container containerNomJoueurHorsLigne;
 	Container containerInstructionHorsLigne;
 	Container containerEnLigne;
 	Container containerClient;
@@ -60,6 +61,7 @@ public class Menu extends JFrame implements Observer {
 		this.containerMenu = new JLayeredPane();
 		this.containerClient = new Container();
 		this.containerHorsLigne = new Container();
+		this.containerNomJoueurHorsLigne = new Container();
 		this.containerInstructionHorsLigne = new Container();
 		this.containerEnLigne = new Container();
 		this.containerServeur = new Container();
@@ -100,6 +102,7 @@ public class Menu extends JFrame implements Observer {
 		this.remove(this.containerAttente);
 		this.remove(this.containerRejete);
 		this.remove(this.containerInstructionHorsLigne);
+		this.remove(this.containerNomJoueurHorsLigne);
 	}
 
 	public void vueMenu() {
@@ -164,6 +167,24 @@ public class Menu extends JFrame implements Observer {
 		
 		this.setVisible(true);
 	}
+	public void vueNomJoueurHorsLigne(int nbJoueur) {
+		this.removeAll();
+		
+		ControleurBoutons cplay = new ControleurBoutons(this);
+		this.containerNomJoueurHorsLigne = new JLayeredPane();
+		
+		VueMenu fondMenu = new VueMenu();
+		VueNomJoueur vNJ = new VueNomJoueur(nbJoueur,cplay);
+		
+		containerNomJoueurHorsLigne.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
+		containerNomJoueurHorsLigne.add(fondMenu, 0, 0);
+		containerNomJoueurHorsLigne.add(vNJ, 1, 0);
+		
+		this.add(containerNomJoueurHorsLigne);
+		
+		this.setVisible(true);
+	}
+	
 	
 	public void vueInstructionHorsLigne() {
 		this.removeAll();
