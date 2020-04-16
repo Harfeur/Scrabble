@@ -17,6 +17,7 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 	private int nbjoueur=1;
 	private String langue;
 	private JComboBox<String> c;
+	
 	public ControleurBoutons(Menu menu) {
 		super();
 		this.menu=menu;
@@ -26,15 +27,6 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand()=="2 joueurs") {
-			this.nbjoueur=2;
-		}
-		if (e.getActionCommand()=="3 joueurs") {
-			this.nbjoueur=3;
-		}
-		if (e.getActionCommand()=="4 joueurs") {
-			this.nbjoueur=4;
-		}
 		if (e.getActionCommand()=="Hors ligne") {
 			menu.vueInstructionHorsLigne();
 		}
@@ -43,20 +35,6 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 		}
 		if (e.getActionCommand()=="Serveur") {
 			menu.vueServeur();
-		}
-		if (e.getActionCommand()=="Commencer") {
-			if(this.nbjoueur<2) {
-				//Boîte du message préventif
-				JOptionPane jop2 = new JOptionPane();
-				JOptionPane.showMessageDialog(null, "Nombre de joueur non choisi", "Attention", JOptionPane.WARNING_MESSAGE);
-			}
-			else {
-				prenom.add("Joueur 1");
-				prenom.add("Joueur 2");
-				prenom.add("Joueur 3");
-				prenom.add("Joueur 4");
-				menu.vueHorsLigne(this.nbjoueur, this.langue,prenom);
-			}
 		}
 		if (e.getActionCommand()=="Accueil") {
 			menu.vueMenu();
@@ -75,5 +53,11 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 	public void itemStateChanged(ItemEvent e) {
 		// TODO Auto-generated method stub
 	    this.changerLangue((String) e.getItem());
+	}
+	
+	public void setInstruc(int nb, ArrayList<String> l) {
+		this.nbjoueur=nb;
+		this.prenom=l;
+		menu.vueHorsLigne(this.nbjoueur, this.langue,prenom);
 	}
 }
