@@ -403,6 +403,8 @@ public class Modele extends Observable{
 					this.chevalets[this.numChevalet].remettreLettre(elem.getLetter());
 					elem.getCase().lettre=null;
 				}
+				this.motbasOk=0;
+				this.motdroiteOk=0;
 				this.placementEnCours=new ArrayList<Placement>();
 				this.setChanged();
 				this.notifyObservers(this.chevalets[this.numChevalet]);
