@@ -112,13 +112,15 @@ public class VueChevalet extends JPanel implements Observer {
 			this.chevalet = (Chevalet) arg;
 			this.repaint(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}
+		//Numero Joueur
 		if (arg.getClass() == Integer.class) {
 			this.numchevalet = (Integer) arg;
 			this.repaint(0,0,(int) (TAILLE*3*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}
+		//Nombre lettre restante
 		if (arg.getClass() == Sac.class) {
 			this.sac = (Sac) arg;
-			this.repaint((int) (TAILLE*9*Menu.SCALE), 0, (int) (TAILLE*2*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+			this.repaint((int) (TAILLE*5*Menu.SCALE), 0, (int) (TAILLE*5*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}
 	}
 	
