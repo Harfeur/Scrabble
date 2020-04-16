@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 import fr.scrabble.menu.Menu;
 import fr.scrabble.online.Client;
+import fr.scrabble.online.JTextFieldLimit;
 
 @SuppressWarnings("serial")
 public class VueStart extends JPanel implements ActionListener {
@@ -39,6 +40,8 @@ public class VueStart extends JPanel implements ActionListener {
 		ip_l.setFont(font);	
 		this.ip_t.setFont(font);
 		valider.setFont(font);
+		
+		prenom_t.setDocument(new JTextFieldLimit(15));
 		
 		valider.addActionListener(this);
 		
