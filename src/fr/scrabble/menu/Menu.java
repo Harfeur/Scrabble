@@ -58,6 +58,10 @@ public class Menu extends JFrame implements Observer {
 		this.langue = "FR";
 		this.nbJoueur = 4;
 		
+		ControleurBoutons cplay = new ControleurBoutons(this);
+		VueMenuBar vueMenuBar = new VueMenuBar(cplay);
+		this.setJMenuBar(vueMenuBar);
+		
 		this.containerMenu = new JLayeredPane();
 		this.containerClient = new Container();
 		this.containerHorsLigne = new Container();
@@ -116,7 +120,7 @@ public class Menu extends JFrame implements Observer {
 		VueBoutonHorsLigne vueBoutonHorsLigne = new VueBoutonHorsLigne(cplay);
 		VueBoutonMulti vueBoutonMultijoueur = new VueBoutonMulti(cplay);
 		VueBoutonServeur vueBoutonServeur = new VueBoutonServeur(cplay);
-
+		
 		containerMenu.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
 		containerMenu.add(fondMenu, 0, 0);
 		containerMenu.add(vueBoutonHorsLigne, 1, 0);
