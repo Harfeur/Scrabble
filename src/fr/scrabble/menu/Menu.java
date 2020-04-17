@@ -1,12 +1,11 @@
 package fr.scrabble.menu;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -33,8 +32,6 @@ import fr.scrabble.structures.Couleur;
 public class Menu extends JFrame implements Observer {
 
 	public static double SCALE=1.5;
-	public String langue;
-	public int nbJoueur;
 	
 	Container containerMenu;
 	Container containerHorsLigne;
@@ -53,15 +50,16 @@ public class Menu extends JFrame implements Observer {
 	Client client;
 	Serveur serveur;
 	ModeleEnLigne modeleEnLigne;
-	Couleur couleur;
+	
+	Locale[] locales = {new Locale("fr"), new Locale("en")};
+	public Couleur couleur;
 	
 	public Menu () {
 		super("Menu");
-		this.langue = "FR";
-		this.nbJoueur = 4;
+		this.setLocale(Locale.getDefault());
 		this.couleur = new Couleur();
 		
-		VueMenuBar vueMenuBar = new VueMenuBar(this, this.couleur);
+		VueMenuBar vueMenuBar = new VueMenuBar(this);
 		this.setJMenuBar(vueMenuBar);
 		
 		this.containerMenu = new JLayeredPane();
@@ -119,9 +117,9 @@ public class Menu extends JFrame implements Observer {
 		ControleurBoutons cplay = new ControleurBoutons(this);
 
 		VueMenu fondMenu = new VueMenu(this.couleur);
-		VueBoutonHorsLigne vueBoutonHorsLigne = new VueBoutonHorsLigne(cplay, this.couleur);
-		VueBoutonMulti vueBoutonMultijoueur = new VueBoutonMulti(cplay, this.couleur);
-		VueBoutonServeur vueBoutonServeur = new VueBoutonServeur(cplay, this.couleur);
+		VueBoutonHorsLigne vueBoutonHorsLigne = new VueBoutonHorsLigne(this, this.couleur);
+		VueBoutonMulti vueBoutonMultijoueur = new VueBoutonMulti(this, this.couleur);
+		VueBoutonServeur vueBoutonServeur = new VueBoutonServeur(this, this.couleur);
 		
 		this.couleur.addObserver(fondMenu);
 		this.couleur.addObserver(vueBoutonHorsLigne);
@@ -141,8 +139,6 @@ public class Menu extends JFrame implements Observer {
 
 	public void vueHorsLigne(int nb, String l, ArrayList<String> prenoms) {
 		this.removeAll();
-		this.langue=l;
-		this.nbJoueur=nb;
 		
 		this.modeleHorsLigne = new Modele();
 
@@ -174,7 +170,7 @@ public class Menu extends JFrame implements Observer {
 		
 		this.add(this.containerHorsLigne);
 		
-		this.modeleHorsLigne.nouvellePartie(this.nbJoueur, this.langue, prenoms);
+		this.modeleHorsLigne.nouvellePartie(nb, l, prenoms);
 		
 		this.setVisible(true);
 	}
@@ -350,6 +346,12 @@ public class Menu extends JFrame implements Observer {
 				this.setVisible(true);
 			}
 		}
+	}
+	
+	@Override
+	public void setLocale(Locale l) {
+		super.setLocale(l);
+		this.repaint();
 	}
 }
 

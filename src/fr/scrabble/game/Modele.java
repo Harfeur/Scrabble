@@ -8,7 +8,6 @@ import fr.scrabble.game.vues.VueJoker;
 import fr.scrabble.structures.*;
 import fr.scrabble.structures.Case.Multiplicateur;
 
-@SuppressWarnings("deprecation")
 public class Modele extends Observable{
 
 	public Sac sac;
@@ -65,7 +64,6 @@ public class Modele extends Observable{
 
 		this.setChanged();
 		this.notifyObservers(this.sac);
-
 	}
 
 	/* mis a jour de la lettre selectionner*/
