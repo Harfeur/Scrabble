@@ -121,7 +121,7 @@ public class Menu extends JFrame implements Observer {
 		VueMenu fondMenu = new VueMenu();
 		VueBoutonHorsLigne vueBoutonHorsLigne = new VueBoutonHorsLigne(cplay);
 		VueBoutonMulti vueBoutonMultijoueur = new VueBoutonMulti(cplay);
-		VueBoutonServeur vueBoutonServeur = new VueBoutonServeur(cplay);
+		VueBoutonServeur vueBoutonServeur = new VueBoutonServeur(cplay, this.couleur);
 		
 		containerMenu.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
 		containerMenu.add(fondMenu, 0, 0);
