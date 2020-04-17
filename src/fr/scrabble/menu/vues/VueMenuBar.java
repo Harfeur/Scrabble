@@ -9,6 +9,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.KeyStroke;
 
 import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Couleur;
@@ -31,7 +32,7 @@ public class VueMenuBar extends JMenuBar {
 		this.couleurJM = new JMenu("Couleur");
 		
 		this.accueil = new JMenuItem("Accueil");
-		this.arreter = new JMenuItem("Arrêter");
+		this.arreter = new JMenuItem("Quitter");
 		
 		this.arreter.addActionListener(new Quitte());
 		this.accueil.addActionListener(new Accueil(this.menu));
@@ -60,6 +61,8 @@ public class VueMenuBar extends JMenuBar {
 		this.appli.addSeparator();
 		this.appli.add(this.arreter);
 		
+		this.appli.setMnemonic('a');
+		this.arreter.setAccelerator(KeyStroke.getKeyStroke('q'));
 		
 		this.add(appli);
 		
