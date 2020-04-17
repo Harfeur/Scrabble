@@ -10,24 +10,31 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JRadioButtonMenuItem;
 
+import fr.scrabble.menu.Menu;
+import fr.scrabble.structures.Couleur;
+
 @SuppressWarnings("serial")
 public class VueMenuBar extends JMenuBar {
 
-	JMenu appli,couleur;
+	JMenu appli,couleurJM;
 	JMenuItem accueil,arreter;
 	JRadioButtonMenuItem jr1,jr2;
+	Menu menu;
+	Couleur couleur;
 	
-	public VueMenuBar (ActionListener accueil) {
+	public VueMenuBar (Menu menu, Couleur couleur) {
 		super();
+		this.menu = menu;
+		this.couleur = couleur;
 		
 		this.appli = new JMenu("Application");
-		this.couleur = new JMenu("Couleur");
+		this.couleurJM = new JMenu("Couleur");
 		
 		this.accueil = new JMenuItem("Accueil");
 		this.arreter = new JMenuItem("Arrêter");
 		
 		this.arreter.addActionListener(new Quitte());
-		this.accueil.addActionListener(accueil);
+		this.accueil.addActionListener(new Accueil(this.menu));
 		
 		//RadioButton
 		this.jr1 = new JRadioButtonMenuItem("Clair");
@@ -38,13 +45,18 @@ public class VueMenuBar extends JMenuBar {
 		bg.add(this.jr2);
 		this.jr1.setSelected(true);
 		
-		//Ajout RadioButton dans couleur
-		this.couleur.add(this.jr1);		
-		this.couleur.add(this.jr2);	
+		//RadioButton ajout Listener
+		CouleurListener cl = new CouleurListener(this.couleur);
+		this.jr1.addActionListener(cl);
+		this.jr2.addActionListener(cl);
+		
+		//Ajout RadioButton dans JMenu couleur
+		this.couleurJM.add(this.jr1);		
+		this.couleurJM.add(this.jr2);	
 		
 		//Ajout dans Appli
 		this.appli.add(this.accueil);
-		this.appli.add(this.couleur);
+		this.appli.add(this.couleurJM);
 		this.appli.addSeparator();
 		this.appli.add(this.arreter);
 		
@@ -63,6 +75,34 @@ class Quitte implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		System.exit(0);
+	}	
+}
+
+class Accueil implements ActionListener{
+
+	Menu menu;
+	
+	public Accueil(Menu menu) {
+		this.menu = menu ;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		this.menu.vueMenu();
+	}	
+}
+
+class CouleurListener implements ActionListener{
+	
+	Couleur couleur;
+	
+	public CouleurListener(Couleur couleur) {
+		this.couleur = couleur;
+	}
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		this.couleur.changeCouleur(((JRadioButtonMenuItem)e.getSource()).getText()); 
 	}
 	
 }

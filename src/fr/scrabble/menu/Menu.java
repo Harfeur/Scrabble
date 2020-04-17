@@ -27,6 +27,7 @@ import fr.scrabble.game.vues.VueScore;
 import fr.scrabble.menu.vues.*;
 import fr.scrabble.online.*;
 import fr.scrabble.online.vues.*;
+import fr.scrabble.structures.Couleur;
 
 @SuppressWarnings("serial")
 public class Menu extends JFrame implements Observer {
@@ -52,14 +53,15 @@ public class Menu extends JFrame implements Observer {
 	Client client;
 	Serveur serveur;
 	ModeleEnLigne modeleEnLigne;
+	Couleur couleur;
 	
 	public Menu () {
 		super("Menu");
 		this.langue = "FR";
 		this.nbJoueur = 4;
+		this.couleur = new Couleur();
 		
-		ControleurBoutons cplay = new ControleurBoutons(this);
-		VueMenuBar vueMenuBar = new VueMenuBar(cplay);
+		VueMenuBar vueMenuBar = new VueMenuBar(this, this.couleur);
 		this.setJMenuBar(vueMenuBar);
 		
 		this.containerMenu = new JLayeredPane();
