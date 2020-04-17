@@ -21,7 +21,7 @@ public class Couleur extends Observable {
 			this.couleur=0;
 		}
 		this.setChanged();
-		this.notifyObservers(this.couleur);
+		this.notifyObservers();
 	}
 	
 	public int getCouleur() {

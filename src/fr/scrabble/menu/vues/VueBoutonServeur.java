@@ -41,8 +41,8 @@ public class VueBoutonServeur extends JPanel implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
-		if(arg.getClass() == Couleur.class) {
-			this.c = (Couleur) arg;
+		if(o.getClass() == Couleur.class) {
+			this.c = (Couleur) o;
 			this.repaint();
 		}
 	}
@@ -66,5 +66,5 @@ class BoutonServeur extends JButton  {
 		 g.setColor(c.getColorBoutonVert()[c.getCouleur()]); 
 		 g.fillOval(0, 0, this.getSize().width-1, this.getSize().height-1); 
 		 super.paintComponent(g);
-	}	
+	}
 }
