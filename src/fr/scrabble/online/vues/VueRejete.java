@@ -26,7 +26,7 @@ public class VueRejete extends JPanel {
 		
 		//image
 		try {
-			this.im = ImageIO.read(Menu.class.getResource("/resources/triste.jpg"));
+			this.im = ImageIO.read(Menu.class.getResource("/resources/images/triste.jpg"));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}	

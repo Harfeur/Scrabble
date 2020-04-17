@@ -3,6 +3,8 @@ package fr.scrabble.menu.vues;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
@@ -15,7 +17,7 @@ import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Couleur;
 
 @SuppressWarnings("serial")
-public class VueMenuBar extends JMenuBar {
+public class VueMenuBar extends JMenuBar implements Observer {
 
 	JMenu appli,couleurJM;
 	JMenuItem accueil,arreter;
@@ -66,9 +68,18 @@ public class VueMenuBar extends JMenuBar {
 		
 		this.add(appli);
 		
-		this.setBackground(new Color(128, 255, 170));
+		this.setBackground(this.couleur.getColorBoutonVert()[this.couleur.getCouleur()]);
 		this.setVisible(true);
 		
+	}
+
+	@Override
+	public void update(Observable o, Object arg1) {
+		// TODO Auto-generated method stub
+		if(o.getClass() == Couleur.class) {
+			this.couleur = (Couleur) o;
+			this.repaint();
+		}
 	}	
 }
 

@@ -5,20 +5,26 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionListener;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import fr.scrabble.menu.Menu;
+import fr.scrabble.structures.Couleur;
 
 @SuppressWarnings("serial")
-public class VueBoutonHorsLigne  extends JPanel {
+public class VueBoutonHorsLigne  extends JPanel implements Observer{
 
-	public VueBoutonHorsLigne(ActionListener solo) {
+	Couleur c;
+	
+	public VueBoutonHorsLigne(ActionListener solo, Couleur c) {
 		super();
+		this.c = c;
 		
 		// Creation du Bouton
-		JButton b = new BoutonHorsLigne("Hors ligne");
+		JButton b = new BoutonHorsLigne("Hors ligne", this.c);
 		b.addActionListener(solo);
 		b.setBorderPainted(false);
 		b.setContentAreaFilled(false);
@@ -31,21 +37,33 @@ public class VueBoutonHorsLigne  extends JPanel {
 		this.add(b);
 	}
 	
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		if(o.getClass() == Couleur.class) {
+			this.c = (Couleur) o;
+			this.repaint();
+		}
+	}
+	
 	 
 }
 
 @SuppressWarnings("serial")
 class BoutonHorsLigne extends JButton {
 	
-	public BoutonHorsLigne(String titre) {
+	Couleur c;
+	
+	public BoutonHorsLigne(String titre, Couleur c) {
 		super(titre);
+		this.c = c;
 	}
 	
 	@Override
 	protected void paintComponent(Graphics g) { 
 		Font f = new Font(Font.SERIF,Font.CENTER_BASELINE,25);
 		g.setFont(f);
-		g.setColor(new Color(128, 255, 170)); 
+		g.setColor(c.getColorBoutonVert()[c.getCouleur()]); 
 		g.fillOval(0, 0, this.getSize().width-1, this.getSize().height-1); 
 		super.paintComponent(g);
 	}
