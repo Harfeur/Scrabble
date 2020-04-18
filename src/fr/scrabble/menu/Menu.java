@@ -34,7 +34,7 @@ import fr.scrabble.structures.Couleur;
 public class Menu extends JFrame implements Observer {
 
 	public static double SCALE = 1.5;
-	public static Locale[] LOCALES = {new Locale("fr", "FR"), new Locale("en", "US")};
+	public static Locale[] LOCALES = {new Locale("fr", "FR"), new Locale("en", "US"), new Locale("es", "MX")};
 
 	Container containerChargement;
 	Container containerMenu;
