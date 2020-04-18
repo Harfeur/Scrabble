@@ -13,46 +13,49 @@ import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Couleur;
 
 @SuppressWarnings("serial")
-public class VueMenu extends JPanel implements Observer{
+public class VueMenu extends JPanel {
 	
-	Image im1, im2;
-	Image[] im ;
+	Image[] images ;
 	Couleur c;
 	
 	public VueMenu(Couleur c) {
 		this.c = c;
-		this.im = new Image[2];
+		this.images = new Image[2];
+		Image im1 = null, im2 = null;
 		try {
-			this.im1 = ImageIO.read(Menu.class.getResource("/resources/images/scrabble.jpg"));
+			im1 = ImageIO.read(Menu.class.getResource("/resources/images/scrabble.jpg"));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
 		try {
-			this.im2 = ImageIO.read(Menu.class.getResource("/resources/images/beauxgosses.jpg"));
+			im2 = ImageIO.read(Menu.class.getResource("/resources/images/beauxgosses.jpg"));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
-		this.im[0] = this.im1;
-		this.im[1] = this.im2;
+		this.images[0] = im1;
+		this.images[1] = im2;
 		
 		this.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
 		this.setOpaque(true);
 	}
 	
 	@Override
-	public void update(Observable o, Object arg) {
-		if(o.getClass() == Couleur.class) {
-			this.c = (Couleur) o;
-			this.repaint();
-		}
+	public void paint(Graphics g) {
+		super.paint(g);
+		this.putClientProperty("color", this.c.getCouleur());
+		g.drawImage(this.images[this.c.getCouleur()], 0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE), this.getParent());
 	}
 	
 	@Override
-	public void paint(Graphics g) {
-		super.paintComponents(g);
-		g.drawImage(this.im[this.c.getCouleur()], 0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE), this.getParent());
+	public void update(Graphics g) {
+		System.out.println("update");
+		if ((int) this.getClientProperty("color") != this.c.getCouleur()) {
+			this.putClientProperty("color", this.c.getCouleur());
+			System.out.println("repaint");
+			g.drawImage(this.images[this.c.getCouleur()], 0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE), this.getParent());
+		}
 	}
 
 }

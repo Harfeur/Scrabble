@@ -59,6 +59,8 @@ public class Menu extends JFrame implements Observer {
 		this.setLocale(Locale.getDefault());
 		this.couleur = new Couleur();
 		
+		this.couleur.addObserver(this);
+		
 		VueMenuBar vueMenuBar = new VueMenuBar(this);
 		this.setJMenuBar(vueMenuBar);
 		
@@ -320,7 +322,7 @@ public class Menu extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg.getClass() == String.class) {
+		if (arg != null && arg.getClass() == String.class) {
 			String str = (String) arg;
 			if (str.equals("cacher")) {
 				this.setVisible(false);

@@ -18,7 +18,7 @@ import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Couleur;
 
 @SuppressWarnings("serial")
-public class VueMenuBar extends JMenuBar implements Observer {
+public class VueMenuBar extends JMenuBar {
 
 	JMenu appli,couleurJM;
 	JMenuItem accueil,arreter;
@@ -75,14 +75,6 @@ public class VueMenuBar extends JMenuBar implements Observer {
 		this.add(appli);
 		this.setVisible(true);
 		
-	}
-
-	@Override
-	public void update(Observable o, Object arg1) {
-		if(o.getClass() == Couleur.class) {
-			this.couleur = (Couleur) o;
-			this.repaint();
-		}
 	}
 	
 	@Override
