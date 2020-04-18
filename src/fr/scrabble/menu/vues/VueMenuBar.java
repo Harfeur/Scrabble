@@ -3,7 +3,6 @@ package fr.scrabble.menu.vues;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -90,6 +89,8 @@ public class VueMenuBar extends JMenuBar implements Observer {
 	public void paint(Graphics g) {
 		super.paint(g);
 		this.setLocale(menu.getLocale());
+		this.putClientProperty("color", this.couleur.getCouleur());
+		
 		//Changement de langue
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.appli.setText(strings.getString("application"));
@@ -108,6 +109,8 @@ public class VueMenuBar extends JMenuBar implements Observer {
 	@Override
 	public void update(Graphics g) {
 		if (menu.getLocale()!=this.getLocale()) {
+			this.setLocale(menu.getLocale());
+			
 			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.appli.setText(strings.getString("application"));
 			this.couleurJM.setText(strings.getString("couleur"));
@@ -117,6 +120,11 @@ public class VueMenuBar extends JMenuBar implements Observer {
 			
 			this.jr1.setText(strings.getString("clair"));
 			this.jr2.setText(strings.getString("sombre"));
+		}
+		if ((int) this.getClientProperty("color") != this.couleur.getCouleur()) {
+			this.putClientProperty("color", this.couleur.getCouleur());
+			
+			this.setBackground(this.couleur.getColorBouton());
 		}
 	}
 	
