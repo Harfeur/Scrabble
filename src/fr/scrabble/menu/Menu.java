@@ -263,9 +263,10 @@ public class Menu extends JFrame implements Observer {
 		this.client = new Client(this);
 		
 		VueMenu fondMenu = new VueMenu(this.couleur);
-		VueStart vs = new VueStart(this.client);
+		VueStart vs = new VueStart(this.client, this.couleur);
 		
 		this.couleur.addObserver(fondMenu);
+		this.couleur.addObserver(vs);
 		
 		this.containerClient = new JLayeredPane();
 		
@@ -284,9 +285,10 @@ public class Menu extends JFrame implements Observer {
 		this.containerAttente = new Container();
 		
 		VueMenu fondMenu = new VueMenu(this.couleur);
-		VueAttente va = new VueAttente(this.client);
+		VueAttente va = new VueAttente(this.client, this.couleur);
 		
 		this.couleur.addObserver(fondMenu);
+		this.couleur.addObserver(va);
 		
 		this.containerAttente = new JLayeredPane();
 		
@@ -305,9 +307,10 @@ public class Menu extends JFrame implements Observer {
 		ControleurBoutons cplay = new ControleurBoutons(this);
 		
 		VueMenu fondMenu = new VueMenu(this.couleur);
-		VueRejete vr = new VueRejete(cplay);
+		VueRejete vr = new VueRejete(cplay, this.couleur);
 		
 		this.couleur.addObserver(fondMenu);
+		this.couleur.addObserver(vr);
 		
 		this.containerRejete = new JLayeredPane();
 		
