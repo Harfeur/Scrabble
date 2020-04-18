@@ -17,13 +17,14 @@ public class Modele extends Observable{
 	public SetDeChevalets chevalets;
 	public Integer numChevalet;
 	public Score[] score;
+	public int scoreAv;
 	ArrayList<MotPlace> motValide;
 	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
 	Dictionnaire dico;
 	String lettreChoisi, langue;
 	int motbasOk, motdroiteOk, passe=0;
-	boolean Test1, Test2, premierTour;
+	boolean Test1, Test2, premierTour, colonne;
 
 	public Modele() {
 		super();
@@ -211,6 +212,7 @@ public class Modele extends Observable{
 				Placement deuxiemLettre = this.placementEnCours.get(1);
 				// Si les lettres sont dans la meme colonne
 				if(premierLettre.getColumn()==deuxiemLettre.getColumn()) {
+					colonne=true;
 					System.out.println(premierLettre.getColumn()+" "+deuxiemLettre.getColumn());
 					System.out.println("Même colonne donc 1 mot bas et + mot droite");
 					//mot bas
@@ -293,6 +295,7 @@ public class Modele extends Observable{
 				}
 				//lettre dans la meme ligne
 				if(premierLettre.getLine()==deuxiemLettre.getLine()) {
+					colonne=false;
 					System.out.println(premierLettre.getLine()+" "+deuxiemLettre.getLine());
 					System.out.println("Même ligne donc + mots bas et 1 mot droite");
 					System.out.println("Mots bas trouvés : ");
@@ -427,7 +430,7 @@ public class Modele extends Observable{
 		
 		for (Placement placement : this.placementEnCours) {
 			Lettre lettre = placement.getLetter();
-			
+			this.scoreAv=this.score[this.numChevalet].getScore();
 			//On cherche le mot vertical
 			int lig = placement.getLine()-1;
 			int score = lettre.valeur;
@@ -607,13 +610,26 @@ public class Modele extends Observable{
 
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
-		System.out.println("Joueur : "+this.numChevalet+" ---------- Score : "+this.score[this.numChevalet].getScore());
 		if(this.chevalets.chevaletEnCours().size()==7) {
 			this.passe=passe+1;
+			System.out.print(this.score[this.numChevalet].getPrenom()+" a passé son tour.. \n");
 		}
 		else {
+			if(this.chevalets.chevaletEnCours().size()==6) {
+				System.out.print(this.score[this.numChevalet].getPrenom()+" a placé la lettre "+this.placementEnCours.get(0).getLetter().lettre);
+			}
+			else {
+				//Console
+				if(colonne) {
+					System.out.print(this.score[this.numChevalet].getPrenom()+" vient de jouer "+this.motBas+"\n");
+				}
+				else {
+					System.out.print(this.score[this.numChevalet].getPrenom()+" vient de jouer "+this.motDroite+"\n");
+				}
+			}
 			this.chevalets.chevaletEnCours().remplir(sac);
 			this.passe=0;
+			System.out.print("Son score augmente de "+(this.score[numChevalet].getScore()+this.scoreAv)+" points ! \n");
 		}
 		if(this.passe==this.chevalets.size()) {
 			System.out.println("JEU TERMINE");
@@ -639,7 +655,10 @@ public class Modele extends Observable{
 		this.notifyObservers(this.score);
 		// On initialise à zéro le placement
 		this.placementEnCours = new ArrayList<Placement>();
-	}
+		
+		//
+		System.out.print("C'est au tour de "+this.score[this.numChevalet].getPrenom()+"\n");
+		}
 
 	public void lettreJoker(String lettre) {
 		lettreChoisi=lettre;

@@ -22,6 +22,9 @@ public class Score implements Serializable {
 		return score;
 	}
 	
+	public String getPrenom() {
+		return prenom;
+	}
 	public void faux() {
 		this.score=0;
 	}
