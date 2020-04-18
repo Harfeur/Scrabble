@@ -3,9 +3,11 @@ package fr.scrabble.menu.vues;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -64,30 +66,37 @@ public class VueMenuBar extends JMenuBar {
 		this.couleurJM.add(this.jr2);	
 		
 		//RadioButton Langue
-		this.l0 = new JRadioButtonMenuItem();
-		this.l1 = new JRadioButtonMenuItem();
-		this.l2 = new JRadioButtonMenuItem();
-
-		this.l0.getModel().setActionCommand(Locale.getDefault().toString());
-		this.l1.getModel().setActionCommand(menu.locales[0].toString());
-		this.l2.getModel().setActionCommand(menu.locales[1].toString());
-				
 		this.bgl = new ButtonGroup();
-		bgl.add(this.l0);				
-		bgl.add(this.l1);
-		bgl.add(this.l2);
-		this.l0.setSelected(true);
-				
-		//RadioButton langue ajout Listener
 		LangueListener ll = new LangueListener();
-		this.l0.addActionListener(ll);
-		this.l1.addActionListener(ll);
-		this.l2.addActionListener(ll);
+		
+		boolean selected = false;
+		
+		for (Locale locale : Menu.LOCALES) {
+			JRadioButtonMenuItem localeButton = new JRadioButtonMenuItem(locale.toString());
+			localeButton.getModel().setActionCommand(locale.toString());
+			localeButton.addActionListener(ll);
+			
+			this.bgl.add(localeButton);
+			this.langue.add(localeButton);
+			
+			if (locale.toString().equals(menu.getLocale().toString())) {
+				localeButton.setSelected(true);
+				selected = true;
+			}
+		}
+		
+		if (!selected) {
+			Enumeration<AbstractButton> buttons = bgl.getElements();
+			
+			while(buttons.hasMoreElements()) {
+				AbstractButton button = (AbstractButton) buttons.nextElement();
 				
-		//Ajout RadioButton langue dans JMenu langue
-		this.langue.add(this.l0);		
-		this.langue.add(this.l1);		
-		this.langue.add(this.l2);	
+				if (button.getText().equals("fr_FR")) {
+					button.setSelected(true);
+					break;
+				}
+			}
+		}	
 		
 		//Ajout dans Appli
 		this.appli.add(this.accueil);
@@ -120,10 +129,6 @@ public class VueMenuBar extends JMenuBar {
 		
 		this.jr1.setText(strings.getString("clair"));
 		this.jr2.setText(strings.getString("sombre"));
-		
-		this.l0.setText(Locale.getDefault().toString());
-		this.l1.setText(strings.getString(menu.locales[0].toString()));
-		this.l2.setText(strings.getString(menu.locales[1].toString()));
 		
 		//Mode sombre
 		this.setBackground(this.couleur.getColorBouton());
@@ -179,8 +184,9 @@ public class VueMenuBar extends JMenuBar {
 	class LangueListener implements ActionListener{
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println(bgl.getSelection().getActionCommand());
-			
+			String[] localeString = bgl.getSelection().getActionCommand().split("_");
+			Locale locale = new Locale(localeString[0], localeString[1]);
+			menu.setLocale(locale);
 		}
 	}
 }

@@ -33,7 +33,8 @@ import fr.scrabble.structures.Couleur;
 @SuppressWarnings("serial")
 public class Menu extends JFrame implements Observer {
 
-	public static double SCALE=1.5;
+	public static double SCALE = 1.5;
+	public static Locale[] LOCALES = {new Locale("fr", "FR"), new Locale("en", "US")};
 
 	Container containerChargement;
 	Container containerMenu;
@@ -53,15 +54,12 @@ public class Menu extends JFrame implements Observer {
 	vueLigne, vueColonne, vueConsole, vueRejete;
 	VueScore vueScore;
 
-
-
 	boolean vueHorsLigneSombre=true;
 
 	Client client;
 	Serveur serveur;
 	ModeleEnLigne modeleEnLigne;
 	
-	public Locale[] locales = {new Locale("fr", "FR"), new Locale("en", "US")};
 	public Couleur couleur;
 
 	public Menu () {
