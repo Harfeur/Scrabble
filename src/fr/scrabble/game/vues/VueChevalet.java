@@ -20,6 +20,7 @@ public class VueChevalet extends JPanel implements Observer {
 	Chevalet chevalet;
 	Sac sac;
 	Couleur couleur;
+	Menu menu;
 	public static int TAILLE=35;
 	Integer numchevalet;
 	//Color [clair fill,sombre fill, clair contour, sombre contour]
@@ -29,11 +30,12 @@ public class VueChevalet extends JPanel implements Observer {
 	
 	//essaie de push
 	
-	public VueChevalet(MouseInputListener cc, Couleur couleur) {
+	public VueChevalet(MouseInputListener cc, Menu menu) {
 		super();
 		this.chevalet =new Chevalet();
 		this.sac = new Sac("FR");
-		this.couleur = couleur;
+		this.menu = menu;
+		this.couleur = menu.couleur;
 		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Menu.SCALE),(int) (VuePlateau.TAILLE*3*Menu.SCALE)));
 		this.addMouseListener(cc);
 		this.setBounds(0, (int) (VuePlateau.TAILLE*15*Menu.SCALE+(TAILLE*Menu.SCALE)), (int) (VuePlateau.TAILLE*15*Menu.SCALE), (int) (VuePlateau.TAILLE*3*Menu.SCALE));
@@ -86,6 +88,7 @@ public class VueChevalet extends JPanel implements Observer {
 				g.drawString(this.chevalet.get(i).valeur+"",(int) (i*TAILLE*Menu.SCALE+metrics_valeur.getDescent()),(int) (TAILLE*Menu.SCALE+metrics_valeur.getAscent()));
 			}
 		}
+		//Lettre selectionnee
 		for(int i=0 ; i<this.chevalet.size() ;i=i+1) {
 			if(this.chevalet.lettreSelectionee==i) {
 				//Fond
@@ -114,34 +117,31 @@ public class VueChevalet extends JPanel implements Observer {
 	@Override
 	public void update(Observable o, Object arg) {
 		// Cette fonction change le chevalet selon le modèle
-		if(arg != null) {
-			if (arg.getClass() == Chevalet.class) {
-				this.chevalet = (Chevalet) arg;
-				this.repaint(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-			}
-			if (arg.getClass() == SetDeChevalets.class) {
-				this.chevalet = ((SetDeChevalets) arg).chevaletEnCours();
-				this.repaint(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-			}
-			//Numero Joueur
-			if (arg.getClass() == Integer.class) {
-				this.numchevalet = (Integer) arg;
-				this.repaint(0,0,(int) (TAILLE*3*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-			}
-			//Nombre lettre restante
-			if (arg.getClass() == Sac.class) {
-				this.sac = (Sac) arg;
-				this.repaint((int) (TAILLE*5*Menu.SCALE), 0, (int) (TAILLE*5*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-			}		
+		if (arg.getClass() == Chevalet.class) {
+			this.chevalet = (Chevalet) arg;
+			this.repaint(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}
-		else {
-			if(o.getClass() == Couleur.class) {
-			this.couleur = (Couleur) o;
-			this.repaint();
-			}
+		if (arg.getClass() == SetDeChevalets.class) {
+			this.chevalet = ((SetDeChevalets) arg).chevaletEnCours();
+			this.repaint(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}
-		
+		//Numero Joueur
+		if (arg.getClass() == Integer.class) {
+			this.numchevalet = (Integer) arg;
+			this.repaint(0,0,(int) (TAILLE*3*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+		}
+		//Nombre lettre restante
+		if (arg.getClass() == Sac.class) {
+			this.sac = (Sac) arg;
+			this.repaint((int) (TAILLE*5*Menu.SCALE), 0, (int) (TAILLE*5*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+		}				
 	}
 	
+	@Override
+	public void update(Graphics g) {
+		if ((int) this.getClientProperty("color") != this.couleur.getCouleur()) {
+			this.putClientProperty("color", this.couleur.getCouleur());
+		}
+	}
 	
 }

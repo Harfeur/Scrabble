@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 
 import fr.scrabble.menu.ControleurBoutons;
 import fr.scrabble.menu.Menu;
+import fr.scrabble.structures.Couleur;
 
 @SuppressWarnings("serial")
 public class VueInstructionBouton extends JPanel implements ActionListener{
@@ -32,11 +33,13 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	JComboBox<String> liste_langues;
 	ControleurBoutons cb;
 	Menu menu;
+	Couleur c;
 	
 	public VueInstructionBouton(Menu menu, ControleurBoutons contb) {
 		super();
 		this.cb = contb;
 		this.menu = menu;
+		this.c = menu.couleur;
 		this.setLayout(null);
 		
 		this.liste_langues = new JComboBox<String>();
@@ -80,7 +83,6 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         Font f = new Font("Arial",Font.BOLD,(int)(10*Menu.SCALE));
         joueur.setFont(f);
         joueur.setBounds(140,315,140,25);
-        joueur.setBackground(new Color(128, 255, 170));
         joueur.setEditable(false);
         joueur.setOpaque(true);
         
@@ -88,7 +90,6 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         Font fl = new Font("Arial",Font.BOLD,(int)(10*Menu.SCALE));
         langue.setFont(fl);
         langue.setBounds(470,315,110,25);
-        langue.setBackground(new Color(128, 255, 170));
         langue.setEditable(false);
         langue.setOpaque(true);
         
@@ -108,10 +109,6 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 			this.nbjoueur=3;
 		}else if (quatre.isSelected()==true) {
 			this.nbjoueur=4;
-		}else {
-			//TODO : On garde ou pas ? Car 2 joueurs est sélectionner par défaut 
-			//Boîte du message préventif
-			JOptionPane.showMessageDialog(null, "Nombre de joueur non choisi", "Attention", JOptionPane.WARNING_MESSAGE);
 		}
 		return nbjoueur;
 	}
@@ -139,6 +136,15 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	        	this.liste_langues.addItem(langue);
 	        }
 		}
+		
+		//Couleur
+        this.joueur.setBackground(this.c.getColorBouton());
+        this.langue.setBackground(this.c.getColorBouton());
+        this.valide.setBackground(this.c.getColorBouton());
+        
+        this.joueur.setForeground(this.c.getColorLettre());
+        this.langue.setForeground(this.c.getColorLettre());;
+        this.valide.setForeground(this.c.getColorLettre());
 	}
 }
 

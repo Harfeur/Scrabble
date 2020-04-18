@@ -6,7 +6,7 @@ import java.util.Observable;
 public class Couleur extends Observable {
 
 	int couleur;
-	Color[] lettre = {Color.black,Color.white};
+	Color[] lettre = {Color.black,Color.gray};
 	Color[] bouton = {new Color(128, 255, 170), new Color(82,150,119)};
 	
 	public Couleur() {

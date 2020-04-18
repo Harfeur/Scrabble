@@ -14,6 +14,7 @@ import java.util.Observer;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Case;
 import fr.scrabble.structures.Case.Multiplicateur;
+import fr.scrabble.structures.Couleur;
 import fr.scrabble.structures.Plateau;
 
 @SuppressWarnings("serial")
@@ -21,16 +22,23 @@ public class VuePlateau extends JPanel implements Observer {
 
 	Plateau plateau;
 	public static int TAILLE = 25; 
+	Menu menu;
+	Couleur c;
+	//Color [clair fill,sombre fill]
+	Color[] tuile = {new Color(230,207,207),new Color(200,77,77)};
+
 	
-	public VuePlateau(MouseInputListener l) {
+	public VuePlateau(MouseInputListener l, Menu menu) {
 		super();
 		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Menu.SCALE),(int) (VuePlateau.TAILLE*15*Menu.SCALE)));
 		this.plateau = new Plateau();
 		this.addMouseListener(l);
+		this.menu = menu;
+		this.c = menu.couleur;
 
 		// Creation du Panel
-		VueColonne colonne = new VueColonne();
-		VueLigne ligne = new VueLigne();
+		VueColonne colonne = new VueColonne(this.menu);
+		VueLigne ligne = new VueLigne(this.menu);
 		
 		this.setBackground(Color.GREEN);
         this.setBounds((int) (colonne.getWidth()), (int) (ligne.getHeight()), (int) (VuePlateau.TAILLE*15*Menu.SCALE), (int) (VuePlateau.TAILLE*15*Menu.SCALE));
@@ -46,9 +54,9 @@ public class VuePlateau extends JPanel implements Observer {
 					if(c.lettre==null) {				
 						Multiplicateur m = c.multiplicateur;
 						//Fond
-						g.setColor(m.getCouleur());
+						g.setColor(m.getCouleur()[this.c.getCouleur()]);
 						g.fillRect((int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE));
-						g.setColor(Color.BLACK);
+						g.setColor(this.c.getColorLettre());
 						g.drawRect((int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE));
 						//Mot score
 						String score_l="";
@@ -62,28 +70,28 @@ public class VuePlateau extends JPanel implements Observer {
 						Font font_mot_score = new Font("Arial",Font.BOLD, (int)(5*Menu.SCALE));
 							FontMetrics metrics_mot_score = getFontMetrics(font_mot_score);
 							g.setFont(font_mot_score);
-							g.setColor(Color.BLACK);
+							g.setColor(this.c.getColorLettre());
 							g.drawString(score_l,(int) (Menu.SCALE*2+j*VuePlateau.TAILLE*Menu.SCALE),(int) (Menu.SCALE*5+i*VuePlateau.TAILLE*Menu.SCALE+metrics_mot_score.getHeight()));
-							g.setColor(Color.BLACK);
+							g.setColor(this.c.getColorLettre());
 							g.drawString(score_d,(int) (Menu.SCALE*2+j*VuePlateau.TAILLE*Menu.SCALE+metrics_mot_score.getDescent()),(int) (Menu.SCALE*10+i*VuePlateau.TAILLE*Menu.SCALE+metrics_mot_score.getHeight()));
 						}
 					else {
 						//Fond
-						g.setColor(new Color(230,207,207));
+						g.setColor(this.tuile[this.c.getCouleur()]);
 						g.fillRect((int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE));
-						g.setColor(Color.BLACK);
+						g.setColor(this.c.getColorLettre());
 						g.drawRect((int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE));
 						//Lettre
 						Font font_lettre = new Font("Arial",Font.PLAIN,(int)(VuePlateau.TAILLE*Menu.SCALE)) ;
 						FontMetrics metrics_lettre = getFontMetrics(font_lettre);
 						g.setFont(font_lettre);
-						g.setColor(Color.BLACK);
+						g.setColor(this.c.getColorLettre());
 						g.drawString(c.lettre.lettre,(int) (j*TAILLE*Menu.SCALE+metrics_lettre.getDescent()),(int) (i*TAILLE*Menu.SCALE+metrics_lettre.getAscent()));
 						//Valeur
 						Font font_valeur = new Font("Arial",Font.PLAIN,(int)(5*Menu.SCALE)) ;
 						FontMetrics metrics_valeur = getFontMetrics(font_valeur);
 						g.setFont(font_valeur);
-						g.setColor(Color.BLACK);
+						g.setColor(this.c.getColorLettre());
 						g.drawString(c.lettre.valeur+"",(int) (j*TAILLE*Menu.SCALE+metrics_valeur.getDescent()),(int) (i*TAILLE*Menu.SCALE+metrics_valeur.getAscent()));
 					}
 				}
@@ -100,6 +108,12 @@ public class VuePlateau extends JPanel implements Observer {
 					this.repaint((int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE));
 				}
 			}
+		}
+	}
+	@Override
+	public void update(Graphics g) {
+		if ((int) this.getClientProperty("color") != this.c.getCouleur()) {
+			this.putClientProperty("color", this.c.getCouleur());
 		}
 	}
 	

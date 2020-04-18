@@ -32,6 +32,7 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 	Menu menu;
 	JButton b;
 	Couleur c;
+	JPanel p;
 	
 	public VueNomJoueur(Menu menu, int nbjoueur, ControleurBoutons cb, Couleur c) {
 		super();
@@ -48,15 +49,15 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 		Font f = new Font("Arial",Font.BOLD,(int)(10*Menu.SCALE));
 		
 		//label
-		JPanel p = new JPanel();
+		this.p = new JPanel();
 		this.label = new JLabel();
 		this.label.setFont(f);
 		this.label.setForeground(this.c.getColorLettre());
 		this.label.setBounds(0, 0, 100, 100);
-		p.add(label);
-		p.setBackground(this.c.getColorBouton());
-		p.setOpaque(true);
-		this.add(p);
+		this.p.add(label);
+		this.p.setBackground(this.c.getColorBouton());
+		this.p.setOpaque(true);
+		this.add(this.p);
 		
 		//Creation zone de texte
 		this.j1 = new JTextField("Joueur 1", 10);
@@ -122,6 +123,8 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 	    this.b.setForeground(this.c.getColorLettre());
 	    //Sombre label
 		this.label.setForeground(this.c.getColorLettre());
+		
+		this.p.setBackground(this.c.getColorBouton());
 	}
 
 	@Override

@@ -141,12 +141,12 @@ public class Menu extends JFrame implements Observer {
 		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
 		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
 
-		VuePlateau vuePlateau = new VuePlateau(cp);
-		VueChevalet vueChevalet = new VueChevalet(cc, this.couleur);
+		VuePlateau vuePlateau = new VuePlateau(cp,this);
+		VueChevalet vueChevalet = new VueChevalet(cc, this);
 		VueBouton vueBouton = new VueBouton(cb);
-		VueLigne vueLigne = new VueLigne();
-		VueColonne vueColonne = new VueColonne();
-		VueScore vueScore = new VueScore();
+		VueLigne vueLigne = new VueLigne(this);
+		VueColonne vueColonne = new VueColonne(this);
+		VueScore vueScore = new VueScore(this);
 
 		this.modeleHorsLigne.addObserver(vuePlateau);
 		this.modeleHorsLigne.addObserver(vueChevalet);
@@ -215,12 +215,12 @@ public class Menu extends JFrame implements Observer {
 		ControleurChevalet cc = new ControleurChevalet(modeleEnLigne);
 		ControleurBouton cb = new ControleurBouton(modeleEnLigne);
 
-		VuePlateau vuePlateau = new VuePlateau(cp);
-		VueChevalet vueChevalet = new VueChevalet(cc, this.couleur);
+		VuePlateau vuePlateau = new VuePlateau(cp,this);
+		VueChevalet vueChevalet = new VueChevalet(cc, this);
 		VueBouton vueBouton = new VueBouton(cb);
-		VueLigne vueLigne = new VueLigne();
-		VueColonne vueColonne = new VueColonne();
-		VueScore vueScore = new VueScore();
+		VueLigne vueLigne = new VueLigne(this);
+		VueColonne vueColonne = new VueColonne(this);
+		VueScore vueScore = new VueScore(this);
 		VueConsole vueConsole = new VueConsole();
 		
 		this.client.addObserver(vuePlateau);
