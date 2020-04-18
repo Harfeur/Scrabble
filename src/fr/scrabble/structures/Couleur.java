@@ -7,7 +7,7 @@ public class Couleur extends Observable {
 
 	int couleur;
 	Color[] lettre = {Color.black,Color.white};
-	Color[] boutonVert = {new Color(128, 255, 170), new Color(82,150,119)};
+	Color[] bouton = {new Color(128, 255, 170), new Color(82,150,119)};
 	
 	public Couleur() {
 		this.couleur=0;
@@ -32,8 +32,8 @@ public class Couleur extends Observable {
 		return lettre;
 	}
 	
-	public Color[] getColorBoutonVert() {
-		return boutonVert;
+	public Color[] getColorBouton() {
+		return bouton;
 	}
 	
 }

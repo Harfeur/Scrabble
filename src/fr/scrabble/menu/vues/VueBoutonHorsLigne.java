@@ -69,7 +69,7 @@ public class VueBoutonHorsLigne  extends JPanel implements Observer, ActionListe
 		protected void paintComponent(Graphics g) { 
 			Font f = new Font(Font.SERIF,Font.CENTER_BASELINE,25);
 			g.setFont(f);
-			g.setColor(c.getColorBoutonVert()[c.getCouleur()]); 
+			g.setColor(c.getColorBouton()[c.getCouleur()]); 
 			g.fillOval(0, 0, this.getSize().width-1, this.getSize().height-1); 
 			super.paintComponent(g);
 		}

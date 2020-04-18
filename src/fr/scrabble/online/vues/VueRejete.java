@@ -29,7 +29,7 @@ public class VueRejete extends JPanel implements Observer{
 	Color[] lettre = {new Color (179,29,29), new Color (255,0,0)};
 	Couleur c;
 	
-	public VueRejete (ActionListener accueil, Couleur c) {
+	public VueRejete (Couleur c) {
 		super();
 		this.c = c;
 		this.im = new Image[2];

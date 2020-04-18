@@ -1,14 +1,12 @@
 package fr.scrabble.menu;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 
-public class ControleurBoutons implements ActionListener, ItemListener {
+public class ControleurBoutons implements ItemListener {
 	private ArrayList<String> prenom;
 	private Menu menu;
 	private int nbjoueur=1;
@@ -21,18 +19,6 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 		this.prenom = new ArrayList<String>();
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand()=="Hors ligne") {
-			menu.vueInstructionHorsLigne();
-		}
-		if (e.getActionCommand()=="En ligne") {
-			menu.vueClient();
-		}
-		if (e.getActionCommand()=="Serveur") {
-			menu.vueServeur();
-		}
-	}
 	public void changerLangue(int index) {
 		switch (index) {
 		case 0:
@@ -40,7 +26,7 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 			break;
 			
 		case 1:
-			this.langue = "FR";
+			this.langue = "EN";
 			break;
 
 		default:

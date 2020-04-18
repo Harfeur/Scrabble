@@ -119,11 +119,6 @@ public class Menu extends JFrame implements Observer {
 		VueBoutonMulti vueBoutonMultijoueur = new VueBoutonMulti(this, this.couleur);
 		VueBoutonServeur vueBoutonServeur = new VueBoutonServeur(this, this.couleur);
 		
-		this.couleur.addObserver(fondMenu);
-		this.couleur.addObserver(vueBoutonHorsLigne);
-		this.couleur.addObserver(vueBoutonMultijoueur);
-		this.couleur.addObserver(vueBoutonServeur);
-		
 		containerMenu.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
 		containerMenu.add(fondMenu, 0, 0);
 		containerMenu.add(vueBoutonHorsLigne, 1, 0);
@@ -155,8 +150,6 @@ public class Menu extends JFrame implements Observer {
 		this.modeleHorsLigne.addObserver(vueChevalet);
 		this.modeleHorsLigne.addObserver(vueScore);
 		this.modeleHorsLigne.addObserver(this);
-
-		this.couleur.addObserver(vueChevalet);
 		
 		this.containerHorsLigne = new JLayeredPane();
 
@@ -184,9 +177,6 @@ public class Menu extends JFrame implements Observer {
 		VueMenu fondMenu = new VueMenu(this.couleur);
 		VueNomJoueur vNJ = new VueNomJoueur(this, nbJoueur,cplay, this.couleur);
 		
-		this.couleur.addObserver(fondMenu);
-		this.couleur.addObserver(vNJ);
-		
 		containerNomJoueurHorsLigne.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
 		containerNomJoueurHorsLigne.add(fondMenu, 0, 0);
 		containerNomJoueurHorsLigne.add(vNJ, 1, 0);
@@ -205,8 +195,6 @@ public class Menu extends JFrame implements Observer {
 		
 		VueMenu fondMenu = new VueMenu(this.couleur);
 		VueInstructionBouton vueInstru = new VueInstructionBouton(this, cplay);
-		
-		this.couleur.addObserver(fondMenu);
 		
 		containerInstructionHorsLigne.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
 		containerInstructionHorsLigne.add(fondMenu, 0, 0);
@@ -232,8 +220,6 @@ public class Menu extends JFrame implements Observer {
 		VueColonne vueColonne = new VueColonne();
 		VueScore vueScore = new VueScore();
 		VueConsole vueConsole = new VueConsole();
-
-		this.couleur.addObserver(vueChevalet);
 		
 		this.client.addObserver(vuePlateau);
 		this.client.addObserver(vueChevalet);
@@ -265,9 +251,6 @@ public class Menu extends JFrame implements Observer {
 		VueMenu fondMenu = new VueMenu(this.couleur);
 		VueStart vs = new VueStart(this.client, this.couleur);
 		
-		this.couleur.addObserver(fondMenu);
-		this.couleur.addObserver(vs);
-		
 		this.containerClient = new JLayeredPane();
 		
 		this.containerClient.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
@@ -287,9 +270,6 @@ public class Menu extends JFrame implements Observer {
 		VueMenu fondMenu = new VueMenu(this.couleur);
 		VueAttente va = new VueAttente(this.client, this.couleur);
 		
-		this.couleur.addObserver(fondMenu);
-		this.couleur.addObserver(va);
-		
 		this.containerAttente = new JLayeredPane();
 		
 		this.containerAttente.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
@@ -304,13 +284,9 @@ public class Menu extends JFrame implements Observer {
 		this.removeAll();
 		
 		this.containerRejete = new Container();
-		ControleurBoutons cplay = new ControleurBoutons(this);
 		
 		VueMenu fondMenu = new VueMenu(this.couleur);
-		VueRejete vr = new VueRejete(cplay, this.couleur);
-		
-		this.couleur.addObserver(fondMenu);
-		this.couleur.addObserver(vr);
+		VueRejete vr = new VueRejete(this.couleur);
 		
 		this.containerRejete = new JLayeredPane();
 		
@@ -352,6 +328,9 @@ public class Menu extends JFrame implements Observer {
 			if (str.equals("afficher")) {
 				this.setVisible(true);
 			}
+		}
+		if (o.getClass() == Couleur.class) {
+			this.repaint();
 		}
 	}
 	

@@ -3,6 +3,7 @@ package fr.scrabble.menu.vues;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -73,8 +74,6 @@ public class VueMenuBar extends JMenuBar implements Observer {
 		this.arreter.setAccelerator(KeyStroke.getKeyStroke('q'));
 		
 		this.add(appli);
-		
-		this.setBackground(this.couleur.getColorBoutonVert()[this.couleur.getCouleur()]);
 		this.setVisible(true);
 		
 	}
@@ -90,7 +89,7 @@ public class VueMenuBar extends JMenuBar implements Observer {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		
+		this.setLocale(menu.getLocale());
 		//Changement de langue
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.appli.setText(strings.getString("application"));
@@ -103,9 +102,22 @@ public class VueMenuBar extends JMenuBar implements Observer {
 		this.jr2.setText(strings.getString("sombre"));
 		
 		//Mode sombre
-		this.setBackground(this.couleur.getColorBoutonVert()[this.couleur.getCouleur()]);
-		
-		
+		this.setBackground(this.couleur.getColorBouton()[this.couleur.getCouleur()]);
+	}
+	
+	@Override
+	public void update(Graphics g) {
+		if (menu.getLocale()!=this.getLocale()) {
+			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+			this.appli.setText(strings.getString("application"));
+			this.couleurJM.setText(strings.getString("couleur"));
+			
+			this.accueil.setText(strings.getString("accueil"));
+			this.arreter.setText(strings.getString("quitter"));
+			
+			this.jr1.setText(strings.getString("clair"));
+			this.jr2.setText(strings.getString("sombre"));
+		}
 	}
 	
 	class Quitte implements ActionListener{
