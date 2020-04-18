@@ -32,9 +32,6 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 		if (e.getActionCommand()=="Serveur") {
 			menu.vueServeur();
 		}
-		if (e.getActionCommand()=="Accueil") {
-			menu.vueMenu();
-		}
 	}
 	public void changerLangue(int index) {
 		switch (index) {

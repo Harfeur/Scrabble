@@ -9,6 +9,7 @@ import java.util.Observer;
 import fr.scrabble.game.Modele;
 import fr.scrabble.structures.Chevalet;
 import fr.scrabble.structures.Sac;
+import fr.scrabble.structures.SetDeChevalets;
 
 @SuppressWarnings("serial")
 public class Serveur extends ArrayList<UserThread> implements Observer, Runnable {
@@ -71,7 +72,13 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 		//System.out.println(arg);
 		if (arg.getClass() == Chevalet.class) {
 			UserThread user = this.get(this.joueurEnCours);
-			user.envoyer(this.modele.chevalets[this.modele.numChevalet]);
+			user.envoyer(this.modele.chevalets.chevaletEnCours());
+		} else if (arg.getClass() == SetDeChevalets.class) {
+			SetDeChevalets sdc = (SetDeChevalets) arg;
+			for (int i = 0; i < this.size(); ++i) {
+				UserThread user = this.get(i);
+				user.envoyer(sdc.get(i));
+			}
 		} else if (arg.getClass() == Integer.class) {
 			this.joueurEnCours = (Integer) arg;
 		} else if (arg.getClass() == String.class) {
