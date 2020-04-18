@@ -73,6 +73,7 @@ public class Menu extends JFrame implements Observer {
 		this.couleur.addObserver(this);
 
 		// Initialisation des Containers
+		this.containerChargement = new Container();
 		this.containerMenu = new JLayeredPane();
 		this.containerClient = new Container();
 		this.containerHorsLigne = new Container();
