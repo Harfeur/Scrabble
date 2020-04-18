@@ -181,9 +181,10 @@ public class Menu extends JFrame implements Observer {
 		this.containerNomJoueurHorsLigne = new JLayeredPane();
 		
 		VueMenu fondMenu = new VueMenu(this.couleur);
-		VueNomJoueur vNJ = new VueNomJoueur(this, nbJoueur,cplay);
+		VueNomJoueur vNJ = new VueNomJoueur(this, nbJoueur,cplay, this.couleur);
 		
 		this.couleur.addObserver(fondMenu);
+		this.couleur.addObserver(vNJ);
 		
 		containerNomJoueurHorsLigne.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
 		containerNomJoueurHorsLigne.add(fondMenu, 0, 0);

@@ -55,6 +55,7 @@ public class VueBoutonServeur extends JPanel implements Observer, ActionListener
 		super.paint(g);
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.b.setText(strings.getString("serveur"));
+		this.b.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
 	}
 
 	@Override

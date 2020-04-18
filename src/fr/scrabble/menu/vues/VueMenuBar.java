@@ -69,7 +69,7 @@ public class VueMenuBar extends JMenuBar implements Observer {
 		this.appli.addSeparator();
 		this.appli.add(this.arreter);
 		
-		this.appli.setMnemonic('a');
+		//this.appli.setMnemonic('a');
 		this.arreter.setAccelerator(KeyStroke.getKeyStroke('q'));
 		
 		this.add(appli);
@@ -90,6 +90,8 @@ public class VueMenuBar extends JMenuBar implements Observer {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+		//Changement de langue
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.appli.setText(strings.getString("application"));
 		this.couleurJM.setText(strings.getString("couleur"));
@@ -99,6 +101,11 @@ public class VueMenuBar extends JMenuBar implements Observer {
 		
 		this.jr1.setText(strings.getString("clair"));
 		this.jr2.setText(strings.getString("sombre"));
+		
+		//Mode sombre
+		this.setBackground(this.couleur.getColorBoutonVert()[this.couleur.getCouleur()]);
+		
+		
 	}
 	
 	class Quitte implements ActionListener{

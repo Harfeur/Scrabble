@@ -55,6 +55,7 @@ public class VueBoutonHorsLigne  extends JPanel implements Observer, ActionListe
 		super.paint(g);
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.b.setText(strings.getString("hors_ligne"));
+		this.b.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
 	}
 
 	@Override
