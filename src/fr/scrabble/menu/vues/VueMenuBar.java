@@ -102,7 +102,7 @@ public class VueMenuBar extends JMenuBar implements Observer {
 		this.jr2.setText(strings.getString("sombre"));
 		
 		//Mode sombre
-		this.setBackground(this.couleur.getColorBouton()[this.couleur.getCouleur()]);
+		this.setBackground(this.couleur.getColorBouton());
 	}
 	
 	@Override

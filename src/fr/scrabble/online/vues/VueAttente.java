@@ -50,10 +50,10 @@ public class VueAttente extends JPanel implements ActionListener, Observer{
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		this.txt.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
-		this.lancerPartie.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
-		this.lancerPartie.setBackground(c.getColorBouton()[c.getCouleur()]);
-		this.setBackground(c.getColorBouton()[c.getCouleur()]);
+		this.txt.setForeground(this.c.getColorLettre());
+		this.lancerPartie.setForeground(this.c.getColorLettre());
+		this.lancerPartie.setBackground(c.getColorBouton());
+		this.setBackground(c.getColorBouton());
 	
 	}
 	

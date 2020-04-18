@@ -52,7 +52,7 @@ public class VueChevalet extends JPanel implements Observer {
 			Font font_joueur = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;
 			FontMetrics metrics_joueur = getFontMetrics(font_joueur);
 			g.setFont(font_joueur);
-			g.setColor(this.couleur.getColorLettre()[this.couleur.getCouleur()]);
+			g.setColor(this.couleur.getColorLettre());
 			g.drawString("Joueur "+(numchevalet+1),metrics_joueur.getDescent(),metrics_joueur.getAscent());
 		}
 		
@@ -60,7 +60,7 @@ public class VueChevalet extends JPanel implements Observer {
 		Font font_lr = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;
 		FontMetrics metrics_lr = getFontMetrics(font_lr);
 		g.setFont(font_lr);
-		g.setColor(this.couleur.getColorLettre()[this.couleur.getCouleur()]);
+		g.setColor(this.couleur.getColorLettre());
 		g.drawString("Lettre restante (sac) : "+this.sac.nombreDeLettres,(int) (4*TAILLE*Menu.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
 		//Affichage lettre sur chevalet
 		if(this.chevalet.size()>0) {
@@ -75,14 +75,14 @@ public class VueChevalet extends JPanel implements Observer {
 					Font font_lettre = new Font("Arial",Font.PLAIN,(int)(VueChevalet.TAILLE*Menu.SCALE)) ;
 					FontMetrics metrics_lettre = getFontMetrics(font_lettre);
 					g.setFont(font_lettre);
-					g.setColor(this.couleur.getColorLettre()[this.couleur.getCouleur()]);
+					g.setColor(this.couleur.getColorLettre());
 					g.drawString(this.chevalet.get(i).lettre,(int) (i*TAILLE*Menu.SCALE+metrics_lettre.getDescent()),(int) (TAILLE*Menu.SCALE+metrics_lettre.getAscent()));
 				}
 				//Valeur
 				Font font_valeur = new Font("Arial",Font.PLAIN,(int)(6*Menu.SCALE)) ;
 				FontMetrics metrics_valeur = getFontMetrics(font_valeur);
 				g.setFont(font_valeur);
-				g.setColor(this.couleur.getColorLettre()[this.couleur.getCouleur()]);
+				g.setColor(this.couleur.getColorLettre());
 				g.drawString(this.chevalet.get(i).valeur+"",(int) (i*TAILLE*Menu.SCALE+metrics_valeur.getDescent()),(int) (TAILLE*Menu.SCALE+metrics_valeur.getAscent()));
 			}
 		}
@@ -98,14 +98,14 @@ public class VueChevalet extends JPanel implements Observer {
 					Font font_lettre = new Font("Arial",Font.PLAIN,(int)(VueChevalet.TAILLE*Menu.SCALE)) ;
 					FontMetrics metrics_lettre = getFontMetrics(font_lettre);
 					g.setFont(font_lettre);
-					g.setColor(this.couleur.getColorLettre()[this.couleur.getCouleur()]);
+					g.setColor(this.couleur.getColorLettre());
 					g.drawString(this.chevalet.get(i).lettre,(int) (i*TAILLE*Menu.SCALE+metrics_lettre.getDescent()),(int) (TAILLE*Menu.SCALE+metrics_lettre.getAscent()));
 				}
 				//Valeur
 				Font font_valeur = new Font("Arial",Font.PLAIN,(int)(6*Menu.SCALE)) ;
 				FontMetrics metrics_valeur = getFontMetrics(font_valeur);
 				g.setFont(font_valeur);
-				g.setColor(this.couleur.getColorLettre()[this.couleur.getCouleur()]);
+				g.setColor(this.couleur.getColorLettre());
 				g.drawString(this.chevalet.get(i).valeur+"",(int) (i*TAILLE*Menu.SCALE+metrics_valeur.getDescent()),(int) (TAILLE*Menu.SCALE+metrics_valeur.getAscent()));
 			}
 		}

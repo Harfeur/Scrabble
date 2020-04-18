@@ -67,13 +67,13 @@ public class VueStart extends JPanel implements ActionListener, Observer {
 	public void paint(Graphics g) {
 		super.paint(g);
 		//Mode sombre
-		this.setBackground(c.getColorBouton()[c.getCouleur()]);
+		this.setBackground(c.getColorBouton());
 		
-		this.prenom_l.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
-		this.ip_l.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
+		this.prenom_l.setForeground(this.c.getColorLettre());
+		this.ip_l.setForeground(this.c.getColorLettre());
 		
-		this.valider.setBackground(c.getColorBouton()[c.getCouleur()]);
-		this.valider.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);		
+		this.valider.setBackground(c.getColorBouton());
+		this.valider.setForeground(this.c.getColorLettre());		
 	}
 	
 	@Override

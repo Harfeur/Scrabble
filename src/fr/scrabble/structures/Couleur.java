@@ -28,12 +28,12 @@ public class Couleur extends Observable {
 		return this.couleur;
 	}
 	
-	public Color[] getColorLettre() {
-		return lettre;
+	public Color getColorLettre() {
+		return lettre[couleur];
 	}
 	
-	public Color[] getColorBouton() {
-		return bouton;
+	public Color getColorBouton() {
+		return bouton[couleur];
 	}
 	
 }

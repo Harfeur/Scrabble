@@ -51,10 +51,10 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 		JPanel p = new JPanel();
 		this.label = new JLabel();
 		this.label.setFont(f);
-		this.label.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
+		this.label.setForeground(this.c.getColorLettre());
 		this.label.setBounds(0, 0, 100, 100);
 		p.add(label);
-		p.setBackground(this.c.getColorBouton()[this.c.getCouleur()]);
+		p.setBackground(this.c.getColorBouton());
 		p.setOpaque(true);
 		this.add(p);
 		
@@ -94,8 +94,8 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 	    //Bouton validation
 	    this.b = new JButton();
 	    this.b.setFont(f);
-	    this.b.setBackground(this.c.getColorBouton()[this.c.getCouleur()]);
-	    this.b.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
+	    this.b.setBackground(this.c.getColorBouton());
+	    this.b.setForeground(this.c.getColorLettre());
 	    this.b.addActionListener(this);
 	    this.b.setBounds(200, 200, 100, 10);
 	    this.add(b);
@@ -118,10 +118,10 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 		this.label.setText(strings.getString("nom_joueurs"));
 		this.b.setText(strings.getString("jouer"));
 		//Sombre button
-	    this.b.setBackground(this.c.getColorBouton()[this.c.getCouleur()]);
-	    this.b.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
+	    this.b.setBackground(this.c.getColorBouton());
+	    this.b.setForeground(this.c.getColorLettre());
 	    //Sombre label
-		this.label.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
+		this.label.setForeground(this.c.getColorLettre());
 	}
 
 	@Override
