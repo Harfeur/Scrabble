@@ -174,6 +174,7 @@ public class Menu extends JFrame implements Observer {
 		
 		this.setVisible(true);
 	}
+	
 	public void vueNomJoueurHorsLigne(int nbJoueur) {
 		this.removeAll();
 		
