@@ -51,7 +51,7 @@ public class Menu extends JFrame implements Observer {
 	Serveur serveur;
 	ModeleEnLigne modeleEnLigne;
 	
-	Locale[] locales = {new Locale("fr", "FR"), new Locale("en", "US")};
+	public Locale[] locales = {new Locale("fr", "FR"), new Locale("en", "US")};
 	public Couleur couleur;
 	
 	public Menu () {
