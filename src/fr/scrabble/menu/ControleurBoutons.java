@@ -6,12 +6,14 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
+import javax.swing.JComboBox;
+
 public class ControleurBoutons implements ActionListener, ItemListener {
 	private ArrayList<String> prenom;
 	private Menu menu;
 	private int nbjoueur=1;
 	private String langue;
-	
+
 	public ControleurBoutons(Menu menu) {
 		super();
 		this.menu=menu;
@@ -34,27 +36,35 @@ public class ControleurBoutons implements ActionListener, ItemListener {
 			menu.vueMenu();
 		}
 	}
-	public void changerLangue(String l) {
-		if(l=="English") {
-			this.langue="EN";
-		}
-		else {
-			this.langue="FR";
+	public void changerLangue(int index) {
+		switch (index) {
+		case 0:
+			this.langue = "FR";
+			break;
+			
+		case 1:
+			this.langue = "FR";
+			break;
+
+		default:
+			this.langue = "FR";
+			break;
 		}
 	}
-//selectedItemReminder
+
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		// TODO Auto-generated method stub
-	    this.changerLangue((String) e.getItem());
+		@SuppressWarnings("unchecked")
+		JComboBox<String> jcb = (JComboBox<String>) e.getSource();
+		this.changerLangue(jcb.getSelectedIndex());
 	}
-	
+
 	public void lancerPartie(int nb, ArrayList<String> l) {
 		this.nbjoueur=nb;
 		this.prenom=l;
 		menu.vueHorsLigne(this.nbjoueur, this.langue,prenom);
 	}
-	
+
 	public void NombreJoueur(int nbjoueur) {
 		this.nbjoueur=nbjoueur;
 		menu.vueNomJoueurHorsLigne(this.nbjoueur);

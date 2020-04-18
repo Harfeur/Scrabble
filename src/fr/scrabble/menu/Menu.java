@@ -51,7 +51,7 @@ public class Menu extends JFrame implements Observer {
 	Serveur serveur;
 	ModeleEnLigne modeleEnLigne;
 	
-	Locale[] locales = {new Locale("fr"), new Locale("en")};
+	Locale[] locales = {new Locale("fr", "FR"), new Locale("en", "US")};
 	public Couleur couleur;
 	
 	public Menu () {
@@ -113,8 +113,6 @@ public class Menu extends JFrame implements Observer {
 		this.removeAll();
 		
 		this.containerMenu = new JLayeredPane();
-
-		ControleurBoutons cplay = new ControleurBoutons(this);
 
 		VueMenu fondMenu = new VueMenu(this.couleur);
 		VueBoutonHorsLigne vueBoutonHorsLigne = new VueBoutonHorsLigne(this, this.couleur);
@@ -181,7 +179,7 @@ public class Menu extends JFrame implements Observer {
 		this.containerNomJoueurHorsLigne = new JLayeredPane();
 		
 		VueMenu fondMenu = new VueMenu(this.couleur);
-		VueNomJoueur vNJ = new VueNomJoueur(nbJoueur,cplay);
+		VueNomJoueur vNJ = new VueNomJoueur(this, nbJoueur,cplay);
 		
 		this.couleur.addObserver(fondMenu);
 		
@@ -202,7 +200,7 @@ public class Menu extends JFrame implements Observer {
 		this.containerInstructionHorsLigne = new JLayeredPane();
 		
 		VueMenu fondMenu = new VueMenu(this.couleur);
-		VueInstructionBouton vueInstru = new VueInstructionBouton(cplay);
+		VueInstructionBouton vueInstru = new VueInstructionBouton(this, cplay);
 		
 		this.couleur.addObserver(fondMenu);
 		

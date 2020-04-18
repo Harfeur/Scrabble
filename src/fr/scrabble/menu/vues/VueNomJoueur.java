@@ -3,10 +3,11 @@ package fr.scrabble.menu.vues;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,18 +18,23 @@ import fr.scrabble.menu.ControleurBoutons;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.online.JTextFieldLimit;
 
+@SuppressWarnings("serial")
 public class VueNomJoueur extends JPanel implements ActionListener{
 
 	ArrayList<String> prenom;
 	JTextField j1,j2,j3,j4;
 	int nbjoueur=1;
 	ControleurBoutons cb;
+	JLabel label;
+	Menu menu;
+	JButton b;
 	
-	public VueNomJoueur(int nbjoueur, ControleurBoutons cb) {
+	public VueNomJoueur(Menu menu, int nbjoueur, ControleurBoutons cb) {
 		super();
 		this.prenom = new ArrayList<String>();
 		this.nbjoueur=nbjoueur;
 		this.cb=cb;
+		this.menu = menu;
 		
 		this.setPreferredSize(new Dimension((int) (600*Menu.SCALE),(int) (600*Menu.SCALE)));
 		this.setBounds((int) (250*Menu.SCALE), (int) (200*Menu.SCALE), (int) (100*Menu.SCALE), (int) (200*Menu.SCALE));
@@ -38,7 +44,7 @@ public class VueNomJoueur extends JPanel implements ActionListener{
 		
 		//label
 		JPanel p = new JPanel();
-		JLabel label = new JLabel("Noms des Joueurs : ");
+		this.label = new JLabel();
 		label.setFont(f);
 		label.setBounds(0, 0, 100, 100);
 		p.add(label);
@@ -80,7 +86,7 @@ public class VueNomJoueur extends JPanel implements ActionListener{
 	    }
 	    
 	    //Bouton validation
-	    JButton b = new JButton("Jouer");
+	    this.b = new JButton();
 	    b.setFont(f);
 	    b.addActionListener(this);
 	    b.setBounds(200, 200, 100, 10);
@@ -90,12 +96,19 @@ public class VueNomJoueur extends JPanel implements ActionListener{
 
 	@Override
 	public void actionPerformed(ActionEvent arg) {
-		// TODO Auto-generated method stub
 		this.prenom.add(this.j1.getText());
 		this.prenom.add(this.j2.getText());
 		this.prenom.add(this.j3.getText());
 		this.prenom.add(this.j4.getText());
 		this.cb.lancerPartie(this.nbjoueur, this.prenom);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", menu.getLocale());
+		this.label.setText(strings.getString("nom_joueurs"));
+		this.b.setText(strings.getString("jouer"));
 	}
 	
 }
