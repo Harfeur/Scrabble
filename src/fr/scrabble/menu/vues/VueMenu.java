@@ -8,37 +8,52 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import fr.scrabble.menu.Menu;
+import fr.scrabble.structures.Couleur;
 
 @SuppressWarnings("serial")
-public class VueMenu extends JPanel{
-	Image im;
+public class VueMenu extends JPanel {
 	
-	public VueMenu() {
+	Image[] images ;
+	Couleur c;
+	
+	public VueMenu(Couleur c) {
+		this.c = c;
+		this.images = new Image[2];
+		Image im1 = null, im2 = null;
 		try {
-			im = ImageIO.read(Menu.class.getResource("/resources/scrabble.jpg"));
+			im1 = ImageIO.read(Menu.class.getResource("/resources/images/scrabble.jpg"));
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		/*bouton = new VueBoutonSolo();
-		Rectangle r = new Rectangle();
-		r.height=50;
-		r.width=50;
-		r.x=100;
-		r.y=100;
-        bouton.setBounds(r);
-        this.add(bouton);
-        this.setSize(50, 50);*/
+		
+		try {
+			im2 = ImageIO.read(Menu.class.getResource("/resources/images/beauxgosses.jpg"));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		this.images[0] = im1;
+		this.images[1] = im2;
+		
+		this.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
+		this.setOpaque(true);
 	}
 	
+	@Override
 	public void paint(Graphics g) {
-		super.paintComponents(g);
-		g.drawImage(im, 0, 0, 400, 400, this.getParent());
-		
-	       
-       
-        
+		super.paint(g);
+		this.putClientProperty("color", this.c.getCouleur());
+		g.drawImage(this.images[this.c.getCouleur()], 0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE), this.getParent());
 	}
+	
+	@Override
+	public void update(Graphics g) {
+		System.out.println("update");
+		if ((int) this.getClientProperty("color") != this.c.getCouleur()) {
+			this.putClientProperty("color", this.c.getCouleur());
+			System.out.println("repaint");
+			g.drawImage(this.images[this.c.getCouleur()], 0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE), this.getParent());
+		}
 	}
 
-
+}

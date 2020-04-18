@@ -17,29 +17,29 @@ import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Couleur;
 
 @SuppressWarnings("serial")
-public class VueBoutonMulti extends JPanel implements Observer, ActionListener {
-	
+public class VueBoutonHorsLigne  extends JPanel implements Observer, ActionListener {
+
 	Couleur c;
-	JButton b;
 	Menu menu;
+	JButton b;
 	
-	public VueBoutonMulti(Menu menu, Couleur c) {
+	public VueBoutonHorsLigne(Menu menu, Couleur c) {
 		super();
-		this.menu = menu;
 		this.c = c;
+		this.menu = menu;
 		
 		// Creation du Bouton
-		this.b = new BoutonMulti();
+		this.b = new BoutonHorsLigne();
 		b.addActionListener(this);
 		b.setBorderPainted(false);
 		b.setContentAreaFilled(false);
 		b.setPreferredSize(new Dimension((int) (225*Menu.SCALE), (int) (75*Menu.SCALE)));
-
+	
 		// Creation du Panel
 		this.setBackground(Color.GREEN);
-        this.setBounds((int) (260*Menu.SCALE), (int) (190*Menu.SCALE), (int) (300*Menu.SCALE), (int) (300*Menu.SCALE));
-        this.setOpaque(false);
-        this.add(b);
+		this.setBounds(0, (int) (190*Menu.SCALE), (int) (300*Menu.SCALE), (int) (300*Menu.SCALE));
+		this.setOpaque(false);
+		this.add(b);
 	}
 	
 	@Override
@@ -54,26 +54,25 @@ public class VueBoutonMulti extends JPanel implements Observer, ActionListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
-		this.b.setText(strings.getString("en_ligne"));
+		this.b.setText(strings.getString("hors_ligne"));
 		this.b.setForeground(this.c.getColorLettre());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		menu.vueClient();
+		menu.vueInstructionHorsLigne();
 	}
 	
-	class BoutonMulti extends JButton {
+	class BoutonHorsLigne extends JButton {
 		
 		@Override
 		protected void paintComponent(Graphics g) { 
-			 Font f = new Font(Font.SERIF,Font.CENTER_BASELINE,25);
-			 g.setFont(f);
-			 g.setColor(c.getColorBouton()); 
-			 g.fillOval(0, 0, this.getSize().width-1, this.getSize().height-1); 
-			 super.paintComponent(g);
+			Font f = new Font(Font.SERIF,Font.CENTER_BASELINE,25);
+			g.setFont(f);
+			g.setColor(c.getColorBouton()); 
+			g.fillOval(0, 0, this.getSize().width-1, this.getSize().height-1); 
+			super.paintComponent(g);
 		}
-		
 	}
-
 }
+

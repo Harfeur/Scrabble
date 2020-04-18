@@ -1,12 +1,12 @@
-package fr.scrabble.controleurs;
+package fr.scrabble.game.controleurs;
 
 import java.awt.event.MouseEvent;
 
 import javax.swing.event.MouseInputListener;
 
-import fr.scrabble.Modele;
-import fr.scrabble.Solo;
-import fr.scrabble.vues.VuePlateau;
+import fr.scrabble.game.Modele;
+import fr.scrabble.game.vues.VuePlateau;
+import fr.scrabble.menu.Menu;
 
 public class ControleurPlateau implements MouseInputListener {
 	
@@ -19,45 +19,34 @@ public class ControleurPlateau implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int col = (int) (e.getX() / (VuePlateau.TAILLE*Solo.SCALE));
-		int lig = (int) (e.getY() / (VuePlateau.TAILLE*Solo.SCALE));
-		m.ajoutLettre(col, lig);
+		int col = (int) (e.getX() / (VuePlateau.TAILLE*Menu.SCALE));
+		int lig = (int) (e.getY() / (VuePlateau.TAILLE*Menu.SCALE));
+		if (lig < 15 && col < 15)
+			m.ajoutLettre(col, lig);
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

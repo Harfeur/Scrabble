@@ -1,4 +1,4 @@
-package fr.scrabble.vues;
+package fr.scrabble.game.vues;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -8,7 +8,7 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import fr.scrabble.Modele;
+import fr.scrabble.game.Modele;
 import fr.scrabble.structures.Sac;
 
 @SuppressWarnings("serial")

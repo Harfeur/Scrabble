@@ -1,12 +1,12 @@
-package fr.scrabble.controleurs;
+package fr.scrabble.game.controleurs;
 
 import java.awt.event.MouseEvent;
 
 import javax.swing.event.MouseInputListener;
 
-import fr.scrabble.Modele;
-import fr.scrabble.Solo;
-import fr.scrabble.vues.VueChevalet;
+import fr.scrabble.game.Modele;
+import fr.scrabble.game.vues.VueChevalet;
+import fr.scrabble.menu.Menu;
 
 public class ControleurChevalet implements MouseInputListener {
 
@@ -19,44 +19,32 @@ public class ControleurChevalet implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int num = (int) (e.getX() / (VueChevalet.TAILLE*Solo.SCALE));
+		int num = (int) (e.getX() / (VueChevalet.TAILLE*Menu.SCALE));
 		m.selectLettre(num);
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -1,10 +1,11 @@
 package fr.scrabble.structures;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-@SuppressWarnings("serial")
-public class Chevalet extends ArrayList<Lettre>{
+public class Chevalet extends ArrayList<Lettre> implements Serializable{
 	
+	private static final long serialVersionUID = 3930204422098162416L;
 	public int lettreSelectionee;
 	
 	public Chevalet() {

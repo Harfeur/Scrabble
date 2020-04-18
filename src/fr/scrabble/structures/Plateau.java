@@ -3,12 +3,15 @@ package fr.scrabble.structures;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 
 import fr.scrabble.structures.Case.Multiplicateur;
 
-public class Plateau {
+public class Plateau implements Serializable{
 
+	private static final long serialVersionUID = -8869397609730203863L;
+	
 	Case[][] plateau;
 
 	public Plateau() {

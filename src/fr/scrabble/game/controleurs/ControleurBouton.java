@@ -1,9 +1,9 @@
-package fr.scrabble.controleurs;
+package fr.scrabble.game.controleurs;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.scrabble.Modele;
+import fr.scrabble.game.Modele;
 
 public class ControleurBouton implements ActionListener {
 	

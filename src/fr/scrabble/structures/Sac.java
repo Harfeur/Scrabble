@@ -3,12 +3,14 @@ package fr.scrabble.structures;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
-@SuppressWarnings("serial")
-public class Sac extends ArrayList<Lettre> {
+public class Sac extends ArrayList<Lettre> implements Serializable {
+	
+	private static final long serialVersionUID = 8678217022591767923L;
 	
 	public int nombreDeLettres;
 
