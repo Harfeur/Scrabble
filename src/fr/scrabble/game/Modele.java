@@ -125,96 +125,17 @@ public class Modele extends Observable{
 		int lettrecotecote=1;
 		if(this.placementEnCours.size()>0) {
 			Placement premierLettre = this.placementEnCours.get(0);	
-		for (Placement elem : this.placementEnCours) {
-			lig=lig+elem.getLine();
-			col=col+elem.getColumn();
-			if(this.premierTour==false && elem.getLine()==7 && elem.getColumn()==7) {
-				premierTour=true; // A changer que à la fin du code
+			for (Placement elem : this.placementEnCours) {
+				lig=lig+elem.getLine();
+				col=col+elem.getColumn();
+				if(this.premierTour==false && elem.getLine()==7 && elem.getColumn()==7) {
+					premierTour=true; // A changer que à la fin du code
+				}
 			}
-		}
-		if(premierLettre.getLine() == lig/this.placementEnCours.size() || premierLettre.getColumn() == col/this.placementEnCours.size()) {
-			//Pour un seul ajout
-			if(this.placementEnCours.size()==1) {
-				System.out.println("Un seul ajout");
-				//mot bas
-				int l=0;
-				if(premierLettre.getLine()>0) {
-					while(this.plateauFictif.getCase(premierLettre.getLine()+l-1, premierLettre.getColumn()).lettre != null) {
-						l--;
-						if(premierLettre.getLine()+l-1==-1) {
-							break;
-						}
-					}	
-				}
-				Case premB = this.plateauFictif.getCase(premierLettre.getLine()+l, premierLettre.getColumn());
-
-				motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
-				
-				if(premierLettre.getLine()<14) {
-					while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
-						premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
-						motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
-						l++;
-						if(premierLettre.getLine()+l+1==15) {
-							break;
-						}
-					}
-				}
-				System.out.println("Mot bas trouvé : "+ motBas);
-				if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
-					motbasOk++;
-				}
-				else {
-					System.out.print(motBas.toString());
-				}
-
-				//mot droite
-				int c=0;
-				if(premierLettre.getColumn()>0) {
-					while(this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c-1).lettre != null) {
-						c--;
-						if(premierLettre.getColumn()+c-1==-1) {
-							break;
-						}
-					}	
-				}
-				Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c);
-
-				motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
-
-				if(premierLettre.getColumn()<14) {
-					while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
-						premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
-						motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
-						c++;
-						
-						if(premierLettre.getColumn()+c+1==15) {
-							break;
-						}
-					}
-				}
-				System.out.println("Mot droite trouvé : "+ motDroite);
-				if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
-					motdroiteOk++;
-				}
-				else {
-					System.out.print(motDroite.toString());
-				}
-
-				if(motbasOk==1 && motdroiteOk==1) {
-					Test1=true;
-					Test2=true;
-				}
-			}	
-			//plusieurs lettres
-			else {
-				System.out.println("Plusieurs ajout");
-				Placement deuxiemLettre = this.placementEnCours.get(1);
-				// Si les lettres sont dans la meme colonne
-				if(premierLettre.getColumn()==deuxiemLettre.getColumn()) {
-					colonne=true;
-					System.out.println(premierLettre.getColumn()+" "+deuxiemLettre.getColumn());
-					System.out.println("Même colonne donc 1 mot bas et + mot droite");
+			if(premierLettre.getLine() == lig/this.placementEnCours.size() || premierLettre.getColumn() == col/this.placementEnCours.size()) {
+				//Pour un seul ajout
+				if(this.placementEnCours.size()==1) {
+					System.out.println("Un seul ajout");
 					//mot bas
 					int l=0;
 					if(premierLettre.getLine()>0) {
@@ -231,111 +152,22 @@ public class Modele extends Observable{
 
 					if(premierLettre.getLine()<14) {
 						while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
-							for(Placement elem: this.placementEnCours) {
-								if(elem.getCase()==premB) {
-									lettrecotecote++;
-								}
-							}
 							premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
 							motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
-							l++;						
-							
+							l++;
 							if(premierLettre.getLine()+l+1==15) {
 								break;
 							}
 						}
 					}
-					System.out.println("Mot bas trouvé : "+motBas);
+					System.out.println("Mot bas trouvé : "+ motBas);
 					if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 						motbasOk++;
 					}
 					else {
 						System.out.print(motBas.toString());
 					}
-					System.out.println("Mots droite trouvés : ");
-					for(Placement elem : this.placementEnCours) {
-						//mot droite
-						int c=0;
-						premierLettre = elem;
-						if(premierLettre.getColumn()>0) {
-							while(this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c-1).lettre != null) {
-								c--;
-								if(premierLettre.getColumn()+c-1==-1) {
-									break;
-								}
-							}	
-						}
-						Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c);
 
-						motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
-
-						if(premierLettre.getColumn()<14) {
-							while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
-								premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
-								motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
-								c++;
-								
-								if(premierLettre.getColumn()+c+1==15) {
-									break;
-								}
-							}
-						}
-						System.out.println(motDroite);
-						if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
-							motdroiteOk++;
-						}
-						else {
-							System.out.print(motDroite.toString());
-						}
-					}
-					if(motbasOk==1 && motdroiteOk==this.placementEnCours.size()) {
-						Test1=true;
-						Test2=true;
-					}
-				}
-				//lettre dans la meme ligne
-				if(premierLettre.getLine()==deuxiemLettre.getLine()) {
-					colonne=false;
-					System.out.println(premierLettre.getLine()+" "+deuxiemLettre.getLine());
-					System.out.println("Même ligne donc + mots bas et 1 mot droite");
-					System.out.println("Mots bas trouvés : ");
-					for(Placement elem : this.placementEnCours) {
-						//mot bas
-						int l=0;
-						premierLettre = elem;
-						if(premierLettre.getLine()>0) {
-							while(this.plateauFictif.getCase(premierLettre.getLine()+l-1, premierLettre.getColumn()).lettre != null) {
-								l--;
-								if(premierLettre.getLine()+l-1==-1) {
-									break;
-								}
-							}	
-						}
-						Case premB = this.plateauFictif.getCase(premierLettre.getLine()+l, premierLettre.getColumn());
-
-						motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
-
-						if(premierLettre.getLine()<14) {
-							while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
-								premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
-								motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
-								l++;
-
-								
-								if(premierLettre.getLine()+l+1==15) {
-									break;
-								}
-							}
-						}
-						System.out.println(motBas);
-						if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
-							motbasOk++;
-						}
-						else {
-							System.out.print(motBas.toString());
-						}
-					}
-					
 					//mot droite
 					int c=0;
 					if(premierLettre.getColumn()>0) {
@@ -352,21 +184,16 @@ public class Modele extends Observable{
 
 					if(premierLettre.getColumn()<14) {
 						while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
-							for(Placement elem: this.placementEnCours) {
-								if(elem.getCase()==premD) {
-									lettrecotecote++;
-								}
-							}
 							premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
 							motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
 							c++;
-							
+
 							if(premierLettre.getColumn()+c+1==15) {
 								break;
 							}
 						}
 					}
-					System.out.println("Mot droite trouvée : "+motDroite);
+					System.out.println("Mot droite trouvé : "+ motDroite);
 					if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 						motdroiteOk++;
 					}
@@ -374,51 +201,221 @@ public class Modele extends Observable{
 						System.out.print(motDroite.toString());
 					}
 
-					if(motbasOk==this.placementEnCours.size() && motdroiteOk==1) {
+					if(motbasOk==1 && motdroiteOk==1) {
 						Test1=true;
 						Test2=true;
 					}
+				}	
+				//plusieurs lettres
+				else {
+					System.out.println("Plusieurs ajout");
+					Placement deuxiemLettre = this.placementEnCours.get(1);
+					// Si les lettres sont dans la meme colonne
+					if(premierLettre.getColumn()==deuxiemLettre.getColumn()) {
+						colonne=true;
+						System.out.println("Même colonne donc 1 mot bas et + mot droite");
+						//mot bas
+						int l=0;
+						if(premierLettre.getLine()>0) {
+							while(this.plateauFictif.getCase(premierLettre.getLine()+l-1, premierLettre.getColumn()).lettre != null) {
+								l--;
+								if(premierLettre.getLine()+l-1==-1) {
+									break;
+								}
+							}	
+						}
+						Case premB = this.plateauFictif.getCase(premierLettre.getLine()+l, premierLettre.getColumn());
+
+						motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
+
+						if(premierLettre.getLine()<14) {
+							while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
+								for(Placement elem: this.placementEnCours) {
+									if(elem.getCase()==premB) {
+										lettrecotecote++;
+									}
+								}
+								premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
+								motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
+								l++;						
+
+								if(premierLettre.getLine()+l+1==15) {
+									break;
+								}
+							}
+						}
+						System.out.println("Mot bas trouvé : "+motBas);
+						if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
+							motbasOk++;
+						}
+						else {
+							System.out.print(motBas.toString());
+						}
+						System.out.println("Mots droite trouvés : ");
+						for(Placement elem : this.placementEnCours) {
+							//mot droite
+							int c=0;
+							premierLettre = elem;
+							if(premierLettre.getColumn()>0) {
+								while(this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c-1).lettre != null) {
+									c--;
+									if(premierLettre.getColumn()+c-1==-1) {
+										break;
+									}
+								}	
+							}
+							Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c);
+
+							motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
+
+							if(premierLettre.getColumn()<14) {
+								while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
+									premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
+									motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
+									c++;
+
+									if(premierLettre.getColumn()+c+1==15) {
+										break;
+									}
+								}
+							}
+							System.out.println(motDroite);
+							if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
+								motdroiteOk++;
+							}
+							else {
+								System.out.print(motDroite.toString());
+							}
+						}
+						if(motbasOk==1 && motdroiteOk==this.placementEnCours.size()) {
+							Test1=true;
+							Test2=true;
+						}
+					}
+					//lettre dans la meme ligne
+					if(this.placementEnCours.get(0).getLine()==deuxiemLettre.getLine()) {
+						colonne=false;
+						System.out.println("Même ligne donc + mots bas et 1 mot droite");
+						System.out.println("Mots bas trouvés : ");
+						for(Placement elem : this.placementEnCours) {
+							//mot bas
+							int l=0;
+							premierLettre = elem;
+							if(premierLettre.getLine()>0) {
+								while(this.plateauFictif.getCase(premierLettre.getLine()+l-1, premierLettre.getColumn()).lettre != null) {
+									l--;
+									if(premierLettre.getLine()+l-1==-1) {
+										break;
+									}
+								}	
+							}
+							Case premB = this.plateauFictif.getCase(premierLettre.getLine()+l, premierLettre.getColumn());
+
+							motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
+
+							if(premierLettre.getLine()<=14) {
+								while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
+									premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
+									motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
+									l++;
+
+
+									if(premierLettre.getLine()+l+1==15) {
+										break;
+									}
+								}
+							}
+							System.out.println(motBas);
+							if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
+								motbasOk++;
+							}
+							else {
+								System.out.print(motBas.toString());
+							}
+						}
+
+						//mot droite
+						int c=0;
+						if(premierLettre.getColumn()>0) {
+							while(this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c-1).lettre != null) {
+								c--;
+								if(premierLettre.getColumn()+c-1==-1) {
+									break;
+								}
+							}	
+						}
+						Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c);
+
+						motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
+
+						if(premierLettre.getColumn()<15) {
+							while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
+								for(Placement elem: this.placementEnCours) {
+									if(elem.getCase()==premD) {
+										lettrecotecote++;
+									}
+								}
+								premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
+								motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
+								c++;
+								if(premierLettre.getColumn()+c+1==15) {
+									break;
+								}
+							}
+						}
+						System.out.println("Mot droite trouvée : "+motDroite);
+						if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
+							motdroiteOk++;
+						}
+						else {
+							System.out.print(motDroite.toString());
+						}
+
+						if(motbasOk==this.placementEnCours.size() && motdroiteOk==1) {
+							Test1=true;
+							Test2=true;
+						}
+					}
 				}
-			}
-			if (this.Test1 && this.Test2 && lettrecotecote == this.placementEnCours.size() && premierTour==true) {
-				System.out.println("Plateau Valide");
-				this.calculerScore();
-				this.changementJoueur();
+				if (this.Test1 && this.Test2 && lettrecotecote == this.placementEnCours.size() && premierTour==true) {
+					System.out.println("Plateau Valide");
+					this.calculerScore();
+					this.changementJoueur();
+				}
+				else {
+					System.out.println("Plateau Non Valide");
+					if(this.Test1==false) {
+						System.out.println("Mot Bas Non Valide");
+					}
+					if(this.Test2==false) {
+						System.out.println("Mot Droite Non Valide");
+					}
+					if(lettrecotecote < this.placementEnCours.size()) {
+						System.out.println("lettre pas cote cote");
+						System.out.println(lettrecotecote);
+
+					}
+					if(premierTour==false) {
+						System.out.println("commence au milieu");
+
+					}
+					for(Placement elem: this.placementEnCours) {
+						this.chevalets.chevaletEnCours().remettreLettre(elem.getLetter());
+						elem.getCase().lettre=null;
+					}
+					this.motbasOk=0;
+					this.motdroiteOk=0;
+					this.placementEnCours=new ArrayList<Placement>();
+					this.setChanged();
+					this.notifyObservers(this.chevalets);
+					this.plateauFictif=this.plateau.clone();
+					this.setChanged();
+					this.notifyObservers(this.plateauFictif);
+				} 
 			}
 			else {
-				System.out.println("Plateau Non Valide");
-				if(this.Test1==false) {
-					System.out.println("Mot Bas Non Valide");
-				}
-				if(this.Test2==false) {
-					System.out.println("Mot Droite Non Valide");
-				}
-				if(lettrecotecote < this.placementEnCours.size()) {
-					System.out.println("lettre pas cote cote");
-					System.out.println(lettrecotecote);
-					
-				}
-				if(premierTour==false) {
-					System.out.println("commence au milieu");
-					
-				}
-				for(Placement elem: this.placementEnCours) {
-					this.chevalets.chevaletEnCours().remettreLettre(elem.getLetter());
-					elem.getCase().lettre=null;
-				}
-				this.motbasOk=0;
-				this.motdroiteOk=0;
-				this.placementEnCours=new ArrayList<Placement>();
-				this.setChanged();
-				this.notifyObservers(this.chevalets);
-				this.plateauFictif=this.plateau.clone();
-				this.setChanged();
-				this.notifyObservers(this.plateauFictif);
-			} 
-		}
-		else {
-			System.out.println("Les lettres ne sont pas sur la même ligne ou colonne");
-		}
+				System.out.println("Les lettres ne sont pas sur la même ligne ou colonne");
+			}
 		}
 	}
 	
@@ -427,10 +424,10 @@ public class Modele extends Observable{
 
 		Hashtable<String, Integer> motsVerticaux = new Hashtable<String, Integer>();
 		Hashtable<String, Integer> motsHorizontaux = new Hashtable<String, Integer>();
+		this.scoreAv=this.score[this.numChevalet].getScore();
 		
 		for (Placement placement : this.placementEnCours) {
 			Lettre lettre = placement.getLetter();
-			this.scoreAv=this.score[this.numChevalet].getScore();
 			//On cherche le mot vertical
 			int lig = placement.getLine()-1;
 			int score = lettre.valeur;
@@ -473,7 +470,7 @@ public class Modele extends Observable{
 			
 			lig = placement.getLine()+1;
 			
-			while (lig <= 15 && this.plateauFictif.getCase(lig, placement.getColumn()).lettre != null) {
+			while (lig < 15 && this.plateauFictif.getCase(lig, placement.getColumn()).lettre != null) {
 				
 				mot = mot +this.plateauFictif.getCase(lig, placement.getColumn()).lettre.lettre;
 				boolean lettreJoueur = false;
@@ -555,7 +552,7 @@ public class Modele extends Observable{
 			
 			col = placement.getColumn()+1;
 			
-			while (col <= 15 && this.plateauFictif.getCase(placement.getLine(), col).lettre != null) {
+			while (col < 15 && this.plateauFictif.getCase(placement.getLine(), col).lettre != null) {
 				
 				mot = mot + this.plateauFictif.getCase(placement.getLine(),col).lettre.lettre;
 				boolean lettreJoueur = false;
