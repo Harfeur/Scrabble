@@ -6,17 +6,11 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-
-import fr.scrabble.online.Client;
-
 public class ControleurBoutons implements ActionListener, ItemListener {
 	private ArrayList<String> prenom;
 	private Menu menu;
 	private int nbjoueur=1;
 	private String langue;
-	private JComboBox<String> c;
 	
 	public ControleurBoutons(Menu menu) {
 		super();

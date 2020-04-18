@@ -43,7 +43,6 @@ public class VueMenu extends JPanel implements Observer{
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		if(o.getClass() == Couleur.class) {
 			this.c = (Couleur) o;
 			this.repaint();
