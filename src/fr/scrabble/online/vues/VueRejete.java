@@ -3,22 +3,17 @@ package fr.scrabble.online.vues;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Couleur;
 
 import java.awt.Color;
-import java.awt.Container;
 
 @SuppressWarnings("serial")
 public class VueRejete extends JPanel implements Observer{
