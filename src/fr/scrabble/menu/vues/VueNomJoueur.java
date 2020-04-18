@@ -7,6 +7,8 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -17,9 +19,10 @@ import javax.swing.JTextField;
 import fr.scrabble.menu.ControleurBoutons;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.online.JTextFieldLimit;
+import fr.scrabble.structures.Couleur;
 
 @SuppressWarnings("serial")
-public class VueNomJoueur extends JPanel implements ActionListener{
+public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 
 	ArrayList<String> prenom;
 	JTextField j1,j2,j3,j4;
@@ -28,13 +31,15 @@ public class VueNomJoueur extends JPanel implements ActionListener{
 	JLabel label;
 	Menu menu;
 	JButton b;
+	Couleur c;
 	
-	public VueNomJoueur(Menu menu, int nbjoueur, ControleurBoutons cb) {
+	public VueNomJoueur(Menu menu, int nbjoueur, ControleurBoutons cb, Couleur c) {
 		super();
 		this.prenom = new ArrayList<String>();
 		this.nbjoueur=nbjoueur;
 		this.cb=cb;
 		this.menu = menu;
+		this.c = c;
 		
 		this.setPreferredSize(new Dimension((int) (600*Menu.SCALE),(int) (600*Menu.SCALE)));
 		this.setBounds((int) (250*Menu.SCALE), (int) (200*Menu.SCALE), (int) (100*Menu.SCALE), (int) (200*Menu.SCALE));
@@ -45,10 +50,11 @@ public class VueNomJoueur extends JPanel implements ActionListener{
 		//label
 		JPanel p = new JPanel();
 		this.label = new JLabel();
-		label.setFont(f);
-		label.setBounds(0, 0, 100, 100);
+		this.label.setFont(f);
+		this.label.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
+		this.label.setBounds(0, 0, 100, 100);
 		p.add(label);
-		p.setBackground(new Color(128, 255, 170));
+		p.setBackground(this.c.getColorBoutonVert()[this.c.getCouleur()]);
 		p.setOpaque(true);
 		this.add(p);
 		
@@ -87,9 +93,11 @@ public class VueNomJoueur extends JPanel implements ActionListener{
 	    
 	    //Bouton validation
 	    this.b = new JButton();
-	    b.setFont(f);
-	    b.addActionListener(this);
-	    b.setBounds(200, 200, 100, 10);
+	    this.b.setFont(f);
+	    this.b.setBackground(this.c.getColorBoutonVert()[this.c.getCouleur()]);
+	    this.b.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
+	    this.b.addActionListener(this);
+	    this.b.setBounds(200, 200, 100, 10);
 	    this.add(b);
 		
 	}
@@ -109,6 +117,20 @@ public class VueNomJoueur extends JPanel implements ActionListener{
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", menu.getLocale());
 		this.label.setText(strings.getString("nom_joueurs"));
 		this.b.setText(strings.getString("jouer"));
+		//Sombre button
+	    this.b.setBackground(this.c.getColorBoutonVert()[this.c.getCouleur()]);
+	    this.b.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
+	    //Sombre label
+		this.label.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
+	}
+
+	@Override
+	public void update(Observable o, Object arg1) {
+		// TODO Auto-generated method stub
+		if(o.getClass() == Couleur.class) {
+			this.c = (Couleur) o;
+			this.repaint();
+		}
 	}
 	
 }

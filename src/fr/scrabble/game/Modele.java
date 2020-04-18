@@ -14,7 +14,7 @@ public class Modele extends Observable{
 	File fichier;
 	public Plateau plateau;
 	Plateau plateauFictif;
-	public Chevalet[] chevalets;
+	public SetDeChevalets chevalets;
 	public Integer numChevalet;
 	public Score[] score;
 	public int scoreAv;
@@ -22,7 +22,7 @@ public class Modele extends Observable{
 	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
 	Dictionnaire dico;
-	String lettreChoisi;
+	String lettreChoisi, langue;
 	int motbasOk, motdroiteOk, passe=0;
 	boolean Test1, Test2, premierTour, colonne;
 
@@ -37,22 +37,23 @@ public class Modele extends Observable{
 		this.plateau= new Plateau();
 		this.plateauFictif= new Plateau();
 		this.placementEnCours = new ArrayList<Placement>();
+		this.langue = langue;
 		
 		this.premierTour=false;
 		
-		this.chevalets = new Chevalet[nbJoueur];
+		this.chevalets = new SetDeChevalets();
 		this.score = new Score[nbJoueur];
 
 		for (int i=0; i<nbJoueur; i++) {
-			this.chevalets[i]=new Chevalet();
-			this.chevalets[i].remplir(this.sac);
+			this.chevalets.ajouterChevalet(new Chevalet());
+			this.chevalets.get(i).remplir(sac);
 			this.score[i]= new Score(prenoms.get(i));
 		}
 		this.numChevalet=0;
 		// Après avoir cree les elements, on notifie les deux vues
 
 		this.setChanged();
-		this.notifyObservers(this.chevalets[numChevalet]);
+		this.notifyObservers(this.chevalets);
 		
 		this.setChanged();
 		this.notifyObservers(this.score);
@@ -69,11 +70,11 @@ public class Modele extends Observable{
 
 	/* mis a jour de la lettre selectionner*/
 	public void selectLettre(int num) {
-		if (this.chevalets[this.numChevalet].selectionnerLettre(num)) {
+		if (this.chevalets.chevaletEnCours().selectionnerLettre(num)) {
 			this.setChanged();
-			this.notifyObservers(this.chevalets[this.numChevalet]);
-			if (this.chevalets[this.numChevalet].get(num).valeur == 0) {
-				new VueJoker("FR", this);
+			this.notifyObservers(this.chevalets);
+			if (this.chevalets.chevaletEnCours().get(num).valeur == 0) {
+				new VueJoker(this.langue, this);
 				this.setChanged();
 				this.notifyObservers("cacher");
 			}
@@ -82,14 +83,14 @@ public class Modele extends Observable{
 
 	/* ajoute la lettre choisi sur le chevalet dans le plateau*/
 	public void ajoutLettre(int col, int lig) {
-		Lettre lettre = this.chevalets[this.numChevalet].obtenirLettre();
+		Lettre lettre = this.chevalets.chevaletEnCours().obtenirLettre();
 		Case c = this.plateauFictif.getCase(lig, col);
 		if (lettre == null) {
 			// Si aucune lettre n'est selectionee du chevalet, alors on supprime la lettre du plateau
 			// que si c'est une lettre qui est en train d'etre placee
 			Placement caseCliquee = new Placement(null, c, lig, col);
 			if (this.placementEnCours.contains(caseCliquee)) {
-				this.chevalets[this.numChevalet].remettreLettre(c.lettre);
+				this.chevalets.chevaletEnCours().remettreLettre(c.lettre);
 				c.lettre = null;
 				this.placementEnCours.remove(caseCliquee);
 			}
@@ -105,7 +106,7 @@ public class Modele extends Observable{
 				c.ajouterLettre(lettre);
 			}
 			else {
-				this.chevalets[this.numChevalet].remettreLettre(lettre);
+				this.chevalets.chevaletEnCours().remettreLettre(lettre);
 			}
 			
 		}
@@ -113,7 +114,7 @@ public class Modele extends Observable{
 		this.notifyObservers(this.plateauFictif);
 
 		this.setChanged();
-		this.notifyObservers(this.chevalets[this.numChevalet]);
+		this.notifyObservers(this.chevalets);
 	}
 
 	public void verificationMot() {
@@ -402,14 +403,14 @@ public class Modele extends Observable{
 					
 				}
 				for(Placement elem: this.placementEnCours) {
-					this.chevalets[this.numChevalet].remettreLettre(elem.getLetter());
+					this.chevalets.chevaletEnCours().remettreLettre(elem.getLetter());
 					elem.getCase().lettre=null;
 				}
 				this.motbasOk=0;
 				this.motdroiteOk=0;
 				this.placementEnCours=new ArrayList<Placement>();
 				this.setChanged();
-				this.notifyObservers(this.chevalets[this.numChevalet]);
+				this.notifyObservers(this.chevalets);
 				this.plateauFictif=this.plateau.clone();
 				this.setChanged();
 				this.notifyObservers(this.plateauFictif);
@@ -609,13 +610,12 @@ public class Modele extends Observable{
 
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
-  
-		if(this.chevalets[this.numChevalet].size()==7) {
+		if(this.chevalets.chevaletEnCours().size()==7) {
 			this.passe=passe+1;
 			System.out.print(this.score[this.numChevalet].getPrenom()+" a passé son tour.. \n");
 		}
 		else {
-			if(this.chevalets[this.numChevalet].size()==6) {
+			if(this.chevalets.chevaletEnCours().size()==6) {
 				System.out.print(this.score[this.numChevalet].getPrenom()+" a placé la lettre "+this.placementEnCours.get(0).getLetter().lettre);
 			}
 			else {
@@ -627,14 +627,14 @@ public class Modele extends Observable{
 					System.out.print(this.score[this.numChevalet].getPrenom()+" vient de jouer "+this.motDroite+"\n");
 				}
 			}
-			this.chevalets[this.numChevalet].remplir(sac);
+			this.chevalets.chevaletEnCours().remplir(sac);
 			this.passe=0;
 			System.out.print("Son score augmente de "+(this.score[numChevalet].getScore()+this.scoreAv)+" points ! \n");
 		}
-		if(this.passe==this.chevalets.length) {
+		if(this.passe==this.chevalets.size()) {
 			System.out.println("JEU TERMINE");
 		}
-		if (this.numChevalet+1 == this.chevalets.length) {
+		if (this.numChevalet+1 == this.chevalets.size()) {
 			this.numChevalet=0;
 		}
 		else {
@@ -650,7 +650,7 @@ public class Modele extends Observable{
 		this.setChanged();
 		this.notifyObservers(this.numChevalet);
 		this.setChanged();
-		this.notifyObservers(this.chevalets[this.numChevalet]);
+		this.notifyObservers(this.chevalets);
 		this.setChanged();
 		this.notifyObservers(this.score);
 		// On initialise à zéro le placement

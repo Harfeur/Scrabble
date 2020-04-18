@@ -55,6 +55,7 @@ public class VueBoutonMulti extends JPanel implements Observer, ActionListener {
 		super.paint(g);
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.b.setText(strings.getString("en_ligne"));
+		this.b.setForeground(this.c.getColorLettre()[this.c.getCouleur()]);
 	}
 
 	@Override
