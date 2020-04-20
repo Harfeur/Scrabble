@@ -1,8 +1,10 @@
 package fr.scrabble.menu;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -10,6 +12,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
@@ -25,10 +28,12 @@ import fr.scrabble.game.vues.VueInstructionBouton;
 import fr.scrabble.game.vues.VueLigne;
 import fr.scrabble.game.vues.VuePlateau;
 import fr.scrabble.game.vues.VueScore;
+import fr.scrabble.game.vues.VueScoreFin;
 import fr.scrabble.menu.vues.*;
 import fr.scrabble.online.*;
 import fr.scrabble.online.vues.*;
 import fr.scrabble.structures.Couleur;
+import fr.scrabble.structures.Score;
 
 @SuppressWarnings("serial")
 public class Menu extends JFrame implements Observer {
@@ -46,6 +51,7 @@ public class Menu extends JFrame implements Observer {
 	Container containerServeur;
 	Container containerAttente;
 	Container containerRejete;
+	Container containerScore;
 
 	Modele modeleHorsLigne;
 
@@ -61,6 +67,7 @@ public class Menu extends JFrame implements Observer {
 	ModeleEnLigne modeleEnLigne;
 	
 	public Couleur couleur;
+	
 
 	public Menu () {
 		super("Menu");
@@ -81,6 +88,7 @@ public class Menu extends JFrame implements Observer {
 		this.containerServeur = new Container();
 		this.containerAttente = new Container();
 		this.containerRejete = new Container();
+		this.containerScore =  new Container();
 
 		// Création et paramétrage de la fenêtre
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -148,6 +156,7 @@ public class Menu extends JFrame implements Observer {
 		this.remove(this.containerRejete);
 		this.remove(this.containerInstructionHorsLigne);
 		this.remove(this.containerNomJoueurHorsLigne);
+		this.remove(this.containerScore);
 	}
 
 	public void vueChargement(JProgressBar loading) {
@@ -347,6 +356,17 @@ public class Menu extends JFrame implements Observer {
 
 		new Thread(this.serveur).start();
 
+		this.setVisible(true);
+	}
+	
+	public void vueFinale(Score[] score) {
+		this.removeAll();
+		this.setTitle("Partie terminée");
+		this.containerScore =  new JLayeredPane();
+		
+		containerScore.add(new VueScoreFin(),0,0);
+		containerScore.add(new VueScoreFin(score),1,0);
+		this.add(containerScore);
 		this.setVisible(true);
 	}
 

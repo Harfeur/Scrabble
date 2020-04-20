@@ -5,6 +5,7 @@ import java.util.Hashtable;
 import java.util.Observable;
 
 import fr.scrabble.game.vues.VueJoker;
+import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.*;
 import fr.scrabble.structures.Case.Multiplicateur;
 
@@ -627,7 +628,8 @@ public class Modele extends Observable{
 			System.out.print("Son score augmente de "+(this.score[numChevalet].getScore()+this.scoreAv)+" points ! \n");
 		}
 		if(this.passe==this.chevalets.size()) {
-			System.out.println("JEU TERMINE");
+			Menu m = new Menu();
+			m.vueFinale(score);
 		}
 		if (this.numChevalet+1 == this.chevalets.size()) {
 			this.numChevalet=0;
