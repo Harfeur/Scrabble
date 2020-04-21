@@ -21,6 +21,7 @@ public class VueChevalet extends JPanel implements Observer {
 	Sac sac;
 	Couleur couleur;
 	Menu menu;
+	Score prenom;
 	public static int TAILLE=35;
 	Integer numchevalet;
 	//Color [clair fill,sombre fill, clair contour, sombre contour]
@@ -55,7 +56,7 @@ public class VueChevalet extends JPanel implements Observer {
 			FontMetrics metrics_joueur = getFontMetrics(font_joueur);
 			g.setFont(font_joueur);
 			g.setColor(this.couleur.getColorLettre());
-			g.drawString("Joueur "+(numchevalet+1),metrics_joueur.getDescent(),metrics_joueur.getAscent());
+			g.drawString(prenom.getPrenom(),metrics_joueur.getDescent(),metrics_joueur.getAscent());
 		}
 		
 		//Lettre restante
@@ -134,7 +135,11 @@ public class VueChevalet extends JPanel implements Observer {
 		if (arg.getClass() == Sac.class) {
 			this.sac = (Sac) arg;
 			this.repaint((int) (TAILLE*5*Menu.SCALE), 0, (int) (TAILLE*5*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-		}				
+		}
+		if (arg.getClass() == Score.class) {
+			this.prenom = (Score) arg;
+			this.repaint((int) (TAILLE*5*Menu.SCALE), 0, (int) (TAILLE*5*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+		}	
 	}
 	
 	@Override

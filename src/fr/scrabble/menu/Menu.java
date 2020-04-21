@@ -223,6 +223,41 @@ public class Menu extends JFrame implements Observer {
 
 		this.setVisible(true);
 	}
+	
+	public void vueHorsLigne() {
+		this.removeAll();
+
+		this.modeleHorsLigne = new Modele();
+
+		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
+		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
+		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
+
+		VuePlateau vuePlateau = new VuePlateau(cp,this);
+		VueChevalet vueChevalet = new VueChevalet(cc, this);
+		VueBouton vueBouton = new VueBouton(cb);
+
+		this.modeleHorsLigne.addObserver(vuePlateau);
+		this.modeleHorsLigne.addObserver(vueChevalet);
+		this.modeleHorsLigne.addObserver(vueScore);
+		this.modeleHorsLigne.addObserver(this);
+
+		this.containerHorsLigne = new JLayeredPane();
+
+
+		this.containerHorsLigne.add(vuePlateau);
+		this.containerHorsLigne.add(vueLigne);
+		this.containerHorsLigne.add(vueColonne);
+		this.containerHorsLigne.add(vueChevalet);
+		this.containerHorsLigne.add(vueBouton);
+		this.containerHorsLigne.add(vueScore);
+
+		this.add(this.containerHorsLigne);
+
+		this.modeleHorsLigne.Reprise();
+
+		this.setVisible(true);
+	}
 
 	public void vueNomJoueurHorsLigne(int nbJoueur) {
 		this.removeAll();

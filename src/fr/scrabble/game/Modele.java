@@ -1,5 +1,10 @@
 package fr.scrabble.game;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Observable;
@@ -33,7 +38,9 @@ public class Modele extends Observable{
 
 	/*Met le jeu a zero en fonction de nb de joueur*/
 	public void nouvellePartie(int nbJoueur, String langue, ArrayList<String> prenoms) {
+
 		this.sac = new Sac(langue);
+		this.numChevalet=0;
 		this.dico = new Dictionnaire(langue);
 		this.plateau= new Plateau();
 		this.plateauFictif= new Plateau();
@@ -50,7 +57,6 @@ public class Modele extends Observable{
 			this.chevalets.get(i).remplir(sac);
 			this.score[i]= new Score(prenoms.get(i));
 		}
-		this.numChevalet=0;
 		// Après avoir cree les elements, on notifie les deux vues
 
 		this.setChanged();
@@ -67,6 +73,43 @@ public class Modele extends Observable{
 
 		this.setChanged();
 		this.notifyObservers(this.sac);
+		
+		this.setChanged();
+		this.notifyObservers(this.score[this.numChevalet]);
+	}
+	
+	public void Reprise() {
+		try {
+			this.charger();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println("echec");
+		}
+		this.dico = new Dictionnaire(langue);
+		this.plateauFictif= this.plateau;
+		this.placementEnCours = new ArrayList<Placement>();
+		this.motbasOk=0;
+		this.motdroiteOk=0;
+		
+		// Après avoir cree les elements, on notifie les deux vues
+
+		this.setChanged();
+		this.notifyObservers(this.chevalets);
+		
+		this.setChanged();
+		this.notifyObservers(this.score);
+
+		this.setChanged();
+		this.notifyObservers(this.numChevalet);
+
+		this.setChanged();
+		this.notifyObservers(this.plateau);
+
+		this.setChanged();
+		this.notifyObservers(this.sac);
+		
+		this.setChanged();
+		this.notifyObservers(this.score[this.numChevalet]);
 	}
 
 	/* mis a jour de la lettre selectionner*/
@@ -232,7 +275,7 @@ public class Modele extends Observable{
 						if(premierLettre.getLine()<14) {
 							while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
 								for(Placement elem: this.placementEnCours) {
-									if(elem.getLine()==premierLettre.getLine()+l+1 && premierLettre.getColumn()==elem.getColumn()) {
+									if(elem.getLine()==(premierLettre.getLine()+l+1) && premierLettre.getColumn()==elem.getColumn()) {
 										lettrecotecote++;
 									}
 								}
@@ -352,7 +395,7 @@ public class Modele extends Observable{
 						if(premierLettre.getColumn()<15) {
 							while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
 								for(Placement elem: this.placementEnCours) {
-									if(elem.getLine()==premierLettre.getLine() && elem.getColumn()==premierLettre.getColumn()+c+1) {
+									if(elem.getLine()==premierLettre.getLine() && elem.getColumn()==premierLettre.getColumn()+c+1 && elem.getLetter().lettre==premierLettre.getLetter().lettre) {
 										lettrecotecote++;
 									}
 								}
@@ -391,9 +434,10 @@ public class Modele extends Observable{
 					if(this.Test2==false) {
 						System.out.println("Mot Droite Non Valide");
 					}
-					if(lettrecotecote < this.placementEnCours.size()) {
+					if(lettrecotecote != this.placementEnCours.size()) {
 						System.out.println(this.score[this.numChevalet].getPrenom()+" les lettres doivent être côte à côte !");
 						System.out.println(lettrecotecote);
+						System.out.println(this.placementEnCours.size());
 					}
 					if(premierTour==false) {
 						System.out.println("Il faut commencer au milieu");
@@ -612,7 +656,7 @@ public class Modele extends Observable{
 		}
 		else {
 			if(this.chevalets.chevaletEnCours().size()==6) {
-				System.out.print(this.score[this.numChevalet].getPrenom()+" a placé la lettre "+this.placementEnCours.get(0).getLetter().lettre);
+				System.out.println(this.score[this.numChevalet].getPrenom()+" a placé la lettre "+this.placementEnCours.get(0).getLetter().lettre);
 			}
 			else {
 				//Console
@@ -625,41 +669,159 @@ public class Modele extends Observable{
 			}
 			this.chevalets.chevaletEnCours().remplir(sac);
 			this.passe=0;
-			System.out.print("Son score augmente de "+(this.score[numChevalet].getScore()+this.scoreAv)+" points ! \n");
+			System.out.print("Son score augmente de "+(this.score[numChevalet].getScore()-this.scoreAv)+" points ! \n");
 		}
 		if(this.passe==this.chevalets.size()) {
 			Menu m = new Menu();
 			m.vueFinale(score);
 		}
-		if (this.numChevalet+1 == this.chevalets.size()) {
-			this.numChevalet=0;
-		}
 		else {
-			this.numChevalet++;
-		}
-		this.motbasOk=0;
-		this.motdroiteOk=0;
-		this.plateau=this.plateauFictif.clone();
-		this.setChanged();
-		this.notifyObservers(this.sac);
-		this.setChanged();
-		this.notifyObservers(this.plateau);
-		this.setChanged();
-		this.notifyObservers(this.numChevalet);
-		this.setChanged();
-		this.notifyObservers(this.chevalets);
-		this.setChanged();
-		this.notifyObservers(this.score);
-		// On initialise à zéro le placement
-		this.placementEnCours = new ArrayList<Placement>();
-		
-		//
-		System.out.print("C'est au tour de "+this.score[this.numChevalet].getPrenom()+"\n");
+			if (this.numChevalet+1 == this.chevalets.size()) {
+				this.numChevalet=0;
+			}
+			else {
+				this.numChevalet++;
+			}
+			this.motbasOk=0;
+			this.motdroiteOk=0;
+			this.plateau=this.plateauFictif.clone();
+			this.setChanged();
+			this.notifyObservers(this.sac);
+			this.setChanged();
+			this.notifyObservers(this.plateau);
+			this.setChanged();
+			this.notifyObservers(this.numChevalet);
+			this.setChanged();
+			this.notifyObservers(this.chevalets);
+			this.setChanged();
+			this.notifyObservers(this.score);
+			this.setChanged();
+			this.notifyObservers(this.score[this.numChevalet]);
+			// On initialise à zéro le placement
+			this.placementEnCours = new ArrayList<Placement>();
+			
+			//
+			System.out.print("C'est au tour de "+this.score[this.numChevalet].getPrenom()+"\n");
+			this.enregistrer();
+			}
 		}
 
 	public void lettreJoker(String lettre) {
 		lettreChoisi=lettre;
 		this.setChanged();
 		this.notifyObservers("afficher");
+	}
+	
+	//Serialisation
+	
+	public void charger() throws IOException, ClassNotFoundException {
+		//Sac
+		FileInputStream fis = new FileInputStream(new File("Sac.dat"));
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		this.sac = (Sac)ois.readObject();
+		ois.close();
+		fis.close();
+		//numChevalet
+		FileInputStream fis1 = new FileInputStream(new File("JoueurEnCours.dat"));
+		ObjectInputStream ois1 = new ObjectInputStream(fis1);
+		this.numChevalet = (int)ois1.readObject();
+		ois1.close();
+		fis1.close();
+		//Score
+		FileInputStream fis2 = new FileInputStream(new File("Score.dat"));
+		ObjectInputStream ois2 = new ObjectInputStream(fis2);
+		this.score = (Score[])ois2.readObject();
+		ois2.close();
+		fis2.close();
+		//Score
+		FileInputStream fis3 = new FileInputStream(new File("Chevalet.dat"));
+		ObjectInputStream ois3 = new ObjectInputStream(fis3);
+		this.chevalets= (SetDeChevalets)ois3.readObject();
+		ois3.close();
+		fis3.close();
+		//Langue
+		FileInputStream fis4 = new FileInputStream(new File("Langue.dat"));
+		ObjectInputStream ois4 = new ObjectInputStream(fis4);
+		this.langue= (String)ois4.readObject();
+		ois4.close();
+		fis4.close();
+		//Plateau
+		FileInputStream fis5 = new FileInputStream(new File("Plateau.dat"));
+		ObjectInputStream ois5 = new ObjectInputStream(fis5);
+		this.plateau= (Plateau)ois5.readObject();
+		ois5.close();
+		fis5.close();
+		//PremierTour
+		FileInputStream fis6 = new FileInputStream(new File("PremierTour.dat"));
+		ObjectInputStream ois6 = new ObjectInputStream(fis6);
+		this.premierTour= (boolean)ois6.readObject();
+		ois6.close();
+		fis6.close();
+	}
+	
+	public void enregistrer(){
+		try {
+			FileOutputStream fos =  new FileOutputStream(new File("Sac.dat"));
+			ObjectOutputStream oos= new ObjectOutputStream(fos);
+			oos.writeObject(this.sac);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Impossible d'écrire les données du sac");
+		}
+		try {
+			FileOutputStream fos =  new FileOutputStream(new File("JoueurEnCours.dat"));
+			ObjectOutputStream oos= new ObjectOutputStream(fos);
+			oos.writeObject(this.numChevalet);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Impossible d'écrire les données du numero de joueur en cours");
+		}
+		try {
+			FileOutputStream fos =  new FileOutputStream(new File("Score.dat"));
+			ObjectOutputStream oos= new ObjectOutputStream(fos);
+			oos.writeObject(this.score);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Impossible d'écrire les données du score");
+		}
+		try {
+			FileOutputStream fos =  new FileOutputStream(new File("Chevalet.dat"));
+			ObjectOutputStream oos= new ObjectOutputStream(fos);
+			oos.writeObject(this.chevalets);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Impossible d'écrire les données du chevalet");
+		}
+		try {
+			FileOutputStream fos =  new FileOutputStream(new File("Langue.dat"));
+			ObjectOutputStream oos= new ObjectOutputStream(fos);
+			oos.writeObject(this.langue);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Impossible d'écrire les données de la langue");
+		}
+		try {
+			FileOutputStream fos =  new FileOutputStream(new File("Plateau.dat"));
+			ObjectOutputStream oos= new ObjectOutputStream(fos);
+			oos.writeObject(this.plateau);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Impossible d'écrire les données du plateau");
+		}
+		try {
+			FileOutputStream fos =  new FileOutputStream(new File("PremierTour.dat"));
+			ObjectOutputStream oos= new ObjectOutputStream(fos);
+			oos.writeObject(this.premierTour);
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Impossible d'écrire les données du premTour");
+		}
 	}
 }

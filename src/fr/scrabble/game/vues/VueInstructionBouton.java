@@ -27,7 +27,7 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	int nbjoueur=1;
 	JTextField j1,j2,j3,j4;
 	JRadioButton deux,trois,quatre;
-	JButton valide;
+	JButton valide, sauver;
 	JTextArea joueur;
 	JTextArea langue;
 	JComboBox<String> liste_langues;
@@ -52,9 +52,13 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 		this.quatre = new JRadioButton();
 		
         this.valide = new JButton();
+        this.sauver = new JButton();
         
         valide.addActionListener(this);
         valide.setBounds(300, 550, 150,50);
+        
+        sauver.addActionListener(this);
+        sauver.setBounds(100, 550, 150,50);
         
 		ButtonGroup groupe = new ButtonGroup();
 		this.deux.setSelected(true);
@@ -98,7 +102,8 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         this.add(pan);
         this.add(pan1);
         this.add(langue);
-        this.add(valide);       
+        this.add(valide);
+        this.add(sauver);
         
 	}
 	
@@ -114,8 +119,13 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	}
 	
 	@Override
-	public void actionPerformed(ActionEvent e) {		
-		this.cb.NombreJoueur(getNbJoueur());
+	public void actionPerformed(ActionEvent e) {
+		if(e.getActionCommand()=="") {
+			this.menu.vueHorsLigne();
+		}
+		else {
+			this.cb.NombreJoueur(getNbJoueur());
+		}
 	}
 	
 	@Override
