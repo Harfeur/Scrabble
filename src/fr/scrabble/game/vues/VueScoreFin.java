@@ -15,6 +15,7 @@ import fr.scrabble.structures.Score;
 
 public class VueScoreFin extends JPanel {
 	Score[] score;
+	Score scr;
 	
 	public VueScoreFin() {
 		super();
@@ -24,24 +25,31 @@ public class VueScoreFin extends JPanel {
 		txt.setBounds(325,100,400,300);
 		txt.setFont(new Font("Arial",Font.BOLD,45));
 		txt.setForeground(new Color(255,191,0));
-
+		
 		this.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
 		this.setBackground(new Color(0,100,0));
-		
 		this.add(txt);
 	}
+	
 	public VueScoreFin(Score[] scor) {
 		super();
 		this.score=scor;
+		
+		for(int i=this.score.length-1;i>0;i--) {
+			int a=1;
+			while(i-a!=-1 && this.score[i].getScore()>this.score[i-a].getScore()) {
+				scr=this.score[i];
+				this.score[i]=this.score[i-a];
+				this.score[i-a]=scr;
+			}
+		}
 		this.setPreferredSize(new Dimension(400,400));
-		this.setBounds(250,250, 400, 400);
+		this.setBounds(375,250, 400, 400);
 		this.setOpaque(false);
 	}
 	
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.setColor(new Color(100,100,100));
-		g.drawRect(275, 150,(int) (VuePlateau.TAILLE*7*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*4*Menu.SCALE)-1);
 		if(score!=null) {
 			int j=0;
 			for (int i=0; i<score.length;i++) {
