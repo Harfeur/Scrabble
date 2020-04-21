@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.util.Arrays;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,7 +12,9 @@ import javax.swing.JPanel;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Score;
 
+@SuppressWarnings("serial")
 public class VueScoreFin extends JPanel {
+	
 	Score[] score;
 	Score scr;
 	
@@ -31,9 +32,9 @@ public class VueScoreFin extends JPanel {
 		this.add(txt);
 	}
 	
-	public VueScoreFin(Score[] scor) {
+	public VueScoreFin(Score[] score) {
 		super();
-		this.score=scor;
+		this.score=score;
 		
 		for(int i=this.score.length-1;i>0;i--) {
 			int a=1;

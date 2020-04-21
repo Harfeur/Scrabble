@@ -1,10 +1,8 @@
 package fr.scrabble.menu;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Locale;
@@ -12,23 +10,13 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import fr.scrabble.game.Modele;
-import fr.scrabble.game.controleurs.ControleurBouton;
-import fr.scrabble.game.controleurs.ControleurChevalet;
-import fr.scrabble.game.controleurs.ControleurPlateau;
-import fr.scrabble.game.vues.VueBouton;
-import fr.scrabble.game.vues.VueChevalet;
-import fr.scrabble.game.vues.VueColonne;
-import fr.scrabble.game.vues.VueInstructionBouton;
-import fr.scrabble.game.vues.VueLigne;
-import fr.scrabble.game.vues.VuePlateau;
-import fr.scrabble.game.vues.VueScore;
-import fr.scrabble.game.vues.VueScoreFin;
+import fr.scrabble.game.controleurs.*;
+import fr.scrabble.game.vues.*;
 import fr.scrabble.menu.vues.*;
 import fr.scrabble.online.*;
 import fr.scrabble.online.vues.*;
@@ -41,17 +29,8 @@ public class Menu extends JFrame implements Observer {
 	public static double SCALE = 1.5;
 	public static Locale[] LOCALES = {new Locale("fr", "FR"), new Locale("en", "US"), new Locale("es", "MX")};
 
-	Container containerChargement;
-	Container containerMenu;
-	Container containerHorsLigne;
-	Container containerNomJoueurHorsLigne;
-	Container containerInstructionHorsLigne;
-	Container containerEnLigne;
-	Container containerClient;
-	Container containerServeur;
-	Container containerAttente;
-	Container containerRejete;
-	Container containerScore;
+	Container containerChargement, containerMenu, containerHorsLigne, containerNomJoueurHorsLigne, containerInstructionHorsLigne,
+	containerEnLigne, containerClient, containerServeur, containerAttente, containerRejete, containerScore;
 
 	Modele modeleHorsLigne;
 
