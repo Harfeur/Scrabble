@@ -58,7 +58,7 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 		this.quatre = new JRadioButton();
 		
         this.valide = new JButton();
-        this.sauver = new JButton("Continuer la partie");
+        this.sauver = new JButton();
         
         valide.addActionListener(this);
         sauver.addActionListener(this);
@@ -150,10 +150,10 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand()=="Continuer la partie") {
+		if(e.getActionCommand().equals("Continuer")) {
 			this.menu.vueHorsLigne();
 		}
-		else {
+		if(e.getActionCommand().equals("Commencer")){
 			this.cb.NombreJoueur(getNbJoueur());
 		}
 	}
