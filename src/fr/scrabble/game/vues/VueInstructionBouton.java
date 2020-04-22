@@ -6,6 +6,10 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ResourceBundle;
 
 import javax.swing.ButtonGroup;
@@ -20,11 +24,13 @@ import javax.swing.JTextField;
 import fr.scrabble.menu.ControleurBoutons;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Couleur;
+import fr.scrabble.structures.Sac;
 
 @SuppressWarnings("serial")
 public class VueInstructionBouton extends JPanel implements ActionListener{
 
 	int nbjoueur=1;
+	Sac sac;
 	JTextField j1,j2,j3,j4;
 	JRadioButton deux,trois,quatre;
 	JButton valide, sauver;
@@ -52,13 +58,10 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 		this.quatre = new JRadioButton();
 		
         this.valide = new JButton();
-        this.sauver = new JButton();
+        this.sauver = new JButton("Continuer la partie");
         
         valide.addActionListener(this);
-        valide.setBounds(300, 550, 150,50);
-        
         sauver.addActionListener(this);
-        sauver.setBounds(100, 550, 150,50);
         
 		ButtonGroup groupe = new ButtonGroup();
 		this.deux.setSelected(true);
@@ -102,9 +105,36 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         this.add(pan);
         this.add(pan1);
         this.add(langue);
-        this.add(valide);
-        this.add(sauver);
         
+        if(testSauvegarde()) {
+            valide.setBounds(400, 550, 150,50);
+            
+            sauver.setBounds(200, 550, 150,50);
+            
+        	this.add(valide);
+        	this.add(sauver);
+        }
+        else {
+        	valide.setBounds(300, 550, 150,50);
+            
+        	this.add(valide);
+        }
+        
+        
+	}
+	
+	public boolean testSauvegarde() {
+		try {
+			FileInputStream fis = new FileInputStream(new File("Sac.dat"));
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			this.sac = (Sac)ois.readObject();
+			ois.close();
+			fis.close();
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			return false;
+		}
+		return true;
 	}
 	
 	public int getNbJoueur() {
@@ -120,7 +150,7 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if(e.getActionCommand()=="") {
+		if(e.getActionCommand()=="Continuer la partie") {
 			this.menu.vueHorsLigne();
 		}
 		else {
@@ -147,14 +177,19 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	        }
 		}
 		
+		this.valide.setBorderPainted(false);
+		this.sauver.setBorderPainted(false);
+		
 		//Couleur
         this.joueur.setBackground(this.c.getColorBouton());
         this.langue.setBackground(this.c.getColorBouton());
         this.valide.setBackground(this.c.getColorBouton());
+        this.sauver.setBackground(this.c.getColorBouton());
         
         this.joueur.setForeground(this.c.getColorLettre());
-        this.langue.setForeground(this.c.getColorLettre());;
+        this.langue.setForeground(this.c.getColorLettre());
         this.valide.setForeground(this.c.getColorLettre());
+        this.sauver.setForeground(this.c.getColorLettre());
 	}
 }
 

@@ -395,7 +395,7 @@ public class Modele extends Observable{
 						if(premierLettre.getColumn()<15) {
 							while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
 								for(Placement elem: this.placementEnCours) {
-									if(elem.getLine()==premierLettre.getLine() && elem.getColumn()==premierLettre.getColumn()+c+1 && elem.getLetter().lettre==premierLettre.getLetter().lettre) {
+									if(elem.getLine()==premierLettre.getLine() && elem.getColumn()==premierLettre.getColumn()+c+1) {
 										lettrecotecote++;
 									}
 								}
