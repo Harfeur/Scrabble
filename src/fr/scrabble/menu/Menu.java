@@ -233,7 +233,7 @@ public class Menu extends JFrame implements Observer {
 
 		this.add(this.containerHorsLigne);
 
-		this.modeleHorsLigne.Reprise();
+		this.modeleHorsLigne.reprise();
 
 		this.setVisible(true);
 	}

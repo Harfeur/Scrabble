@@ -78,7 +78,7 @@ public class Modele extends Observable{
 		this.notifyObservers(this.score[this.numChevalet]);
 	}
 	
-	public void Reprise() {
+	public void reprise() {
 		try {
 			this.charger();
 		} catch (ClassNotFoundException | IOException e) {
@@ -166,19 +166,22 @@ public class Modele extends Observable{
 		Test2=false; //Mot droite
 		int lig=0;
 		int col =0;
-		int lettrecotecote=1;
+		int lettrecotecote=0;
+		int autreLettre=0;
 		if(this.placementEnCours.size()>0) {
 			Placement premierLettre = this.placementEnCours.get(0);	
 			for (Placement elem : this.placementEnCours) {
 				lig=lig+elem.getLine();
 				col=col+elem.getColumn();
-				if(this.premierTour==false && elem.getLine()==7 && elem.getColumn()==7) {
-					premierTour=true; // A changer que à la fin du code
+				if(this.premierTour==false && elem.getLine()==7 && elem.getColumn()==7 && this.placementEnCours.size()>1) {
+					autreLettre=15;
+					premierTour=true;
 				}
 			}
 			if(premierLettre.getLine() == lig/this.placementEnCours.size() || premierLettre.getColumn() == col/this.placementEnCours.size()) {
 				//Pour un seul ajout
 				if(this.placementEnCours.size()==1) {
+					lettrecotecote=1;
 					System.out.println("Un seul ajout");
 					//mot bas
 					int l=0;
@@ -245,9 +248,10 @@ public class Modele extends Observable{
 						System.out.print(motDroite.toString());
 					}
 
-					if(motbasOk==1 && motdroiteOk==1) {
+					if(motbasOk==1 && motdroiteOk==1 && (motBas.nombreDeLettres()!=1 || motDroite.nombreDeLettres()!=1)) {
 						Test1=true;
 						Test2=true;
+						autreLettre=2;
 					}
 				}	
 				//plusieurs lettres
@@ -271,13 +275,31 @@ public class Modele extends Observable{
 						Case premB = this.plateauFictif.getCase(premierLettre.getLine()+l, premierLettre.getColumn());
 
 						motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
-
+						boolean present=false;
+						for(Placement elem: this.placementEnCours) {
+							if(elem.getLine()==premierLettre.getLine()+l && elem.getColumn()==premierLettre.getColumn()) {
+								present=true;
+							}
+						}
+						if(present) {
+							lettrecotecote++;
+						}
+						else {
+							autreLettre++;
+						}
 						if(premierLettre.getLine()<14) {
 							while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
+								present=false;
 								for(Placement elem: this.placementEnCours) {
-									if(elem.getLine()==(premierLettre.getLine()+l+1) && premierLettre.getColumn()==elem.getColumn()) {
-										lettrecotecote++;
+									if(elem.getLine()==premierLettre.getLine()+l+1 && elem.getColumn()==premierLettre.getColumn()) {
+										present=true;
 									}
+								}
+								if(present) {
+									lettrecotecote++;
+								}
+								else {
+									autreLettre++;
 								}
 								premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
 								motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
@@ -363,7 +385,6 @@ public class Modele extends Observable{
 									motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
 									l++;
 
-
 									if(premierLettre.getLine()+l+1==15) {
 										break;
 									}
@@ -383,6 +404,7 @@ public class Modele extends Observable{
 						if(premierLettre.getColumn()>0) {
 							while(this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c-1).lettre != null) {
 								c--;
+								
 								if(premierLettre.getColumn()+c-1==-1) {
 									break;
 								}
@@ -391,13 +413,31 @@ public class Modele extends Observable{
 						Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c);
 
 						motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
-
+						boolean present=false;
+						for(Placement elem: this.placementEnCours) {
+							if(elem.getLine()==premierLettre.getLine() && elem.getColumn()==premierLettre.getColumn()+c) {
+								present=true;
+							}
+						}
+						if(present) {
+							lettrecotecote++;
+						}
+						else {
+							autreLettre++;
+						}
 						if(premierLettre.getColumn()<15) {
 							while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
+								present=false;
 								for(Placement elem: this.placementEnCours) {
 									if(elem.getLine()==premierLettre.getLine() && elem.getColumn()==premierLettre.getColumn()+c+1) {
-										lettrecotecote++;
+										present=true;
 									}
+								}
+								if(present) {
+									lettrecotecote++;
+								}
+								else {
+									autreLettre++;
 								}
 								premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
 								motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
@@ -421,8 +461,9 @@ public class Modele extends Observable{
 						}
 					}
 				}
-				if (this.Test1 && this.Test2 && lettrecotecote == this.placementEnCours.size() && premierTour==true) {
+				if (this.Test1 && this.Test2 && lettrecotecote == this.placementEnCours.size() && premierTour==true && autreLettre!=0) {
 					System.out.println("Plateau Valide");
+					System.out.println(lettrecotecote+" "+autreLettre);
 					this.calculerScore();
 					this.changementJoueur();
 				}
@@ -434,13 +475,16 @@ public class Modele extends Observable{
 					if(this.Test2==false) {
 						System.out.println("Mot Droite Non Valide");
 					}
+					if(autreLettre==0){
+						System.out.println("Attention "+this.score[this.numChevalet].getPrenom()+" Vous devez toucher les lettres déjà placés sur le plateau");
+					}
 					if(lettrecotecote != this.placementEnCours.size()) {
 						System.out.println(this.score[this.numChevalet].getPrenom()+" les lettres doivent être côte à côte !");
 						System.out.println(lettrecotecote);
 						System.out.println(this.placementEnCours.size());
 					}
 					if(premierTour==false) {
-						System.out.println("Il faut commencer au milieu");
+						System.out.println("Il faut commencer au milieu et posé plusieurs lettres");
 
 					}
 					for(Placement elem: this.placementEnCours) {
