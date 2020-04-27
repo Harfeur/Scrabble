@@ -181,7 +181,7 @@ public class Menu extends JFrame implements Observer {
 
 		VuePlateau vuePlateau = new VuePlateau(cp,this);
 		VueChevalet vueChevalet = new VueChevalet(cc, this);
-		VueBouton vueBouton = new VueBouton(cb);
+		VueBouton vueBouton = new VueBouton(cb,this);
 		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
 
 		this.modeleHorsLigne.addObserver(vuePlateau);
@@ -222,7 +222,7 @@ public class Menu extends JFrame implements Observer {
 
 		VuePlateau vuePlateau = new VuePlateau(cp,this);
 		VueChevalet vueChevalet = new VueChevalet(cc, this);
-		VueBouton vueBouton = new VueBouton(cb);
+		VueBouton vueBouton = new VueBouton(cb,this);
 		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
 
 		this.modeleHorsLigne.addObserver(vuePlateau);
@@ -296,7 +296,7 @@ public class Menu extends JFrame implements Observer {
 
 		VuePlateau vuePlateau = new VuePlateau(cp,this);
 		VueChevalet vueChevalet = new VueChevalet(cc, this);
-		VueBouton vueBouton = new VueBouton(cb);
+		VueBouton vueBouton = new VueBouton(cb,this);
 		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
 
 		this.client.addObserver(vuePlateau);

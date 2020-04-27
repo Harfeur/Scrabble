@@ -2,7 +2,9 @@ package fr.scrabble.game.vues;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import javax.swing.*;
 
@@ -10,11 +12,18 @@ import fr.scrabble.menu.Menu;
 
 @SuppressWarnings("serial")
 public class VueBouton extends JPanel {
-
-	public VueBouton(ActionListener cb) {
+	JButton b,p;
+	Menu menu;
+	public VueBouton(ActionListener cb, Menu menu) {
 		super();
-		JButton b = new JButton("Valider");
-		JButton p = new JButton("Passer");
+		this.b = new JButton();
+		this.p = new JButton();
+		
+		this.menu=menu;
+		
+		b.getModel().setActionCommand("Valider");
+		p.getModel().setActionCommand("Passer");
+		
 		b.addActionListener(cb);
 		p.addActionListener(cb);
 		
@@ -26,6 +35,14 @@ public class VueBouton extends JPanel {
 		this.setBounds((int) (VueColonne.TAILLE*Menu.SCALE+VuePlateau.TAILLE*15*Menu.SCALE), 0, 100, 100);
 		this.add(b);
 		this.add(p);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+		this.b.setText(strings.getString("valider"));
+		this.p.setText(strings.getString("passer"));
 	}
 	
 }
