@@ -165,6 +165,7 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 		this.deux.setText(String.format(strings.getString("x_joueurs"), 2));
 		this.trois.setText(String.format(strings.getString("x_joueurs"), 3));
 		this.quatre.setText(String.format(strings.getString("x_joueurs"), 4));
+		this.sauver.setText(strings.getString("continuer"));
 		this.valide.setText(strings.getString("commencer"));
 		this.joueur.setText(strings.getString("nb_joueurs"));
 		this.langue.setText(strings.getString("langue_jeu"));

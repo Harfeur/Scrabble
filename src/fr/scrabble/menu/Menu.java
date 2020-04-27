@@ -172,6 +172,9 @@ public class Menu extends JFrame implements Observer {
 		this.removeAll();
 
 		this.modeleHorsLigne = new Modele();
+		
+		VueMenuBar vueMenuBar = new VueMenuBar(this,this.modeleHorsLigne);
+		this.setJMenuBar(vueMenuBar);
 
 		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
 		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
@@ -207,6 +210,9 @@ public class Menu extends JFrame implements Observer {
 		this.removeAll();
 
 		this.modeleHorsLigne = new Modele();
+		
+		VueMenuBar vueMenuBar = new VueMenuBar(this,this.modeleHorsLigne);
+		this.setJMenuBar(vueMenuBar);
 
 		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
 		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);

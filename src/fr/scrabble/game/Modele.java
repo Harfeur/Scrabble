@@ -746,7 +746,6 @@ public class Modele extends Observable{
 			
 			//
 			System.out.print("C'est au tour de "+this.score[this.numChevalet].getPrenom()+"\n");
-			this.enregistrer();
 			}
 		}
 
@@ -867,5 +866,6 @@ public class Modele extends Observable{
 		} catch (IOException e) {
 			throw new RuntimeException("Impossible d'écrire les données du premTour");
 		}
+		System.out.println("La partie a été sauvegardé");
 	}
 }
