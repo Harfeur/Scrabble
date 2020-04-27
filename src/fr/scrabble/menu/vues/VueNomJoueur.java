@@ -16,9 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import fr.scrabble.game.utils.JTextFieldLimit;
 import fr.scrabble.menu.ControleurBoutons;
 import fr.scrabble.menu.Menu;
-import fr.scrabble.online.JTextFieldLimit;
 import fr.scrabble.structures.Couleur;
 
 @SuppressWarnings("serial")

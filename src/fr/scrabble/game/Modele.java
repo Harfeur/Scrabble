@@ -519,9 +519,13 @@ public class Modele extends Observable{
 							case "LT":
 								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;
 								break;
-							case "MD": multiplicateur*=2;
+							case "MD":
+								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+								multiplicateur*=2;
 								break;
-							case "MT": multiplicateur*=3;
+							case "MT":
+								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+								multiplicateur*=3;
 								break;
 							default:
 								score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
@@ -555,9 +559,13 @@ public class Modele extends Observable{
 							case "LT":
 								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;
 								break;
-							case "MD": multiplicateur*=2;
+							case "MD":
+								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+								multiplicateur*=2;
 								break;
-							case "MT": multiplicateur*=3;
+							case "MT":
+								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+								multiplicateur*=3;
 								break;
 							default:
 								score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
@@ -602,9 +610,13 @@ public class Modele extends Observable{
 							case "LT":
 								score +=this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*3;
 								break;
-							case "MD": multiplicateur*=2;
+							case "MD":
+								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+								multiplicateur*=2;
 								break;
-							case "MT": multiplicateur*=3;
+							case "MT":
+								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+								multiplicateur*=3;
 								break;
 							default:
 								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
@@ -637,9 +649,13 @@ public class Modele extends Observable{
 							case "LT":
 								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*3;
 								break;
-							case "MD": multiplicateur*=2;
+							case "MD":
+								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+								multiplicateur*=2;
 								break;
-							case "MT": multiplicateur*=3;
+							case "MT":
+								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+								multiplicateur*=3;
 								break;
 							default:
 								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
@@ -707,6 +723,7 @@ public class Modele extends Observable{
 			else {
 				this.numChevalet++;
 			}
+			this.chevalets.joueurSuivant();
 			this.motbasOk=0;
 			this.motdroiteOk=0;
 			this.plateau=this.plateauFictif.clone();
