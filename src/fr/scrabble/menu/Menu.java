@@ -297,9 +297,11 @@ public class Menu extends JFrame implements Observer {
 		VuePlateau vuePlateau = new VuePlateau(cp,this);
 		VueChevalet vueChevalet = new VueChevalet(cc, this);
 		VueBouton vueBouton = new VueBouton(cb);
+		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
 
 		this.client.addObserver(vuePlateau);
 		this.client.addObserver(vueChevalet);
+		this.client.addObserver(vueConsole);
 		this.client.addObserver(vueScore);
 		this.client.addObserver(this);
 
