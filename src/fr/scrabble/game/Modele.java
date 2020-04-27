@@ -84,7 +84,8 @@ public class Modele extends Observable{
 			this.charger();
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
-			System.out.println("echec");
+			this.setChanged();
+			this.notifyObservers("echec");
 		}
 		this.dico = new Dictionnaire(langue);
 		this.plateauFictif= this.plateau;
@@ -212,7 +213,8 @@ public class Modele extends Observable{
 						motbasOk++;
 					}
 					else {
-						System.out.println(motBas.toString()+" n'est pas valide");
+						this.setChanged();
+						this.notifyObservers(motBas.toString()+" n'est pas valide");
 					}
 
 					//mot droite
@@ -244,7 +246,8 @@ public class Modele extends Observable{
 						motdroiteOk++;
 					}
 					else {
-						System.out.println(motDroite.toString()+" n'est pas valide");
+						this.setChanged();
+						this.notifyObservers(motDroite.toString()+" n'est pas valide");
 					}
 
 					if(motbasOk==1 && motdroiteOk==1 && (motBas.nombreDeLettres()!=1 || motDroite.nombreDeLettres()!=1)) {
@@ -311,7 +314,8 @@ public class Modele extends Observable{
 							motbasOk++;
 						}
 						else {
-							System.out.println(motBas.toString()+" n'est pas valide");
+							this.setChanged();
+							this.notifyObservers(motBas.toString()+" n'est pas valide");
 						}
 						
 						for(Placement elem : this.placementEnCours) {
@@ -346,7 +350,8 @@ public class Modele extends Observable{
 								motdroiteOk++;
 							}
 							else {
-								System.out.println(motDroite.toString()+" n'est pas valide");
+								this.setChanged();
+								this.notifyObservers(motDroite.toString()+" n'est pas valide");
 							}
 						}
 						if(motbasOk==1 && motdroiteOk==this.placementEnCours.size()) {
@@ -388,7 +393,8 @@ public class Modele extends Observable{
 								motbasOk++;
 							}
 							else {
-								System.out.println(motBas.toString()+" n'est pas valide");
+								this.setChanged();
+								this.notifyObservers(motBas.toString()+" n'est pas valide");
 							}
 						}
 
@@ -444,7 +450,8 @@ public class Modele extends Observable{
 							motdroiteOk++;
 						}
 						else {
-							System.out.println(motDroite.toString()+" n'est pas valide");
+							this.setChanged();
+							this.notifyObservers(motDroite.toString()+" n'est pas valide");
 						}
 
 						if(motbasOk==this.placementEnCours.size() && motdroiteOk==1) {
@@ -459,13 +466,16 @@ public class Modele extends Observable{
 				}
 				else {
 					if(autreLettre==0){
-						System.out.println("Attention "+this.score[this.numChevalet].getPrenom()+" Vous devez toucher les lettres déjà placés sur le plateau");
+						this.setChanged();
+						this.notifyObservers("Attention "+this.score[this.numChevalet].getPrenom()+" Vous devez toucher les lettres déjà placés sur le plateau");
 					}
 					if(lettrecotecote != this.placementEnCours.size()) {
-						System.out.println(this.score[this.numChevalet].getPrenom()+" les lettres doivent être côte à côte !");
+						this.setChanged();
+						this.notifyObservers(this.score[this.numChevalet].getPrenom()+" les lettres doivent être côte à côte !");
 					}
 					if(premierTour==false) {
-						System.out.println("Il faut commencer au milieu et posé plusieurs lettres");
+						this.setChanged();
+						this.notifyObservers("Il faut commencer au milieu et posé plusieurs lettres");
 
 					}
 					for(Placement elem: this.placementEnCours) {
@@ -480,11 +490,13 @@ public class Modele extends Observable{
 					this.plateauFictif=this.plateau.clone();
 					this.setChanged();
 					this.notifyObservers(this.plateauFictif);
-					System.out.println("Réessaye "+this.score[this.numChevalet].getPrenom());
+					this.setChanged();
+					this.notifyObservers("Réessaye "+this.score[this.numChevalet].getPrenom());
 				} 
 			}
 			else {
-				System.out.println("Les lettres ne sont pas sur la même ligne\\colonne");
+				this.setChanged();
+				this.notifyObservers("Les lettres ne sont pas sur la même ligne\\colonne");
 			}
 		}
 	}
@@ -693,24 +705,29 @@ public class Modele extends Observable{
 	public void changementJoueur() {
 		if(this.chevalets.chevaletEnCours().size()==7) {
 			this.passe=passe+1;
-			System.out.print(this.score[this.numChevalet].getPrenom()+" a passé son tour.. \n");
+			this.setChanged();
+			this.notifyObservers(this.score[this.numChevalet].getPrenom()+" a passé son tour.. \n");
 		}
 		else {
 			if(this.chevalets.chevaletEnCours().size()==6) {
-				System.out.println(this.score[this.numChevalet].getPrenom()+" a placé la lettre "+this.placementEnCours.get(0).getLetter().lettre);
+				this.setChanged();
+				this.notifyObservers(this.score[this.numChevalet].getPrenom()+" a placé la lettre "+this.placementEnCours.get(0).getLetter().lettre);
 			}
 			else {
 				//Console
 				if(colonne) {
-					System.out.print(this.score[this.numChevalet].getPrenom()+" vient de jouer "+this.motBas+"\n");
+					this.setChanged();
+					this.notifyObservers(this.score[this.numChevalet].getPrenom()+" vient de jouer "+this.motBas+"\n");
 				}
 				else {
-					System.out.print(this.score[this.numChevalet].getPrenom()+" vient de jouer "+this.motDroite+"\n");
+					this.setChanged();
+					this.notifyObservers(this.score[this.numChevalet].getPrenom()+" vient de jouer "+this.motDroite+"\n");
 				}
 			}
 			this.chevalets.chevaletEnCours().remplir(sac);
 			this.passe=0;
-			System.out.print("Son score augmente de "+(this.score[numChevalet].getScore()-this.scoreAv)+" points ! \n");
+			this.setChanged();
+			this.notifyObservers("Son score augmente de "+(this.score[numChevalet].getScore()-this.scoreAv)+" points ! \n");
 		}
 		if(this.passe==this.chevalets.size()) {
 			this.setChanged();
@@ -745,7 +762,8 @@ public class Modele extends Observable{
 			this.placementEnCours = new ArrayList<Placement>();
 			
 			//
-			System.out.print("C'est au tour de "+this.score[this.numChevalet].getPrenom()+"\n");
+			this.setChanged();
+			this.notifyObservers("C'est au tour de "+this.score[this.numChevalet].getPrenom()+"\n");
 			}
 		}
 
@@ -866,6 +884,7 @@ public class Modele extends Observable{
 		} catch (IOException e) {
 			throw new RuntimeException("Impossible d'écrire les données du premTour");
 		}
-		System.out.println("La partie a été sauvegardé");
+		this.setChanged();
+		this.notifyObservers("La partie a été sauvegardé");
 	}
 }
