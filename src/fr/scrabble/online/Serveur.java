@@ -25,8 +25,9 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 	ArrayList<String> joueurs;
 	
 	
-	public Serveur() {
+	public Serveur(Modele modele) {
 		super();
+		this.modele = modele;
 		this.gameStarted = false;
 		this.joueurs = new ArrayList<String>();
 	}
@@ -44,11 +45,6 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
-		Serveur s = new Serveur();
-		s.ouvrirConnection();
-	}
 
 	public boolean ajouterJoueur(String username) {
 		if (!this.gameStarted && !this.joueurs.contains(username) && this.joueurs.size() < 4) {
@@ -60,7 +56,6 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 
 	public void demarrer() {
 		this.joueurEnCours = 0;
-		this.modele = new Modele();
 		this.modele.addObserver(this);
 		for (int i = 0; i < this.size(); ++i) {
 			UserThread user = this.get(i);
