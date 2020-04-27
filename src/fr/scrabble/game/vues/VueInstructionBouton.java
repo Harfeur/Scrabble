@@ -60,6 +60,9 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         this.valide = new JButton();
         this.sauver = new JButton();
         
+        this.valide.getModel().setActionCommand("Commencer");
+        this.sauver.getModel().setActionCommand("Continuer");
+        
         valide.addActionListener(this);
         sauver.addActionListener(this);
         
