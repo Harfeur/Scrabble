@@ -45,7 +45,7 @@ public class VueScoreFin extends JPanel {
 			}
 		}
 		this.setPreferredSize(new Dimension(400,400));
-		this.setBounds(375,250, 400, 400);
+		this.setBounds(300,250, 400, 400);
 		this.setOpaque(false);
 	}
 	
@@ -54,13 +54,22 @@ public class VueScoreFin extends JPanel {
 		if(score!=null) {
 			int j=0;
 			for (int i=0; i<score.length;i++) {
-				Font font_score = new Font("Arial",Font.PLAIN,(int)(25*Menu.SCALE)) ;
-				FontMetrics metrics_score = getFontMetrics(font_score);
-				g.setFont(font_score);
-				g.setColor(new Color(255,255,255));
-				g.drawString(score[i].prenom + " : "+score[i].getScore(),metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
-				j=j+2;
-			
+				if(i==0) {
+					Font font_score = new Font("Arial",Font.PLAIN,(int)(30*Menu.SCALE)) ;
+					FontMetrics metrics_score = getFontMetrics(font_score);
+					g.setFont(font_score);
+					g.setColor(new Color(253,200,72));
+					g.drawString(score[i].prenom + "  "+score[i].getScore()+" points",metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
+					j=j+2;
+				}
+				else {
+					Font font_score = new Font("Arial",Font.PLAIN,(int)(25*Menu.SCALE)) ;
+					FontMetrics metrics_score = getFontMetrics(font_score);
+					g.setFont(font_score);
+					g.setColor(new Color(255,255,255));
+					g.drawString("  "+score[i].prenom + "  "+score[i].getScore()+" points",metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
+					j=j+2;
+				}
 			}
 		}
 	}
