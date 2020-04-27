@@ -381,7 +381,7 @@ public class Menu extends JFrame implements Observer {
 	
 	public void vueFinale(Score[] score) {
 		this.removeAll();
-		this.setTitle("Partie terminée");
+		
 		this.containerScore =  new JLayeredPane();
 		
 		containerScore.add(new VueScoreFin(),0,0);
