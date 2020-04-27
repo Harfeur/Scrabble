@@ -164,6 +164,9 @@ public class Modele extends Observable{
 	}
 
 	public void verificationMot() {
+		if(this.placementEnCours.size()==0) {
+			return;
+		}
 		Test1=false; //Mot bas
 		Test2=false; //Mot droite
 		int lig=0;
@@ -886,5 +889,29 @@ public class Modele extends Observable{
 		}
 		this.setChanged();
 		this.notifyObservers("La partie a été sauvegardé");
+	}
+	
+	public void suppFile() {
+		//Sac
+		File fichier = new File("Sac.dat");
+		fichier.delete();
+		//numChevalet
+		File fichier1 = new File("JoueurEnCours.dat");
+		fichier1.delete();
+		//Score
+		File fichier2 = new File("Score.dat");
+		fichier2.delete();
+		//Chevalet
+		File fichier3 = new File("Chevalet.dat");
+		fichier3.delete();
+		//Langue
+		File fichier6 = new File("Langue.dat");
+		fichier6.delete();
+		//Plateau
+		File fichier4 = new File("Plateau.dat");
+		fichier4.delete();
+		//PremierTour
+		File fichier5 = new File("PremierTour.dat");
+		fichier5.delete();
 	}
 }

@@ -399,6 +399,9 @@ public class Menu extends JFrame implements Observer {
 		
 		this.containerScore =  new JLayeredPane();
 		
+		this.modeleHorsLigne.suppFile();
+		
+		
 		containerScore.add(new VueScoreFin(),0,0);
 		containerScore.add(new VueScoreFin(score),1,0);
 		this.add(containerScore);
@@ -425,7 +428,7 @@ public class Menu extends JFrame implements Observer {
 		}
 		if (arg.getClass() == Score[].class && this.fin) {
 			System.out.println("Partie terminée !");
-			this.vueFinale((Score[]) arg);
+				this.vueFinale((Score[]) arg);
 		}
 		if (o.getClass() == Couleur.class) {
 			this.repaint();
