@@ -7,8 +7,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import fr.scrabble.game.utils.CustomOutputStream;
 import fr.scrabble.menu.Menu;
-import fr.scrabble.online.CustomOutputStream;
 
 @SuppressWarnings("serial")
 public class VueConsole extends JPanel {

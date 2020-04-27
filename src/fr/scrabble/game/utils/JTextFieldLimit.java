@@ -1,4 +1,4 @@
-package fr.scrabble.online;
+package fr.scrabble.game.utils;
 
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
