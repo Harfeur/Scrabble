@@ -1,5 +1,6 @@
 package fr.scrabble.game.vues;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 
@@ -8,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -68,50 +71,28 @@ public class VueChevalet extends JPanel implements Observer {
 		//Affichage lettre sur chevalet
 		if(this.chevalet.size()>0) {
 			for(int i=0; i<this.chevalet.size();i=i+1) {
-				//Fond
-				g.setColor(this.tuile[this.couleur.getCouleur()]);
-				g.fillRect((int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-				g.setColor(this.tuile[this.couleur.getCouleur()+1]);
-				g.drawRect((int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-				//Lettre
-				if(this.chevalet.get(i).valeur!=0) {
-					Font font_lettre = new Font("Arial",Font.PLAIN,(int)(VueChevalet.TAILLE*Menu.SCALE)) ;
-					FontMetrics metrics_lettre = getFontMetrics(font_lettre);
-					g.setFont(font_lettre);
-					g.setColor(this.couleur.getColorLettre());
-					g.drawString(this.chevalet.get(i).lettre,(int) (i*TAILLE*Menu.SCALE+metrics_lettre.getDescent()),(int) (TAILLE*Menu.SCALE+metrics_lettre.getAscent()));
+				Image im = null;
+				try {
+					im = ImageIO.read(this.chevalet.get(i).image);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				//Valeur
-				Font font_valeur = new Font("Arial",Font.PLAIN,(int)(6*Menu.SCALE)) ;
-				FontMetrics metrics_valeur = getFontMetrics(font_valeur);
-				g.setFont(font_valeur);
-				g.setColor(this.couleur.getColorLettre());
-				g.drawString(this.chevalet.get(i).valeur+"",(int) (i*TAILLE*Menu.SCALE+metrics_valeur.getDescent()),(int) (TAILLE*Menu.SCALE+metrics_valeur.getAscent()));
+				g.drawImage(im,(int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
 			}
 		}
 		//Lettre selectionnee
 		for(int i=0 ; i<this.chevalet.size() ;i=i+1) {
 			if(this.chevalet.lettreSelectionee==i) {
-				//Fond
-				g.setColor(this.select[this.couleur.getCouleur()]);
-				g.fillRect((int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-				g.setColor(this.select[this.couleur.getCouleur()+1]);
-				g.drawRect((int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-				//Lettre
-				if(this.chevalet.get(i).valeur!=0) {
-					Font font_lettre = new Font("Arial",Font.PLAIN,(int)(VueChevalet.TAILLE*Menu.SCALE)) ;
-					FontMetrics metrics_lettre = getFontMetrics(font_lettre);
-					g.setFont(font_lettre);
-					g.setColor(this.couleur.getColorLettre());
-					g.drawString(this.chevalet.get(i).lettre,(int) (i*TAILLE*Menu.SCALE+metrics_lettre.getDescent()),(int) (TAILLE*Menu.SCALE+metrics_lettre.getAscent()));
+				Image im = null;
+				try {
+					im = ImageIO.read(this.chevalet.get(i).imageSelectionnee);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-				//Valeur
-				Font font_valeur = new Font("Arial",Font.PLAIN,(int)(6*Menu.SCALE)) ;
-				FontMetrics metrics_valeur = getFontMetrics(font_valeur);
-				g.setFont(font_valeur);
-				g.setColor(this.couleur.getColorLettre());
-				g.drawString(this.chevalet.get(i).valeur+"",(int) (i*TAILLE*Menu.SCALE+metrics_valeur.getDescent()),(int) (TAILLE*Menu.SCALE+metrics_valeur.getAscent()));
-			}
+				g.drawImage(im,(int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
+				}
 		}
 	}
 

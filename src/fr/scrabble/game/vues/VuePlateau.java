@@ -1,5 +1,6 @@
 package fr.scrabble.game.vues;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 
@@ -8,6 +9,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -76,24 +79,15 @@ public class VuePlateau extends JPanel implements Observer {
 							g.drawString(score_d,(int) (Menu.SCALE*2+j*VuePlateau.TAILLE*Menu.SCALE+metrics_mot_score.getDescent()),(int) (Menu.SCALE*10+i*VuePlateau.TAILLE*Menu.SCALE+metrics_mot_score.getHeight()));
 						}
 					else {
-						//Fond
-						g.setColor(this.tuile[this.c.getCouleur()]);
-						g.fillRect((int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE));
-						g.setColor(this.c.getColorLettre());
-						g.drawRect((int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE));
-						//Lettre
-						Font font_lettre = new Font("Arial",Font.PLAIN,(int)(VuePlateau.TAILLE*Menu.SCALE)) ;
-						FontMetrics metrics_lettre = getFontMetrics(font_lettre);
-						g.setFont(font_lettre);
-						g.setColor(this.c.getColorLettre());
-						g.drawString(c.lettre.lettre,(int) (j*TAILLE*Menu.SCALE+metrics_lettre.getDescent()),(int) (i*TAILLE*Menu.SCALE+metrics_lettre.getAscent()));
-						//Valeur
-						Font font_valeur = new Font("Arial",Font.PLAIN,(int)(5*Menu.SCALE)) ;
-						FontMetrics metrics_valeur = getFontMetrics(font_valeur);
-						g.setFont(font_valeur);
-						g.setColor(this.c.getColorLettre());
-						g.drawString(c.lettre.valeur+"",(int) (j*TAILLE*Menu.SCALE+metrics_valeur.getDescent()),(int) (i*TAILLE*Menu.SCALE+metrics_valeur.getAscent()));
-					}
+						Image im = null;
+						try {
+							im = ImageIO.read(c.lettre.image);
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						g.drawImage(im,(int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),null);
+						}
 				}
 			}
 		}
