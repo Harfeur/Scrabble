@@ -726,6 +726,7 @@ public class Modele extends Observable{
 			else {
 				this.numChevalet++;
 			}
+			this.chevalets.joueurSuivant();
 			this.motbasOk=0;
 			this.motdroiteOk=0;
 			this.plateau=this.plateauFictif.clone();
