@@ -1,13 +1,14 @@
 package fr.scrabble.online;
 
 import fr.scrabble.game.Modele;
+import fr.scrabble.menu.Menu;
 
 public class ModeleEnLigne extends Modele {
 	
 	private Client client;
-
-	public ModeleEnLigne(Client client) {
-		super();
+	
+	public ModeleEnLigne(Client client, Menu menu) {
+		super(menu);
 		this.client =  client;
 	}
 	

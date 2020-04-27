@@ -170,7 +170,7 @@ public class Menu extends JFrame implements Observer {
 	public void vueHorsLigne(int nb, String l, ArrayList<String> prenoms) {
 		this.removeAll();
 
-		this.modeleHorsLigne = new Modele();
+		this.modeleHorsLigne = new Modele(this);
 		
 		VueMenuBar vueMenuBar = new VueMenuBar(this,this.modeleHorsLigne);
 		this.setJMenuBar(vueMenuBar);
@@ -211,7 +211,7 @@ public class Menu extends JFrame implements Observer {
 	public void vueHorsLigne() {
 		this.removeAll();
 
-		this.modeleHorsLigne = new Modele();
+		this.modeleHorsLigne = new Modele(this);
 		
 		VueMenuBar vueMenuBar = new VueMenuBar(this,this.modeleHorsLigne);
 		this.setJMenuBar(vueMenuBar);
@@ -288,7 +288,7 @@ public class Menu extends JFrame implements Observer {
 	public void vueEnLigne() {
 		this.removeAll();
 
-		this.modeleEnLigne = new ModeleEnLigne(this.client);
+		this.modeleEnLigne = new ModeleEnLigne(this.client, this);
 
 		ControleurPlateau cp = new ControleurPlateau(modeleEnLigne);
 		ControleurChevalet cc = new ControleurChevalet(modeleEnLigne);
@@ -373,7 +373,7 @@ public class Menu extends JFrame implements Observer {
 	public void vueServeur() {
 		this.removeAll();
 		
-		this.modeleHorsLigne = new Modele();
+		this.modeleHorsLigne = new Modele(this);
 
 		this.serveur = new Serveur(this.modeleHorsLigne);
 		
