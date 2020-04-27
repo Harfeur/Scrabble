@@ -1,5 +1,6 @@
 package fr.scrabble.menu.vues;
 
+import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +24,7 @@ import fr.scrabble.structures.Couleur;
 public class VueMenuBar extends JMenuBar {
 
 	JMenu appli,couleurJM,langue;
-	JMenuItem accueil,arreter,sauver;
+	JMenuItem accueil,arreter,sauver,valider;
 	JRadioButtonMenuItem jr1,jr2, l0,l1, l2;
 	ButtonGroup bg,bgl;
 	Menu menu;
@@ -43,9 +44,11 @@ public class VueMenuBar extends JMenuBar {
 		this.accueil = new JMenuItem();
 		this.arreter = new JMenuItem();
 		this.sauver = new JMenuItem();
+		this.valider=new JMenuItem();
 		
 		this.arreter.addActionListener(new Quitte());
 		this.accueil.addActionListener(new Accueil());
+		this.valider.addActionListener(new Validation());
 		this.sauver.addActionListener(new Sauvegarde());
 		
 		//RadioButton Couleur
@@ -116,6 +119,7 @@ public class VueMenuBar extends JMenuBar {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public VueMenuBar (Menu menu, Modele m) {
 		super();
 		
@@ -130,11 +134,12 @@ public class VueMenuBar extends JMenuBar {
 		this.accueil = new JMenuItem();
 		this.arreter = new JMenuItem();
 		this.sauver = new JMenuItem();
-		JMenuItem valider=new JMenuItem();
+		this.valider=new JMenuItem();
 		
 		this.arreter.addActionListener(new Quitte());
 		this.accueil.addActionListener(new Accueil());
 		this.sauver.addActionListener(new Sauvegarde());
+		this.valider.addActionListener(new Validation());
 		
 		//RadioButton Couleur
 		this.jr1 = new JRadioButtonMenuItem();
@@ -195,12 +200,14 @@ public class VueMenuBar extends JMenuBar {
 		this.appli.add(this.couleurJM);
 		this.appli.add(this.langue);
 		this.appli.addSeparator();
+		this.appli.add(this.valider);
 		this.appli.add(this.sauver);
 		this.appli.addSeparator();
 		this.appli.add(this.arreter);
 		
 		this.arreter.setAccelerator(KeyStroke.getKeyStroke('q'));
 		this.sauver.setAccelerator(KeyStroke.getKeyStroke('s'));
+		this.valider.setAccelerator(KeyStroke.getKeyStroke(Event.ENTER,0));
 		
 		this.add(appli);
 		this.setVisible(true);
@@ -221,6 +228,7 @@ public class VueMenuBar extends JMenuBar {
 		
 		this.accueil.setText(strings.getString("accueil"));
 		this.sauver.setText(strings.getString("sauvegarder"));
+		this.valider.setText(strings.getString("valider"));
 		this.arreter.setText(strings.getString("quitter"));
 		
 		this.jr1.setText(strings.getString("clair"));
@@ -241,6 +249,7 @@ public class VueMenuBar extends JMenuBar {
 			
 			this.accueil.setText(strings.getString("accueil"));
 			this.sauver.setText(strings.getString("sauvegarder"));
+			this.valider.setText(strings.getString("valider"));
 			this.arreter.setText(strings.getString("quitter"));
 			
 			this.jr1.setText(strings.getString("clair"));
@@ -274,6 +283,14 @@ public class VueMenuBar extends JMenuBar {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			m.enregistrer();
+		}	
+	}
+	
+	class Validation implements ActionListener{
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			m.verificationMot();
 		}	
 	}
 
