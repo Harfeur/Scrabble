@@ -39,7 +39,7 @@ public class Menu extends JFrame implements Observer {
 	vueLigne, vueColonne, vueConsole, vueRejete;
 	VueScore vueScore;
 
-	boolean vueHorsLigneSombre=true;
+	boolean vueHorsLigneSombre=true, fin=false;
 
 	Client client;
 	Serveur serveur;
@@ -404,6 +404,13 @@ public class Menu extends JFrame implements Observer {
 			if (str.equals("afficher")) {
 				this.setVisible(true);
 			}
+			if (str.equals("FIN")) {
+				this.fin=true;
+			}
+		}
+		if (arg.getClass() == Score[].class && this.fin) {
+			System.out.println("Partie terminée !");
+			this.vueFinale((Score[]) arg);
 		}
 		if (o.getClass() == Couleur.class) {
 			this.repaint();

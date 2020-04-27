@@ -10,7 +10,6 @@ import java.util.Hashtable;
 import java.util.Observable;
 
 import fr.scrabble.game.vues.VueJoker;
-import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.*;
 import fr.scrabble.structures.Case.Multiplicateur;
 
@@ -32,6 +31,7 @@ public class Modele extends Observable{
 	int motbasOk, motdroiteOk, passe=0;
 	boolean Test1, Test2, premierTour, colonne;
 
+	@SuppressWarnings("deprecation")
 	public Modele() {
 		super();
 	}
@@ -182,7 +182,6 @@ public class Modele extends Observable{
 				//Pour un seul ajout
 				if(this.placementEnCours.size()==1) {
 					lettrecotecote=1;
-					System.out.println("Un seul ajout");
 					//mot bas
 					int l=0;
 					if(premierLettre.getLine()>0) {
@@ -207,12 +206,12 @@ public class Modele extends Observable{
 							}
 						}
 					}
-					System.out.println("Mot bas trouvé : "+ motBas);
+					
 					if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 						motbasOk++;
 					}
 					else {
-						System.out.print(motBas.toString());
+						System.out.println(motBas.toString()+" n'est pas valide");
 					}
 
 					//mot droite
@@ -240,12 +239,11 @@ public class Modele extends Observable{
 							}
 						}
 					}
-					System.out.println("Mot droite trouvé : "+ motDroite);
 					if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 						motdroiteOk++;
 					}
 					else {
-						System.out.print(motDroite.toString());
+						System.out.println(motDroite.toString()+" n'est pas valide");
 					}
 
 					if(motbasOk==1 && motdroiteOk==1 && (motBas.nombreDeLettres()!=1 || motDroite.nombreDeLettres()!=1)) {
@@ -256,12 +254,10 @@ public class Modele extends Observable{
 				}	
 				//plusieurs lettres
 				else {
-					System.out.println("Plusieurs ajout");
 					Placement deuxiemLettre = this.placementEnCours.get(1);
 					// Si les lettres sont dans la meme colonne
 					if(premierLettre.getColumn()==deuxiemLettre.getColumn()) {
 						colonne=true;
-						System.out.println("Même colonne donc 1 mot bas et + mot droite");
 						//mot bas
 						int l=0;
 						if(premierLettre.getLine()>0) {
@@ -310,14 +306,13 @@ public class Modele extends Observable{
 								}
 							}
 						}
-						System.out.println("Mot bas trouvé : "+motBas);
 						if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 							motbasOk++;
 						}
 						else {
-							System.out.print(motBas.toString());
+							System.out.println(motBas.toString()+" n'est pas valide");
 						}
-						System.out.println("Mots droite trouvés : ");
+						
 						for(Placement elem : this.placementEnCours) {
 							//mot droite
 							int c=0;
@@ -345,12 +340,12 @@ public class Modele extends Observable{
 									}
 								}
 							}
-							System.out.println(motDroite);
+							
 							if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 								motdroiteOk++;
 							}
 							else {
-								System.out.print(motDroite.toString());
+								System.out.println(motDroite.toString()+" n'est pas valide");
 							}
 						}
 						if(motbasOk==1 && motdroiteOk==this.placementEnCours.size()) {
@@ -361,8 +356,6 @@ public class Modele extends Observable{
 					//lettre dans la meme ligne
 					if(this.placementEnCours.get(0).getLine()==deuxiemLettre.getLine()) {
 						colonne=false;
-						System.out.println("Même ligne donc + mots bas et 1 mot droite");
-						System.out.println("Mots bas trouvés : ");
 						for(Placement elem : this.placementEnCours) {
 							//mot bas
 							int l=0;
@@ -390,12 +383,11 @@ public class Modele extends Observable{
 									}
 								}
 							}
-							System.out.println(motBas);
 							if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 								motbasOk++;
 							}
 							else {
-								System.out.print(motBas.toString());
+								System.out.println(motBas.toString()+" n'est pas valide");
 							}
 						}
 
@@ -447,12 +439,11 @@ public class Modele extends Observable{
 								}
 							}
 						}
-						System.out.println("Mot droite trouvée : "+motDroite);
 						if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 							motdroiteOk++;
 						}
 						else {
-							System.out.print(motDroite.toString());
+							System.out.println(motDroite.toString()+" n'est pas valide");
 						}
 
 						if(motbasOk==this.placementEnCours.size() && motdroiteOk==1) {
@@ -462,26 +453,15 @@ public class Modele extends Observable{
 					}
 				}
 				if (this.Test1 && this.Test2 && lettrecotecote == this.placementEnCours.size() && premierTour==true && autreLettre!=0) {
-					System.out.println("Plateau Valide");
-					System.out.println(lettrecotecote+" "+autreLettre);
 					this.calculerScore();
 					this.changementJoueur();
 				}
 				else {
-					System.out.println("Plateau Non Valide");
-					if(this.Test1==false) {
-						System.out.println("Mot Bas Non Valide");
-					}
-					if(this.Test2==false) {
-						System.out.println("Mot Droite Non Valide");
-					}
 					if(autreLettre==0){
 						System.out.println("Attention "+this.score[this.numChevalet].getPrenom()+" Vous devez toucher les lettres déjà placés sur le plateau");
 					}
 					if(lettrecotecote != this.placementEnCours.size()) {
 						System.out.println(this.score[this.numChevalet].getPrenom()+" les lettres doivent être côte à côte !");
-						System.out.println(lettrecotecote);
-						System.out.println(this.placementEnCours.size());
 					}
 					if(premierTour==false) {
 						System.out.println("Il faut commencer au milieu et posé plusieurs lettres");
@@ -716,8 +696,9 @@ public class Modele extends Observable{
 			System.out.print("Son score augmente de "+(this.score[numChevalet].getScore()-this.scoreAv)+" points ! \n");
 		}
 		if(this.passe==this.chevalets.size()) {
-			Menu m = new Menu();
-			m.vueFinale(score);
+			this.setChanged();
+			this.notifyObservers("FIN");
+			this.notifyObservers(this.score);
 		}
 		else {
 			if (this.numChevalet+1 == this.chevalets.size()) {
