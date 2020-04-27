@@ -10,6 +10,7 @@ import java.util.Hashtable;
 import java.util.Observable;
 
 import fr.scrabble.game.vues.VueJoker;
+import fr.scrabble.menu.Menu.Vues;
 import fr.scrabble.structures.*;
 import fr.scrabble.structures.Case.Multiplicateur;
 
@@ -120,7 +121,7 @@ public class Modele extends Observable{
 			if (this.chevalets.chevaletEnCours().get(num).valeur == 0) {
 				new VueJoker(this.langue, this);
 				this.setChanged();
-				this.notifyObservers("cacher");
+				this.notifyObservers(Vues.MASQUER);
 			}
 		}
 	}
@@ -713,7 +714,8 @@ public class Modele extends Observable{
 		}
 		if(this.passe==this.chevalets.size()) {
 			this.setChanged();
-			this.notifyObservers("FIN");
+			this.notifyObservers(Vues.FINALE);
+			this.setChanged();
 			this.notifyObservers(this.score);
 		}
 		else {
@@ -750,7 +752,7 @@ public class Modele extends Observable{
 	public void lettreJoker(String lettre) {
 		lettreChoisi=lettre;
 		this.setChanged();
-		this.notifyObservers("afficher");
+		this.notifyObservers(Vues.AFFICHER);
 	}
 	
 	//Serialisation
