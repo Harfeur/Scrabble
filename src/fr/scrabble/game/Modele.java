@@ -643,7 +643,7 @@ public class Modele extends Observable{
 				motsVerticaux.put(mot, score);
 				ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 				this.setChanged();
-				this.notifyObservers(String.format(strings.getString("jou"), this.score[this.numChevalet].getPrenom(),mot+"\n"));
+				this.notifyObservers(String.format(strings.getString("joue"), this.score[this.numChevalet].getPrenom(),mot+"\n"));
 			}
 
 			//On cherche le mot horizontal
@@ -722,7 +722,7 @@ public class Modele extends Observable{
 				motsHorizontaux.put(mot, score);
 				ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 				this.setChanged();
-				this.notifyObservers(String.format(strings.getString("jou"), this.score[this.numChevalet].getPrenom(),mot+"\n"));
+				this.notifyObservers(String.format(strings.getString("joue"), this.score[this.numChevalet].getPrenom(),mot+"\n"));
 			}
 
 		}
