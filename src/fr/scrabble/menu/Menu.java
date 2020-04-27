@@ -366,13 +366,24 @@ public class Menu extends JFrame implements Observer {
 	}
 
 	public void vueServeur() {
-		//Vue plateau/vueConsole
 		this.removeAll();
 
-		this.containerServeur = new Container();
-		this.containerServeur.add(new VueServeur());
-
 		this.serveur = new Serveur();
+
+		this.modeleEnLigne = new ModeleEnLigne(this.client);
+
+		ControleurPlateau cp = new ControleurPlateau(modeleEnLigne);
+
+		VuePlateau vuePlateau = new VuePlateau(cp,this);
+		
+		this.client.addObserver(vuePlateau);
+		
+		this.containerServeur = new JLayeredPane();
+
+		this.containerServeur.add(vuePlateau);
+		this.containerServeur.add(vueLigne);
+		this.containerServeur.add(vueColonne);
+		//this.containerServeur.add(vueScore,1);
 
 		this.add(this.containerServeur);
 
