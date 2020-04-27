@@ -334,9 +334,30 @@ public class Modele extends Observable{
 							Case premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c);
 
 							motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
-
+							present=false;
+							for(Placement tt: this.placementEnCours) {
+								if(tt.getLine()==premierLettre.getLine()+l && tt.getColumn()==premierLettre.getColumn()) {
+									present=true;
+								}
+							}
+							if(present) {
+							}
+							else {
+								autreLettre++;
+							}
 							if(premierLettre.getColumn()<14) {
 								while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
+									present=false;
+									for(Placement tt: this.placementEnCours) {
+										if(tt.getLine()==premierLettre.getLine()+l && tt.getColumn()==premierLettre.getColumn()) {
+											present=true;
+										}
+									}
+									if(present) {
+									}
+									else {
+										autreLettre++;
+									}
 									premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
 									motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
 									c++;
@@ -378,14 +399,36 @@ public class Modele extends Observable{
 							Case premB = this.plateauFictif.getCase(premierLettre.getLine()+l, premierLettre.getColumn());
 
 							motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
-
-							if(premierLettre.getLine()<=14) {
+							boolean present=false;
+							for(Placement tt: this.placementEnCours) {
+								if(tt.getLine()==premierLettre.getLine()+l && tt.getColumn()==premierLettre.getColumn()) {
+									present=true;
+								}
+							}
+							if(present) {
+							}
+							else {
+								autreLettre++;
+							}
+							if(premierLettre.getLine()<14) {
 								while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
+									present=false;
+									for(Placement tt: this.placementEnCours) {
+										if(tt.getLine()==premierLettre.getLine()+l+1 && tt.getColumn()==premierLettre.getColumn()) {
+											present=true;
+										}
+									}
+									if(present) {
+									}
+									else {
+										autreLettre++;
+									}
 									premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
 									motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
 									l++;
 
 									if(premierLettre.getLine()+l+1==15) {
+										System.out.println("stop");
 										break;
 									}
 								}
