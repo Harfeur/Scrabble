@@ -1,12 +1,14 @@
 package fr.scrabble.online;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import fr.scrabble.game.Modele;
+import fr.scrabble.menu.Menu.Vues;
 import fr.scrabble.structures.Chevalet;
 import fr.scrabble.structures.Sac;
 import fr.scrabble.structures.SetDeChevalets;
@@ -69,7 +71,6 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//System.out.println(arg);
 		if (arg.getClass() == Chevalet.class) {
 			UserThread user = this.get(this.joueurEnCours);
 			user.envoyer(this.modele.chevalets.chevaletEnCours());
@@ -82,21 +83,34 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 		} else if (arg.getClass() == Integer.class) {
 			this.joueurEnCours = (Integer) arg;
 		} else if (arg.getClass() == String.class) {
-			String str = (String) arg;
-			str = this.joueurs.get(this.joueurEnCours) + " a joué " + arg;
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
-				user.envoyer(str);
+				user.envoyer(arg);
+			}
+		} else if (arg.getClass() == Vues.class) {
+			Vues vue = (Vues) arg;
+			UserThread user;
+			switch (vue) {
+			case MASQUER:
+				user = this.get(this.joueurEnCours);
+				user.envoyer(Vues.MASQUER);
+				break;
+			case AFFICHER:
+				user = this.get(this.joueurEnCours);
+				user.envoyer(Vues.AFFICHER);
+				break;
+			case FINALE:
+				for (int i = 0; i < this.size(); ++i) {
+					user = this.get(i);
+					user.envoyer(Vues.FINALE);
+				}
+				break;
 			}
 		} else {
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
 				user.envoyer(arg);
 			}
-		}
-		if (arg.getClass() == Sac.class) {
-			Sac s = (Sac) arg;
-			System.out.println(s.size());
 		}
 	}
 
