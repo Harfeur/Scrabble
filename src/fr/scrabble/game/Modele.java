@@ -32,7 +32,6 @@ public class Modele extends Observable{
 	int motbasOk, motdroiteOk, passe=0;
 	boolean Test1, Test2, premierTour, colonne;
 
-	@SuppressWarnings("deprecation")
 	public Modele() {
 		super();
 	}
@@ -47,9 +46,9 @@ public class Modele extends Observable{
 		this.plateauFictif= new Plateau();
 		this.placementEnCours = new ArrayList<Placement>();
 		this.langue = langue;
-		
+
 		this.premierTour=false;
-		
+
 		this.chevalets = new SetDeChevalets();
 		this.score = new Score[nbJoueur];
 
@@ -62,7 +61,7 @@ public class Modele extends Observable{
 
 		this.setChanged();
 		this.notifyObservers(this.chevalets);
-		
+
 		this.setChanged();
 		this.notifyObservers(this.score);
 
@@ -74,16 +73,15 @@ public class Modele extends Observable{
 
 		this.setChanged();
 		this.notifyObservers(this.sac);
-		
+
 		this.setChanged();
 		this.notifyObservers(this.score[this.numChevalet]);
 	}
-	
+
 	public void reprise() {
 		try {
 			this.charger();
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
 			this.setChanged();
 			this.notifyObservers("echec");
 		}
@@ -92,12 +90,12 @@ public class Modele extends Observable{
 		this.placementEnCours = new ArrayList<Placement>();
 		this.motbasOk=0;
 		this.motdroiteOk=0;
-		
+
 		// Après avoir cree les elements, on notifie les deux vues
 
 		this.setChanged();
 		this.notifyObservers(this.chevalets);
-		
+
 		this.setChanged();
 		this.notifyObservers(this.score);
 
@@ -109,7 +107,7 @@ public class Modele extends Observable{
 
 		this.setChanged();
 		this.notifyObservers(this.sac);
-		
+
 		this.setChanged();
 		this.notifyObservers(this.score[this.numChevalet]);
 	}
@@ -154,7 +152,7 @@ public class Modele extends Observable{
 			else {
 				this.chevalets.chevaletEnCours().remettreLettre(lettre);
 			}
-			
+
 		}
 		this.setChanged();
 		this.notifyObservers(this.plateauFictif);
@@ -211,13 +209,13 @@ public class Modele extends Observable{
 							}
 						}
 					}
-					
+
 					if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 						motbasOk++;
 					}
 					else {
 						this.setChanged();
-						this.notifyObservers(motBas.toString()+" n'est pas valide");
+						this.notifyObservers(motBas.toString()+" n'est pas valide\n");
 					}
 
 					//mot droite
@@ -250,7 +248,7 @@ public class Modele extends Observable{
 					}
 					else {
 						this.setChanged();
-						this.notifyObservers(motDroite.toString()+" n'est pas valide");
+						this.notifyObservers(motDroite.toString()+" n'est pas valide\n");
 					}
 
 					if(motbasOk==1 && motdroiteOk==1 && (motBas.nombreDeLettres()!=1 || motDroite.nombreDeLettres()!=1)) {
@@ -318,9 +316,9 @@ public class Modele extends Observable{
 						}
 						else {
 							this.setChanged();
-							this.notifyObservers(motBas.toString()+" n'est pas valide");
+							this.notifyObservers(motBas.toString()+" n'est pas valide\n");
 						}
-						
+
 						for(Placement elem : this.placementEnCours) {
 							//mot droite
 							int c=0;
@@ -369,13 +367,13 @@ public class Modele extends Observable{
 									}
 								}
 							}
-							
+
 							if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 								motdroiteOk++;
 							}
 							else {
 								this.setChanged();
-								this.notifyObservers(motDroite.toString()+" n'est pas valide");
+								this.notifyObservers(motDroite.toString()+" n'est pas valide\n");
 							}
 						}
 						if(motbasOk==1 && motdroiteOk==this.placementEnCours.size()) {
@@ -440,7 +438,7 @@ public class Modele extends Observable{
 							}
 							else {
 								this.setChanged();
-								this.notifyObservers(motBas.toString()+" n'est pas valide");
+								this.notifyObservers(motBas.toString()+" n'est pas valide\n");
 							}
 						}
 
@@ -449,7 +447,7 @@ public class Modele extends Observable{
 						if(premierLettre.getColumn()>0) {
 							while(this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c-1).lettre != null) {
 								c--;
-								
+
 								if(premierLettre.getColumn()+c-1==-1) {
 									break;
 								}
@@ -497,7 +495,7 @@ public class Modele extends Observable{
 						}
 						else {
 							this.setChanged();
-							this.notifyObservers(motDroite.toString()+" n'est pas valide");
+							this.notifyObservers(motDroite.toString()+" n'est pas valide\n");
 						}
 
 						if(motbasOk==this.placementEnCours.size() && motdroiteOk==1) {
@@ -513,15 +511,15 @@ public class Modele extends Observable{
 				else {
 					if(autreLettre==0){
 						this.setChanged();
-						this.notifyObservers("Attention "+this.score[this.numChevalet].getPrenom()+" Vous devez toucher les lettres déjà placés sur le plateau");
+						this.notifyObservers("Attention "+this.score[this.numChevalet].getPrenom()+", vous devez toucher les lettres déjà placées sur le plateau\n");
 					}
 					if(lettrecotecote != this.placementEnCours.size()) {
 						this.setChanged();
-						this.notifyObservers(this.score[this.numChevalet].getPrenom()+" les lettres doivent être côte à côte !");
+						this.notifyObservers(this.score[this.numChevalet].getPrenom()+" les lettres doivent être côte à côte !\n");
 					}
 					if(premierTour==false) {
 						this.setChanged();
-						this.notifyObservers("Il faut commencer au milieu et posé plusieurs lettres");
+						this.notifyObservers("Il faut commencer au milieu et poser plusieurs lettres\n");
 
 					}
 					for(Placement elem: this.placementEnCours) {
@@ -546,197 +544,174 @@ public class Modele extends Observable{
 			}
 		}
 	}
-	
-	
+
+
 	private void calculerScore() {
 
 		Hashtable<String, Integer> motsVerticaux = new Hashtable<String, Integer>();
 		Hashtable<String, Integer> motsHorizontaux = new Hashtable<String, Integer>();
 		this.scoreAv=this.score[this.numChevalet].getScore();
-		
+
 		for (Placement placement : this.placementEnCours) {
-			Lettre lettre = placement.getLetter();
-			//On cherche le mot vertical
-			int lig = placement.getLine()-1;
-			int score = lettre.valeur;
-			String mot = lettre.lettre;			
-			int multiplicateur = 1;
 			
+			//On cherche le mot vertical
+			int lig = placement.getLine();
+			int score = 0;
+			String mot = "";
+			int multiplicateur = 1;
+
 			while (lig >= 0 && this.plateauFictif.getCase(lig, placement.getColumn()).lettre != null) {
-				
+
 				mot = this.plateauFictif.getCase(lig, placement.getColumn()).lettre.lettre + mot;
-				boolean lettreJoueur = false;
-				
-				for (Placement placement2 : this.placementEnCours) {
-					if (placement2.getLetter().equals(this.plateauFictif.getCase(lig, placement.getColumn()).lettre)) {
-						lettreJoueur = true;
-						Multiplicateur m = this.plateauFictif.getCase(lig, placement.getColumn()).multiplicateur;
-						switch(m.toString()) {				
-							case "LD":
-								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*2;
-								break;
-							case "LT":
-								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;
-								break;
-							case "MD":
-								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
-								multiplicateur*=2;
-								break;
-							case "MT":
-								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
-								multiplicateur*=3;
-								break;
-							default:
-								score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
-								break;
-						}
+
+				if (this.plateau.getCase(lig, placement.getColumn()).lettre == null) {
+					Multiplicateur m = this.plateauFictif.getCase(lig, placement.getColumn()).multiplicateur;
+					switch(m) {				
+					case LETTRE_DOUBLE:
+						score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*2;
+						break;
+					case LETTRE_TRIPLE:
+						score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;
+						break;
+					case MOT_DOUBLE:
+						score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+						multiplicateur*=2;
+						break;
+					case MOT_TRIPLE:
+						score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+						multiplicateur*=3;
+						break;
+					default:
+						score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+						break;
 					}
-				}
-				
-				if(!lettreJoueur) {
+				} else {
 					score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
 				}
-				
+
 				lig--;
 			}
-			
+
 			lig = placement.getLine()+1;
-			
+
 			while (lig < 15 && this.plateauFictif.getCase(lig, placement.getColumn()).lettre != null) {
-				
+
 				mot = mot +this.plateauFictif.getCase(lig, placement.getColumn()).lettre.lettre;
-				boolean lettreJoueur = false;
-				
-				for (Placement placement2 : this.placementEnCours) {
-					if (placement2.getLetter().equals(this.plateauFictif.getCase(lig, placement.getColumn()).lettre)) {
-						lettreJoueur = true;
-						Multiplicateur m = this.plateauFictif.getCase(lig, placement.getColumn()).multiplicateur;
-						switch(m.toString()) {				
-							case "LD":
-								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*2;
-								break;
-							case "LT":
-								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;
-								break;
-							case "MD":
-								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
-								multiplicateur*=2;
-								break;
-							case "MT":
-								score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
-								multiplicateur*=3;
-								break;
-							default:
-								score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
-								break;
-						}
+
+				if (this.plateau.getCase(lig, placement.getColumn()).lettre == null) {
+					Multiplicateur m = this.plateauFictif.getCase(lig, placement.getColumn()).multiplicateur;
+					switch(m) {				
+					case LETTRE_DOUBLE:
+						score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*2;
+						break;
+					case LETTRE_TRIPLE:
+						score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur*3;
+						break;
+					case MOT_DOUBLE:
+						score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+						multiplicateur*=2;
+						break;
+					case MOT_TRIPLE:
+						score+=this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+						multiplicateur*=3;
+						break;
+					default:
+						score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
+						break;
 					}
-				}
-				
-				if(!lettreJoueur) {
+				} else {
 					score += this.plateauFictif.getCase(lig, placement.getColumn()).lettre.valeur;
 				}
-				
+
 				lig++;
 			}
+
 			score*=multiplicateur;
-			
+
 			if (mot.length() > 1 && !motsVerticaux.containsKey(mot)) {
 				motsVerticaux.put(mot, score);
 				this.setChanged();
-				this.notifyObservers(mot);
+				this.notifyObservers(this.score[this.numChevalet].getPrenom()+" vient de jouer "+mot+"\n");
 			}
-			
+
 			//On cherche le mot horizontal
-			int col = placement.getColumn()-1;
-			score = lettre.valeur;
-			mot = lettre.lettre;
+			int col = placement.getColumn();
+			score = 0;
+			mot = "";
 			multiplicateur = 1;
-			
+
 			while (col >= 0 && this.plateauFictif.getCase(placement.getLine(), col).lettre != null) {
-				
+
 				mot = this.plateauFictif.getCase(placement.getLine(),col).lettre.lettre + mot;
-				boolean lettreJoueur = false;
-				
-				for (Placement placement2 : this.placementEnCours) {
-					if (placement2.getLetter().equals(this.plateauFictif.getCase(placement.getLine(), col).lettre)) {
-						lettreJoueur = true;
-						Multiplicateur m = this.plateauFictif.getCase(placement.getLine(), col).multiplicateur;
-						switch(m.toString()) {				
-							case "LD":
-								score +=this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*2;
-								break;
-							case "LT":
-								score +=this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*3;
-								break;
-							case "MD":
-								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
-								multiplicateur*=2;
-								break;
-							case "MT":
-								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
-								multiplicateur*=3;
-								break;
-							default:
-								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
-								break;
-						}
+
+				if (this.plateau.getCase(placement.getLine(), col).lettre == null) {
+					Multiplicateur m = this.plateauFictif.getCase(placement.getLine(), col).multiplicateur;
+					switch(m) {				
+					case LETTRE_DOUBLE:
+						score +=this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*2;
+						break;
+					case LETTRE_TRIPLE:
+						score +=this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*3;
+						break;
+					case MOT_DOUBLE:
+						score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+						multiplicateur*=2;
+						break;
+					case MOT_TRIPLE:
+						score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+						multiplicateur*=3;
+						break;
+					default:
+						score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+						break;
 					}
-				}
-				
-				if(!lettreJoueur) {
+				} else {
 					score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
 				}
 				col--;
 			}
-			
+
 			col = placement.getColumn()+1;
-			
+
 			while (col < 15 && this.plateauFictif.getCase(placement.getLine(), col).lettre != null) {
-				
+
 				mot = mot + this.plateauFictif.getCase(placement.getLine(),col).lettre.lettre;
-				boolean lettreJoueur = false;
-				
-				for (Placement placement2 : this.placementEnCours) {
-					if (placement2.getLetter().equals(this.plateauFictif.getCase(placement.getLine(), col).lettre)) {
-						lettreJoueur = true;
-						Multiplicateur m = this.plateauFictif.getCase(placement.getLine(), col).multiplicateur;
-						switch(m.toString()) {				
-							case "LD":
-								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*2;
-								break;
-							case "LT":
-								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*3;
-								break;
-							case "MD":
-								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
-								multiplicateur*=2;
-								break;
-							case "MT":
-								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
-								multiplicateur*=3;
-								break;
-							default:
-								score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
-								break;
-						}
+
+				if (this.plateau.getCase(placement.getLine(), col).lettre == null) {
+					Multiplicateur m = this.plateauFictif.getCase(placement.getLine(), col).multiplicateur;
+					switch(m) {				
+					case LETTRE_DOUBLE:
+						score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*2;
+						break;
+					case LETTRE_TRIPLE:
+						score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur*3;
+						break;
+					case MOT_DOUBLE:
+						score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+						multiplicateur*=2;
+						break;
+					case MOT_TRIPLE:
+						score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+						multiplicateur*=3;
+						break;
+					default:
+						score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
+						break;
 					}
-				}
-				
-				if(!lettreJoueur) {
+				} else {
 					score += this.plateauFictif.getCase(placement.getLine(), col).lettre.valeur;
 				}
 				col++;
 			}
 
 			score*=multiplicateur;
-			
+
 			if (mot.length() > 1 && !motsHorizontaux.containsKey(mot)) {
 				motsHorizontaux.put(mot, score);
 				this.setChanged();
-				this.notifyObservers(mot);
+				this.notifyObservers(this.score[this.numChevalet].getPrenom()+" vient de jouer "+mot+"\n");
 			}
-			
+
 		}
 
 		for (Integer score : motsHorizontaux.values()) {
@@ -752,28 +727,13 @@ public class Modele extends Observable{
 		if(this.chevalets.chevaletEnCours().size()==7) {
 			this.passe=passe+1;
 			this.setChanged();
-			this.notifyObservers(this.score[this.numChevalet].getPrenom()+" a passé son tour.. \n");
+			this.notifyObservers(this.score[this.numChevalet].getPrenom()+" a passé son tour... \n");
 		}
 		else {
-			if(this.chevalets.chevaletEnCours().size()==6) {
-				this.setChanged();
-				this.notifyObservers(this.score[this.numChevalet].getPrenom()+" a placé la lettre "+this.placementEnCours.get(0).getLetter().lettre);
-			}
-			else {
-				//Console
-				if(colonne) {
-					this.setChanged();
-					this.notifyObservers(this.score[this.numChevalet].getPrenom()+" vient de jouer "+this.motBas+"\n");
-				}
-				else {
-					this.setChanged();
-					this.notifyObservers(this.score[this.numChevalet].getPrenom()+" vient de jouer "+this.motDroite+"\n");
-				}
-			}
 			this.chevalets.chevaletEnCours().remplir(sac);
 			this.passe=0;
 			this.setChanged();
-			this.notifyObservers("Son score augmente de "+(this.score[numChevalet].getScore()-this.scoreAv)+" points ! \n");
+			this.notifyObservers("Son score augmente de "+(this.score[numChevalet].getScore()-this.scoreAv)+" points !\n");
 		}
 		if(this.passe==this.chevalets.size()) {
 			this.setChanged();
@@ -806,21 +766,21 @@ public class Modele extends Observable{
 			this.notifyObservers(this.score[this.numChevalet]);
 			// On initialise à zéro le placement
 			this.placementEnCours = new ArrayList<Placement>();
-			
+
 			//
 			this.setChanged();
 			this.notifyObservers("C'est au tour de "+this.score[this.numChevalet].getPrenom()+"\n");
-			}
 		}
+	}
 
 	public void lettreJoker(String lettre) {
 		lettreChoisi=lettre;
 		this.setChanged();
 		this.notifyObservers(Vues.AFFICHER);
 	}
-	
+
 	//Serialisation
-	
+
 	public void charger() throws IOException, ClassNotFoundException {
 		//Sac
 		FileInputStream fis = new FileInputStream(new File("Sac.dat"));
@@ -865,7 +825,7 @@ public class Modele extends Observable{
 		ois6.close();
 		fis6.close();
 	}
-	
+
 	public void enregistrer(){
 		try {
 			FileOutputStream fos =  new FileOutputStream(new File("Sac.dat"));
@@ -931,9 +891,9 @@ public class Modele extends Observable{
 			throw new RuntimeException("Impossible d'écrire les données du premTour");
 		}
 		this.setChanged();
-		this.notifyObservers("La partie a été sauvegardé");
+		this.notifyObservers("La partie a été sauvegardé\n");
 	}
-	
+
 	public void suppFile() {
 		//Sac
 		File fichier = new File("Sac.dat");
