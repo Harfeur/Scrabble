@@ -35,7 +35,7 @@ public class Modele extends Observable{
 	ArrayList<Placement> placementEnCours;
 	Dictionnaire dico;
 	String lettreChoisi, langue;
-	int motbasOk, motdroiteOk, passe=0;
+	int motbasOk, motdroiteOk, passe=0, difficulte;
 	boolean Test1, Test2, premierTour, colonne;
 	Menu menu;
 	
@@ -45,7 +45,7 @@ public class Modele extends Observable{
 	}
 
 	/*Met le jeu a zero en fonction de nb de joueur*/
-	public void nouvellePartie(int nbJoueur, String langue, ArrayList<String> prenoms) {
+	public void nouvellePartie(int nbJoueur, String langue, ArrayList<String> prenoms, int difficulte) {
 
 		this.sac = new Sac(langue);
 		this.numChevalet=0;
@@ -56,6 +56,7 @@ public class Modele extends Observable{
 		this.langue = langue;
 
 		this.premierTour=false;
+		this.difficulte = difficulte;
 
 		this.chevalets = new SetDeChevalets();
 		this.score = new Score[nbJoueur];
