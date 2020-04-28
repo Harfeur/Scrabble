@@ -44,4 +44,16 @@ public class Chevalet extends ArrayList<Lettre> implements Serializable{
 		this.lettreSelectionee = -1;
 		return lettre;
 	}
+	
+	@Override
+	public String toString() {
+		String str = "";
+		for (Lettre lettre : this) {
+			if (lettre.lettre.equals("JOKER"))
+				str += "*";
+			else
+				str += lettre.lettre;
+		}
+		return str;
+	}
 }
