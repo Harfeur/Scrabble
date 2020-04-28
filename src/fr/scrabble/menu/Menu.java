@@ -167,7 +167,7 @@ public class Menu extends JFrame implements Observer {
 		this.setVisible(true);
 	}
 
-	public void vueHorsLigne(int nb, String l, ArrayList<String> prenoms) {
+	public void vueHorsLigne(int nb, String l, ArrayList<String> prenoms, int diff) {
 		this.removeAll();
 
 		this.modeleHorsLigne = new Modele(this);
@@ -203,7 +203,7 @@ public class Menu extends JFrame implements Observer {
 
 		this.add(this.containerHorsLigne);
 
-		this.modeleHorsLigne.nouvellePartie(nb, l, prenoms);
+		this.modeleHorsLigne.nouvellePartie(nb, l, prenoms,diff);
 
 		this.setVisible(true);
 	}
