@@ -32,7 +32,7 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	int nbjoueur=1;
 	Sac sac;
 	JTextField j1,j2,j3,j4;
-	JRadioButton deux,trois,quatre;
+	JRadioButton un,deux,trois,quatre;
 	JButton valide, sauver;
 	JTextArea joueur;
 	JTextArea langue;
@@ -53,6 +53,7 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 		liste_langues.setEditable(false);
 		liste_langues.addItemListener(cb);
 		
+		this.un = new JRadioButton();
 		this.deux = new JRadioButton();
 		this.trois = new JRadioButton();
 		this.quatre = new JRadioButton();
@@ -67,7 +68,8 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         sauver.addActionListener(this);
         
 		ButtonGroup groupe = new ButtonGroup();
-		this.deux.setSelected(true);
+		this.un.setSelected(true);
+		groupe.add(this.un);
 		groupe.add(this.deux);
 		groupe.add(this.trois);
 		groupe.add(this.quatre);
@@ -82,12 +84,13 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         pan1.setBounds(450, 350, 150, 50);
         
         JPanel pan = new JPanel();
+        pan.add(this.un);
         pan.add(this.deux);
         pan.add(this.trois);
         pan.add(this.quatre);
         pan.setOpaque(false);
         pan.setPreferredSize(new Dimension(100,100));
-        pan.setBounds(150, 350,100, 100);
+        pan.setBounds(150, 350,100, 150);
         
         this.joueur = new JTextArea();
         Font f = new Font("Arial",Font.BOLD,(int)(10*Menu.SCALE));
@@ -141,7 +144,9 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	}
 	
 	public int getNbJoueur() {
-		if(deux.isSelected()==true) {
+		if(un.isSelected()==true) {
+			this.nbjoueur=1;
+		}else if (deux.isSelected()==true) {
 			this.nbjoueur=2;
 		}else if (trois.isSelected()==true) {
 			this.nbjoueur=3;
@@ -165,6 +170,7 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	public void paint(Graphics g) {
 		super.paint(g);
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", menu.getLocale());
+		this.un.setText(String.format(strings.getString("x_joueurs"), 1));
 		this.deux.setText(String.format(strings.getString("x_joueurs"), 2));
 		this.trois.setText(String.format(strings.getString("x_joueurs"), 3));
 		this.quatre.setText(String.format(strings.getString("x_joueurs"), 4));
