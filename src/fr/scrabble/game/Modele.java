@@ -862,9 +862,13 @@ public class Modele extends Observable{
 	}
 
 	public void lettreJoker(String lettre) {
-		lettreChoisi=lettre;
-		this.setChanged();
-		this.notifyObservers(Vues.AFFICHER);
+		if (lettre == null) {
+			this.chevalets.chevaletEnCours().lettreSelectionee = -1;
+		} else {
+			lettreChoisi=lettre;
+			this.setChanged();
+			this.notifyObservers(Vues.AFFICHER);
+		}
 	}
 
 	//Serialisation

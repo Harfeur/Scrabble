@@ -61,7 +61,7 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			UserThread user = this.get(i);
 			user.envoyer("starting");
 		}
-		this.modele.nouvellePartie(this.size(), "FR", this.joueurs);
+		this.modele.nouvellePartie(this.size(), "FR", this.joueurs, 0);
 	}
 
 	@Override
