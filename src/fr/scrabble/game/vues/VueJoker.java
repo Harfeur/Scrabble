@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -18,11 +20,12 @@ import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Sac;
 
 @SuppressWarnings("serial")
-public class VueJoker extends JFrame implements ListSelectionListener {
+public class VueJoker extends JFrame implements ListSelectionListener, ActionListener {
 	
 	JList<String> li;
 	Modele modele;
 	ArrayList<String> lettre ;
+	JButton annuler;
 	
 	public VueJoker(String langue, Modele m) {
 		super("Choix de la valeur");
@@ -50,8 +53,11 @@ public class VueJoker extends JFrame implements ListSelectionListener {
 	    li.setLayoutOrientation(JList.VERTICAL_WRAP);
 	    li.setVisibleRowCount(2);
 		
+	    annuler = new JButton("Annuler");
+	    annuler.addActionListener(this);
 	    
 		panel.add(li);
+		panel.add(annuler);
 		this.add(panel);
 	
 		this.pack();
@@ -92,6 +98,15 @@ public class VueJoker extends JFrame implements ListSelectionListener {
 	        }
             return label;
 		}			
+	}
+
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		// TODO Auto-generated method stub
+		this.modele.lettreJoker(null);
+		this.setVisible(false);
+		this.dispose();
 	}	
 	
 }
