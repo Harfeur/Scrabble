@@ -106,11 +106,10 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 	    JPanel pan = new JPanel();
         pan.setOpaque(false);
         pan.setPreferredSize(new Dimension(100,100));
-        pan.setBounds(150, 350,200, 300);
+        pan.setBounds(100, 350,200, 300);
 	    //Ajout jtextfield au JPanel en fonction nbjoueur
 	    if(nbjoueur == 1) {
 	    	pan.add(j1);
-	    	pan.add(pc);
 	    	pan.add(pc1);
 	    	pan.add(pc2);
 	    	pan.add(pc3);
@@ -199,15 +198,11 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 			this.prenom.add("PC");
 		}
 		
-		this.nbjoueur=this.nbjoueur+this.nbpc;		
-		System.out.println(prenom);
-		System.out.println(this.nbjoueur);
-		this.cb.lancerPartie(this.nbjoueur, this.prenom);
+		
+		this.nbjoueur=this.nbjoueur+this.nbpc;	
+		this.cb.lancerPartie(this.nbjoueur, this.prenom,liste_difficulte.getSelectedIndex());
 	}
 	
-	public void difficulte() {
-		
-	}
 	
 	@Override
 	public void paint(Graphics g) {
