@@ -51,7 +51,7 @@ public class Menu extends JFrame implements Observer {
 	
 
 	public Menu () {
-		super("Menu");
+		super("Scrabble");
 
 		this.setLocale(Locale.getDefault());
 
@@ -153,7 +153,7 @@ public class Menu extends JFrame implements Observer {
 
 	public void vueMenu() {
 		this.removeAll();
-
+		
 		this.containerMenu = new JLayeredPane();
 
 		containerMenu.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));

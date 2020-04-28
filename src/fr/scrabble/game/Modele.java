@@ -220,7 +220,7 @@ public class Modele extends Observable{
 					else {
 						ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 						this.setChanged();
-						this.notifyObservers(String.format(strings.getString("pas_valide"), motBas.toString()+"\n"));
+						this.notifyObservers(String.format(strings.getString("pas_valide"), motBas.toString())+"\n");
 					}
 
 					//mot droite
@@ -254,7 +254,7 @@ public class Modele extends Observable{
 					else {
 						ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 						this.setChanged();
-						this.notifyObservers(String.format(strings.getString("pas_valide"), motDroite.toString()+"\n"));
+						this.notifyObservers(String.format(strings.getString("pas_valide"), motDroite.toString())+"\n");
 					}
 
 					if(motbasOk==1 && motdroiteOk==1 && (motBas.nombreDeLettres()!=1 || motDroite.nombreDeLettres()!=1)) {
@@ -323,7 +323,7 @@ public class Modele extends Observable{
 						else {
 							ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 							this.setChanged();
-							this.notifyObservers(String.format(strings.getString("pas_valide"), motBas.toString()+"\n"));
+							this.notifyObservers(String.format(strings.getString("pas_valide"), motBas.toString())+"\n");
 						}
 
 						for(Placement elem : this.placementEnCours) {
@@ -381,7 +381,7 @@ public class Modele extends Observable{
 							else {
 								ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 								this.setChanged();
-								this.notifyObservers(String.format(strings.getString("pas_valide"), motDroite.toString()+"\n"));}
+								this.notifyObservers(String.format(strings.getString("pas_valide"), motDroite.toString())+"\n");}
 						}
 						if(motbasOk==1 && motdroiteOk==this.placementEnCours.size()) {
 							Test1=true;
@@ -446,7 +446,7 @@ public class Modele extends Observable{
 							else {
 								ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 								this.setChanged();
-								this.notifyObservers(String.format(strings.getString("pas_valide"), motBas.toString()+"\n"));}
+								this.notifyObservers(String.format(strings.getString("pas_valide"), motBas.toString())+"\n");}
 						}
 
 						//mot droite
@@ -503,7 +503,7 @@ public class Modele extends Observable{
 						else {
 							ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 							this.setChanged();
-							this.notifyObservers(String.format(strings.getString("pas_valide"), motDroite.toString()+"\n"));}
+							this.notifyObservers(String.format(strings.getString("pas_valide"), motDroite.toString())+"\n");}
 
 						if(motbasOk==this.placementEnCours.size() && motdroiteOk==1) {
 							Test1=true;
@@ -519,12 +519,12 @@ public class Modele extends Observable{
 					if(autreLettre==0){
 						ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 						this.setChanged();
-						this.notifyObservers(String.format(strings.getString("toucher"), this.score[this.numChevalet].getPrenom()+"\n"));
+						this.notifyObservers(String.format(strings.getString("toucher"), this.score[this.numChevalet].getPrenom())+"\n");
 					}
 					if(lettrecotecote != this.placementEnCours.size()) {
 						ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 						this.setChanged();
-						this.notifyObservers(String.format(strings.getString("cote_cote"), this.score[this.numChevalet].getPrenom()+"\n"));	
+						this.notifyObservers(String.format(strings.getString("cote_cote"), this.score[this.numChevalet].getPrenom())+"\n");	
 					}
 					if(premierTour==false) {
 						ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
@@ -545,7 +545,7 @@ public class Modele extends Observable{
 					this.notifyObservers(this.plateauFictif);
 					ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 					this.setChanged();
-					this.notifyObservers(String.format(strings.getString("reessaye"), this.score[this.numChevalet].getPrenom()+"\n"));
+					this.notifyObservers(String.format(strings.getString("reessaye"), this.score[this.numChevalet].getPrenom())+"\n");
 				} 
 			}
 			else {
@@ -643,7 +643,7 @@ public class Modele extends Observable{
 				motsVerticaux.put(mot, score);
 				ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 				this.setChanged();
-				this.notifyObservers(String.format(strings.getString("joue"), this.score[this.numChevalet].getPrenom(),mot+"\n"));
+				this.notifyObservers(String.format(strings.getString("joue"), this.score[this.numChevalet].getPrenom(),mot)+"\n");
 			}
 
 			//On cherche le mot horizontal
@@ -722,7 +722,7 @@ public class Modele extends Observable{
 				motsHorizontaux.put(mot, score);
 				ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 				this.setChanged();
-				this.notifyObservers(String.format(strings.getString("joue"), this.score[this.numChevalet].getPrenom(),mot+"\n"));
+				this.notifyObservers(String.format(strings.getString("joue"), this.score[this.numChevalet].getPrenom(),mot)+"\n");
 			}
 
 		}
@@ -748,7 +748,7 @@ public class Modele extends Observable{
 			this.passe=0;
 			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.setChanged();
-			this.notifyObservers(String.format(strings.getString("augmente"), (this.score[numChevalet].getScore()-this.scoreAv)+"\n"));
+			this.notifyObservers(String.format(strings.getString("augmente"), (this.score[numChevalet].getScore()-this.scoreAv))+"\n");
 		}
 		if(this.passe==this.chevalets.size()) {
 			this.setChanged();
@@ -785,7 +785,7 @@ public class Modele extends Observable{
 			//
 			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.setChanged();
-			this.notifyObservers(String.format(strings.getString("tour"),this.score[this.numChevalet].getPrenom()+"\n"));
+			this.notifyObservers(String.format(strings.getString("tour"),this.score[this.numChevalet].getPrenom())+"\n");
 		}
 	}
 
