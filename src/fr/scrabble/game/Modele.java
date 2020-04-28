@@ -866,9 +866,9 @@ public class Modele extends Observable{
 			this.chevalets.chevaletEnCours().lettreSelectionee = -1;
 		} else {
 			lettreChoisi=lettre;
-			this.setChanged();
-			this.notifyObservers(Vues.AFFICHER);
 		}
+		this.setChanged();
+		this.notifyObservers(Vues.AFFICHER);
 	}
 
 	//Serialisation
