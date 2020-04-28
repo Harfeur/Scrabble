@@ -53,6 +53,20 @@ public class Plateau implements Serializable{
 	}
 	
 	@Override
+	public String toString() {
+		String str = "";
+		for (Case[] cases : plateau) {
+			for (Case case1 : cases) {
+				if (case1.lettre != null)
+					str += case1.lettre.lettre;
+				else
+					str += "-";
+			}
+		}
+		return str;
+	}
+	
+	@Override
 	public Plateau clone() {
 		Plateau p = new Plateau();
 		for (int i = 0; i < 15; i++) {
