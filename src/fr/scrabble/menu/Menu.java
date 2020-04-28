@@ -429,13 +429,19 @@ public class Menu extends JFrame implements Observer {
 				this.fin=true;
 			}
 		}
-		if (arg.getClass() == Score[].class && this.fin) {
-			System.out.println("Partie terminée !");
-				this.vueFinale((Score[]) arg);
+		if (arg != null) {
+			if (arg.getClass() == Score[].class && this.fin) {
+				System.out.println("Partie terminée !");
+					this.vueFinale((Score[]) arg);
+			}
 		}
-		if (o.getClass() == Couleur.class) {
-			this.repaint();
+		else {
+			if(o.getClass() == Couleur.class) {
+				this.repaint();
+			}
+			
 		}
+			
 	}
 
 	@Override
