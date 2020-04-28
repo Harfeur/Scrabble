@@ -18,7 +18,7 @@ public class Ordinateur {
 		JSONObject json = new JSONObject();
 		try {
 			URL url = new URL("https://www.scrabble-word-finder.com/api/solver/getSolutions");
-
+			
 			JSONObject data = new JSONObject();
 
 			JSONObject input_array = new JSONObject();
