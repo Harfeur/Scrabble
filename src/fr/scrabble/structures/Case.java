@@ -2,16 +2,17 @@ package fr.scrabble.structures;
 
 import java.awt.Color;
 import java.io.Serializable;
+import java.net.URL;
 
 public class Case implements Serializable{
 	
 	private static final long serialVersionUID = -482796625632545523L;
-
-	static Color[] simple = {Color.green, new Color(81,138,11)};
+	public static URL simple, ld,md,lt,mt;
+	/*static Color[] simple = {Color.green, new Color(81,138,11)};
 	static Color[] ld = {Color.cyan, new Color(131,198,235)};
 	static Color[] md = {Color.pink, new Color(209,134,194)};
 	static Color[] lt = {Color.blue, new Color(42,103,209)};
-	static Color[] mt = {Color.red, new Color(186,60,60)};
+	static Color[] mt = {Color.red, new Color(186,60,60)};*/
 	
 	public enum Multiplicateur implements Serializable{
 		
@@ -21,18 +22,18 @@ public class Case implements Serializable{
 		LETTRE_TRIPLE (lt, "LT"),
 		MOT_TRIPLE (mt, "MT");
 		
-		private Color[] couleur;
+		private URL couleur;
 		private String libelle;
 		
 		private static final long serialVersionUID = 315206622012546523L;
 		
-		private Multiplicateur(Color[] c, String l) {
-			this.couleur = c;
+		private Multiplicateur(URL simple2, String l) {
+			this.couleur = simple2;
 			this.libelle = l;
 		}
 		
 		public String toString() { return this.libelle; }
-		public Color[] getCouleur() { return this.couleur; }
+		public URL getCouleur() { return Multiplicateur.class.getResource("/resources/images/plateau/"+this.libelle+".png"); }
 	};
 	
 	

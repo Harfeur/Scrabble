@@ -56,27 +56,19 @@ public class VuePlateau extends JPanel implements Observer {
 					Case c = this.plateau.getCase(i,j);	
 					if(c.lettre==null) {				
 						Multiplicateur m = c.multiplicateur;
-						//Fond
-						g.setColor(m.getCouleur()[this.c.getCouleur()]);
-						g.fillRect((int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE));
-						g.setColor(this.c.getColorLettre());
-						g.drawRect((int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE));
-						//Mot score
-						String score_l="";
-						String score_d="";
-						switch(m.toString()) {
-							case "LD": score_l="LETTRE";score_d="DOUBLE";break;
-							case "LT": score_l="LETTRE";score_d="TRIPLE";break;
-							case "MD": score_l="MOT";score_d="DOUBLE";break;
-							case "MT": score_l="MOT";score_d="TRIPLE";break;
-						} 
-						Font font_mot_score = new Font("Arial",Font.BOLD, (int)(5*Menu.SCALE));
-							FontMetrics metrics_mot_score = getFontMetrics(font_mot_score);
-							g.setFont(font_mot_score);
-							g.setColor(this.c.getColorLettre());
-							g.drawString(score_l,(int) (Menu.SCALE*2+j*VuePlateau.TAILLE*Menu.SCALE),(int) (Menu.SCALE*5+i*VuePlateau.TAILLE*Menu.SCALE+metrics_mot_score.getHeight()));
-							g.setColor(this.c.getColorLettre());
-							g.drawString(score_d,(int) (Menu.SCALE*2+j*VuePlateau.TAILLE*Menu.SCALE+metrics_mot_score.getDescent()),(int) (Menu.SCALE*10+i*VuePlateau.TAILLE*Menu.SCALE+metrics_mot_score.getHeight()));
+						Image im = null;
+						try {
+							if(i==7 && j==7) {
+								im = ImageIO.read(Multiplicateur.class.getResource("/resources/images/plateau/E.png"));
+							}
+							else {
+								im = ImageIO.read(c.multiplicateur.getCouleur());
+							}
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						g.drawImage(im,(int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),null);
 						}
 					else {
 						Image im = null;
