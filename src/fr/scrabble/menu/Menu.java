@@ -441,7 +441,6 @@ public class Menu extends JFrame implements Observer {
 			}
 			
 		}
-			
 	}
 
 	@Override

@@ -10,6 +10,9 @@ import java.util.Hashtable;
 import java.util.Observable;
 import java.util.ResourceBundle;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import fr.scrabble.game.vues.VueJoker;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.menu.Menu.Vues;
@@ -786,7 +789,74 @@ public class Modele extends Observable{
 			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.setChanged();
 			this.notifyObservers(String.format(strings.getString("tour"),this.score[this.numChevalet].getPrenom())+"\n");
+			if (this.score[this.numChevalet].getPrenom()=="PC"){
+					jouerPC();
+			}
 		}
+	}
+	
+	public void jouerPC() {
+		JSONObject resultat= (JSONObject) Ordinateur.solutions(plateau, this.chevalets.chevaletEnCours(), this.langue).get("results");
+		JSONArray res=(JSONArray) resultat.get("result");
+		JSONObject resu=(JSONObject) res.get(0);
+		//x
+		int x=Integer.parseInt(resu.getString("x"));
+		//y
+		int y=Integer.parseInt(resu.getString("y"));
+		//value
+		int value=Integer.parseInt(resu.getString("value"));
+		//direction
+		int direction=Integer.parseInt(resu.getString("direction"));
+		//word
+		String word=resu.getString("word");
+		//statue
+		String statue=resu.getString("word");
+		
+		if(statue=="error") {
+			this.changementJoueur();
+		}
+		else {
+			this.score[this.numChevalet].majScore(value);
+			
+			for (int i=0;i<word.length();i++) {
+				Character l=word.charAt(i);
+				String lettre=l.toString();
+				if(this.plateau.getCase(y, x).lettre!=null) {
+					if (lettre.toLowerCase().equals(lettre)){
+						for(int t=0;t<this.chevalets.chevaletEnCours().size();t++) {
+							if (this.chevalets.chevaletEnCours().get(t).valeur == 0) {
+								this.chevalets.chevaletEnCours().selectionnerLettre(t);
+								Lettre ajout=this.chevalets.chevaletEnCours().obtenirLettre();
+								ajout.lettre=lettre;
+								Case c =this.plateau.getCase(y, x);
+								c.ajouterLettre(ajout);
+							}
+						}
+					}
+					else {
+						for(int t=0;t<this.chevalets.chevaletEnCours().size();t++) {
+							if (this.chevalets.chevaletEnCours().get(t).equals(lettre)) {
+								this.chevalets.chevaletEnCours().selectionnerLettre(t);
+								Lettre ajout=this.chevalets.chevaletEnCours().obtenirLettre();
+								Case c =this.plateau.getCase(y, x);
+								c.ajouterLettre(ajout);
+								break;
+							}
+						}
+					}
+				}
+				if(direction==0) {
+					x=x+1;
+				}
+				else {
+					y=y+1;
+				}
+			}
+			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+			this.setChanged();
+			this.notifyObservers(String.format(strings.getString("joue"), this.score[this.numChevalet].getPrenom(),word.toUpperCase())+"\n");
+			this.changementJoueur();
+		}	
 	}
 
 	public void lettreJoker(String lettre) {
