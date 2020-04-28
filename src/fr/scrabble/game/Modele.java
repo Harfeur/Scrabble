@@ -801,6 +801,15 @@ public class Modele extends Observable{
 		JSONObject reponse = (JSONObject) Ordinateur.solutions(plateau, this.chevalets.chevaletEnCours(), this.langue);
 		JSONArray liste_solutions = (JSONArray) ((JSONObject) reponse.get("results")).get("result");
 		JSONObject choix = (JSONObject) liste_solutions.get(0);
+		if (difficulte==0) {
+			choix = (JSONObject) liste_solutions.get(0);
+		}
+		else if(difficulte==1) {
+			choix = (JSONObject) liste_solutions.get((int) liste_solutions.length()/2);
+		}
+		else {
+			choix = (JSONObject) liste_solutions.get(liste_solutions.length());
+		}
 		//x
 		int x=Integer.parseInt(choix.getString("x"));
 		//y
