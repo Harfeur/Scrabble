@@ -11,7 +11,6 @@ import org.json.JSONObject;
 
 import fr.scrabble.structures.Chevalet;
 import fr.scrabble.structures.Plateau;
-import fr.scrabble.structures.Sac;
 
 public class Ordinateur {
 	
@@ -65,11 +64,5 @@ public class Ordinateur {
 			e.printStackTrace();
 		}
 		return json;
-	}
-	
-	public static void main(String[] args) {
-		Chevalet chevalet = new Chevalet();
-		chevalet.remplir(new Sac("FR"));
-		System.out.println(Ordinateur.solutions(new Plateau(), chevalet, "FR"));
 	}
 }
