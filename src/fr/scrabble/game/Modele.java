@@ -862,6 +862,14 @@ public class Modele extends Observable{
 				else {
 					y=y+1;
 				}
+				
+				try {
+					TimeUnit.SECONDS.sleep(1);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				this.setChanged();
+				this.notifyObservers(this.plateauFictif);
 			}
 			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.setChanged();
