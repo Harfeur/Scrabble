@@ -742,7 +742,7 @@ public class Modele extends Observable{
 
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
-		if(this.chevalets.chevaletEnCours().size()==7) {
+		if(this.plateauFictif==this.plateau) {
 			this.passe=passe+1;
 			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.setChanged();
@@ -768,31 +768,48 @@ public class Modele extends Observable{
 			else {
 				this.numChevalet++;
 			}
-			this.chevalets.joueurSuivant();
-			this.motbasOk=0;
-			this.motdroiteOk=0;
-			this.plateau=this.plateauFictif.clone();
-			this.setChanged();
-			this.notifyObservers(this.sac);
-			this.setChanged();
-			this.notifyObservers(this.plateau);
-			this.setChanged();
-			this.notifyObservers(this.numChevalet);
-			this.setChanged();
-			this.notifyObservers(this.chevalets);
-			this.setChanged();
-			this.notifyObservers(this.score);
-			this.setChanged();
-			this.notifyObservers(this.score[this.numChevalet]);
-			// On initialise à zéro le placement
-			this.placementEnCours = new ArrayList<Placement>();
-
-			//
-			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
-			this.setChanged();
-			this.notifyObservers(String.format(strings.getString("tour"),this.score[this.numChevalet].getPrenom())+"\n");
-			if (this.score[this.numChevalet].getPrenom().equals("PC")){
-				this.jouerPC();
+			while(this.chevalets.chevaletEnCours().size()==0 && this.passe!=this.chevalets.size()) {
+				if (this.numChevalet+1 == this.chevalets.size()) {
+					this.numChevalet=0;
+				}
+				else {
+					this.numChevalet++;
+				}
+				this.passe=this.passe+1;
+			}
+			if(this.passe==this.chevalets.size()) {
+				this.setChanged();
+				this.notifyObservers(Vues.FINALE);
+				this.setChanged();
+				this.notifyObservers(this.score);
+			}
+			else {
+				this.chevalets.joueurSuivant();
+				this.motbasOk=0;
+				this.motdroiteOk=0;
+				this.plateau=this.plateauFictif.clone();
+				this.setChanged();
+				this.notifyObservers(this.sac);
+				this.setChanged();
+				this.notifyObservers(this.plateau);
+				this.setChanged();
+				this.notifyObservers(this.numChevalet);
+				this.setChanged();
+				this.notifyObservers(this.chevalets);
+				this.setChanged();
+				this.notifyObservers(this.score);
+				this.setChanged();
+				this.notifyObservers(this.score[this.numChevalet]);
+				// On initialise à zéro le placement
+				this.placementEnCours = new ArrayList<Placement>();
+				
+				//
+				ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+				this.setChanged();
+				this.notifyObservers(String.format(strings.getString("tour"),this.score[this.numChevalet].getPrenom())+"\n");
+				if (this.score[this.numChevalet].getPrenom().equals("PC")){
+					this.jouerPC();
+				}
 			}
 		}
 	}
@@ -808,7 +825,7 @@ public class Modele extends Observable{
 			choix = (JSONObject) liste_solutions.get((int) liste_solutions.length()/2);
 		}
 		else {
-			choix = (JSONObject) liste_solutions.get(liste_solutions.length());
+			choix = (JSONObject) liste_solutions.get(liste_solutions.length()-1);
 		}
 		//x
 		int x=Integer.parseInt(choix.getString("x"));
