@@ -8,11 +8,6 @@ public class Case implements Serializable{
 	
 	private static final long serialVersionUID = -482796625632545523L;
 	public static URL simple, ld,md,lt,mt;
-	/*static Color[] simple = {Color.green, new Color(81,138,11)};
-	static Color[] ld = {Color.cyan, new Color(131,198,235)};
-	static Color[] md = {Color.pink, new Color(209,134,194)};
-	static Color[] lt = {Color.blue, new Color(42,103,209)};
-	static Color[] mt = {Color.red, new Color(186,60,60)};*/
 	
 	public enum Multiplicateur implements Serializable{
 		

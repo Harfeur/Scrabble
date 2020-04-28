@@ -9,14 +9,11 @@ public class Lettre implements Serializable {
 	
 	public String lettre;
 	public int valeur;
-	public URL image, imageSelectionnee;
 			
 	
 	public Lettre(String l, int v) {
 		this.lettre=l;
 		this.valeur=v;
-		this.image=Lettre.class.getResource("/resources/images/lettre/letter_"+lettre+".png");
-		this.imageSelectionnee= Lettre.class.getResource("/resources/images/lettreSelectionnee/letter_"+lettre+".png");
 	}
 
 	@Override

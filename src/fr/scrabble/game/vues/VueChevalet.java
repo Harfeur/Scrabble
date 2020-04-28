@@ -72,8 +72,9 @@ public class VueChevalet extends JPanel implements Observer {
 		if(this.chevalet.size()>0) {
 			for(int i=0; i<this.chevalet.size();i=i+1) {
 				Image im = null;
+				String l =this.chevalet.get(i).lettre;
 				try {
-					im = ImageIO.read(this.chevalet.get(i).image);
+					im = ImageIO.read(Lettre.class.getResource("/resources/images/lettre/letter_"+l+".png"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -85,8 +86,9 @@ public class VueChevalet extends JPanel implements Observer {
 		for(int i=0 ; i<this.chevalet.size() ;i=i+1) {
 			if(this.chevalet.lettreSelectionee==i) {
 				Image im = null;
+				String l =this.chevalet.get(i).lettre;
 				try {
-					im = ImageIO.read(this.chevalet.get(i).imageSelectionnee);
+					im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSelectionnee/letter_"+l+".png"));
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

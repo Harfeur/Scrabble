@@ -18,6 +18,7 @@ import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Case;
 import fr.scrabble.structures.Case.Multiplicateur;
 import fr.scrabble.structures.Couleur;
+import fr.scrabble.structures.Lettre;
 import fr.scrabble.structures.Plateau;
 
 @SuppressWarnings("serial")
@@ -62,7 +63,7 @@ public class VuePlateau extends JPanel implements Observer {
 								im = ImageIO.read(Multiplicateur.class.getResource("/resources/images/plateau/E.png"));
 							}
 							else {
-								im = ImageIO.read(c.multiplicateur.getCouleur());
+								im = ImageIO.read(Multiplicateur.class.getResource("/resources/images/plateau/"+m.toString()+".png"));
 							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -73,7 +74,7 @@ public class VuePlateau extends JPanel implements Observer {
 					else {
 						Image im = null;
 						try {
-							im = ImageIO.read(c.lettre.image);
+							im = ImageIO.read(Lettre.class.getResource("/resources/images/lettre/letter_"+c.lettre.lettre+".png"));
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
