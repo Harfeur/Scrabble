@@ -37,7 +37,7 @@ public class Modele extends Observable{
 	String lettreChoisi, langue;
 	int motbasOk, motdroiteOk, passe=0, difficulte;
 	boolean Test1, Test2, premierTour, colonne;
-	Menu menu;
+	public Menu menu;
 	
 	public Modele(Menu menu) {
 		super();

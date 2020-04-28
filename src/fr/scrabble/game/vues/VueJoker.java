@@ -2,12 +2,14 @@ package fr.scrabble.game.vues;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import javax.swing.event.ListSelectionListener;
 
 import fr.scrabble.game.Modele;
 import fr.scrabble.menu.Menu;
+import fr.scrabble.structures.Couleur;
 import fr.scrabble.structures.Sac;
 
 @SuppressWarnings("serial")
@@ -26,12 +29,16 @@ public class VueJoker extends JFrame implements ListSelectionListener, ActionLis
 	Modele modele;
 	ArrayList<String> lettre ;
 	JButton annuler;
+	JPanel panel;
+	Menu menu;
+	Couleur c;
 	
 	public VueJoker(String langue, Modele m) {
 		super("Choix de la valeur");
 		this.modele = m;
-		
-		JPanel panel = new JPanel();
+		this.menu = m.menu;
+		this.c = m.menu.couleur;
+		this.panel = new JPanel();
 		
 		Sac sac = new Sac(langue);
 		
@@ -69,8 +76,19 @@ public class VueJoker extends JFrame implements ListSelectionListener, ActionLis
 	    this.setLocation(x, y);
 		this.setVisible(true);
 
+		
+		
 	}
-
+	public void paint(Graphics g) {
+		super.paint(g);
+		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", menu.getLocale());
+		this.annuler.setText(String.format(strings.getString("annuler"), 1));
+        this.panel.setBackground(this.c.getColorBouton());
+        this.li.setBackground(this.c.getColorBouton());
+        this.annuler.setForeground(this.c.getColorLettre());
+        this.annuler.setBackground(this.c.getColorBouton());
+        
+	}
 
 
 	@Override
