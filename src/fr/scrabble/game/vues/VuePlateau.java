@@ -1,5 +1,6 @@
 package fr.scrabble.game.vues;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 
@@ -9,6 +10,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -79,16 +81,10 @@ public class VuePlateau extends JPanel implements Observer {
 		// Creation du Panel
 		VueColonne colonne = new VueColonne(this.menu);
 		VueLigne ligne = new VueLigne(this.menu);
-<<<<<<< HEAD
 		
 		this.setBackground(Color.GRAY);
         this.setBounds((int) (colonne.getWidth()), (int) (ligne.getHeight()), (int) (VuePlateau.TAILLE*15*Menu.SCALE), (int) (VuePlateau.TAILLE*15*Menu.SCALE));
-=======
-
-		this.setBackground(Color.GREEN);
-		this.setBounds((int) (colonne.getWidth()), (int) (ligne.getHeight()), (int) (VuePlateau.TAILLE*15*Menu.SCALE), (int) (VuePlateau.TAILLE*15*Menu.SCALE));
->>>>>>> branch 'dev' of https://github.com/Harfeur/Scrabble.git
-	}
+}
 
 	@Override
 	public void paint(Graphics g) {
@@ -100,7 +96,6 @@ public class VuePlateau extends JPanel implements Observer {
 					if(c.lettre==null) {	
 						int index = 25;
 						Multiplicateur m = c.multiplicateur;
-<<<<<<< HEAD
 						Image im = null;
 						try {
 							if(i==7 && j==7) {
@@ -112,7 +107,7 @@ public class VuePlateau extends JPanel implements Observer {
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-=======
+						}
 						switch(m) {				
 						case LETTRE_DOUBLE:
 							index = 28;
@@ -128,15 +123,14 @@ public class VuePlateau extends JPanel implements Observer {
 							break;
 						case SIMPLE:
 							index = 32;
->>>>>>> branch 'dev' of https://github.com/Harfeur/Scrabble.git
 						}
 						if(i==7 && j==7) {
 							index = 27;
 						}
 						g.drawImage(this.images.get(index),(int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),null);
+						
 					}
 					else {
-<<<<<<< HEAD
 						Image im = null;
 						try {
 							if(this.c.getCouleur()==0) {
@@ -148,7 +142,7 @@ public class VuePlateau extends JPanel implements Observer {
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
-=======
+						}
 						int index;
 						if (c.lettre.valeur == 0)
 							index = 26;
@@ -156,7 +150,6 @@ public class VuePlateau extends JPanel implements Observer {
 							char lettre = c.lettre.lettre.charAt(0);
 							index = (int) lettre;
 							index -= 65;
->>>>>>> branch 'dev' of https://github.com/Harfeur/Scrabble.git
 						}
 						g.drawImage(this.images.get(index),(int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),null);
 					}

@@ -1,5 +1,6 @@
 package fr.scrabble.game.vues;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 
@@ -11,6 +12,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -108,9 +110,15 @@ public class VueChevalet extends JPanel implements Observer {
 		g.setColor(this.couleur.getColorLettre());
 		g.drawString("Lettre restante (sac) : "+this.sac.nombreDeLettres,(int) (4*TAILLE*Menu.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
 		//Affichage lettre sur chevalet
-<<<<<<< HEAD
 		if(this.chevalet.size()>0) {
+			int index = 0;
 			for(int i=0; i<this.chevalet.size();i=i+1) {
+				if (this.chevalet.get(i).valeur == 0)
+					index = 26;
+				else {
+					char lettre = this.chevalet.get(i).lettre.charAt(0);
+					index = (int) lettre;
+					index -= 65;
 				Image im = null;
 				String l =this.chevalet.get(i).lettre;
 				try {
@@ -125,44 +133,28 @@ public class VueChevalet extends JPanel implements Observer {
 					e.printStackTrace();
 				}
 				g.drawImage(im,(int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
-=======
-		for(int i=0; i<this.chevalet.size();i=i+1) {
-			int index;
-			if (this.chevalet.get(i).valeur == 0)
-				index = 26;
-			else {
-				char lettre = this.chevalet.get(i).lettre.charAt(0);
-				index = (int) lettre;
-				index -= 65;
->>>>>>> branch 'dev' of https://github.com/Harfeur/Scrabble.git
 			}
-<<<<<<< HEAD
 		}
-		//Lettre selectionnee
-		for(int i=0 ; i<this.chevalet.size() ;i=i+1) {
-			if(this.chevalet.lettreSelectionee==i) {
-				Image im = null;
-				String l =this.chevalet.get(i).lettre;
-				try {
-					if(this.couleur.getCouleur()==0) {
-						im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSelectionnee/letter_"+l+".png"));
+			//Lettre selectionnee
+			for(int i=0 ; i<this.chevalet.size() ;i=i+1) {
+				if(this.chevalet.lettreSelectionee==i) {
+					index+=27;
+					Image im = null;
+					String l =this.chevalet.get(i).lettre;
+					try {
+						if(this.couleur.getCouleur()==0) {
+							im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSelectionnee/letter_"+l+".png"));
+						}
+						else {
+							im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSombreSelectionnee/letter_"+l+".png"));
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
-					else {
-						im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSombreSelectionnee/letter_"+l+".png"));
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					g.drawImage(im,(int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
 				}
-				g.drawImage(im,(int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
-				}
-=======
-
-			if(this.chevalet.lettreSelectionee==i)
-				index+=27;
-
-			g.drawImage(this.images.get(index),(int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
->>>>>>> branch 'dev' of https://github.com/Harfeur/Scrabble.git
+			}
 		}
 	}
 
