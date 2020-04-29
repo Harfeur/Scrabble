@@ -74,7 +74,12 @@ public class VueChevalet extends JPanel implements Observer {
 				Image im = null;
 				String l =this.chevalet.get(i).lettre;
 				try {
-					im = ImageIO.read(Lettre.class.getResource("/resources/images/lettre/letter_"+l+".png"));
+					if(this.couleur.getCouleur()==0) {
+						im = ImageIO.read(Lettre.class.getResource("/resources/images/lettre/letter_"+l+".png"));
+					}
+					else {
+						im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSombre/letter_"+l+".png"));
+					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -88,7 +93,12 @@ public class VueChevalet extends JPanel implements Observer {
 				Image im = null;
 				String l =this.chevalet.get(i).lettre;
 				try {
-					im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSelectionnee/letter_"+l+".png"));
+					if(this.couleur.getCouleur()==0) {
+						im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSelectionnee/letter_"+l+".png"));
+					}
+					else {
+						im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSombreSelectionnee/letter_"+l+".png"));
+					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -129,6 +139,7 @@ public class VueChevalet extends JPanel implements Observer {
 	public void update(Graphics g) {
 		if ((int) this.getClientProperty("color") != this.couleur.getCouleur()) {
 			this.putClientProperty("color", this.couleur.getCouleur());
+			System.out.println(this.couleur.getCouleur());
 		}
 	}
 	

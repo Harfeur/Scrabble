@@ -44,7 +44,7 @@ public class VuePlateau extends JPanel implements Observer {
 		VueColonne colonne = new VueColonne(this.menu);
 		VueLigne ligne = new VueLigne(this.menu);
 		
-		this.setBackground(Color.GREEN);
+		this.setBackground(Color.GRAY);
         this.setBounds((int) (colonne.getWidth()), (int) (ligne.getHeight()), (int) (VuePlateau.TAILLE*15*Menu.SCALE), (int) (VuePlateau.TAILLE*15*Menu.SCALE));
 	}
 	
@@ -60,7 +60,7 @@ public class VuePlateau extends JPanel implements Observer {
 						Image im = null;
 						try {
 							if(i==7 && j==7) {
-								im = ImageIO.read(Multiplicateur.class.getResource("/resources/images/plateau/E.png"));
+								im = ImageIO.read(Multiplicateur.class.getResource("/resources/images/plateau/Etoile.png"));
 							}
 							else {
 								im = ImageIO.read(Multiplicateur.class.getResource("/resources/images/plateau/"+m.toString()+".png"));
@@ -74,7 +74,12 @@ public class VuePlateau extends JPanel implements Observer {
 					else {
 						Image im = null;
 						try {
-							im = ImageIO.read(Lettre.class.getResource("/resources/images/lettre/letter_"+c.lettre.lettre+".png"));
+							if(this.c.getCouleur()==0) {
+								im = ImageIO.read(Lettre.class.getResource("/resources/images/lettre/letter_"+c.lettre.lettre+".png"));
+							}
+							else {
+								im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSombre/letter_"+c.lettre.lettre+".png"));
+							}
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

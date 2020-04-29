@@ -792,10 +792,13 @@ public class Modele extends Observable{
 				this.notifyObservers(this.sac);
 				this.setChanged();
 				this.notifyObservers(this.plateau);
-				this.setChanged();
-				this.notifyObservers(this.numChevalet);
-				this.setChanged();
-				this.notifyObservers(this.chevalets);
+				if(this.score[this.numChevalet].getPrenom().equals("PC")==false) {
+					this.setChanged();
+					this.notifyObservers(this.numChevalet);
+					this.setChanged();
+					this.notifyObservers(this.chevalets);
+				}
+				
 				this.setChanged();
 				this.notifyObservers(this.score);
 				this.setChanged();
@@ -816,36 +819,37 @@ public class Modele extends Observable{
 	
 	public void jouerPC() {
 		JSONObject reponse = (JSONObject) Ordinateur.solutions(plateau, this.chevalets.chevaletEnCours(), this.langue);
-		JSONArray liste_solutions = (JSONArray) ((JSONObject) reponse.get("results")).get("result");
-		JSONObject choix = (JSONObject) liste_solutions.get(0);
-		if (difficulte==0) {
-			choix = (JSONObject) liste_solutions.get(0);
-		}
-		else if(difficulte==1) {
-			choix = (JSONObject) liste_solutions.get((int) liste_solutions.length()/2);
-		}
-		else {
-			choix = (JSONObject) liste_solutions.get(liste_solutions.length()-1);
-		}
-		//x
-		int x=Integer.parseInt(choix.getString("x"));
-		//y
-		int y=Integer.parseInt(choix.getString("y"));
-		//value
-		int value=Integer.parseInt(choix.getString("value"));
-		//direction
-		int direction=Integer.parseInt(choix.getString("direction"));
-		//word
-		String word=choix.getString("word");
 		//statue
 		String status=reponse.getString("status");
-		
+				
 		if(status.equals("error")) {
 			this.changementJoueur();
 		}
 		else {
+			JSONArray liste_solutions = (JSONArray) ((JSONObject) reponse.get("results")).get("result");
+			JSONObject choix = (JSONObject) liste_solutions.get(0);
+			if (difficulte==0) {
+				choix = (JSONObject) liste_solutions.get(0);
+			}
+			else if(difficulte==1) {
+				choix = (JSONObject) liste_solutions.get((int) liste_solutions.length()/2);
+			}
+			else {
+				choix = (JSONObject) liste_solutions.get(liste_solutions.length()-1);
+			}
+			//x
+			int x=Integer.parseInt(choix.getString("x"));
+			//y
+			int y=Integer.parseInt(choix.getString("y"));
+			//value
+			int value=Integer.parseInt(choix.getString("value"));
+			//direction
+			int direction=Integer.parseInt(choix.getString("direction"));
+			//word
+			String word=choix.getString("word");
+
 			this.score[this.numChevalet].majScore(value);
-			
+
 			for (int i=0;i<word.length();i++) {
 				Character l=word.charAt(i);
 				String lettre=l.toString();
@@ -879,7 +883,7 @@ public class Modele extends Observable{
 				else {
 					y=y+1;
 				}
-				
+
 				try {
 					TimeUnit.SECONDS.sleep(1);
 				} catch (InterruptedException e) {
@@ -892,7 +896,7 @@ public class Modele extends Observable{
 			this.setChanged();
 			this.notifyObservers(String.format(strings.getString("joue"), this.score[this.numChevalet].getPrenom(),word.toUpperCase())+"\n");
 			this.changementJoueur();
-		}	
+		}
 	}
 
 	public void lettreJoker(String lettre) {

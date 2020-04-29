@@ -5,13 +5,17 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.Image;
+import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Couleur;
+import fr.scrabble.structures.Case.Multiplicateur;
 
 @SuppressWarnings("serial")
 public class VueColonne extends JPanel {
@@ -33,18 +37,20 @@ public class VueColonne extends JPanel {
 	public void paint(Graphics g) {
 		super.paint(g);
 		for (int i = 0; i < 15; i++) {
-			//Fond
-			g.setColor(fond[this.c.getCouleur()]);
-			g.fillRect(0,(int) (i*TAILLE*Menu.SCALE) ,(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-			g.setColor(this.c.getColorLettre());
-			g.drawRect(0,(int) (i*TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-			//Chiffre
-			Font font_lettre = new Font("Arial",Font.PLAIN,(int)(18*Menu.SCALE)) ;
-			FontMetrics metrics_lettre = getFontMetrics(font_lettre);
-			g.setFont(font_lettre);
-			g.setColor(this.c.getColorLettre());
-			g.drawString(alphabet[i],metrics_lettre.getDescent(),(int) (i*TAILLE*Menu.SCALE+metrics_lettre.getAscent()));
-		}
+			Image im = null;
+			try {
+				if(this.c.getCouleur()==0) {
+					im = ImageIO.read(Multiplicateur.class.getResource("/resources/images/plateau/"+alphabet[i]+".png"));
+				}
+				else {
+					im = ImageIO.read(Multiplicateur.class.getResource("/resources/images/plateau/"+alphabet[i]+"S.png"));
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			g.drawImage(im,0,(int) (i*TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
+			}
 	}
 	
 	@Override
