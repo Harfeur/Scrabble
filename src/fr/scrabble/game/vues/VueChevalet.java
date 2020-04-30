@@ -1,6 +1,5 @@
 package fr.scrabble.game.vues;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 
@@ -12,7 +11,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Toolkit;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -30,15 +28,11 @@ public class VueChevalet extends JPanel implements Observer {
 	Score prenom;
 	public static int TAILLE=35;
 	Integer numchevalet;
-	//Color [clair fill,sombre fill, clair contour, sombre contour]
 	Color[] chevaletC = {new Color(117,82,56),new Color(87,52,26),new Color(117,82,56),new Color(167,114,81)};
-	Color[] tuile = {new Color(230,207,207),new Color(200,77,77),new Color(66,50,41),new Color(39,32,24)};
-	Color[] select = {new Color(255,255,0),new Color(200,200,0),new Color(200,77,77),new Color(200,140,140)};
 	private ArrayList<Image> images;
+	MouseInputListener l;
 
-	//essaie de push
-
-	public VueChevalet(MouseInputListener cc, Menu menu) {
+	public VueChevalet(Menu menu) {
 		super();
 		this.chevalet =new Chevalet();
 		this.sac = new Sac("FR");
@@ -75,26 +69,65 @@ public class VueChevalet extends JPanel implements Observer {
 			this.images.add(img);
 		}
 
+		for (int i = 53; i < 80; i++) {
+			String lettre;
+			if (i == 79) {
+				lettre = "JOKER";
+			} else {
+				Character c = (char) ('A'+i-53);
+				lettre = c.toString();
+			}
+			Image img = Toolkit.getDefaultToolkit().getImage(Lettre.class.getResource("/resources/images/lettreSombre/letter_"+lettre+".png"));
+			mt.addImage(img, i);
+			this.images.add(img);
+		}
+
+		for (int i = 80; i < 106; i++) {
+			String lettre;
+			if (i == 105) {
+				lettre = "JOKER";
+			} else {
+				Character c = (char) ('A'+i-80);
+				lettre = c.toString();
+			}
+			Image img = Toolkit.getDefaultToolkit().getImage(Lettre.class.getResource("/resources/images/lettreSombreSelectionnee/letter_"+lettre+".png"));
+			mt.addImage(img, i);
+			this.images.add(img);
+		}
+
 		try {
 			mt.waitForAll();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 
+		this.putClientProperty("color", this.couleur.getCouleur());
+
 		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Menu.SCALE),(int) (VuePlateau.TAILLE*3*Menu.SCALE)));
-		this.addMouseListener(cc);
 		this.setBounds(0, (int) (VuePlateau.TAILLE*15*Menu.SCALE+(TAILLE*Menu.SCALE)), (int) (VuePlateau.TAILLE*15*Menu.SCALE), (int) (VuePlateau.TAILLE*3*Menu.SCALE));
+	}
+
+	public void initialiser(MouseInputListener l) {
+		this.removeMouseListener(this.l);
+		this.l = l;
+		this.addMouseListener(l);
+		this.chevalet = null;
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+
+		if ((int) this.getClientProperty("color") != this.couleur.getCouleur())
+			this.putClientProperty("color", this.couleur.getCouleur());
+
 		//Fond chevalet
 		g.setColor(this.chevaletC[this.couleur.getCouleur()]);
 		g.fillRect(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		g.setColor(this.chevaletC[this.couleur.getCouleur()+1]);
 		g.drawRect(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-		//Numero joueur
+
+		//Nom joueur
 		if(numchevalet!=null) {
 			Font font_joueur = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;
 			FontMetrics metrics_joueur = getFontMetrics(font_joueur);
@@ -108,10 +141,11 @@ public class VueChevalet extends JPanel implements Observer {
 		FontMetrics metrics_lr = getFontMetrics(font_lr);
 		g.setFont(font_lr);
 		g.setColor(this.couleur.getColorLettre());
-		g.drawString("Lettre restante (sac) : "+this.sac.nombreDeLettres,(int) (4*TAILLE*Menu.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
+		g.drawString("Lettres restantes (sac) : "+this.sac.nombreDeLettres,(int) (4*TAILLE*Menu.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
+
 		//Affichage lettre sur chevalet
-		if(this.chevalet.size()>0) {
-			int index = 0;
+		int index = 0;
+		if (this.chevalet != null)
 			for(int i=0; i<this.chevalet.size();i=i+1) {
 				if (this.chevalet.get(i).valeur == 0)
 					index = 26;
@@ -119,43 +153,13 @@ public class VueChevalet extends JPanel implements Observer {
 					char lettre = this.chevalet.get(i).lettre.charAt(0);
 					index = (int) lettre;
 					index -= 65;
-				Image im = null;
-				String l =this.chevalet.get(i).lettre;
-				try {
-					if(this.couleur.getCouleur()==0) {
-						im = ImageIO.read(Lettre.class.getResource("/resources/images/lettre/letter_"+l+".png"));
-					}
-					else {
-						im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSombre/letter_"+l+".png"));
-					}
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
-				g.drawImage(im,(int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
-			}
-		}
-			//Lettre selectionnee
-			for(int i=0 ; i<this.chevalet.size() ;i=i+1) {
-				if(this.chevalet.lettreSelectionee==i) {
+				if (this.chevalet.lettreSelectionee == i)
 					index+=27;
-					Image im = null;
-					String l =this.chevalet.get(i).lettre;
-					try {
-						if(this.couleur.getCouleur()==0) {
-							im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSelectionnee/letter_"+l+".png"));
-						}
-						else {
-							im = ImageIO.read(Lettre.class.getResource("/resources/images/lettreSombreSelectionnee/letter_"+l+".png"));
-						}
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					g.drawImage(im,(int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
-				}
+				if ((int) this.getClientProperty("color") == 1)
+					index+=53;
+				g.drawImage(this.images.get(index),(int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
 			}
-		}
 	}
 
 	@Override
@@ -183,14 +187,6 @@ public class VueChevalet extends JPanel implements Observer {
 			this.prenom = (Score) arg;
 			this.repaint((int) (TAILLE*5*Menu.SCALE), 0, (int) (TAILLE*5*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}	
-	}
-
-	@Override
-	public void update(Graphics g) {
-		if ((int) this.getClientProperty("color") != this.couleur.getCouleur()) {
-			this.putClientProperty("color", this.couleur.getCouleur());
-			System.out.println(this.couleur.getCouleur());
-		}
 	}
 
 }

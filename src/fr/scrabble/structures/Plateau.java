@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.Arrays;
 
 import fr.scrabble.structures.Case.Multiplicateur;
 
@@ -75,5 +76,19 @@ public class Plateau implements Serializable{
 			}
 		}
 		return p;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Plateau other = (Plateau) obj;
+		if (other.toString().equals(this.toString()))
+			return true;
+		return false;
 	}
 }

@@ -39,6 +39,8 @@ public class Menu extends JFrame implements Observer {
 	// Vues à charger au début
 	JPanel fondMenu, vueBoutonHorsLigne, vueBoutonMultijoueur, vueBoutonServeur,
 	vueLigne, vueColonne, vueConsole, vueRejete;
+	VuePlateau vuePlateau;
+	VueChevalet vueChevalet;
 	VueScore vueScore;
 
 	boolean vueHorsLigneSombre=true, fin=false;
@@ -86,7 +88,7 @@ public class Menu extends JFrame implements Observer {
 
 		this.setLocation(x, y);
 
-		JProgressBar loading = new JProgressBar(0, 9);
+		JProgressBar loading = new JProgressBar(0, 10);
 		
 		this.vueChargement(loading);
 
@@ -118,6 +120,12 @@ public class Menu extends JFrame implements Observer {
 		
 		this.vueRejete = new VueRejete(this.couleur);
 		loading.setValue(8);
+		
+		this.vuePlateau = new VuePlateau(this);
+		loading.setValue(9);
+		
+		this.vueChevalet = new VueChevalet(this);
+		loading.setValue(10);
 
 		this.vueMenu();
 	}
@@ -179,8 +187,8 @@ public class Menu extends JFrame implements Observer {
 		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
 		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
 
-		VuePlateau vuePlateau = new VuePlateau(cp,this);
-		VueChevalet vueChevalet = new VueChevalet(cc, this);
+		this.vuePlateau.initialiser(cp);
+		this.vueChevalet.initialiser(cc);
 		VueBouton vueBouton = new VueBouton(cb,this);
 		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
 
@@ -220,8 +228,8 @@ public class Menu extends JFrame implements Observer {
 		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
 		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
 
-		VuePlateau vuePlateau = new VuePlateau(cp,this);
-		VueChevalet vueChevalet = new VueChevalet(cc, this);
+		this.vuePlateau.initialiser(cp);
+		this.vueChevalet.initialiser(cc);
 		VueBouton vueBouton = new VueBouton(cb,this);
 		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
 
@@ -294,8 +302,8 @@ public class Menu extends JFrame implements Observer {
 		ControleurChevalet cc = new ControleurChevalet(modeleEnLigne);
 		ControleurBouton cb = new ControleurBouton(modeleEnLigne);
 
-		VuePlateau vuePlateau = new VuePlateau(cp,this);
-		VueChevalet vueChevalet = new VueChevalet(cc, this);
+		this.vuePlateau.initialiser(cp);
+		this.vueChevalet.initialiser(cc);
 		VueBouton vueBouton = new VueBouton(cb,this);
 		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
 
@@ -377,7 +385,7 @@ public class Menu extends JFrame implements Observer {
 
 		this.serveur = new Serveur(this.modeleHorsLigne);
 		
-		VuePlateau vuePlateau = new VuePlateau(null,this);
+		this.vuePlateau.initialiser(null);
 		VueScore vueScore = new VueScore(this);
 
 		this.modeleHorsLigne.addObserver(vuePlateau);
