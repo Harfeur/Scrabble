@@ -742,7 +742,7 @@ public class Modele extends Observable{
 
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
-		if(this.plateauFictif==this.plateau) {
+		if(this.plateauFictif.equals(this.plateau)) {
 			this.passe=passe+1;
 			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.setChanged();
@@ -792,7 +792,7 @@ public class Modele extends Observable{
 				this.notifyObservers(this.sac);
 				this.setChanged();
 				this.notifyObservers(this.plateau);
-				if(this.score[this.numChevalet].getPrenom().equals("PC")==false) {
+				if(!this.score[this.numChevalet].getPrenom().equals("PC")) {
 					this.setChanged();
 					this.notifyObservers(this.numChevalet);
 					this.setChanged();
@@ -828,7 +828,7 @@ public class Modele extends Observable{
 		else {
 			JSONArray liste_solutions = (JSONArray) ((JSONObject) reponse.get("results")).get("result");
 			JSONObject choix = (JSONObject) liste_solutions.get(0);
-			if (difficulte==0) {
+			if (difficulte==2) {
 				choix = (JSONObject) liste_solutions.get(0);
 			}
 			else if(difficulte==1) {
