@@ -298,7 +298,6 @@ public class VueMenuBar extends JMenuBar {
 		
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.out.println(bg.getSelection().getActionCommand());
 			couleur.changeCouleur(bg.getSelection().getActionCommand());
 		}
 	}
