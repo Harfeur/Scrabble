@@ -14,6 +14,7 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.*;
@@ -30,6 +31,7 @@ public class VueChevalet extends JPanel implements Observer {
 	Integer numchevalet;
 	Color[] chevaletC = {new Color(117,82,56),new Color(87,52,26),new Color(117,82,56),new Color(167,114,81)};
 	private ArrayList<Image> images;
+	JTextArea lettrerest;
 	MouseInputListener l;
 
 	public VueChevalet(Menu menu) {
@@ -38,7 +40,12 @@ public class VueChevalet extends JPanel implements Observer {
 		this.sac = new Sac("FR");
 		this.menu = menu;
 		this.couleur = menu.couleur;
-
+		this.lettrerest = new JTextArea();
+		lettrerest.setPreferredSize(new Dimension(30,15));
+        lettrerest.setBounds(30,315,30,15);
+        lettrerest.setEditable(false);
+        lettrerest.setOpaque(true);
+		
 		// Chargement des images
 		this.images = new ArrayList<Image>();
 		MediaTracker mt = new MediaTracker(this);
@@ -139,9 +146,11 @@ public class VueChevalet extends JPanel implements Observer {
 		//Lettre restante
 		Font font_lr = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;
 		FontMetrics metrics_lr = getFontMetrics(font_lr);
-		g.setFont(font_lr);
-		g.setColor(this.couleur.getColorLettre());
-		g.drawString("Lettres restantes (sac) : "+this.sac.nombreDeLettres,(int) (4*TAILLE*Menu.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
+		this.lettrerest.setFont(font_lr);
+		this.lettrerest.setCaretColor(this.couleur.getColorLettre());
+		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+		this.lettrerest.setText(strings.getString("lettres_restantes"));
+		g.drawString(this.lettrerest.getText()+this.sac.nombreDeLettres,(int) (4*TAILLE*Menu.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
 
 		//Affichage lettre sur chevalet
 		int index = 0;
