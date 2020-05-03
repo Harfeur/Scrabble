@@ -119,6 +119,10 @@ public class Modele extends Observable{
 
 		this.setChanged();
 		this.notifyObservers(this.score[this.numChevalet]);
+		
+		if (this.score[this.numChevalet].getPrenom().equals("PC")){
+			this.jouerPC();
+		}
 	}
 
 	/* mis a jour de la lettre selectionner*/
