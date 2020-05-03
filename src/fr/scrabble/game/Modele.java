@@ -1022,7 +1022,7 @@ public class Modele extends Observable{
 		}
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.setChanged();
-		this.notifyObservers(strings.getString("sauvegarde")+"\n");
+		this.notifyObservers(strings.getString("sauvegarder")+"\n");
 	}
 
 	public void suppFile() {

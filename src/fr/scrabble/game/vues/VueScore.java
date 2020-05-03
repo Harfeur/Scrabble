@@ -55,7 +55,7 @@ public class VueScore extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		if(arg.getClass() == Score[].class) {
 			this.score = (Score []) arg;
-			this.repaint(0,0,(int) (VuePlateau.TAILLE*7*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*10*Menu.SCALE)-1);
+			this.repaint(0,0,(int) (VuePlateau.TAILLE*4*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);
 		}
 	}
 	
