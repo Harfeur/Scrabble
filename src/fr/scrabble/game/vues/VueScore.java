@@ -43,7 +43,7 @@ public class VueScore extends JPanel implements Observer {
 				FontMetrics metrics_score = getFontMetrics(font_score);
 				g.setFont(font_score);
 				g.setColor(this.c.getColorLettre());
-				g.drawString(score[i].prenom + " : "+score[i].getScore(),metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
+				g.drawString(score[i].prenom + " : "+score[i].score,metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
 				j=j+2;
 			
 			}
@@ -55,7 +55,7 @@ public class VueScore extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		if(arg.getClass() == Score[].class) {
 			this.score = (Score []) arg;
-			this.repaint(0,0,(int) (VuePlateau.TAILLE*7*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*3*Menu.SCALE)-1);
+			this.repaint(0,0,(int) (VuePlateau.TAILLE*7*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*10*Menu.SCALE)-1);
 		}
 	}
 	
