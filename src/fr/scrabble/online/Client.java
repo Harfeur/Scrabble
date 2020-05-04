@@ -67,8 +67,6 @@ public class Client extends Observable implements Runnable {
                 if (inputObject.equals("starting")) {
                     System.out.println("La partie démarre");
         			this.menu.vueEnLigne();
-                } else if (inputObject.getClass() == String.class) {
-                	System.out.println(inputObject);
                 } else if (inputObject.getClass() == char.class) {
                 	System.out.print((char) inputObject);
                 } else {

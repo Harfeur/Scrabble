@@ -158,6 +158,7 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 		user.envoyer(modele.chevalets.get(id));
 		user.envoyer(modele.plateauFictif);
 		user.envoyer(modele.score);
+		user.envoyer(modele.sac);
 	}
 	
 }
