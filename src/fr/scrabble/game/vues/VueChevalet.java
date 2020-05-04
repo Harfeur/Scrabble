@@ -131,9 +131,9 @@ public class VueChevalet extends JPanel implements Observer {
 
 		//Fond chevalet
 		g.setColor(this.chevaletC[this.couleur.getCouleur()]);
-		g.fillRect(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+		g.fillRect(115, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		g.setColor(this.chevaletC[this.couleur.getCouleur()+1]);
-		g.drawRect(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+		g.drawRect(115, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 
 		//Nom joueur
 		if(numchevalet!=null) {
@@ -151,7 +151,7 @@ public class VueChevalet extends JPanel implements Observer {
 		this.lettrerest.setCaretColor(this.couleur.getColorLettre());
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.lettrerest.setText(strings.getString("lettres_restantes"));
-		g.drawString(this.lettrerest.getText()+this.sac.nombreDeLettres,(int) (4*TAILLE*Menu.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
+		g.drawString(this.lettrerest.getText()+this.sac.nombreDeLettres,(int) (4*TAILLE*Menu.SCALE+metrics_lr.getDescent()+90),metrics_lr.getAscent());
 
 		
 		//Affichage lettre sur chevalet
@@ -169,7 +169,7 @@ public class VueChevalet extends JPanel implements Observer {
 					index+=27;
 				if ((int) this.getClientProperty("color") == 1)
 					index+=53;
-				g.drawImage(this.images.get(index),(int) (i*TAILLE*Menu.SCALE), (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
+				g.drawImage(this.images.get(index),(int) (i*TAILLE*Menu.SCALE)+115, (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
 			}
 	}
 
