@@ -98,7 +98,7 @@ public class VueChevalet extends JPanel implements Observer {
 				Character c = (char) ('A'+i-81);
 				lettre = c.toString();
 			}
-			Image img = Toolkit.getDefaultToolkit().getImage(Lettre.class.getResource("/resources/images/lettreSombreSelectionnee/letter_"+lettre+".png"));
+			Image img = Toolkit.getDefaultToolkit().getImage(Lettre.class.getResource("/resources/images/LettreSombreSelectionnee/letter_"+lettre+".png"));
 			mt.addImage(img, i);
 			this.images.add(img);
 		}

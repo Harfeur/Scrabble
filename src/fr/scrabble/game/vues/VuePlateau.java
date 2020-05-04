@@ -49,22 +49,22 @@ public class VuePlateau extends JPanel implements Observer {
 				Character c = (char) ('A'+i);
 				lettre = c.toString();
 			}
-			Image img = Toolkit.getDefaultToolkit().getImage(Lettre.class.getResource("/resources/images/lettre/letter_"+lettre+".png"));
+			Image img = Toolkit.getDefaultToolkit().getImage(VuePlateau.class.getResource("/resources/images/lettre/letter_"+lettre+".png"));
 			mt.addImage(img, i);
 			this.images.add(img);
 		}
 
-		this.images.add(Toolkit.getDefaultToolkit().getImage(Multiplicateur.class.getResource("/resources/images/plateau/Etoile.png")));
+		this.images.add(Toolkit.getDefaultToolkit().getImage(VuePlateau.class.getResource("/resources/images/Plateau/Etoile.png")));
 		mt.addImage(this.images.get(this.images.size()-1), 27);
-		this.images.add(Toolkit.getDefaultToolkit().getImage(Multiplicateur.class.getResource("/resources/images/plateau/LD.png")));
+		this.images.add(Toolkit.getDefaultToolkit().getImage(VuePlateau.class.getResource("/resources/images/Plateau/LD.png")));
 		mt.addImage(this.images.get(this.images.size()-1), 28);
-		this.images.add(Toolkit.getDefaultToolkit().getImage(Multiplicateur.class.getResource("/resources/images/plateau/LT.png")));
+		this.images.add(Toolkit.getDefaultToolkit().getImage(VuePlateau.class.getResource("/resources/images/Plateau/LT.png")));
 		mt.addImage(this.images.get(this.images.size()-1), 29);
-		this.images.add(Toolkit.getDefaultToolkit().getImage(Multiplicateur.class.getResource("/resources/images/plateau/MD.png")));
+		this.images.add(Toolkit.getDefaultToolkit().getImage(VuePlateau.class.getResource("/resources/images/Plateau/MD.png")));
 		mt.addImage(this.images.get(this.images.size()-1), 30);
-		this.images.add(Toolkit.getDefaultToolkit().getImage(Multiplicateur.class.getResource("/resources/images/plateau/MT.png")));
+		this.images.add(Toolkit.getDefaultToolkit().getImage(VuePlateau.class.getResource("/resources/images/Plateau/MT.png")));
 		mt.addImage(this.images.get(this.images.size()-1), 31);
-		this.images.add(Toolkit.getDefaultToolkit().getImage(Multiplicateur.class.getResource("/resources/images/plateau/S.png")));
+		this.images.add(Toolkit.getDefaultToolkit().getImage(VuePlateau.class.getResource("/resources/images/Plateau/S.png")));
 		mt.addImage(this.images.get(this.images.size()-1), 32);
 
 		for (int i = 33; i < 60; i++) {
