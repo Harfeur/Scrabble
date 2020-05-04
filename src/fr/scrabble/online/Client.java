@@ -11,7 +11,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-import fr.scrabble.game.Main;
 import fr.scrabble.menu.Menu;
 
 public class Client extends Observable implements Runnable {
@@ -75,7 +74,7 @@ public class Client extends Observable implements Runnable {
         			this.menu.vueEnLigne();
                 } else if (inputObject.equals("your_turn")) {
                 	try {
-            			URL url = Main.class.getResource("/resources/sounds/turn.wav");
+            			URL url = Client.class.getResource("/resources/sounds/turn.wav");
             			Clip clip = AudioSystem.getClip();
             			AudioInputStream ais = AudioSystem.getAudioInputStream(url);
             			clip.open(ais);
