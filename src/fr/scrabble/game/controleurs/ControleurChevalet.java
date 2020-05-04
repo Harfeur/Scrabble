@@ -19,7 +19,7 @@ public class ControleurChevalet implements MouseInputListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int num = (int) ((e.getX()-(22*Menu.SCALE*1.5)) / (VueChevalet.TAILLE*Menu.SCALE));
+		int num = (int) ((e.getX()-(22*Menu.SCALE)) / (VueChevalet.TAILLE*Menu.SCALE*1.15));
 		m.selectLettre(num);
 	}
 
