@@ -33,8 +33,8 @@ public class VueAttente extends JPanel implements ActionListener, Observer{
 		this.c = c;
 		this.menu = menu;
 		
-		this.txt = new JLabel("En attente");
-		this.lancerPartie = new JButton("Lancer la partie");
+		this.txt = new JLabel();
+		this.lancerPartie = new JButton();
 		
 		Font font = new Font("Arial",Font.BOLD,(int) (15*Menu.SCALE));
 		txt.setFont(font);
@@ -54,7 +54,7 @@ public class VueAttente extends JPanel implements ActionListener, Observer{
 	public void paint(Graphics g) {
 		super.paint(g);
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
-		this.txt.setText(strings.getString("Attente"));
+		this.txt.setText(strings.getString("attente"));
 		this.lancerPartie.setText(strings.getString("lancerPartie"));
 		
 		this.txt.setForeground(this.c.getColorLettre());

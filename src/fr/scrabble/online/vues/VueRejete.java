@@ -60,7 +60,7 @@ public class VueRejete extends JPanel implements Observer{
 	public void paint(Graphics g) {
 		super.paintComponents(g);
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
-		this.rejete.setText(strings.getString("Rejete"));
+		this.rejete.setText(strings.getString("rejete"));
 		
 		//fond
 		g.setColor(fond[this.c.getCouleur()]);
@@ -71,7 +71,6 @@ public class VueRejete extends JPanel implements Observer{
 		Font font = new Font("Arial",Font.BOLD,(int) (25*Menu.SCALE));
 		g.setFont(font);
 		g.setColor(lettre[this.c.getCouleur()]);
-		//"Vous n'êtes pas dans la partie"
 		g.drawString(rejete.getText(), (int) (120*Menu.SCALE), (int) (80*Menu.SCALE));
 	}
 	

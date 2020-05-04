@@ -70,7 +70,7 @@ public class VueStart extends JPanel implements ActionListener, Observer {
 	public void paint(Graphics g) {
 		super.paint(g);
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
-		this.prenom_l.setText(strings.getString("Prenom"));
+		this.prenom_l.setText(strings.getString("prenom"));
 		this.ip_l.setText(strings.getString("IP"));
 		this.valider.setText(strings.getString("valider"));
 		
