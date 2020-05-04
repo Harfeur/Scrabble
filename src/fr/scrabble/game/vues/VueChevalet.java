@@ -26,8 +26,8 @@ public class VueChevalet extends JPanel implements Observer {
 	Sac sac;
 	Couleur couleur;
 	Menu menu;
-	Score prenom;
-	public static int TAILLE=35;
+	Score score;
+	public static int TAILLE=45;
 	Integer numchevalet;
 	Color[] chevaletC = {new Color(117,82,56),new Color(87,52,26),new Color(117,82,56),new Color(167,114,81)};
 	private ArrayList<Image> images;
@@ -131,17 +131,20 @@ public class VueChevalet extends JPanel implements Observer {
 
 		//Fond chevalet
 		g.setColor(this.chevaletC[this.couleur.getCouleur()]);
-		g.fillRect(115, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
-		g.setColor(this.chevaletC[this.couleur.getCouleur()+1]);
-		g.drawRect(115, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+		int[] xPoints = {0, (int) (Menu.SCALE*20), (int) ((TAILLE*7+20)*Menu.SCALE), (int) ((40+TAILLE*7)*Menu.SCALE)};
+		int[] yPoints = {(int) (TAILLE*1.5*Menu.SCALE), (int) (TAILLE*0.5*Menu.SCALE), (int) (TAILLE*0.5*Menu.SCALE), (int) (TAILLE*1.5*Menu.SCALE)};
+ 		g.fillPolygon(xPoints, yPoints, 4);
+		//g.setColor(this.chevaletC[this.couleur.getCouleur()+1]);
+		//g.drawRect(115, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 
 		//Nom joueur
-		if(numchevalet!=null) {
+		if(this.score!=null) {
 			Font font_joueur = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;
-			FontMetrics metrics_joueur = getFontMetrics(font_joueur);
+			//FontMetrics metrics_joueur = getFontMetrics(font_joueur);
 			g.setFont(font_joueur);
-			g.setColor(this.couleur.getColorLettre());
-			g.drawString(prenom.getPrenom(),metrics_joueur.getDescent(),metrics_joueur.getAscent());
+			g.setColor(Color.WHITE);
+			//g.drawString(prenom.getPrenom(),metrics_joueur.getDescent(),metrics_joueur.getAscent());
+			g.drawString(score.getPrenom(),(int) (20*Menu.SCALE),(int) (TAILLE*1.4*Menu.SCALE));
 		}
 
 		//Lettre restante
@@ -151,7 +154,7 @@ public class VueChevalet extends JPanel implements Observer {
 		this.lettrerest.setCaretColor(this.couleur.getColorLettre());
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.lettrerest.setText(strings.getString("lettres_restantes"));
-		g.drawString(this.lettrerest.getText()+this.sac.nombreDeLettres,(int) (4*TAILLE*Menu.SCALE+metrics_lr.getDescent()+90),metrics_lr.getAscent());
+		g.drawString(this.lettrerest.getText()+this.sac.nombreDeLettres,(int) ((TAILLE*7+20)*Menu.SCALE) - metrics_lr.stringWidth(this.lettrerest.getText()+this.sac.nombreDeLettres),(int) (TAILLE*1.4*Menu.SCALE));
 
 		
 		//Affichage lettre sur chevalet
@@ -169,7 +172,7 @@ public class VueChevalet extends JPanel implements Observer {
 					index+=27;
 				if ((int) this.getClientProperty("color") == 1)
 					index+=54;
-				g.drawImage(this.images.get(index),(int) (i*TAILLE*Menu.SCALE)+115, (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
+				g.drawImage(this.images.get(index),(int) ((20+TAILLE*i)*Menu.SCALE), 0 ,(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
 			}
 	}
 
@@ -178,11 +181,11 @@ public class VueChevalet extends JPanel implements Observer {
 		// Cette fonction change le chevalet selon le modèle
 		if (arg.getClass() == Chevalet.class) {
 			this.chevalet = (Chevalet) arg;
-			this.repaint(115, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+			this.repaint((int) (20*Menu.SCALE), 0, (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}
 		if (arg.getClass() == SetDeChevalets.class) {
 			this.chevalet = ((SetDeChevalets) arg).chevaletEnCours();
-			this.repaint(115, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+			this.repaint((int) (20*Menu.SCALE), 0, (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}
 		//Numero Joueur
 		if (arg.getClass() == Integer.class) {
@@ -195,7 +198,7 @@ public class VueChevalet extends JPanel implements Observer {
 			this.repaint((int) (TAILLE*5*Menu.SCALE), 0, (int) (TAILLE*5*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}
 		if (arg.getClass() == Score.class) {
-			this.prenom = (Score) arg;
+			this.score = (Score) arg;
 			this.repaint((int) (TAILLE*5*Menu.SCALE), 0, (int) (TAILLE*5*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}	
 	}
