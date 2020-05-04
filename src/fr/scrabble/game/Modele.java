@@ -131,7 +131,6 @@ public class Modele extends Observable{
 			this.setChanged();
 			this.notifyObservers(this.chevalets);
 			if (this.chevalets.chevaletEnCours().get(num).valeur == 0) {
-				new VueJoker(this.langue, this);
 				this.setChanged();
 				this.notifyObservers(Vues.MASQUER);
 			}
@@ -904,7 +903,7 @@ public class Modele extends Observable{
 	}
 
 	public void lettreJoker(String lettre) {
-		if (lettre == null) {
+		if (lettre.length() != 1) {
 			this.chevalets.chevaletEnCours().lettreSelectionee = -1;
 		} else {
 			lettreChoisi=lettre;

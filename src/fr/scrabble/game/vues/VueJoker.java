@@ -26,18 +26,16 @@ import fr.scrabble.structures.Sac;
 public class VueJoker extends JFrame implements ListSelectionListener, ActionListener {
 	
 	JList<String> li;
-	Modele modele;
 	ArrayList<String> lettre ;
 	JButton annuler;
 	JPanel panel;
 	Menu menu;
 	Couleur c;
 	
-	public VueJoker(String langue, Modele m) {
+	public VueJoker(String langue, Menu m) {
 		super("Choix de la valeur");
-		this.modele = m;
-		this.menu = m.menu;
-		this.c = m.menu.couleur;
+		this.menu = m;
+		this.c = m.couleur;
 		this.panel = new JPanel();
 		
 		Sac sac = new Sac(langue);
@@ -95,7 +93,7 @@ public class VueJoker extends JFrame implements ListSelectionListener, ActionLis
 	public void valueChanged(ListSelectionEvent e) {
 		String lettre = li.getSelectedValue();
 		System.out.println(lettre);
-		this.modele.lettreJoker(lettre);
+		this.menu.lettreJoker(lettre);
 		this.setVisible(false);
 		this.dispose();
 	}
@@ -122,7 +120,7 @@ public class VueJoker extends JFrame implements ListSelectionListener, ActionLis
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Auto-generated method stub
-		this.modele.lettreJoker(null);
+		this.menu.lettreJoker("non");
 		this.setVisible(false);
 		this.dispose();
 	}	

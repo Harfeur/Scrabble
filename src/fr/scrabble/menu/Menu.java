@@ -21,6 +21,7 @@ import fr.scrabble.menu.vues.*;
 import fr.scrabble.online.*;
 import fr.scrabble.online.vues.*;
 import fr.scrabble.structures.Couleur;
+import fr.scrabble.structures.Lettre;
 import fr.scrabble.structures.Score;
 
 @SuppressWarnings("serial")
@@ -50,6 +51,7 @@ public class Menu extends JFrame implements Observer {
 	ModeleEnLigne modeleEnLigne;
 	
 	public Couleur couleur;
+	private boolean enLigne;
 	
 
 	public Menu () {
@@ -431,6 +433,11 @@ public class Menu extends JFrame implements Observer {
 			Vues vue = (Vues) arg;
 			if (vue.equals(Vues.MASQUER)) {
 				this.setVisible(false);
+				new VueJoker("FR", this);
+				if (o.getClass() == Client.class)
+					this.enLigne=true;
+				else
+					this.enLigne=false;
 			}
 			if (vue.equals(Vues.AFFICHER)) {
 				this.setVisible(true);
@@ -457,6 +464,13 @@ public class Menu extends JFrame implements Observer {
 	public void setLocale(Locale l) {
 		super.setLocale(l);
 		this.repaint();
+	}
+
+	public void lettreJoker(String lettre) {
+		if (enLigne)
+			client.message(lettre);
+		else
+			modeleHorsLigne.lettreJoker(lettre);
 	}
 }
 

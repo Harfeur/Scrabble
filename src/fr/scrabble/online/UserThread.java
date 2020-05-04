@@ -66,7 +66,7 @@ public class UserThread extends Thread {
 						this.serveur.ajoutLettre(this.username, Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
 						break;
 					default:
-						break;
+						this.serveur.modele.lettreJoker(inputLine);
 					}
 				}
 			}
