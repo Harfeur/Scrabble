@@ -102,6 +102,9 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
 				user.envoyer(i);
+				if (i == joueurEnCours) {
+					user.envoyer("your_turn");
+				}
 			}
 		} else if (arg.getClass() == String.class) {
 			for (int i = 0; i < this.size(); ++i) {
@@ -112,9 +115,9 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			Vues vue = (Vues) arg;
 			UserThread user;
 			switch (vue) {
-			case MASQUER:
+			case JOKER:
 				user = this.get(this.joueurEnCours);
-				user.envoyer(Vues.MASQUER);
+				user.envoyer(Vues.JOKER);
 				break;
 			case AFFICHER:
 				user = this.get(this.joueurEnCours);

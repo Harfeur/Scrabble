@@ -30,7 +30,7 @@ public class Menu extends JFrame implements Observer {
 	public static double SCALE = 1.5;
 	public static Locale[] LOCALES = {new Locale("fr", "FR"), new Locale("en", "US"), new Locale("es", "MX")};
 	
-	public enum Vues { AFFICHER, MASQUER, FINALE }
+	public enum Vues { AFFICHER, JOKER, FINALE }
 
 	Container containerChargement, containerMenu, containerHorsLigne, containerNomJoueurHorsLigne, containerInstructionHorsLigne,
 	containerEnLigne, containerClient, containerServeur, containerAttente, containerRejete, containerScore;
@@ -442,12 +442,8 @@ public class Menu extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 		if (arg != null && arg.getClass() == Vues.class) {
 			Vues vue = (Vues) arg;
-			if (vue.equals(Vues.MASQUER)) {
-				this.setVisible(false);
+			if (vue.equals(Vues.JOKER)) {
 				new VueJoker("FR", this);
-			}
-			if (vue.equals(Vues.AFFICHER)) {
-				this.setVisible(true);
 			}
 			if (vue.equals(Vues.FINALE)) {
 				this.fin=true;

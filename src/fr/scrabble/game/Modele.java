@@ -126,7 +126,7 @@ public class Modele extends Observable{
 			this.notifyObservers(this.chevalets);
 			if (this.chevalets.chevaletEnCours().get(num).valeur == 0) {
 				this.setChanged();
-				this.notifyObservers(Vues.MASQUER);
+				this.notifyObservers(Vues.JOKER);
 			}
 		}
 	}
@@ -735,6 +735,9 @@ public class Modele extends Observable{
 		for (Integer score : motsVerticaux.values()) {
 			this.score[this.numChevalet].majScore(score);
 		}
+		
+		if (placementEnCours.size()==7)
+			this.score[this.numChevalet].majScore(50);
 	}
 
 	/*met a jour les changements de Joueur */
@@ -900,8 +903,6 @@ public class Modele extends Observable{
 		} else {
 			lettreChoisi=lettre;
 		}
-		this.setChanged();
-		this.notifyObservers(Vues.AFFICHER);
 	}
 
 	//Serialisation
