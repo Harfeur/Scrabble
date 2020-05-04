@@ -25,7 +25,7 @@ public class Modele extends Observable{
 	public Sac sac;
 	File fichier;
 	public Plateau plateau;
-	Plateau plateauFictif;
+	public Plateau plateauFictif;
 	public SetDeChevalets chevalets;
 	public Integer numChevalet;
 	public Score[] score;

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -24,12 +25,15 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 	boolean gameStarted;
 	ArrayList<String> joueurs;
 	
+	HashMap<String, Integer> joueursEtID;
+	
 	
 	public Serveur(Modele modele) {
 		super();
 		this.modele = modele;
 		this.gameStarted = false;
 		this.joueurs = new ArrayList<String>();
+		this.joueursEtID = new HashMap<String, Integer>();
 	}
 
 	public void ouvrirConnection() {
@@ -48,15 +52,29 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 
 	public boolean ajouterJoueur(String username) {
 		if (!this.gameStarted && !this.joueurs.contains(username) && this.joueurs.size() < 4) {
+			int id = this.joueurs.size();
 			this.joueurs.add(username);
+			this.joueursEtID.put(username, id);
+			return true;
+		} else if (this.gameStarted && this.joueurs.contains(username)) {
+			UserThread user = this.remove(this.size()-1);
+			this.add(this.joueursEtID.get(username), user);
 			return true;
 		}
 		return false;
 	}
 
+	public void disconnected(String username, UserThread userThread) {
+		if (!gameStarted) {
+			this.joueurs.remove(username);
+			this.joueursEtID.remove(username);
+		}
+	}
+
 	public void demarrer() {
 		this.joueurEnCours = 0;
 		this.modele.addObserver(this);
+		this.gameStarted = true;
 		for (int i = 0; i < this.size(); ++i) {
 			UserThread user = this.get(i);
 			user.envoyer("starting");
@@ -132,6 +150,14 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 	@Override
 	public void run() {
 		this.ouvrirConnection();
+	}
+
+	public void getData(String username) {
+		int id = this.joueursEtID.get(username);
+		UserThread user = this.get(id);
+		user.envoyer(modele.chevalets.get(id));
+		user.envoyer(modele.plateauFictif);
+		user.envoyer(modele.score);
 	}
 	
 }
