@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -24,11 +25,13 @@ public class VueAttente extends JPanel implements ActionListener, Observer{
 	Couleur c;
 	JLabel txt;
 	JButton lancerPartie;
+	Menu menu;
 	
-	public VueAttente(Client client, Couleur c) {
+	public VueAttente(Client client, Couleur c, Menu menu) {
 		super();
 		this.client = client;  
 		this.c = c;
+		this.menu = menu;
 		
 		this.txt = new JLabel("En attente");
 		this.lancerPartie = new JButton("Lancer la partie");
@@ -50,6 +53,10 @@ public class VueAttente extends JPanel implements ActionListener, Observer{
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+		this.txt.setText(strings.getString("Attente"));
+		this.lancerPartie.setText(strings.getString("lancerPartie"));
+		
 		this.txt.setForeground(this.c.getColorLettre());
 		this.lancerPartie.setForeground(this.c.getColorLettre());
 		this.lancerPartie.setBackground(c.getColorBouton());

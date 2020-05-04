@@ -118,7 +118,7 @@ public class Menu extends JFrame implements Observer {
 		this.vueScore = new VueScore(this);
 		loading.setValue(7);
 		
-		this.vueRejete = new VueRejete(this.couleur);
+		this.vueRejete = new VueRejete(this.couleur,this);
 		loading.setValue(8);
 		
 		this.vuePlateau = new VuePlateau(this);
@@ -336,7 +336,7 @@ public class Menu extends JFrame implements Observer {
 
 		this.client = new Client(this);
 
-		VueStart vs = new VueStart(this.client, this.couleur);
+		VueStart vs = new VueStart(this.client, this.couleur,this);
 
 		this.containerClient = new JLayeredPane();
 
@@ -354,7 +354,7 @@ public class Menu extends JFrame implements Observer {
 
 		this.containerAttente = new Container();
 
-		VueAttente va = new VueAttente(this.client, this.couleur);
+		VueAttente va = new VueAttente(this.client, this.couleur,this);
 
 		this.containerAttente = new JLayeredPane();
 
