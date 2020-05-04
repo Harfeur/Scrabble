@@ -64,9 +64,9 @@ public class VueChevalet extends JPanel implements Observer {
 			this.images.add(img);
 		}
 
-		for (int i = 27; i < 53; i++) {
+		for (int i = 27; i < 54; i++) {
 			String lettre;
-			if (i == 52) {
+			if (i == 53) {
 				lettre = "JOKER";
 			} else {
 				Character c = (char) ('A'+i-27);
@@ -77,12 +77,12 @@ public class VueChevalet extends JPanel implements Observer {
 			this.images.add(img);
 		}
 
-		for (int i = 53; i < 80; i++) {
+		for (int i = 54; i < 81; i++) {
 			String lettre;
-			if (i == 79) {
+			if (i == 80) {
 				lettre = "JOKER";
 			} else {
-				Character c = (char) ('A'+i-53);
+				Character c = (char) ('A'+i-54);
 				lettre = c.toString();
 			}
 			Image img = Toolkit.getDefaultToolkit().getImage(Lettre.class.getResource("/resources/images/lettreSombre/letter_"+lettre+".png"));
@@ -90,12 +90,12 @@ public class VueChevalet extends JPanel implements Observer {
 			this.images.add(img);
 		}
 
-		for (int i = 80; i < 106; i++) {
+		for (int i = 81; i < 108; i++) {
 			String lettre;
-			if (i == 105) {
+			if (i == 107) {
 				lettre = "JOKER";
 			} else {
-				Character c = (char) ('A'+i-80);
+				Character c = (char) ('A'+i-81);
 				lettre = c.toString();
 			}
 			Image img = Toolkit.getDefaultToolkit().getImage(Lettre.class.getResource("/resources/images/lettreSombreSelectionnee/letter_"+lettre+".png"));
@@ -168,7 +168,7 @@ public class VueChevalet extends JPanel implements Observer {
 				if (this.chevalet.lettreSelectionee == i)
 					index+=27;
 				if ((int) this.getClientProperty("color") == 1)
-					index+=53;
+					index+=54;
 				g.drawImage(this.images.get(index),(int) (i*TAILLE*Menu.SCALE)+115, (int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
 			}
 	}
