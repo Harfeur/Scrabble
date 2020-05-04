@@ -1,7 +1,6 @@
 package fr.scrabble.online;
 
 import java.io.IOException;
-import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import java.util.Observer;
 import fr.scrabble.game.Modele;
 import fr.scrabble.menu.Menu.Vues;
 import fr.scrabble.structures.Chevalet;
-import fr.scrabble.structures.Sac;
 import fr.scrabble.structures.Score;
 import fr.scrabble.structures.SetDeChevalets;
 

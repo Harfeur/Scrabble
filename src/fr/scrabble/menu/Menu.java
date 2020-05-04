@@ -4,11 +4,15 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -21,7 +25,6 @@ import fr.scrabble.menu.vues.*;
 import fr.scrabble.online.*;
 import fr.scrabble.online.vues.*;
 import fr.scrabble.structures.Couleur;
-import fr.scrabble.structures.Lettre;
 import fr.scrabble.structures.Score;
 
 @SuppressWarnings("serial")
@@ -432,6 +435,16 @@ public class Menu extends JFrame implements Observer {
 		containerScore.add(new VueScoreFin(score),1,0);
 		this.add(containerScore);
 		this.setVisible(true);
+		
+		try {
+			URL url = Menu.class.getResource("/resources/sounds/end.wav");
+			Clip clip = AudioSystem.getClip();
+			AudioInputStream ais = AudioSystem.getAudioInputStream(url);
+			clip.open(ais);
+			clip.loop(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
