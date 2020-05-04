@@ -95,14 +95,14 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         this.joueur = new JTextArea();
         Font f = new Font("Arial",Font.BOLD,(int)(10*Menu.SCALE));
         joueur.setFont(f);
-        joueur.setBounds(140,315,140,25);
+        joueur.setBounds(140,315,this.joueur.getText().length()*8,25);
         joueur.setEditable(false);
         joueur.setOpaque(true);
         
         this.langue = new JTextArea();
         Font fl = new Font("Arial",Font.BOLD,(int)(10*Menu.SCALE));
         langue.setFont(fl);
-        langue.setBounds(470,315,110,25);
+        langue.setBounds(470,315,this.langue.getText().length()*9,25);
         langue.setEditable(false);
         langue.setOpaque(true);
         
@@ -200,6 +200,9 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         this.langue.setForeground(this.c.getColorLettre());
         this.valide.setForeground(this.c.getColorLettre());
         this.sauver.setForeground(this.c.getColorLettre());
+        
+        langue.setBounds(470,315,this.langue.getText().length()*9,25);
+        joueur.setBounds(140,315,this.joueur.getText().length()*8,25);
 	}
 }
 

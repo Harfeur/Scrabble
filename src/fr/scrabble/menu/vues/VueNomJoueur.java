@@ -146,12 +146,12 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 	    
 	    this.label = new JLabel();
         label.setFont(f);
-        label.setBounds(140,315,140,25);
+        label.setBounds(140,315,this.label.getText().length()*9,25);
         label.setOpaque(true);
         
         this.label_diff = new JLabel();
         label_diff.setFont(f);
-        label_diff.setBounds(470,315,110,25);
+        label_diff.setBounds(470,315,this.label_diff.getText().length()*9,25);
         label_diff.setOpaque(true);
 	    
 	    this.add(label);
@@ -234,6 +234,8 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 		this.label.setBackground(this.c.getColorBouton());
 		this.label_diff.setBackground(this.c.getColorBouton());
 
+		label.setBounds(140,315,this.label.getText().length()*9,25);
+		label_diff.setBounds(470,315,this.label_diff.getText().length()*9,25);
 	}
 
 	@Override
