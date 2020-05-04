@@ -7,7 +7,6 @@ import java.net.Socket;
 import java.util.Observable;
 
 import fr.scrabble.menu.Menu;
-import fr.scrabble.structures.Sac;
 
 public class Client extends Observable implements Runnable {
 	
@@ -65,12 +64,9 @@ public class Client extends Observable implements Runnable {
 		try {
 			Object inputObject;
 			while ((inputObject = in.readObject()) != null) {
-				//System.out.println(inputObject);
                 if (inputObject.equals("starting")) {
                     System.out.println("La partie démarre");
         			this.menu.vueEnLigne();
-                } else if (inputObject.getClass() == String.class) {
-                	System.out.println(inputObject);
                 } else {
                 	this.setChanged();
 					this.notifyObservers(inputObject);

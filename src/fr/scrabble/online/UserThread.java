@@ -40,7 +40,13 @@ public class UserThread extends Thread {
 			System.out.println(String.format("Tentative de connexion de %s (%s)", this.username, this.clientSocket.getInetAddress().getHostAddress()));
 			if (this.serveur.ajouterJoueur(this.username)) {
 				System.out.println(String.format("%s connecté avec succès", this.username));
-				out.writeObject("gameJoined");
+				if (serveur.gameStarted) {
+					out.writeObject("gameJoined");
+					out.writeObject("starting");
+					serveur.getData(username);
+				}
+				else
+					out.writeObject("gameJoined");
 				while ((inputLine = in.readLine()) != null) {
 					System.out.println(this.username + " : " + inputLine);
 					switch (inputLine) {
@@ -60,7 +66,7 @@ public class UserThread extends Thread {
 						this.serveur.ajoutLettre(this.username, Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
 						break;
 					default:
-						break;
+						this.serveur.modele.lettreJoker(inputLine);
 					}
 				}
 			}
@@ -74,6 +80,7 @@ public class UserThread extends Thread {
 		} catch (SocketException e) {
 			if (this.username != null) System.out.print(this.username + " : ");
 			System.out.println("Le joueur a quitté la partie");
+			serveur.disconnected(username, this);
 		}
 		catch (IOException e) {
 			e.printStackTrace();

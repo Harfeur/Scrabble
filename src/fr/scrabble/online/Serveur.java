@@ -1,14 +1,18 @@
 package fr.scrabble.online;
 
 import java.io.IOException;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
 
 import fr.scrabble.game.Modele;
+import fr.scrabble.menu.Menu.Vues;
 import fr.scrabble.structures.Chevalet;
 import fr.scrabble.structures.Sac;
+import fr.scrabble.structures.Score;
 import fr.scrabble.structures.SetDeChevalets;
 
 @SuppressWarnings("serial")
@@ -22,16 +26,23 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 	boolean gameStarted;
 	ArrayList<String> joueurs;
 	
+	HashMap<String, Integer> joueursEtID;
+	private ServerSocket serverSoc;
+	private boolean fin;
 	
-	public Serveur() {
+	
+	public Serveur(Modele modele) {
 		super();
+		this.modele = modele;
 		this.gameStarted = false;
 		this.joueurs = new ArrayList<String>();
+		this.joueursEtID = new HashMap<String, Integer>();
+		this.fin = false;
 	}
 
 	public void ouvrirConnection() {
 		try {
-			ServerSocket serverSoc = new ServerSocket(8080);
+			this.serverSoc = new ServerSocket(8080);
 			UserThread user;
 			while (true) {
 	            user = new UserThread(serverSoc.accept(), this);
@@ -42,34 +53,41 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			e.printStackTrace();
 		}
 	}
-	
-	public static void main(String[] args) {
-		Serveur s = new Serveur();
-		s.ouvrirConnection();
-	}
 
 	public boolean ajouterJoueur(String username) {
 		if (!this.gameStarted && !this.joueurs.contains(username) && this.joueurs.size() < 4) {
+			int id = this.joueurs.size();
 			this.joueurs.add(username);
+			this.joueursEtID.put(username, id);
+			return true;
+		} else if (this.gameStarted && this.joueurs.contains(username)) {
+			UserThread user = this.remove(this.size()-1);
+			this.add(this.joueursEtID.get(username), user);
 			return true;
 		}
 		return false;
 	}
 
+	public void disconnected(String username, UserThread userThread) {
+		if (!gameStarted) {
+			this.joueurs.remove(username);
+			this.joueursEtID.remove(username);
+		}
+	}
+
 	public void demarrer() {
 		this.joueurEnCours = 0;
-		this.modele = new Modele();
 		this.modele.addObserver(this);
+		this.gameStarted = true;
 		for (int i = 0; i < this.size(); ++i) {
 			UserThread user = this.get(i);
 			user.envoyer("starting");
 		}
-		this.modele.nouvellePartie(this.size(), "FR", this.joueurs);
+		this.modele.nouvellePartie(this.size(), "FR", this.joueurs, 0);
 	}
 
 	@Override
 	public void update(Observable o, Object arg) {
-		//System.out.println(arg);
 		if (arg.getClass() == Chevalet.class) {
 			UserThread user = this.get(this.joueurEnCours);
 			user.envoyer(this.modele.chevalets.chevaletEnCours());
@@ -81,22 +99,49 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			}
 		} else if (arg.getClass() == Integer.class) {
 			this.joueurEnCours = (Integer) arg;
-		} else if (arg.getClass() == String.class) {
-			String str = (String) arg;
-			str = this.joueurs.get(this.joueurEnCours) + " a joué " + arg;
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
-				user.envoyer(str);
+				user.envoyer(i);
+			}
+		} else if (arg.getClass() == String.class) {
+			for (int i = 0; i < this.size(); ++i) {
+				UserThread user = this.get(i);
+				user.envoyer(arg);
+			}
+		} else if (arg.getClass() == Vues.class) {
+			Vues vue = (Vues) arg;
+			UserThread user;
+			switch (vue) {
+			case MASQUER:
+				user = this.get(this.joueurEnCours);
+				user.envoyer(Vues.MASQUER);
+				break;
+			case AFFICHER:
+				user = this.get(this.joueurEnCours);
+				user.envoyer(Vues.AFFICHER);
+				break;
+			case FINALE:
+				for (int i = 0; i < this.size(); ++i) {
+					user = this.get(i);
+					user.envoyer(Vues.FINALE);
+				}
+				this.fin=true;
+				break;
 			}
 		} else {
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
 				user.envoyer(arg);
 			}
-		}
-		if (arg.getClass() == Sac.class) {
-			Sac s = (Sac) arg;
-			System.out.println(s.size());
+			if (arg.getClass()==Score[].class && fin) {
+				try {
+					serverSoc.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					System.exit(0);
+				}
+			}
 		}
 	}
 
@@ -123,6 +168,16 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 	@Override
 	public void run() {
 		this.ouvrirConnection();
+	}
+
+	public void getData(String username) {
+		int id = this.joueursEtID.get(username);
+		UserThread user = this.get(id);
+		user.envoyer(modele.chevalets.get(id));
+		user.envoyer(modele.plateauFictif);
+		user.envoyer(id);
+		user.envoyer(modele.score);
+		user.envoyer(modele.sac);
 	}
 	
 }

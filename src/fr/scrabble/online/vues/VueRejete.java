@@ -6,9 +6,12 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Couleur;
@@ -23,11 +26,15 @@ public class VueRejete extends JPanel implements Observer{
 	Color[] fond = {Color.white, Color.black};
 	Color[] lettre = {new Color (179,29,29), new Color (255,0,0)};
 	Couleur c;
+	JTextArea rejete;
+	Menu menu;
 	
-	public VueRejete (Couleur c) {
+	public VueRejete (Couleur c,Menu menu) {
 		super();
 		this.c = c;
 		this.im = new Image[2];
+		rejete = new JTextArea();
+		this.menu = menu;
 		
 		//image clair
 		try {
@@ -52,6 +59,9 @@ public class VueRejete extends JPanel implements Observer{
 	
 	public void paint(Graphics g) {
 		super.paintComponents(g);
+		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+		this.rejete.setText(strings.getString("rejete"));
+		
 		//fond
 		g.setColor(fond[this.c.getCouleur()]);
 		g.fillRect((int) (90*Menu.SCALE), (int) (50*Menu.SCALE), (int) (420*Menu.SCALE), (int) (480*Menu.SCALE));
@@ -61,7 +71,7 @@ public class VueRejete extends JPanel implements Observer{
 		Font font = new Font("Arial",Font.BOLD,(int) (25*Menu.SCALE));
 		g.setFont(font);
 		g.setColor(lettre[this.c.getCouleur()]);
-		g.drawString("Vous n'êtes pas dans la partie", (int) (120*Menu.SCALE), (int) (80*Menu.SCALE));
+		g.drawString(rejete.getText(), (int) (120*Menu.SCALE), (int) (80*Menu.SCALE));
 	}
 	
 	@Override

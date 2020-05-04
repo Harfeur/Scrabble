@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Serializable;
 import java.net.URL;
+import java.util.Arrays;
 
 import fr.scrabble.structures.Case.Multiplicateur;
 
@@ -53,6 +54,20 @@ public class Plateau implements Serializable{
 	}
 	
 	@Override
+	public String toString() {
+		String str = "";
+		for (Case[] cases : plateau) {
+			for (Case case1 : cases) {
+				if (case1.lettre != null)
+					str += case1.lettre.lettre;
+				else
+					str += "-";
+			}
+		}
+		return str;
+	}
+	
+	@Override
 	public Plateau clone() {
 		Plateau p = new Plateau();
 		for (int i = 0; i < 15; i++) {
@@ -61,5 +76,19 @@ public class Plateau implements Serializable{
 			}
 		}
 		return p;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Plateau other = (Plateau) obj;
+		if (other.toString().equals(this.toString()))
+			return true;
+		return false;
 	}
 }

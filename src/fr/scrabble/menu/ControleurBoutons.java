@@ -9,7 +9,7 @@ import javax.swing.JComboBox;
 public class ControleurBoutons implements ItemListener {
 	private ArrayList<String> prenom;
 	private Menu menu;
-	private int nbjoueur=1;
+	private int nbjoueur=1, diff=0;
 	private String langue;
 
 	public ControleurBoutons(Menu menu) {
@@ -42,10 +42,11 @@ public class ControleurBoutons implements ItemListener {
 		this.changerLangue(jcb.getSelectedIndex());
 	}
 
-	public void lancerPartie(int nb, ArrayList<String> l) {
+	public void lancerPartie(int nb, ArrayList<String> l, int nbdiff) {
 		this.nbjoueur=nb;
 		this.prenom=l;
-		menu.vueHorsLigne(this.nbjoueur, this.langue,prenom);
+		this.diff=nbdiff;
+		menu.vueHorsLigne(this.nbjoueur, this.langue,prenom,this.diff);
 	}
 
 	public void NombreJoueur(int nbjoueur) {

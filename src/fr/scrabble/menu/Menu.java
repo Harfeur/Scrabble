@@ -15,55 +15,47 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
 import fr.scrabble.game.Modele;
-import fr.scrabble.game.controleurs.ControleurBouton;
-import fr.scrabble.game.controleurs.ControleurChevalet;
-import fr.scrabble.game.controleurs.ControleurPlateau;
-import fr.scrabble.game.vues.VueBouton;
-import fr.scrabble.game.vues.VueChevalet;
-import fr.scrabble.game.vues.VueColonne;
-import fr.scrabble.game.vues.VueInstructionBouton;
-import fr.scrabble.game.vues.VueLigne;
-import fr.scrabble.game.vues.VuePlateau;
-import fr.scrabble.game.vues.VueScore;
+import fr.scrabble.game.controleurs.*;
+import fr.scrabble.game.vues.*;
 import fr.scrabble.menu.vues.*;
 import fr.scrabble.online.*;
 import fr.scrabble.online.vues.*;
 import fr.scrabble.structures.Couleur;
+import fr.scrabble.structures.Lettre;
+import fr.scrabble.structures.Score;
 
 @SuppressWarnings("serial")
 public class Menu extends JFrame implements Observer {
 
 	public static double SCALE = 1.5;
 	public static Locale[] LOCALES = {new Locale("fr", "FR"), new Locale("en", "US"), new Locale("es", "MX")};
+	
+	public enum Vues { AFFICHER, MASQUER, FINALE }
 
-	Container containerChargement;
-	Container containerMenu;
-	Container containerHorsLigne;
-	Container containerNomJoueurHorsLigne;
-	Container containerInstructionHorsLigne;
-	Container containerEnLigne;
-	Container containerClient;
-	Container containerServeur;
-	Container containerAttente;
-	Container containerRejete;
+	Container containerChargement, containerMenu, containerHorsLigne, containerNomJoueurHorsLigne, containerInstructionHorsLigne,
+	containerEnLigne, containerClient, containerServeur, containerAttente, containerRejete, containerScore;
 
 	Modele modeleHorsLigne;
 
 	// Vues à charger au début
 	JPanel fondMenu, vueBoutonHorsLigne, vueBoutonMultijoueur, vueBoutonServeur,
 	vueLigne, vueColonne, vueConsole, vueRejete;
+	VuePlateau vuePlateau;
+	VueChevalet vueChevalet;
 	VueScore vueScore;
 
-	boolean vueHorsLigneSombre=true;
+	boolean vueHorsLigneSombre=true, fin=false;
 
 	Client client;
 	Serveur serveur;
 	ModeleEnLigne modeleEnLigne;
 	
 	public Couleur couleur;
+	private boolean enLigne;
+	
 
 	public Menu () {
-		super("Menu");
+		super("Scrabble");
 
 		this.setLocale(Locale.getDefault());
 
@@ -81,6 +73,7 @@ public class Menu extends JFrame implements Observer {
 		this.containerServeur = new Container();
 		this.containerAttente = new Container();
 		this.containerRejete = new Container();
+		this.containerScore =  new Container();
 
 		// Création et paramétrage de la fenêtre
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -97,7 +90,7 @@ public class Menu extends JFrame implements Observer {
 
 		this.setLocation(x, y);
 
-		JProgressBar loading = new JProgressBar(0, 9);
+		JProgressBar loading = new JProgressBar(0, 10);
 		
 		this.vueChargement(loading);
 
@@ -127,11 +120,14 @@ public class Menu extends JFrame implements Observer {
 		this.vueScore = new VueScore(this);
 		loading.setValue(7);
 		
-		this.vueConsole = new VueConsole();
+		this.vueRejete = new VueRejete(this.couleur,this);
 		loading.setValue(8);
 		
-		this.vueRejete = new VueRejete(this.couleur);
+		this.vuePlateau = new VuePlateau(this);
 		loading.setValue(9);
+		
+		this.vueChevalet = new VueChevalet(this);
+		loading.setValue(10);
 
 		this.vueMenu();
 	}
@@ -148,6 +144,7 @@ public class Menu extends JFrame implements Observer {
 		this.remove(this.containerRejete);
 		this.remove(this.containerInstructionHorsLigne);
 		this.remove(this.containerNomJoueurHorsLigne);
+		this.remove(this.containerScore);
 	}
 
 	public void vueChargement(JProgressBar loading) {
@@ -166,7 +163,7 @@ public class Menu extends JFrame implements Observer {
 
 	public void vueMenu() {
 		this.removeAll();
-
+		
 		this.containerMenu = new JLayeredPane();
 
 		containerMenu.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
@@ -180,37 +177,88 @@ public class Menu extends JFrame implements Observer {
 		this.setVisible(true);
 	}
 
-	public void vueHorsLigne(int nb, String l, ArrayList<String> prenoms) {
+	public void vueHorsLigne(int nb, String l, ArrayList<String> prenoms, int diff) {
 		this.removeAll();
+		
+		this.enLigne = false;
 
-		this.modeleHorsLigne = new Modele();
+		this.modeleHorsLigne = new Modele(this);
+		
+		VueMenuBar vueMenuBar = new VueMenuBar(this,this.modeleHorsLigne);
+		this.setJMenuBar(vueMenuBar);
 
 		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
 		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
 		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
 
-		VuePlateau vuePlateau = new VuePlateau(cp,this);
-		VueChevalet vueChevalet = new VueChevalet(cc, this);
-		VueBouton vueBouton = new VueBouton(cb);
+		this.vuePlateau.initialiser(cp);
+		this.vueChevalet.initialiser(cc);
+		VueBouton vueBouton = new VueBouton(cb,this);
+		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
 
 		this.modeleHorsLigne.addObserver(vuePlateau);
 		this.modeleHorsLigne.addObserver(vueChevalet);
+		this.modeleHorsLigne.addObserver(vueConsole);
 		this.modeleHorsLigne.addObserver(vueScore);
 		this.modeleHorsLigne.addObserver(this);
 
 		this.containerHorsLigne = new JLayeredPane();
 
-
-		this.containerHorsLigne.add(vuePlateau);
-		this.containerHorsLigne.add(vueLigne);
-		this.containerHorsLigne.add(vueColonne);
-		this.containerHorsLigne.add(vueChevalet);
-		this.containerHorsLigne.add(vueBouton);
-		this.containerHorsLigne.add(vueScore);
+		this.containerHorsLigne.add(fondMenu,0,0);
+		this.containerHorsLigne.add(vuePlateau,1,0);
+		this.containerHorsLigne.add(vueLigne,1,0);
+		this.containerHorsLigne.add(vueColonne,1,0);
+		this.containerHorsLigne.add(vueChevalet,1,0);
+		this.containerHorsLigne.add(vueBouton,1,0);
+		this.containerHorsLigne.add(vueScore,1,0);
+		this.containerHorsLigne.add(vueConsole,1,0);
 
 		this.add(this.containerHorsLigne);
 
-		this.modeleHorsLigne.nouvellePartie(nb, l, prenoms);
+		this.modeleHorsLigne.nouvellePartie(nb, l, prenoms,diff);
+
+		this.setVisible(true);
+	}
+	
+	public void vueHorsLigne() {
+		this.removeAll();
+		
+		this.enLigne = false;
+
+		this.modeleHorsLigne = new Modele(this);
+		
+		VueMenuBar vueMenuBar = new VueMenuBar(this,this.modeleHorsLigne);
+		this.setJMenuBar(vueMenuBar);
+
+		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
+		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
+		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
+
+		this.vuePlateau.initialiser(cp);
+		this.vueChevalet.initialiser(cc);
+		VueBouton vueBouton = new VueBouton(cb,this);
+		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
+
+		this.modeleHorsLigne.addObserver(vuePlateau);
+		this.modeleHorsLigne.addObserver(vueChevalet);
+		this.modeleHorsLigne.addObserver(vueConsole);
+		this.modeleHorsLigne.addObserver(vueScore);
+		this.modeleHorsLigne.addObserver(this);
+
+		this.containerHorsLigne = new JLayeredPane();
+
+		this.containerHorsLigne.add(fondMenu,0,0);
+		this.containerHorsLigne.add(vuePlateau,1,0);
+		this.containerHorsLigne.add(vueLigne,1,0);
+		this.containerHorsLigne.add(vueColonne,1,0);
+		this.containerHorsLigne.add(vueChevalet,1,0);
+		this.containerHorsLigne.add(vueBouton,1,0);
+		this.containerHorsLigne.add(vueScore,1,0);
+		this.containerHorsLigne.add(vueConsole,1);
+
+		this.add(this.containerHorsLigne);
+
+		this.modeleHorsLigne.reprise();
 
 		this.setVisible(true);
 	}
@@ -253,31 +301,36 @@ public class Menu extends JFrame implements Observer {
 	}
 	public void vueEnLigne() {
 		this.removeAll();
+		
+		this.enLigne = true;
 
-		this.modeleEnLigne = new ModeleEnLigne(this.client);
+		this.modeleEnLigne = new ModeleEnLigne(this.client, this);
 
 		ControleurPlateau cp = new ControleurPlateau(modeleEnLigne);
 		ControleurChevalet cc = new ControleurChevalet(modeleEnLigne);
 		ControleurBouton cb = new ControleurBouton(modeleEnLigne);
 
-		VuePlateau vuePlateau = new VuePlateau(cp,this);
-		VueChevalet vueChevalet = new VueChevalet(cc, this);
-		VueBouton vueBouton = new VueBouton(cb);
+		this.vuePlateau.initialiser(cp);
+		this.vueChevalet.initialiser(cc);
+		VueBouton vueBouton = new VueBouton(cb,this);
+		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
 
 		this.client.addObserver(vuePlateau);
 		this.client.addObserver(vueChevalet);
+		this.client.addObserver(vueConsole);
 		this.client.addObserver(vueScore);
 		this.client.addObserver(this);
 
 		this.containerEnLigne = new JLayeredPane();
 
-		this.containerEnLigne.add(vuePlateau,0);
-		this.containerEnLigne.add(vueLigne,0);
-		this.containerEnLigne.add(vueColonne,0);
-		this.containerEnLigne.add(vueChevalet,0);
-		this.containerEnLigne.add(vueBouton,0);
-		this.containerEnLigne.add(vueScore,1);
-		this.containerEnLigne.add(vueConsole,1);
+		this.containerEnLigne.add(fondMenu,0,0);
+		this.containerEnLigne.add(vuePlateau,1,0);
+		this.containerEnLigne.add(vueLigne,1,0);
+		this.containerEnLigne.add(vueColonne,1,0);
+		this.containerEnLigne.add(vueChevalet,1,0);
+		this.containerEnLigne.add(vueBouton,1,0);
+		this.containerEnLigne.add(vueScore,1,0);
+		this.containerEnLigne.add(vueConsole,1,0);
 
 		this.add(this.containerEnLigne);
 
@@ -286,12 +339,14 @@ public class Menu extends JFrame implements Observer {
 
 	public void vueClient() {
 		this.removeAll();
+		
+		this.enLigne = true;
 
 		this.containerClient = new Container();
 
 		this.client = new Client(this);
 
-		VueStart vs = new VueStart(this.client, this.couleur);
+		VueStart vs = new VueStart(this.client, this.couleur,this);
 
 		this.containerClient = new JLayeredPane();
 
@@ -309,7 +364,7 @@ public class Menu extends JFrame implements Observer {
 
 		this.containerAttente = new Container();
 
-		VueAttente va = new VueAttente(this.client, this.couleur);
+		VueAttente va = new VueAttente(this.client, this.couleur,this);
 
 		this.containerAttente = new JLayeredPane();
 
@@ -335,18 +390,47 @@ public class Menu extends JFrame implements Observer {
 	}
 
 	public void vueServeur() {
-		//Vue plateau/vueConsole
 		this.removeAll();
+		
+		this.enLigne = true;
+		
+		this.modeleHorsLigne = new Modele(this);
 
-		this.containerServeur = new Container();
-		this.containerServeur.add(new VueServeur());
+		this.serveur = new Serveur(this.modeleHorsLigne);
+		
+		this.vuePlateau.initialiser(null);
+		VueScore vueScore = new VueScore(this);
 
-		this.serveur = new Serveur();
+		this.modeleHorsLigne.addObserver(vuePlateau);
+		this.modeleHorsLigne.addObserver(vueScore);
+		
+		this.containerServeur = new JLayeredPane();
+
+		this.containerServeur.add(fondMenu,0,0);
+		this.containerServeur.add(vuePlateau,1,0);
+		this.containerServeur.add(vueLigne,1,0);
+		this.containerServeur.add(vueColonne,1,0);
+		this.containerServeur.add(vueScore,1,0);
 
 		this.add(this.containerServeur);
 
 		new Thread(this.serveur).start();
 
+		this.setVisible(true);
+	}
+	
+	public void vueFinale(Score[] score) {
+		this.removeAll();
+		
+		this.containerScore =  new JLayeredPane();
+		
+		if (!enLigne)
+			this.modeleHorsLigne.suppFile();
+		
+		
+		containerScore.add(new VueScoreFin(),0,0);
+		containerScore.add(new VueScoreFin(score),1,0);
+		this.add(containerScore);
 		this.setVisible(true);
 	}
 
@@ -356,17 +440,30 @@ public class Menu extends JFrame implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg != null && arg.getClass() == String.class) {
-			String str = (String) arg;
-			if (str.equals("cacher")) {
+		if (arg != null && arg.getClass() == Vues.class) {
+			Vues vue = (Vues) arg;
+			if (vue.equals(Vues.MASQUER)) {
 				this.setVisible(false);
+				new VueJoker("FR", this);
 			}
-			if (str.equals("afficher")) {
+			if (vue.equals(Vues.AFFICHER)) {
 				this.setVisible(true);
 			}
+			if (vue.equals(Vues.FINALE)) {
+				this.fin=true;
+			}
 		}
-		if (o.getClass() == Couleur.class) {
-			this.repaint();
+		if (arg != null) {
+			if (arg.getClass() == Score[].class && this.fin) {
+				System.out.println("Partie terminée !");
+					this.vueFinale((Score[]) arg);
+			}
+		}
+		else {
+			if(o.getClass() == Couleur.class) {
+				this.repaint();
+			}
+			
 		}
 	}
 
@@ -374,6 +471,13 @@ public class Menu extends JFrame implements Observer {
 	public void setLocale(Locale l) {
 		super.setLocale(l);
 		this.repaint();
+	}
+
+	public void lettreJoker(String lettre) {
+		if (enLigne)
+			client.message(lettre);
+		else
+			modeleHorsLigne.lettreJoker(lettre);
 	}
 }
 

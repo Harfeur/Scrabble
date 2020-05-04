@@ -37,7 +37,7 @@ public class VueBoutonServeur extends JPanel implements Observer, ActionListener
 
 		// Creation du Panel
 		this.setBackground(Color.GREEN);
-        this.setBounds((int) (0*Menu.SCALE), (int) (350*Menu.SCALE), (int) (300*Menu.SCALE), (int) (300*Menu.SCALE));
+        this.setBounds((int) (125*Menu.SCALE), (int) (350*Menu.SCALE), (int) (300*Menu.SCALE), (int) (300*Menu.SCALE));
         this.setOpaque(false);
         this.add(b);
 	}

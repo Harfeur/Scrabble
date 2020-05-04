@@ -1,6 +1,7 @@
 package fr.scrabble.structures;
 
 import java.io.Serializable;
+import java.net.URL;
 
 public class Lettre implements Serializable {
 	
@@ -8,6 +9,7 @@ public class Lettre implements Serializable {
 	
 	public String lettre;
 	public int valeur;
+			
 	
 	public Lettre(String l, int v) {
 		this.lettre=l;
