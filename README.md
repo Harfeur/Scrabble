@@ -34,6 +34,8 @@ To-Do
 
 Merci à David Panzoli pour son aide et pour ses cours.
 
+Merci également à [Laura Dailhau](https://lauradailhau.wordpress.com/) pour le design des tuiles et du plateau.
+
 ---
 
 ## License
