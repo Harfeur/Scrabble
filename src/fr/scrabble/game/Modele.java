@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import fr.scrabble.game.vues.VueJoker;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.menu.Menu.Vues;
 import fr.scrabble.structures.*;
@@ -755,12 +754,8 @@ public class Modele extends Observable{
 			this.setChanged();
 			this.notifyObservers(String.format(strings.getString("augmente"), (this.score[numChevalet].getScore()-this.scoreAv))+"\n");
 		}
-		if(this.passe==this.chevalets.size()) {
-			this.setChanged();
-			this.notifyObservers(Vues.FINALE);
-			this.setChanged();
-			this.notifyObservers(this.score);
-		}
+		if(this.passe==this.chevalets.size())
+			this.fin();
 		else {
 			if (this.numChevalet+1 == this.chevalets.size()) {
 				this.numChevalet=0;
@@ -768,6 +763,8 @@ public class Modele extends Observable{
 			else {
 				this.numChevalet++;
 			}
+			if (this.chevalets.chevaletEnCours().size()==0)
+				this.fin();
 			while(this.chevalets.chevaletEnCours().size()==0 && this.passe!=this.chevalets.size()) {
 				if (this.numChevalet+1 == this.chevalets.size()) {
 					this.numChevalet=0;
@@ -777,12 +774,8 @@ public class Modele extends Observable{
 				}
 				this.passe=this.passe+1;
 			}
-			if(this.passe==this.chevalets.size()) {
-				this.setChanged();
-				this.notifyObservers(Vues.FINALE);
-				this.setChanged();
-				this.notifyObservers(this.score);
-			}
+			if(this.passe==this.chevalets.size())
+				this.fin();
 			else {
 				this.chevalets.joueurSuivant();
 				this.motbasOk=0;
@@ -815,6 +808,27 @@ public class Modele extends Observable{
 		}
 	}
 	
+	private void fin() {
+		this.setChanged();
+		this.notifyObservers(Vues.FINALE);
+		int joueurAvecZeroTuiles = 0;
+		
+		while (joueurAvecZeroTuiles < this.chevalets.size() && this.chevalets.get(joueurAvecZeroTuiles).size() != 0) {
+			joueurAvecZeroTuiles++;
+		}
+		
+		if (joueurAvecZeroTuiles != this.chevalets.size()) {
+			for (Chevalet chevalet : this.chevalets) {
+				for (Lettre lettre : chevalet) {
+					this.score[joueurAvecZeroTuiles].majScore(lettre.valeur);
+				}
+			}
+		}
+		
+		this.setChanged();
+		this.notifyObservers(this.score);
+	}
+
 	public void jouerPC() {
 		JSONObject reponse = (JSONObject) Ordinateur.solutions(plateau, this.chevalets.chevaletEnCours(), this.langue);
 		//statue
