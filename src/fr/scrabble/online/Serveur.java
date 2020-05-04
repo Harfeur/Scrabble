@@ -15,20 +15,20 @@ import fr.scrabble.structures.SetDeChevalets;
 
 @SuppressWarnings("serial")
 public class Serveur extends ArrayList<UserThread> implements Observer, Runnable {
-	
+
 	// Valeurs à partgaer
 	Modele modele;
 	Integer joueurEnCours;
-	
+
 	// Stats de partie
 	boolean gameStarted;
 	ArrayList<String> joueurs;
-	
+
 	HashMap<String, Integer> joueursEtID;
 	private ServerSocket serverSoc;
 	private boolean fin;
-	
-	
+
+
 	public Serveur(Modele modele) {
 		super();
 		this.modele = modele;
@@ -43,9 +43,9 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			this.serverSoc = new ServerSocket(8080);
 			UserThread user;
 			while (true) {
-	            user = new UserThread(serverSoc.accept(), this);
-	            user.start();
-	            this.add(user);
+				user = new UserThread(serverSoc.accept(), this);
+				user.start();
+				this.add(user);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -60,6 +60,7 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			return true;
 		} else if (this.gameStarted && this.joueurs.contains(username)) {
 			UserThread user = this.remove(this.size()-1);
+			this.remove((int) this.joueursEtID.get(username));
 			this.add(this.joueursEtID.get(username), user);
 			return true;
 		}
@@ -70,6 +71,12 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 		if (!gameStarted) {
 			this.joueurs.remove(username);
 			this.joueursEtID.remove(username);
+			this.remove(userThread);
+		} else if (this.contains(userThread)) {
+			int index = this.indexOf(userThread);
+			this.remove(index);
+			this.add(index, null);
+			this.update(null, username + " s'est déconnecté\n");
 		}
 	}
 
@@ -88,26 +95,31 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 	public void update(Observable o, Object arg) {
 		if (arg.getClass() == Chevalet.class) {
 			UserThread user = this.get(this.joueurEnCours);
-			user.envoyer(this.modele.chevalets.chevaletEnCours());
+			if (user != null)
+				user.envoyer(this.modele.chevalets.chevaletEnCours());
 		} else if (arg.getClass() == SetDeChevalets.class) {
 			SetDeChevalets sdc = (SetDeChevalets) arg;
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
-				user.envoyer(sdc.get(i));
+				if (user != null)
+					user.envoyer(sdc.get(i));
 			}
 		} else if (arg.getClass() == Integer.class) {
 			this.joueurEnCours = (Integer) arg;
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
-				user.envoyer(i);
-				if (i == joueurEnCours) {
-					user.envoyer("your_turn");
+				if (user != null) {
+					user.envoyer(i);
+					if (i == joueurEnCours) {
+						user.envoyer("your_turn");
+					}
 				}
 			}
 		} else if (arg.getClass() == String.class) {
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
-				user.envoyer(arg);
+				if (user != null)
+					user.envoyer(arg);
 			}
 		} else if (arg.getClass() == Vues.class) {
 			Vues vue = (Vues) arg;
@@ -115,16 +127,19 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			switch (vue) {
 			case JOKER:
 				user = this.get(this.joueurEnCours);
-				user.envoyer(Vues.JOKER);
+				if (user != null)
+					user.envoyer(Vues.JOKER);
 				break;
 			case AFFICHER:
 				user = this.get(this.joueurEnCours);
-				user.envoyer(Vues.AFFICHER);
+				if (user != null)
+					user.envoyer(Vues.AFFICHER);
 				break;
 			case FINALE:
 				for (int i = 0; i < this.size(); ++i) {
 					user = this.get(i);
-					user.envoyer(Vues.FINALE);
+					if (user != null)
+						user.envoyer(Vues.FINALE);
 				}
 				this.fin=true;
 				break;
@@ -132,7 +147,8 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 		} else {
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
-				user.envoyer(arg);
+				if (user != null)
+					user.envoyer(arg);
 			}
 			if (arg.getClass()==Score[].class && fin) {
 				try {
@@ -160,7 +176,7 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 		if (this.joueurs.get(this.joueurEnCours).equals(username))
 			this.modele.selectLettre(num);
 	}
-	
+
 	public void ajoutLettre(String username, int col, int lig) {
 		if (this.joueurs.get(this.joueurEnCours).equals(username))
 			this.modele.ajoutLettre(col, lig);
@@ -180,5 +196,5 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 		user.envoyer(modele.score);
 		user.envoyer(modele.sac);
 	}
-	
+
 }

@@ -43,6 +43,7 @@ public class UserThread extends Thread {
 				if (serveur.gameStarted) {
 					out.writeObject("gameJoined");
 					out.writeObject("starting");
+					this.serveur.update(null, username + " s'est reconnecté");
 					serveur.getData(username);
 				}
 				else
@@ -85,7 +86,7 @@ public class UserThread extends Thread {
 		catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-			this.serveur.remove(this);
+			this.serveur.disconnected(username, this);
 		}
 	}
 
