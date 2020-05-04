@@ -200,14 +200,14 @@ public class Menu extends JFrame implements Observer {
 
 		this.containerHorsLigne = new JLayeredPane();
 
-
-		this.containerHorsLigne.add(vuePlateau);
-		this.containerHorsLigne.add(vueLigne);
-		this.containerHorsLigne.add(vueColonne);
-		this.containerHorsLigne.add(vueChevalet);
-		this.containerHorsLigne.add(vueBouton);
-		this.containerHorsLigne.add(vueScore);
-		this.containerHorsLigne.add(vueConsole,1);
+		this.containerHorsLigne.add(fondMenu,0,0);
+		this.containerHorsLigne.add(vuePlateau,1,0);
+		this.containerHorsLigne.add(vueLigne,1,0);
+		this.containerHorsLigne.add(vueColonne,1,0);
+		this.containerHorsLigne.add(vueChevalet,1,0);
+		this.containerHorsLigne.add(vueBouton,1,0);
+		this.containerHorsLigne.add(vueScore,1,0);
+		this.containerHorsLigne.add(vueConsole,1,0);
 
 		this.add(this.containerHorsLigne);
 
@@ -241,13 +241,13 @@ public class Menu extends JFrame implements Observer {
 
 		this.containerHorsLigne = new JLayeredPane();
 
-
-		this.containerHorsLigne.add(vuePlateau);
-		this.containerHorsLigne.add(vueLigne);
-		this.containerHorsLigne.add(vueColonne);
-		this.containerHorsLigne.add(vueChevalet);
-		this.containerHorsLigne.add(vueBouton);
-		this.containerHorsLigne.add(vueScore);
+		this.containerHorsLigne.add(fondMenu,0,0);
+		this.containerHorsLigne.add(vuePlateau,1,0);
+		this.containerHorsLigne.add(vueLigne,1,0);
+		this.containerHorsLigne.add(vueColonne,1,0);
+		this.containerHorsLigne.add(vueChevalet,1,0);
+		this.containerHorsLigne.add(vueBouton,1,0);
+		this.containerHorsLigne.add(vueScore,1,0);
 		this.containerHorsLigne.add(vueConsole,1);
 
 		this.add(this.containerHorsLigne);
@@ -315,13 +315,14 @@ public class Menu extends JFrame implements Observer {
 
 		this.containerEnLigne = new JLayeredPane();
 
-		this.containerEnLigne.add(vuePlateau,0);
-		this.containerEnLigne.add(vueLigne,0);
-		this.containerEnLigne.add(vueColonne,0);
-		this.containerEnLigne.add(vueChevalet,0);
-		this.containerEnLigne.add(vueBouton,0);
-		this.containerEnLigne.add(vueScore,1);
-		this.containerEnLigne.add(vueConsole,1);
+		this.containerEnLigne.add(fondMenu,0,0);
+		this.containerEnLigne.add(vuePlateau,1,0);
+		this.containerEnLigne.add(vueLigne,1,0);
+		this.containerEnLigne.add(vueColonne,1,0);
+		this.containerEnLigne.add(vueChevalet,1,0);
+		this.containerEnLigne.add(vueBouton,1,0);
+		this.containerEnLigne.add(vueScore,1,0);
+		this.containerEnLigne.add(vueConsole,1,0);
 
 		this.add(this.containerEnLigne);
 
@@ -393,10 +394,11 @@ public class Menu extends JFrame implements Observer {
 		
 		this.containerServeur = new JLayeredPane();
 
-		this.containerServeur.add(vuePlateau);
-		this.containerServeur.add(vueLigne);
-		this.containerServeur.add(vueColonne);
-		this.containerServeur.add(vueScore,1);
+		this.containerServeur.add(fondMenu,0,0);
+		this.containerServeur.add(vuePlateau,1,0);
+		this.containerServeur.add(vueLigne,1,0);
+		this.containerServeur.add(vueColonne,1,0);
+		this.containerServeur.add(vueScore,1,0);
 
 		this.add(this.containerServeur);
 

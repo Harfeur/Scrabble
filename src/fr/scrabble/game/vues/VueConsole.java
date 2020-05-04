@@ -29,6 +29,7 @@ public class VueConsole extends JPanel implements Observer {
 		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*10*Menu.SCALE)));
 		this.setBounds((int) (VueColonne.TAILLE*Menu.SCALE+VuePlateau.TAILLE*15*Menu.SCALE),(int) (200*Menu.SCALE), (int) (VuePlateau.TAILLE*7*Menu.SCALE),(int) (VuePlateau.TAILLE*10*Menu.SCALE));
 		this.add(scrollPane);
+		this.setOpaque(false);
 	}
 
 	@Override

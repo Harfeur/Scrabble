@@ -109,6 +109,8 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
         pan.setBounds(100, 350,200, 300);
 	    //Ajout jtextfield au JPanel en fonction nbjoueur
 	    if(nbjoueur == 1) {
+	    	this.pc1.setSelected(true);
+	    	this.pc.setSelected(false);
 	    	pan.add(j1);
 	    	pan.add(pc1);
 	    	pan.add(pc2);

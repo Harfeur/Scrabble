@@ -30,12 +30,15 @@ public class VueScore extends JPanel implements Observer {
 		JLabel score = new JLabel();
 		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*10*Menu.SCALE)));
 		this.setBounds((int) (VueColonne.TAILLE*Menu.SCALE+VuePlateau.TAILLE*15*Menu.SCALE)+5,100, (int) (VuePlateau.TAILLE*7*Menu.SCALE),(int) (VuePlateau.TAILLE*10*Menu.SCALE));
+		this.setOpaque(false);
 	}
 	
 	public void paint(Graphics g) {
 		super.paint(g);
-		g.setColor(this.c.getColorLettre());
 		if(score!=null) {
+			g.setColor(this.c.getColorBouton());
+			g.fillRect(0, 0,(int) (VuePlateau.TAILLE*4*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);
+			g.setColor(this.c.getColorLettre());
 			g.drawRect(0, 0,(int) (VuePlateau.TAILLE*4*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);
 			int j=0;
 			for (int i=0; i<score.length;i++) {

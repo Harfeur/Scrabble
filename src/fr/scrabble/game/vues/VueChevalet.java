@@ -45,6 +45,7 @@ public class VueChevalet extends JPanel implements Observer {
         lettrerest.setBounds(30,315,30,15);
         lettrerest.setEditable(false);
         lettrerest.setOpaque(true);
+        this.setOpaque(false);
 		
 		// Chargement des images
 		this.images = new ArrayList<Image>();
@@ -152,6 +153,7 @@ public class VueChevalet extends JPanel implements Observer {
 		this.lettrerest.setText(strings.getString("lettres_restantes"));
 		g.drawString(this.lettrerest.getText()+this.sac.nombreDeLettres,(int) (4*TAILLE*Menu.SCALE+metrics_lr.getDescent()),metrics_lr.getAscent());
 
+		
 		//Affichage lettre sur chevalet
 		int index = 0;
 		if (this.chevalet != null)

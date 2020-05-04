@@ -36,10 +36,14 @@ public class VueBouton extends JPanel{
 		b.setContentAreaFilled(false);
 		p.setContentAreaFilled(false);
 		
+		b.setOpaque(true);
+		p.setOpaque(true);
+		
 		this.setPreferredSize(new Dimension((int) (b.getWidth()*2.5),(int) (b.getHeight()*2.5)));
 		this.setBounds((int) (VueColonne.TAILLE*Menu.SCALE+VuePlateau.TAILLE*15*Menu.SCALE), 0, 100, 100);
 		this.add(b);
 		this.add(p);
+		this.setOpaque(false);
 	}
 	
 	@Override
@@ -49,6 +53,9 @@ public class VueBouton extends JPanel{
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.b.setText(strings.getString("valider"));
 		this.p.setText(strings.getString("passer"));
+		
+		this.b.setBackground(this.c.getColorBouton());
+		this.p.setBackground(this.c.getColorBouton());
 	}
 	
 }
