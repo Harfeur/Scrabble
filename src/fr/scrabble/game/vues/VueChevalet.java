@@ -190,16 +190,17 @@ public class VueChevalet extends JPanel implements Observer {
 		//Numero Joueur
 		if (arg.getClass() == Integer.class) {
 			this.numchevalet = (Integer) arg;
-			this.repaint(0,0,(int) (TAILLE*3*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+			this.repaint();
 		}
 		//Nombre lettre restante
 		if (arg.getClass() == Sac.class) {
 			this.sac = (Sac) arg;
-			this.repaint((int) (TAILLE*5*Menu.SCALE), 0, (int) (TAILLE*5*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+			this.repaint();
 		}
-		if (arg.getClass() == Score.class) {
-			this.score = (Score) arg;
-			this.repaint((int) (TAILLE*5*Menu.SCALE), 0, (int) (TAILLE*5*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+		if (arg.getClass() == Score[].class) {
+			Score[] scores = (Score[]) arg;
+			this.score = scores[this.numchevalet];
+			this.repaint();
 		}	
 	}
 

@@ -179,6 +179,8 @@ public class Menu extends JFrame implements Observer {
 
 	public void vueHorsLigne(int nb, String l, ArrayList<String> prenoms, int diff) {
 		this.removeAll();
+		
+		this.enLigne = false;
 
 		this.modeleHorsLigne = new Modele(this);
 		
@@ -220,6 +222,8 @@ public class Menu extends JFrame implements Observer {
 	
 	public void vueHorsLigne() {
 		this.removeAll();
+		
+		this.enLigne = false;
 
 		this.modeleHorsLigne = new Modele(this);
 		
@@ -297,6 +301,8 @@ public class Menu extends JFrame implements Observer {
 	}
 	public void vueEnLigne() {
 		this.removeAll();
+		
+		this.enLigne = true;
 
 		this.modeleEnLigne = new ModeleEnLigne(this.client, this);
 
@@ -333,6 +339,8 @@ public class Menu extends JFrame implements Observer {
 
 	public void vueClient() {
 		this.removeAll();
+		
+		this.enLigne = true;
 
 		this.containerClient = new Container();
 
@@ -384,6 +392,8 @@ public class Menu extends JFrame implements Observer {
 	public void vueServeur() {
 		this.removeAll();
 		
+		this.enLigne = true;
+		
 		this.modeleHorsLigne = new Modele(this);
 
 		this.serveur = new Serveur(this.modeleHorsLigne);
@@ -414,7 +424,8 @@ public class Menu extends JFrame implements Observer {
 		
 		this.containerScore =  new JLayeredPane();
 		
-		this.modeleHorsLigne.suppFile();
+		if (!enLigne)
+			this.modeleHorsLigne.suppFile();
 		
 		
 		containerScore.add(new VueScoreFin(),0,0);
@@ -434,10 +445,6 @@ public class Menu extends JFrame implements Observer {
 			if (vue.equals(Vues.MASQUER)) {
 				this.setVisible(false);
 				new VueJoker("FR", this);
-				if (o.getClass() == Client.class)
-					this.enLigne=true;
-				else
-					this.enLigne=false;
 			}
 			if (vue.equals(Vues.AFFICHER)) {
 				this.setVisible(true);

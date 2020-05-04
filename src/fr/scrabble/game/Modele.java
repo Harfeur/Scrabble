@@ -72,19 +72,16 @@ public class Modele extends Observable{
 		this.notifyObservers(this.chevalets);
 
 		this.setChanged();
-		this.notifyObservers(this.score);
+		this.notifyObservers(this.numChevalet);
 
 		this.setChanged();
-		this.notifyObservers(this.numChevalet);
+		this.notifyObservers(this.score);
 
 		this.setChanged();
 		this.notifyObservers(this.plateau);
 
 		this.setChanged();
 		this.notifyObservers(this.sac);
-
-		this.setChanged();
-		this.notifyObservers(this.score[this.numChevalet]);
 	}
 
 	public void reprise() {
@@ -106,19 +103,16 @@ public class Modele extends Observable{
 		this.notifyObservers(this.chevalets);
 
 		this.setChanged();
-		this.notifyObservers(this.score);
+		this.notifyObservers(this.numChevalet);
 
 		this.setChanged();
-		this.notifyObservers(this.numChevalet);
+		this.notifyObservers(this.score);
 
 		this.setChanged();
 		this.notifyObservers(this.plateau);
 
 		this.setChanged();
 		this.notifyObservers(this.sac);
-
-		this.setChanged();
-		this.notifyObservers(this.score[this.numChevalet]);
 		
 		if (this.score[this.numChevalet].getPrenom().equals("PC")){
 			this.jouerPC();
@@ -804,8 +798,6 @@ public class Modele extends Observable{
 				
 				this.setChanged();
 				this.notifyObservers(this.score);
-				this.setChanged();
-				this.notifyObservers(this.score[this.numChevalet]);
 				// On initialise à zéro le placement
 				this.placementEnCours = new ArrayList<Placement>();
 				
@@ -1050,5 +1042,8 @@ public class Modele extends Observable{
 		//PremierTour
 		File fichier5 = new File("PremierTour.dat");
 		fichier5.delete();
+		
+		this.setChanged();
+		this.notifyObservers("fin");
 	}
 }

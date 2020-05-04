@@ -12,6 +12,7 @@ import fr.scrabble.game.Modele;
 import fr.scrabble.menu.Menu.Vues;
 import fr.scrabble.structures.Chevalet;
 import fr.scrabble.structures.Sac;
+import fr.scrabble.structures.Score;
 import fr.scrabble.structures.SetDeChevalets;
 
 @SuppressWarnings("serial")
@@ -26,6 +27,8 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 	ArrayList<String> joueurs;
 	
 	HashMap<String, Integer> joueursEtID;
+	private ServerSocket serverSoc;
+	private boolean fin;
 	
 	
 	public Serveur(Modele modele) {
@@ -34,11 +37,12 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 		this.gameStarted = false;
 		this.joueurs = new ArrayList<String>();
 		this.joueursEtID = new HashMap<String, Integer>();
+		this.fin = false;
 	}
 
 	public void ouvrirConnection() {
 		try {
-			ServerSocket serverSoc = new ServerSocket(8080);
+			this.serverSoc = new ServerSocket(8080);
 			UserThread user;
 			while (true) {
 	            user = new UserThread(serverSoc.accept(), this);
@@ -95,6 +99,10 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			}
 		} else if (arg.getClass() == Integer.class) {
 			this.joueurEnCours = (Integer) arg;
+			for (int i = 0; i < this.size(); ++i) {
+				UserThread user = this.get(i);
+				user.envoyer(i);
+			}
 		} else if (arg.getClass() == String.class) {
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
@@ -117,12 +125,22 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 					user = this.get(i);
 					user.envoyer(Vues.FINALE);
 				}
+				this.fin=true;
 				break;
 			}
 		} else {
 			for (int i = 0; i < this.size(); ++i) {
 				UserThread user = this.get(i);
 				user.envoyer(arg);
+			}
+			if (arg.getClass()==Score[].class && fin) {
+				try {
+					serverSoc.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				} finally {
+					System.exit(0);
+				}
 			}
 		}
 	}
@@ -157,6 +175,7 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 		UserThread user = this.get(id);
 		user.envoyer(modele.chevalets.get(id));
 		user.envoyer(modele.plateauFictif);
+		user.envoyer(id);
 		user.envoyer(modele.score);
 		user.envoyer(modele.sac);
 	}
