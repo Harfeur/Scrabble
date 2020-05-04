@@ -178,11 +178,11 @@ public class VueChevalet extends JPanel implements Observer {
 		// Cette fonction change le chevalet selon le modèle
 		if (arg.getClass() == Chevalet.class) {
 			this.chevalet = (Chevalet) arg;
-			this.repaint(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+			this.repaint(115, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}
 		if (arg.getClass() == SetDeChevalets.class) {
 			this.chevalet = ((SetDeChevalets) arg).chevaletEnCours();
-			this.repaint(0, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+			this.repaint(115, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 		}
 		//Numero Joueur
 		if (arg.getClass() == Integer.class) {
