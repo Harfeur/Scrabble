@@ -435,6 +435,7 @@ public class Menu extends JFrame implements Observer {
 		containerScore.add(new VueScoreFin(score),1,0);
 		this.add(containerScore);
 		this.setVisible(true);
+		this.fin=false;
 		
 		try {
 			URL url = Menu.class.getResource("/resources/sounds/end.wav");
