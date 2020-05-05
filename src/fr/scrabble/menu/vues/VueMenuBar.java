@@ -1,7 +1,10 @@
 package fr.scrabble.menu.vues;
 
+import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Graphics;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
@@ -10,6 +13,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -24,18 +28,19 @@ import fr.scrabble.structures.Couleur;
 public class VueMenuBar extends JMenuBar {
 
 	JMenu appli,couleurJM,langue,aide;
-	JMenuItem accueil,arreter,sauver,valider,jouer,propos;
+	JMenuItem accueil,arreter,sauver,valider,jouer,propos,full;
 	JRadioButtonMenuItem jr1,jr2, l0,l1, l2;
 	ButtonGroup bg,bgl;
 	Menu menu;
 	Modele m;
 	Couleur couleur;
-	boolean sauveardeAffiche;
+	boolean sauveardeAffiche, fullOff;
 
 	public VueMenuBar (Menu menu) {
 		super();
 
 		this.sauveardeAffiche = false;
+		this.fullOff = true;
 
 		this.menu = menu;
 		this.couleur = menu.couleur;
@@ -51,6 +56,7 @@ public class VueMenuBar extends JMenuBar {
 		this.valider=new JMenuItem();
 		this.jouer = new JMenuItem();
 		this.propos = new JMenuItem();
+		this.full = new JMenuItem();
 
 		this.arreter.addActionListener(new Quitte());
 		this.accueil.addActionListener(new Accueil());
@@ -59,6 +65,8 @@ public class VueMenuBar extends JMenuBar {
 
 		this.jouer.addActionListener(new Jouer());
 		this.propos.addActionListener(new Propos());
+		
+		this.full.addActionListener(new Full());
 		/////
 		/////
 
@@ -121,6 +129,7 @@ public class VueMenuBar extends JMenuBar {
 		this.appli.add(this.couleurJM);
 		this.appli.add(this.langue);
 		this.appli.addSeparator();
+		this.appli.add(this.full);
 		this.appli.add(this.arreter);
 
 		this.arreter.setAccelerator(KeyStroke.getKeyStroke('q'));
@@ -171,6 +180,7 @@ public class VueMenuBar extends JMenuBar {
 		this.accueil.setText(strings.getString("accueil"));
 		this.sauver.setText(strings.getString("sauvegarder"));
 		this.valider.setText(strings.getString("valider"));
+		this.full.setText("Fullscreen");
 		this.arreter.setText(strings.getString("quitter"));
 
 		this.aide.setText(strings.getString("aide"));
@@ -274,6 +284,31 @@ public class VueMenuBar extends JMenuBar {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			new APropos(menu);
+		}	
+	}
+	
+	class Full implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			GraphicsEnvironment graphics = GraphicsEnvironment.getLocalGraphicsEnvironment();
+			GraphicsDevice device = graphics.getDefaultScreenDevice();
+			if (fullOff) {
+				menu.dispose();
+				menu.setUndecorated(true);
+				menu.setResizable(false);
+				device.setFullScreenWindow(menu);
+				menu.setVisible(true);
+				fullOff = false;
+			} else {
+				menu.dispose();
+				device.setFullScreenWindow(null);
+				menu.setUndecorated(false);
+				menu.setResizable(true);
+				menu.setMinimumSize(new Dimension(900, 900));
+				menu.setVisible(true);
+				fullOff = true;
+			}
 		}	
 	}
 }

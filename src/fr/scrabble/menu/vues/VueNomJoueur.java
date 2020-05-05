@@ -36,6 +36,8 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 	Menu menu;
 	JButton b;
 	Couleur c;
+	private JPanel pan1;
+	private JPanel pan;
 	
 	public VueNomJoueur(Menu menu, int nbjoueur, ControleurBoutons cb, Couleur c) {
 		super();
@@ -46,24 +48,24 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 		this.c = c;
 		this.setLayout(null);
 		
-        this.setPreferredSize(new Dimension(600,600));
-        this.setBounds(70, 50, (int) (500*Menu.SCALE), (int) (500*Menu.SCALE));
+        this.setPreferredSize(new Dimension((int) (400*this.menu.zoom()) ,(int) (400*this.menu.zoom())));
+        this.setBounds((int) (46*this.menu.zoom()+this.menu.decalageX()), (int) (33*this.menu.zoom()+this.menu.decalageY()), (int) (500*this.menu.zoom()), (int) (500*this.menu.zoom()));
         this.setOpaque(false);
 		
-		Font f = new Font("Arial",Font.BOLD,(int)(10*Menu.SCALE));
+		Font f = new Font("Arial",Font.BOLD,(int)(10*this.menu.zoom()));
 		
 		
 		//Liste diff		
 		this.liste_difficulte = new JComboBox<String>();
-		liste_difficulte.setPreferredSize(new Dimension(150, 50));
+		liste_difficulte.setPreferredSize(new Dimension((int) (100*this.menu.zoom()), (int) (33*this.menu.zoom())));
 		liste_difficulte.setEditable(false);
 
 
-        JPanel pan1 = new JPanel();
+        this.pan1 = new JPanel();
         pan1.add(liste_difficulte);
         pan1.setOpaque(false);
-        pan1.setPreferredSize(new Dimension(150,50));
-        pan1.setBounds(450, 350, 150, 50);
+		pan1.setPreferredSize(new Dimension((int) (100*this.menu.zoom()), (int) (33*this.menu.zoom())));
+        pan1.setBounds((int) (300*this.menu.zoom()), (int) (233*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (33*this.menu.zoom()));
 		
 		//Creation zone de texte
 		this.j1 = new JTextField("Joueur 1", 10);
@@ -101,10 +103,10 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 	    this.pc3.setFont(f);
 	    
 	    
-	    JPanel pan = new JPanel();
+	    this.pan = new JPanel();
         pan.setOpaque(false);
-        pan.setPreferredSize(new Dimension(100,100));
-        pan.setBounds(100, 350,200, 300);
+        pan.setPreferredSize(new Dimension((int) (66*this.menu.zoom()),(int) (66*this.menu.zoom())));
+        pan.setBounds((int) (55*this.menu.zoom()), (int) (233*this.menu.zoom()),(int) (133*this.menu.zoom()), (int) (133*this.menu.zoom()));
 	    //Ajout jtextfield au JPanel en fonction nbjoueur
 	    if(nbjoueur == 1) {
 	    	this.pc1.setSelected(true);
@@ -141,17 +143,17 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 	    this.b.setBackground(this.c.getColorBouton());
 	    this.b.setForeground(this.c.getColorLettre());
 	    this.b.addActionListener(this);
-	    this.b.setBounds(300, 550, 150,50);
+	    this.b.setBounds((int) (200*this.menu.zoom()), (int) (366*this.menu.zoom()), (int) (100*this.menu.zoom()),(int) (33*this.menu.zoom()));
 	    this.add(b);
 	    
 	    this.label = new JLabel();
         label.setFont(f);
-        label.setBounds(140,315,this.label.getText().length()*9,25);
+        label.setBounds((int) (93*this.menu.zoom()),(int) (210*this.menu.zoom()),(int) (this.label.getText().length()*6*this.menu.zoom()),(int) (16*this.menu.zoom()));
         label.setOpaque(true);
         
         this.label_diff = new JLabel();
         label_diff.setFont(f);
-        label_diff.setBounds(470,315,this.label_diff.getText().length()*9,25);
+        label_diff.setBounds((int) (313*this.menu.zoom()),(int) (210*this.menu.zoom()),(int) (this.label_diff.getText().length()*6*this.menu.zoom()),(int) (16*this.menu.zoom()));
         label_diff.setOpaque(true);
 	    
 	    this.add(label);
@@ -207,6 +209,32 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+        this.setBounds((int) (46*this.menu.zoom()+this.menu.decalageX()), (int) (33*this.menu.zoom()+this.menu.decalageY()), (int) (500*this.menu.zoom()), (int) (500*this.menu.zoom()));
+        
+		liste_difficulte.setPreferredSize(new Dimension((int) (100*this.menu.zoom()), (int) (33*this.menu.zoom())));
+		pan1.setPreferredSize(new Dimension((int) (100*this.menu.zoom()), (int) (33*this.menu.zoom())));
+        pan1.setBounds((int) (300*this.menu.zoom()), (int) (233*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (33*this.menu.zoom()));
+
+		Font f = new Font("Arial",Font.BOLD,(int)(10*this.menu.zoom()));
+
+	    this.j1.setFont(f);
+	    this.j2.setFont(f);
+	    this.j3.setFont(f);
+	    this.j4.setFont(f);
+	    this.pc.setFont(f);
+	    this.pc1.setFont(f);
+	    this.pc2.setFont(f);
+	    this.pc3.setFont(f);
+	    
+        pan.setPreferredSize(new Dimension((int) (66*this.menu.zoom()),(int) (66*this.menu.zoom())));
+        pan.setBounds((int) (55*this.menu.zoom()), (int) (233*this.menu.zoom()),(int) (133*this.menu.zoom()), (int) (133*this.menu.zoom()));
+	    
+        this.b.setFont(f);
+	    this.b.setBounds((int) (200*this.menu.zoom()), (int) (366*this.menu.zoom()), (int) (100*this.menu.zoom()),(int) (33*this.menu.zoom()));
+
+        
+        
+        
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", menu.getLocale());
 		this.label.setText(strings.getString("nom_joueurs"));
 		this.label_diff.setText(strings.getString("difficulte"));
@@ -234,8 +262,8 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 		this.label.setBackground(this.c.getColorBouton());
 		this.label_diff.setBackground(this.c.getColorBouton());
 
-		label.setBounds(140,315,this.label.getText().length()*9,25);
-		label_diff.setBounds(470,315,this.label_diff.getText().length()*9,25);
+		label.setBounds((int) (93*this.menu.zoom()),(int) (210*this.menu.zoom()),(int) (this.label.getText().length()*6*this.menu.zoom()),(int) (16*this.menu.zoom()));
+		label_diff.setBounds((int) (313*this.menu.zoom()),(int) (210*this.menu.zoom()),(int) (this.label.getText().length()*6*this.menu.zoom()),(int) (16*this.menu.zoom()));
 	}
 
 	@Override

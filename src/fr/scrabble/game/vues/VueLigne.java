@@ -53,19 +53,22 @@ public class VueLigne extends JPanel {
 		this.putClientProperty("color", this.c.getCouleur());
 
 		this.setOpaque(false);
-		this.setPreferredSize(new Dimension((int) (TAILLE*15*Menu.SCALE),(int) (TAILLE*Menu.SCALE)));
-		this.setBounds(0,0,(int) (TAILLE*16*Menu.SCALE), (int) (TAILLE*Menu.SCALE));
+		this.setPreferredSize(new Dimension((int) (TAILLE*15*this.menu.zoom()),(int) (TAILLE*this.menu.zoom())));
+		this.setBounds(this.menu.decalageX(),this.menu.decalageY(),(int) (TAILLE*16*this.menu.zoom()), (int) (TAILLE*this.menu.zoom()));
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
 		
+		this.setPreferredSize(new Dimension((int) (TAILLE*15*this.menu.zoom()),(int) (TAILLE*this.menu.zoom())));
+		this.setBounds(this.menu.decalageX(),this.menu.decalageY(),(int) (TAILLE*16*this.menu.zoom()), (int) (TAILLE*this.menu.zoom()));
+		
 		if ((int) this.getClientProperty("color") != this.c.getCouleur())
 			this.putClientProperty("color", this.c.getCouleur());
 
 		for (int i = 1; i < 16; i++) {
-			g.drawImage(this.images.get(i-1+15*((int) this.getClientProperty("color"))),(int) (i*TAILLE*Menu.SCALE),0,(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
+			g.drawImage(this.images.get(i-1+15*((int) this.getClientProperty("color"))),(int) (i*TAILLE*this.menu.zoom()),0,(int) (TAILLE*this.menu.zoom()),(int) (TAILLE*this.menu.zoom()),null);
 		}
 	}
 }

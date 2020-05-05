@@ -32,7 +32,6 @@ public class VuePlateau extends JPanel implements Observer {
 
 	public VuePlateau(Menu menu) {
 		super();
-		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Menu.SCALE),(int) (VuePlateau.TAILLE*15*Menu.SCALE)));
 		this.plateau = new Plateau();
 		this.menu = menu;
 		this.c = menu.couleur;
@@ -88,12 +87,9 @@ public class VuePlateau extends JPanel implements Observer {
 
 		this.putClientProperty("color", this.c.getCouleur());
 
-		// Creation du Panel
-		VueColonne colonne = new VueColonne(this.menu);
-		VueLigne ligne = new VueLigne(this.menu);
-
 		this.setBackground(Color.GRAY);
-		this.setBounds((int) (colonne.getWidth()), (int) (ligne.getHeight()), (int) (VuePlateau.TAILLE*15*Menu.SCALE), (int) (VuePlateau.TAILLE*15*Menu.SCALE));
+		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*this.menu.zoom()),(int) (VuePlateau.TAILLE*15*this.menu.zoom())));
+		this.setBounds((int) (VueColonne.TAILLE*this.menu.zoom()+this.menu.decalageX()), (int) (VueLigne.TAILLE*this.menu.zoom()+this.menu.decalageY()), (int) (VuePlateau.TAILLE*15*this.menu.zoom()), (int) (VuePlateau.TAILLE*15*this.menu.zoom()));
 	}
 
 	public void initialiser(MouseInputListener l) {
@@ -106,6 +102,11 @@ public class VuePlateau extends JPanel implements Observer {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+		this.setBackground(Color.GRAY);
+		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*this.menu.zoom()),(int) (VuePlateau.TAILLE*15*this.menu.zoom())));
+		this.setBounds((int) (VueColonne.TAILLE*this.menu.zoom()+this.menu.decalageX()), (int) (VueLigne.TAILLE*this.menu.zoom()+this.menu.decalageY()), (int) (VuePlateau.TAILLE*15*this.menu.zoom()), (int) (VuePlateau.TAILLE*15*this.menu.zoom()));
+		
 		if ((int) this.getClientProperty("color") != this.c.getCouleur()) {
 			this.putClientProperty("color", this.c.getCouleur());
 		}
@@ -138,7 +139,7 @@ public class VuePlateau extends JPanel implements Observer {
 					if(i==7 && j==7) {
 						index = 27;
 					}
-					g.drawImage(this.images.get(index),(int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),null);
+					g.drawImage(this.images.get(index),(int) (j*VuePlateau.TAILLE*this.menu.zoom()), (int) (i*VuePlateau.TAILLE*this.menu.zoom()),(int) (VuePlateau.TAILLE*this.menu.zoom()),(int) (VuePlateau.TAILLE*this.menu.zoom()),null);
 
 				}
 				else {
@@ -152,7 +153,7 @@ public class VuePlateau extends JPanel implements Observer {
 					}
 					if (((int) this.getClientProperty("color")) == 1)
 						index+=33;
-					g.drawImage(this.images.get(index),(int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),null);
+					g.drawImage(this.images.get(index),(int) (j*VuePlateau.TAILLE*this.menu.zoom()), (int) (i*VuePlateau.TAILLE*this.menu.zoom()),(int) (VuePlateau.TAILLE*this.menu.zoom()),(int) (VuePlateau.TAILLE*this.menu.zoom()),null);
 				}
 			}
 		}
@@ -164,7 +165,7 @@ public class VuePlateau extends JPanel implements Observer {
 			this.plateau = (Plateau) arg;
 			for (int i = 0; i < 15; i++) {
 				for (int j = 0; j < 15; j++) {
-					this.repaint((int) (j*VuePlateau.TAILLE*Menu.SCALE), (int) (i*VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*Menu.SCALE));
+					this.repaint((int) (j*VuePlateau.TAILLE*this.menu.zoom()), (int) (i*VuePlateau.TAILLE*this.menu.zoom()),(int) (VuePlateau.TAILLE*this.menu.zoom()),(int) (VuePlateau.TAILLE*this.menu.zoom()));
 				}
 			}
 		}

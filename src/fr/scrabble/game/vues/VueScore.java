@@ -26,13 +26,17 @@ public class VueScore extends JPanel implements Observer {
 		super();
 		this.menu = menu;
 		this.c = menu.couleur;
-		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*10*Menu.SCALE)));
-		this.setBounds((int) (VueColonne.TAILLE*Menu.SCALE+VuePlateau.TAILLE*15*Menu.SCALE)+5,100, (int) (VuePlateau.TAILLE*7*Menu.SCALE),(int) (VuePlateau.TAILLE*10*Menu.SCALE));
+		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*this.menu.zoom()),(int) (VuePlateau.TAILLE*10*this.menu.zoom())));
+		this.setBounds((int) (VueColonne.TAILLE*this.menu.zoom()+VuePlateau.TAILLE*15*this.menu.zoom())+5+this.menu.decalageX(),(int) (66*this.menu.zoom()+this.menu.decalageY()), (int) (VuePlateau.TAILLE*7*this.menu.zoom()),(int) (VuePlateau.TAILLE*10*this.menu.zoom()));
 		this.setOpaque(false);
 	}
 	
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*this.menu.zoom()),(int) (VuePlateau.TAILLE*10*this.menu.zoom())));
+		this.setBounds((int) (VueColonne.TAILLE*this.menu.zoom()+VuePlateau.TAILLE*15*this.menu.zoom())+5+this.menu.decalageX(),(int) (66*this.menu.zoom()+this.menu.decalageY()), (int) (VuePlateau.TAILLE*7*this.menu.zoom()),(int) (VuePlateau.TAILLE*10*this.menu.zoom()));
+		
 		if(score!=null) {
 			int longueur=0;
 			for (int i=0; i<score.length;i++) {
@@ -41,15 +45,15 @@ public class VueScore extends JPanel implements Observer {
 				}
 			}
 			g.setColor(this.c.getColorBouton());
-			g.fillRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);
+			g.fillRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*this.menu.zoom())-1);
 			g.setColor(this.c.getColorLettre());
-			g.drawRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);	
+			g.drawRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*this.menu.zoom())-1);	
 			int j=0;
 			for (int i=0; i<score.length;i++) {	
-				Font font_score = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;	
+				Font font_score = new Font("Arial",Font.PLAIN,(int)(15*this.menu.zoom())) ;	
 				g.setColor(this.c.getColorLettre());
 				if(i==numJoueur) {
-					font_score = new Font("Arial",Font.BOLD,(int)(15*Menu.SCALE)) ;
+					font_score = new Font("Arial",Font.BOLD,(int)(15*this.menu.zoom())) ;
 					g.setColor(new Color(255,0,0));
 				}
 				FontMetrics metrics_score = getFontMetrics(font_score);
@@ -65,7 +69,7 @@ public class VueScore extends JPanel implements Observer {
 	public void update(Observable o, Object arg) {
 		if(arg.getClass() == Score[].class) {
 			this.score = (Score []) arg;
-			this.repaint(0,0,(int) (VuePlateau.TAILLE*4*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);
+			this.repaint(0,0,(int) (VuePlateau.TAILLE*4*this.menu.zoom())-1,(int) (VuePlateau.TAILLE*score.length*this.menu.zoom())-1);
 		}
 		if(arg.getClass() == Integer.class) {
 			this.numJoueur = (Integer) arg;

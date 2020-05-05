@@ -15,8 +15,10 @@ public class VueMenu extends JPanel {
 	
 	Image[] images ;
 	Couleur c;
+	private Menu menu;
 	
-	public VueMenu(Couleur c) {
+	public VueMenu(Couleur c, Menu m) {
+		this.menu = m;
 		this.c = c;
 		this.images = new Image[2];
 		Image im1 = null, im2 = null;
@@ -42,17 +44,16 @@ public class VueMenu extends JPanel {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		this.setBounds(0, 0, this.menu.getWidth(), this.menu.getHeight());
 		this.putClientProperty("color", this.c.getCouleur());
-		g.drawImage(this.images[this.c.getCouleur()], 0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE), this.getParent());
+		int taille = Math.max(this.menu.getWidth(), this.menu.getHeight());
+		g.drawImage(this.images[this.c.getCouleur()], 0, 0, taille, taille, this.getParent());
 	}
-	
+	/*
 	@Override
 	public void update(Graphics g) {
-		if ((int) this.getClientProperty("color") != this.c.getCouleur()) {
-			this.putClientProperty("color", this.c.getCouleur());
-			System.out.println("repaint");
-			g.drawImage(this.images[this.c.getCouleur()], 0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE), this.getParent());
-		}
-	}
+		this.setBounds(0, 0, (int) (600*this.menu.zoom()), (int) (600*this.menu.zoom()));
+		g.drawImage(this.images[this.c.getCouleur()], 0, 0, (int) (600*this.menu.zoom()), (int) (600*this.menu.zoom()), this.getParent());
+	}*/
 
 }

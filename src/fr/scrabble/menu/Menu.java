@@ -80,10 +80,11 @@ public class Menu extends JFrame implements Observer {
 
 		// Création et paramétrage de la fenêtre
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setPreferredSize(new Dimension((int) (600*Menu.SCALE), (int) (600*Menu.SCALE)));
+		this.setPreferredSize(new Dimension(900, 900));
+		this.setMinimumSize(new Dimension(900, 900));
 		this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.setAutoRequestFocus(false);
-		this.setResizable(false);
+		this.setResizable(true);
 
 		this.pack();
 
@@ -102,7 +103,7 @@ public class Menu extends JFrame implements Observer {
 		this.setJMenuBar(vueMenuBar);
 
 		// Chargement des Vues
-		this.fondMenu = new VueMenu(this.couleur);
+		this.fondMenu = new VueMenu(this.couleur, this);
 		loading.setValue(1);
 		
 		this.vueBoutonHorsLigne = new VueBoutonHorsLigne(this, this.couleur);
@@ -191,14 +192,14 @@ public class Menu extends JFrame implements Observer {
 		
 		((VueMenuBar) this.getJMenuBar()).afficherSauvegarde(modeleHorsLigne);
 
-		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
-		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
+		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne, this);
+		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne, this);
 		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
 
 		this.vuePlateau.initialiser(cp);
 		this.vueChevalet.initialiser(cc);
 		VueBouton vueBouton = new VueBouton(cb,this);
-		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
+		VueConsole vueConsole = new VueConsole(modeleHorsLigne, this);
 
 		this.modeleHorsLigne.addObserver(vuePlateau);
 		this.modeleHorsLigne.addObserver(vueChevalet);
@@ -233,14 +234,14 @@ public class Menu extends JFrame implements Observer {
 		
 		((VueMenuBar) this.getJMenuBar()).afficherSauvegarde(modeleHorsLigne);
 
-		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
-		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
+		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne, this);
+		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne, this);
 		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
 
 		this.vuePlateau.initialiser(cp);
 		this.vueChevalet.initialiser(cc);
 		VueBouton vueBouton = new VueBouton(cb,this);
-		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
+		VueConsole vueConsole = new VueConsole(modeleHorsLigne, this);
 
 		this.modeleHorsLigne.addObserver(vuePlateau);
 		this.modeleHorsLigne.addObserver(vueChevalet);
@@ -309,14 +310,14 @@ public class Menu extends JFrame implements Observer {
 
 		this.modeleEnLigne = new ModeleEnLigne(this.client, this);
 
-		ControleurPlateau cp = new ControleurPlateau(modeleEnLigne);
-		ControleurChevalet cc = new ControleurChevalet(modeleEnLigne);
+		ControleurPlateau cp = new ControleurPlateau(modeleEnLigne, this);
+		ControleurChevalet cc = new ControleurChevalet(modeleEnLigne, this);
 		ControleurBouton cb = new ControleurBouton(modeleEnLigne);
 
 		this.vuePlateau.initialiser(cp);
 		this.vueChevalet.initialiser(cc);
 		VueBouton vueBouton = new VueBouton(cb,this);
-		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
+		VueConsole vueConsole = new VueConsole(modeleHorsLigne, this);
 
 		this.client.addObserver(vuePlateau);
 		this.client.addObserver(vueChevalet);
@@ -431,8 +432,8 @@ public class Menu extends JFrame implements Observer {
 			this.modeleHorsLigne.suppFile();
 		
 		
-		containerScore.add(new VueScoreFin(),0,0);
-		containerScore.add(new VueScoreFin(score),1,0);
+		containerScore.add(new VueScoreFin(this),0,0);
+		containerScore.add(new VueScoreFin(score, this),1,0);
 		this.add(containerScore);
 		this.setVisible(true);
 		this.fin=false;
@@ -488,6 +489,24 @@ public class Menu extends JFrame implements Observer {
 			client.message(lettre);
 		else
 			modeleHorsLigne.lettreJoker(lettre);
+	}
+
+	public int decalageX() {
+		if (this.getHeight() >= this.getWidth())
+			return 0;
+		return (this.getWidth()-this.getHeight())/2;
+	}
+	
+	public int decalageY() {
+		if (this.getHeight() <= this.getWidth())
+			return 0;
+		return (this.getHeight()-this.getWidth())/2;
+	}
+	
+	public double zoom() {
+		if (this.getHeight() <= this.getWidth())
+			return this.getHeight() / 600.0;
+		return this.getWidth() / 600.0;
 	}
 }
 

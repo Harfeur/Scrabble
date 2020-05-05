@@ -54,18 +54,21 @@ public class VueColonne extends JPanel {
 
 		this.putClientProperty("color", this.c.getCouleur());
 
-		this.setPreferredSize(new Dimension((int) (TAILLE*Menu.SCALE),(int) (TAILLE*15*Menu.SCALE)));
-		this.setBounds(0,(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE), (int) (TAILLE*15*Menu.SCALE));
+		this.setPreferredSize(new Dimension((int) (TAILLE*this.menu.zoom()),(int) (TAILLE*15*this.menu.zoom())));
+		this.setBounds(this.menu.decalageX(),(int) (TAILLE*this.menu.zoom()+this.menu.decalageY()),(int) (TAILLE*this.menu.zoom()), (int) (TAILLE*15*this.menu.zoom()));
 	}
 
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+		this.setPreferredSize(new Dimension((int) (TAILLE*this.menu.zoom()),(int) (TAILLE*15*this.menu.zoom())));
+		this.setBounds(this.menu.decalageX(),(int) (TAILLE*this.menu.zoom()+this.menu.decalageY()),(int) (TAILLE*this.menu.zoom()), (int) (TAILLE*15*this.menu.zoom()));
 
 		if ((int) this.getClientProperty("color") != this.c.getCouleur())
 			this.putClientProperty("color", this.c.getCouleur());
 
 		for (int i = 0; i < 15; i++) {
-			g.drawImage(this.images.get(i+15*((int) this.getClientProperty("color"))),0,(int) (i*TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
+			g.drawImage(this.images.get(i+15*((int) this.getClientProperty("color"))),0,(int) (i*TAILLE*this.menu.zoom()),(int) (TAILLE*this.menu.zoom()),(int) (TAILLE*this.menu.zoom()),null);
 		}
 	}
 

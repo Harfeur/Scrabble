@@ -42,7 +42,7 @@ public class VueBouton extends JPanel{
 		m.setOpaque(true);
 		
 		this.setPreferredSize(new Dimension((int) (b.getWidth()*2.5),(int) (b.getHeight()*2.5)));
-		this.setBounds((int) (VueColonne.TAILLE*Menu.SCALE+VuePlateau.TAILLE*15*Menu.SCALE), 0, 100, 100);
+		this.setBounds((int) (VueColonne.TAILLE*this.menu.zoom()+VuePlateau.TAILLE*15*this.menu.zoom()+this.menu.decalageX()), this.menu.decalageY(), (int) (66*this.menu.zoom()), (int) (66*this.menu.zoom()));
 		this.add(b);
 		this.add(p);
 		this.add(m);
@@ -61,6 +61,10 @@ public class VueBouton extends JPanel{
 		this.b.setBackground(this.c.getColorBouton());
 		this.p.setBackground(this.c.getColorBouton());
 		this.m.setBackground(this.c.getColorBouton());
+		
+		this.setPreferredSize(new Dimension((int) (b.getWidth()*2.5),(int) (b.getHeight()*2.5)));
+		this.setBounds((int) (VueColonne.TAILLE*this.menu.zoom()+VuePlateau.TAILLE*15*this.menu.zoom()+this.menu.decalageX()), this.menu.decalageY(), (int) (66*this.menu.zoom()), (int) (66*this.menu.zoom()));
+
 	}
 	
 }

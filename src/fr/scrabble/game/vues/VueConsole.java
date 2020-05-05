@@ -1,6 +1,8 @@
 package fr.scrabble.game.vues;
 
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -18,21 +20,35 @@ public class VueConsole extends JPanel implements Observer {
 	JTextArea JtxtA;
 	Modele modele;
 	String txt;
+	private Menu menu;
 	
-	public VueConsole (Modele m) {
+	public VueConsole (Modele m, Menu menu) {
 		super();
 		this.modele = m;
+		this.menu = menu;
 		
 		JtxtA = new JTextArea(20,20);
 		DefaultCaret caret = (DefaultCaret)JtxtA.getCaret();
 		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		JScrollPane scrollPane = new JScrollPane(JtxtA);
 		JtxtA.setEditable(false);
+		this.JtxtA.setFont(new Font("Arial",Font.PLAIN,(int)(10*this.menu.zoom())));
 
-		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*Menu.SCALE),(int) (VuePlateau.TAILLE*10*Menu.SCALE)));
-		this.setBounds((int) (VueColonne.TAILLE*Menu.SCALE+VuePlateau.TAILLE*15*Menu.SCALE),(int) (200*Menu.SCALE), (int) (VuePlateau.TAILLE*7*Menu.SCALE),(int) (VuePlateau.TAILLE*10*Menu.SCALE));
+		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*this.menu.zoom()),(int) (VuePlateau.TAILLE*10*this.menu.zoom())));
+		this.setBounds((int) (VueColonne.TAILLE*this.menu.zoom()+VuePlateau.TAILLE*15*this.menu.zoom()+this.menu.decalageX()),(int) (200*this.menu.zoom()+this.menu.decalageY()), (int) (VuePlateau.TAILLE*7*this.menu.zoom()),(int) (VuePlateau.TAILLE*10*this.menu.zoom()));
 		this.add(scrollPane);
 		this.setOpaque(false);
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		super.paint(g);
+		
+		this.JtxtA.setFont(new Font("Arial",Font.PLAIN,(int)(10*this.menu.zoom())));
+		
+		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*this.menu.zoom()),(int) (VuePlateau.TAILLE*10*this.menu.zoom())));
+		this.setBounds((int) (VueColonne.TAILLE*this.menu.zoom()+VuePlateau.TAILLE*15*this.menu.zoom()+this.menu.decalageX()),(int) (200*this.menu.zoom()+this.menu.decalageY()), (int) (VuePlateau.TAILLE*7*this.menu.zoom()),(int) (VuePlateau.TAILLE*10*this.menu.zoom()));
+
 	}
 
 	@Override

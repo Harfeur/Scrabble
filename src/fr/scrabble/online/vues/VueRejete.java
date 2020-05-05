@@ -56,26 +56,29 @@ public class VueRejete extends JPanel implements Observer{
 		this.im[0] = this.im1;
 		this.im[1] = this.im2;
 		
-		this.setBounds(0,0,(int) (600*Menu.SCALE),(int) (600*Menu.SCALE));
+		this.setBounds(this.menu.decalageX(),this.menu.decalageY(),(int) (600*this.menu.zoom()),(int) (600*this.menu.zoom()));
 		this.setOpaque(false);
 		
 	}
 	
 	public void paint(Graphics g) {
 		super.paintComponents(g);
+		
+		this.setBounds(this.menu.decalageX(),this.menu.decalageY(),(int) (600*this.menu.zoom()),(int) (600*this.menu.zoom()));
+
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.rejete.setText(strings.getString("rejete"));
 		
 		//fond
 		g.setColor(fond[this.c.getCouleur()]);
-		g.fillRect((int) (90*Menu.SCALE), (int) (50*Menu.SCALE), (int) (420*Menu.SCALE), (int) (480*Menu.SCALE));
-		g.drawImage(this.im[this.c.getCouleur()], (int) (100*Menu.SCALE), (int) (100*Menu.SCALE), (int) (400*Menu.SCALE), (int) (400*Menu.SCALE), this.getParent());
+		g.fillRect((int) (90*this.menu.zoom()), (int) (50*this.menu.zoom()), (int) (420*this.menu.zoom()), (int) (480*this.menu.zoom()));
+		g.drawImage(this.im[this.c.getCouleur()], (int) (100*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (400*this.menu.zoom()), (int) (400*this.menu.zoom()), this.getParent());
 		
 		//texte
-		Font font = new Font("Arial",Font.BOLD,(int) (25*Menu.SCALE));
+		Font font = new Font("Arial",Font.BOLD,(int) (25*this.menu.zoom()));
 		g.setFont(font);
 		g.setColor(lettre[this.c.getCouleur()]);
-		g.drawString(rejete.getText(), (int) (120*Menu.SCALE), (int) (80*Menu.SCALE));
+		g.drawString(rejete.getText(), (int) (120*this.menu.zoom()), (int) (80*this.menu.zoom()));
 	}
 	
 	@Override
