@@ -3,10 +3,8 @@ package fr.scrabble.game.vues;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.scrabble.menu.Menu;
