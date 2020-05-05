@@ -532,6 +532,7 @@ public class Modele extends Observable{
 					this.changementJoueur();
 				}
 				else {
+					System.out.println(autreLettre+" "+ lettrecotecote);
 					if(autreLettre==100) {
 						premierTour=false;
 					}
@@ -891,9 +892,10 @@ public class Modele extends Observable{
 							if (this.chevalets.chevaletEnCours().get(t).valeur == 0) {
 								this.chevalets.chevaletEnCours().selectionnerLettre(t);
 								Lettre ajout=this.chevalets.chevaletEnCours().obtenirLettre();
-								ajout.lettre=lettre;
+								ajout.lettre=lettre.toUpperCase();
 								Case c =this.plateauFictif.getCase(y, x);
 								c.ajouterLettre(ajout);
+								this.placementEnCours.add(new Placement(ajout,c,y,x));
 							}
 						}
 					}
@@ -904,6 +906,7 @@ public class Modele extends Observable{
 								Lettre ajout=this.chevalets.chevaletEnCours().obtenirLettre();
 								Case c =this.plateauFictif.getCase(y, x);
 								c.ajouterLettre(ajout);
+								this.placementEnCours.add(new Placement(ajout,c,y,x));
 								break;
 							}
 						}
@@ -924,10 +927,11 @@ public class Modele extends Observable{
 				this.setChanged();
 				this.notifyObservers(this.plateauFictif);
 			}
-			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+			this.verificationMot();
+			/*ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.setChanged();
 			this.notifyObservers(String.format(strings.getString("joue"), this.score[this.numChevalet].getPrenom(),word.toUpperCase())+"\n");
-			this.changementJoueur();
+			this.changementJoueur();*/
 		}
 	}
 
