@@ -1,27 +1,22 @@
 package fr.scrabble.structures;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.net.URL;
-import java.util.Arrays;
 
-import fr.scrabble.menu.vues.ErrorFrame;
 import fr.scrabble.structures.Case.Multiplicateur;
 
-public class Plateau implements Serializable {
+public class Plateau {
 
-	private static final long serialVersionUID = -8869397609730203863L;
-	
 	Case[][] plateau;
 
 	public Plateau() {
 		super();
 		this.plateau = new Case[15][15];
-		URL fichier=Plateau.class.getResource("/resources/plateau.csv");
+		File fichier=new File("assets/plateau.csv");
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(fichier.openStream()));
+			BufferedReader reader = new BufferedReader(new FileReader(fichier));
 			String strCurrentLine;
 			int ligne = 0;
 			while ((strCurrentLine = reader.readLine()) != null) {
@@ -45,7 +40,8 @@ public class Plateau implements Serializable {
 			}
 			reader.close();
 		} catch(IOException e1) {
-			new ErrorFrame("Fichiers manquants");
+			System.out.print("Erreur");
+			System.exit(0);
 		}
 	}
 
@@ -54,49 +50,14 @@ public class Plateau implements Serializable {
 	}
 	
 	@Override
-	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		for (Case[] cases : plateau) {
-			for (Case case1 : cases) {
-				if (case1.lettre != null)
-					buf.append(case1.lettre.lettre);
-				else
-					buf.append('-');
-			}
-		}
-		return buf.toString();
-	}
-	
-	@Override
 	public Plateau clone() {
 		Plateau p = new Plateau();
 		for (int i = 0; i < 15; i++) {
-			for (int j = 0; j < 15; j++) {
+			for (int j = 0; i < 15; i++) {
 				p.plateau[i][j] = this.plateau[i][j].clone();
 			}
 		}
 		return p;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + Arrays.deepHashCode(plateau);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Plateau other = (Plateau) obj;
-		if (!Arrays.deepEquals(plateau, other.plateau))
-			return false;
-		return true;
-	}
 }

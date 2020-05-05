@@ -1,25 +1,24 @@
 package fr.scrabble.structures;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.Serializable;
-import java.net.URL;
-import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.Random;
+import java.util.Map.Entry;
 
-import fr.scrabble.menu.vues.ErrorFrame;
-
-public class Sac extends ArrayList<Lettre> implements Serializable {
+@SuppressWarnings("serial")
+public class Sac extends Hashtable<Lettre, Integer> {
 	
-	private static final long serialVersionUID = 8678217022591767923L;
-	
+	int nombreDeLettres;
 
 	public Sac(String langue) {
 		super();
-		URL fichier = Sac.class.getResource("/resources/sacs/"+langue+".csv");
+		this.nombreDeLettres = 0;
+		File fichier=new File("assets/sacs/"+langue+".csv");
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(fichier.openStream()));
+			BufferedReader reader = new BufferedReader(new FileReader(fichier));
 			String strCurrentLine;
 		    while ((strCurrentLine = reader.readLine()) != null) {
 		    	String[] tab=strCurrentLine.split(",");
@@ -27,44 +26,42 @@ public class Sac extends ArrayList<Lettre> implements Serializable {
 		    	int valeur= Integer.parseInt(tab[1]);
 		    	Lettre nouvLettre= new Lettre(lettre, valeur);
 		    	int nombre = Integer.parseInt(tab[2]);
+		    	this.nombreDeLettres= this.nombreDeLettres+nombre;
 		    	
 		    	this.ajouterLettre(nouvLettre, nombre);
 		    }
 		    reader.close();
 
 		} catch(IOException e1) {
-			new ErrorFrame("Fichiers manquants");
+			System.out.print("Erreur");
+			System.exit(0);
 		}
 
 	}
 
 	public void ajouterLettre(Lettre lettre, int nombre) {
-		for (int i = 0; i < nombre; i++)
-			this.add(lettre.clone());
-	}
-	
-	public void remettreLettre(Lettre lettre) {
-		this.add(lettre);
+		this.put(lettre, nombre);
 	}
 
 	public Lettre obtenirLettre() {
 		if(this.estVide()==false) {
 			Random r = new Random();
-			int nombreAleatoire = r.nextInt(this.size());
+			int nombreAleatoire = r.nextInt(this.nombreDeLettres);
+			int compteur=0;
+			this.nombreDeLettres--;
 
-			Lettre l = this.get(nombreAleatoire);
-			this.remove(nombreAleatoire);
-			return l;
+			for (Entry<Lettre, Integer> element : this.entrySet()) {
+				compteur = compteur + element.getValue();
+				if (compteur>=nombreAleatoire) {
+					return element.getKey();
+				}
+			}
 		}
 		return null;
 	}
 
 	public boolean estVide() {
-		return this.size()==0;
-	}
-
-	public int nbLettre() {
-		return this.size();
+		return this.nombreDeLettres==0;
 	}
 
 }

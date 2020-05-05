@@ -10,7 +10,7 @@ public class MotPlace {
 
 	enum Sens {DROITE, BAS};
 	
-	public ArrayList<Lettre> mot;
+	ArrayList<Lettre> mot;
 	int lig, col;
 	Sens sens;
 
@@ -66,10 +66,10 @@ public class MotPlace {
 	
 	@Override
 	public String toString() {
-		StringBuffer buf = new StringBuffer();
+		String str = "";
 		for (Lettre lettre : mot) {
-			buf.append(lettre.lettre);
+			str += lettre.lettre;
 		}
-		return buf.toString();
+		return str;
 	}
 }

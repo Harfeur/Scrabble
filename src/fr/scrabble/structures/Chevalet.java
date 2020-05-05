@@ -1,11 +1,10 @@
 package fr.scrabble.structures;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Chevalet extends ArrayList<Lettre> implements Serializable{
+@SuppressWarnings("serial")
+public class Chevalet extends ArrayList<Lettre>{
 	
-	private static final long serialVersionUID = 3930204422098162416L;
 	public int lettreSelectionee;
 	
 	public Chevalet() {
@@ -18,11 +17,6 @@ public class Chevalet extends ArrayList<Lettre> implements Serializable{
 			this.add(sac.obtenirLettre());
 		}
 	}
-	
-	public void remettreLettre(Lettre l) {
-		this.add(l);
-	}
-	
 	
 	/**
 	 * Cette methode modifie l'attribut lettreSelectionee
@@ -44,17 +38,5 @@ public class Chevalet extends ArrayList<Lettre> implements Serializable{
 		Lettre lettre = this.remove(lettreSelectionee);
 		this.lettreSelectionee = -1;
 		return lettre;
-	}
-	
-	@Override
-	public String toString() {
-		StringBuffer buf = new StringBuffer();
-		for (Lettre lettre : this) {
-			if (lettre.lettre.equals("JOKER"))
-				buf.append('*');
-			else
-				buf.append(lettre.lettre);
-		}
-		return buf.toString();
 	}
 }
