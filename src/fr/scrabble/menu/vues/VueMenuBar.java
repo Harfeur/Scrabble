@@ -30,9 +30,12 @@ public class VueMenuBar extends JMenuBar {
 	Menu menu;
 	Modele m;
 	Couleur couleur;
+	boolean sauveardeAffiche;
 
 	public VueMenuBar (Menu menu) {
 		super();
+
+		this.sauveardeAffiche = false;
 
 		this.menu = menu;
 		this.couleur = menu.couleur;
@@ -53,6 +56,9 @@ public class VueMenuBar extends JMenuBar {
 		this.accueil.addActionListener(new Accueil());
 		this.valider.addActionListener(new Validation());
 		this.sauver.addActionListener(new Sauvegarde());
+
+		this.jouer.addActionListener(new Jouer());
+		this.propos.addActionListener(new Propos());
 		/////
 		/////
 
@@ -129,112 +135,24 @@ public class VueMenuBar extends JMenuBar {
 
 	}
 
-	@SuppressWarnings("deprecation")
-	public VueMenuBar (Menu menu, Modele m) {
-		super();
-
-		this.menu = menu;
-		this.m=m;
-		this.couleur = menu.couleur;
-
-		this.appli = new JMenu();
-		this.couleurJM = new JMenu();
-		this.langue = new JMenu();
-		this.aide = new JMenu();
-
-		this.accueil = new JMenuItem();
-		this.arreter = new JMenuItem();
-		this.sauver = new JMenuItem();
-		this.valider=new JMenuItem();
-		this.jouer = new JMenuItem();
-		this.propos = new JMenuItem();
-
-		this.arreter.addActionListener(new Quitte());
-		this.accueil.addActionListener(new Accueil());
-		this.sauver.addActionListener(new Sauvegarde());
-		this.valider.addActionListener(new Validation());
-
-		this.jouer.addActionListener(new Jouer());
-		this.propos.addActionListener(new Propos());
-		/////
-		/////
-
-		//RadioButton Couleur
-		this.jr1 = new JRadioButtonMenuItem();
-		this.jr2 = new JRadioButtonMenuItem();
-
-		this.jr1.getModel().setActionCommand("Clair");
-		this.jr2.getModel().setActionCommand("Sombre");
-
-		this.bg = new ButtonGroup();
-		bg.add(this.jr1);
-		bg.add(this.jr2);
-		this.jr1.setSelected(true);
-
-		//RadioButton couleur ajout Listener
-		CouleurListener cl = new CouleurListener();
-		this.jr1.addActionListener(cl);
-		this.jr2.addActionListener(cl);
-
-		//Ajout RadioButton couleur dans JMenu couleur
-		this.couleurJM.add(this.jr1);		
-		this.couleurJM.add(this.jr2);	
-
-		//RadioButton Langue
-		this.bgl = new ButtonGroup();
-		LangueListener ll = new LangueListener();
-
-		boolean selected = false;
-
-		for (Locale locale : Menu.LOCALES) {
-			JRadioButtonMenuItem localeButton = new JRadioButtonMenuItem(locale.toString());
-			localeButton.getModel().setActionCommand(locale.toString());
-			localeButton.addActionListener(ll);
-
-			this.bgl.add(localeButton);
-			this.langue.add(localeButton);
-
-			if (locale.toString().equals(menu.getLocale().toString())) {
-				localeButton.setSelected(true);
-				selected = true;
-			}
-		}
-
-		if (!selected) {
-			Enumeration<AbstractButton> buttons = bgl.getElements();
-
-			while(buttons.hasMoreElements()) {
-				AbstractButton button = (AbstractButton) buttons.nextElement();
-
-				if (button.getText().equals("fr_FR")) {
-					button.setSelected(true);
-					break;
-				}
-			}
-		}	
-
-		//Ajout dans Appli
-		this.appli.add(this.accueil);
-		this.appli.add(this.couleurJM);
-		this.appli.add(this.langue);
-		this.appli.addSeparator();
-		this.appli.add(this.valider);
-		this.appli.add(this.sauver);
-		this.appli.addSeparator();
-		this.appli.add(this.arreter);
-
-		this.arreter.setAccelerator(KeyStroke.getKeyStroke('q'));
+	public void afficherSauvegarde() {
+		this.appli.insert(this.sauver, 4);
+		this.appli.insert(this.valider, 5);
+		this.appli.insertSeparator(6);
 		this.sauver.setAccelerator(KeyStroke.getKeyStroke('s'));
 		this.valider.setAccelerator(KeyStroke.getKeyStroke(Event.ENTER,0));
+		this.sauveardeAffiche = true;
+	}
 
-
-		this.aide.add(this.jouer);
-		this.aide.add(this.propos);
-
-		this.add(appli);
-		this.add(aide);
-		this.setVisible(true);
-
+	public void masquerSauvegarde() {
+		if (this.sauveardeAffiche) {
+			this.appli.remove(4);
+			this.appli.remove(4);
+			this.appli.remove(4);
+			this.sauver.setAccelerator(null);
+			this.valider.setAccelerator(null);
+			this.sauveardeAffiche = false;
+		}
 	}
 
 	@Override
