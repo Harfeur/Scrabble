@@ -54,7 +54,7 @@ public class VueJoker extends JFrame implements ListSelectionListener, ActionLis
 	    ListSelectionModel listSelectionModel = li.getSelectionModel();
 	    listSelectionModel.addListSelectionListener(this);
 
-	    li.setCellRenderer(new JokerList());
+	    li.setCellRenderer(new JokerList(this.c));
 	    li.setLayoutOrientation(JList.VERTICAL_WRAP);
 	    li.setVisibleRowCount(2);
 		
@@ -101,13 +101,25 @@ public class VueJoker extends JFrame implements ListSelectionListener, ActionLis
 	
 	class JokerList extends DefaultListCellRenderer{
 		
+		Couleur c;
+		
+		public JokerList(Couleur c) {
+			this.c=c;
+		}
+		
 		public Component getListCellRendererComponent(JList list, Object value, int index,boolean isSelected, boolean cellHasFocus) {
 			JLabel label = (JLabel) super.getListCellRendererComponent(
                     list, value, index, isSelected, cellHasFocus);
 			for(int i=0;i<lettre.size();i++) {
 	        	if(value.equals(lettre.get(i))) {
 	        		Image im = null;
-					im = new ImageIcon(getClass().getResource("/resources/images/lettre/letter_"+lettre.get(i)+".png")).getImage().getScaledInstance((int)(VuePlateau.TAILLE*Menu.SCALE), (int) (VuePlateau.TAILLE*Menu.SCALE), Image.SCALE_DEFAULT);
+	        		if (this.c.getCouleur() == 0) {
+						im = new ImageIcon(getClass().getResource("/resources/images/lettre/letter_"+lettre.get(i)+".png")).getImage().getScaledInstance((int)(VuePlateau.TAILLE*Menu.SCALE), (int) (VuePlateau.TAILLE*Menu.SCALE), Image.SCALE_DEFAULT);
+
+	        		}
+	        		else if (this.c.getCouleur() == 1) {
+						im = new ImageIcon(getClass().getResource("/resources/images/lettreSombre/letter_"+lettre.get(i)+".png")).getImage().getScaledInstance((int)(VuePlateau.TAILLE*Menu.SCALE), (int) (VuePlateau.TAILLE*Menu.SCALE), Image.SCALE_DEFAULT);
+	        		}
 	        		label.setIcon(new ImageIcon(im));
 	        		label.setText("");
 	        	}
