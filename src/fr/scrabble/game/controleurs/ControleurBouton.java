@@ -32,6 +32,13 @@ public class ControleurBouton implements ActionListener {
 	            }
 			}).start();
 		}
+		if (e.getActionCommand()=="Melanger") {
+			new Thread(new Runnable() {
+	            public void run() {
+	    			m.melanger();
+	            }
+			}).start();
+		}
 		
 	}
 
