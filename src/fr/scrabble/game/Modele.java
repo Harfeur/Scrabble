@@ -752,7 +752,7 @@ public class Modele extends Observable{
 
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
-		if(this.plateauFictif.equals(this.plateau)) {
+		if(this.placementEnCours.size()==0) {
 			if(this.chevalets.chevaletEnCours().size()!=0) {
 				this.passe=passe+1;
 				ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());

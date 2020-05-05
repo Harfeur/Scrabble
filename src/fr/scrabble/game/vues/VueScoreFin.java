@@ -17,20 +17,7 @@ public class VueScoreFin extends JPanel {
 	
 	Score[] score;
 	Score scr;
-	
-	public VueScoreFin() {
-		super();
-
-		JLabel txt = new JLabel("Partie Terminée");
-		txt.setPreferredSize(new Dimension(400,300));
-		txt.setBounds(325,100,400,300);
-		txt.setFont(new Font("Arial",Font.BOLD,45));
-		txt.setForeground(new Color(255,191,0));
-		
-		this.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
-		this.setBackground(new Color(0,100,0));
-		this.add(txt);
-	}
+	int[] y= {325,375,425,475};
 	
 	public VueScoreFin(Score[] score) {
 		super();
@@ -44,13 +31,19 @@ public class VueScoreFin extends JPanel {
 				this.score[i-a]=scr;
 			}
 		}
-		this.setPreferredSize(new Dimension(400,400));
-		this.setBounds(300,250, 400, 400);
+		this.setPreferredSize(new Dimension(1000,1000));
+		this.setBounds(0,0, 1000, 1000);
 		this.setOpaque(false);
 	}
 	
 	public void paint(Graphics g) {
 		super.paint(g);
+		g.setColor(new Color(0,100,0));
+		g.fillRoundRect(200, 200, 500, 400, 100,100);
+		g.setColor(new Color(253,200,72));
+		Font font_string = new Font("Arial",Font.BOLD,(int)(30*Menu.SCALE)) ;
+		g.setFont(font_string);
+		g.drawString("Partie terminée", 285, 250);
 		if(score!=null) {
 			int j=0;
 			for (int i=0; i<score.length;i++) {
@@ -59,16 +52,14 @@ public class VueScoreFin extends JPanel {
 					FontMetrics metrics_score = getFontMetrics(font_score);
 					g.setFont(font_score);
 					g.setColor(new Color(253,200,72));
-					g.drawString(score[i].prenom + "  "+score[i].getScore()+" points",metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
+					g.drawString(score[i].prenom + "  "+score[i].getScore()+" points",360-10*score[i].prenom.length(),325);
 					j=j+2;
 				}
 				else {
 					Font font_score = new Font("Arial",Font.PLAIN,(int)(25*Menu.SCALE)) ;
-					FontMetrics metrics_score = getFontMetrics(font_score);
 					g.setFont(font_score);
 					g.setColor(new Color(255,255,255));
-					g.drawString("  "+score[i].prenom + "  "+score[i].getScore()+" points",metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
-					j=j+2;
+					g.drawString("  "+score[i].prenom + "  "+score[i].getScore()+" points",360-10*score[i].prenom.length(),y[i]);
 				}
 			}
 		}
