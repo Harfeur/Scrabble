@@ -1,10 +1,12 @@
 package fr.scrabble.structures;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URL;
 import java.util.HashSet;
+
+import fr.scrabble.menu.vues.ErrorFrame;
 
 @SuppressWarnings("serial")
 public class Dictionnaire extends HashSet<String> {
@@ -15,9 +17,9 @@ public class Dictionnaire extends HashSet<String> {
 	 */
 	public Dictionnaire(String langue) {
 		super();
-		File fichier=new File("assets/dicos/"+langue+".txt");
+		URL fichier=Dictionnaire.class.getResource("/resources/dicos/"+langue+".txt");
 		try {
-			BufferedReader reader = new BufferedReader(new FileReader(fichier));
+			BufferedReader reader = new BufferedReader(new InputStreamReader(fichier.openStream()));
 			String strCurrentLine;
 		    while ((strCurrentLine = reader.readLine()) != null) {
 		    	this.add(strCurrentLine);
@@ -26,8 +28,7 @@ public class Dictionnaire extends HashSet<String> {
 		    reader.close();
 		
 		} catch(IOException e1) {
-			System.out.print("Erreur");
-			System.exit(0);
+			new ErrorFrame("Fichiers manquants");
 		}
 	}
 	

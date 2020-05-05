@@ -1,5 +1,5 @@
 # Scrabble
-
+ 
 > Jeu réalisé en Gestion de Projet en Licence Informatique
 
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
@@ -33,6 +33,8 @@ To-Do
 | <a href="https://www.github.com/Harfeur" target="_blank">`github.com/Harfeur`</a> | <a href="https://www.github.com/SDailhau" target="_blank">`github.com/SDailhau`</a> | <a href="http://github.com/Llaplace" target="_blank">`github.com/Llaplace`</a> |
 
 Merci à David Panzoli pour son aide et pour ses cours.
+
+Merci également à [Laura Dailhau](https://lauradailhau.wordpress.com/) pour le design des tuiles et du plateau.
 
 ---
 
