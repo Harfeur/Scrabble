@@ -2,8 +2,10 @@ package fr.scrabble.menu.vues;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ResourceBundle;
 
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JTextArea;
 
@@ -18,12 +20,14 @@ public class CommentJouer extends JFrame {
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", menu.getLocale());
 		this.setTitle(strings.getString("commentjouer"));
 		
-		JTextArea jText = new JTextArea();
-		
-		jText.setText();
+		JEditorPane jText = new JEditorPane("text/html", strings.getString("tutoriel"));
 		
 		this.add(jText);
 		
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		this.setPreferredSize(new Dimension((int) (Menu.SCALE*500), (int) (Menu.SCALE*500)));
+
 		this.pack();
 
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
