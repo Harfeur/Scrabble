@@ -798,9 +798,9 @@ public class Modele extends Observable{
 				this.notifyObservers(this.sac);
 				this.setChanged();
 				this.notifyObservers(this.plateau);
+				this.setChanged();
+				this.notifyObservers(this.numChevalet);
 				if(!this.score[this.numChevalet].getPrenom().equals("PC")) {
-					this.setChanged();
-					this.notifyObservers(this.numChevalet);
 					this.setChanged();
 					this.notifyObservers(this.chevalets);
 				}
@@ -919,11 +919,10 @@ public class Modele extends Observable{
 				this.setChanged();
 				this.notifyObservers(this.plateauFictif);
 			}
-			this.verificationMot();
-			/*ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.setChanged();
 			this.notifyObservers(String.format(strings.getString("joue"), this.score[this.numChevalet].getPrenom(),word.toUpperCase())+"\n");
-			this.changementJoueur();*/
+			this.changementJoueur();
 		}
 	}
 

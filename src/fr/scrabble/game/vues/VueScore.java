@@ -1,5 +1,6 @@
 package fr.scrabble.game.vues;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -19,6 +20,7 @@ public class VueScore extends JPanel implements Observer {
 	Score[] score;
 	Menu menu;
 	Couleur c;
+	Integer numJoueur;
 	
 	public VueScore(Menu menu) {
 		super();
@@ -43,11 +45,15 @@ public class VueScore extends JPanel implements Observer {
 			g.setColor(this.c.getColorLettre());
 			g.drawRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);	
 			int j=0;
-			for (int i=0; i<score.length;i++) {
-				Font font_score = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;
+			for (int i=0; i<score.length;i++) {	
+				Font font_score = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;	
+				g.setColor(this.c.getColorLettre());
+				if(i==numJoueur) {
+					font_score = new Font("Arial",Font.BOLD,(int)(15*Menu.SCALE)) ;
+					g.setColor(new Color(255,0,0));
+				}
 				FontMetrics metrics_score = getFontMetrics(font_score);
 				g.setFont(font_score);
-				g.setColor(this.c.getColorLettre());
 				g.drawString(score[i].prenom + " : "+score[i].score,metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
 				j=j+2;
 			
@@ -60,6 +66,11 @@ public class VueScore extends JPanel implements Observer {
 		if(arg.getClass() == Score[].class) {
 			this.score = (Score []) arg;
 			this.repaint(0,0,(int) (VuePlateau.TAILLE*4*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);
+		}
+		if(arg.getClass() == Integer.class) {
+			this.numJoueur = (Integer) arg;
+			System.out.println(this.numJoueur);
+			this.repaint();
 		}
 	}
 	
