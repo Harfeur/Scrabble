@@ -165,6 +165,21 @@ public class Modele extends Observable{
 		this.setChanged();
 		this.notifyObservers(this.chevalets);
 	}
+	
+	public void melanger() {
+		if(this.placementEnCours.size()!=0) {
+			for(Placement elem: this.placementEnCours) {
+				this.chevalets.chevaletEnCours().remettreLettre(elem.getLetter());
+				elem.getCase().lettre=null;
+			}
+		}
+		for(int elem=0; elem<7;elem++) {
+			this.chevalets.chevaletEnCours().selectionnerLettre(0);
+			Lettre l = this.chevalets.chevaletEnCours().obtenirLettre();
+			this.sac.remettreLettre(l);
+		}
+		changementJoueur();
+	}
 
 	public void verificationMot() {
 		if(this.placementEnCours.size()==0) {
@@ -745,18 +760,20 @@ public class Modele extends Observable{
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
 		if(this.plateauFictif.equals(this.plateau)) {
-			this.passe=passe+1;
-			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
-			this.setChanged();
-			this.notifyObservers(String.format(strings.getString("passe"), this.score[this.numChevalet].getPrenom())+"\n");
+			if(this.chevalets.chevaletEnCours().size()!=0) {
+				this.passe=passe+1;
+				ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+				this.setChanged();
+				this.notifyObservers(String.format(strings.getString("passe"), this.score[this.numChevalet].getPrenom())+"\n");
+			}
 		}
 		else {
-			this.chevalets.chevaletEnCours().remplir(sac);
 			this.passe=0;
 			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.setChanged();
 			this.notifyObservers(String.format(strings.getString("augmente"), (this.score[numChevalet].getScore()-this.scoreAv))+"\n");
 		}
+		this.chevalets.chevaletEnCours().remplir(sac);
 		if(this.passe==this.chevalets.size())
 			this.fin();
 		else {

@@ -23,6 +23,7 @@ public class Chevalet extends ArrayList<Lettre> implements Serializable{
 		this.add(l);
 	}
 	
+	
 	/**
 	 * Cette methode modifie l'attribut lettreSelectionee
 	 * @param num Lettre qui doit etre selectionee

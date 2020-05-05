@@ -154,7 +154,7 @@ public class VueChevalet extends JPanel implements Observer {
 		this.lettrerest.setCaretColor(this.couleur.getColorLettre());
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.lettrerest.setText(strings.getString("lettres_restantes"));
-		g.drawString(this.lettrerest.getText()+this.sac.nombreDeLettres,(int) ((VuePlateau.TAILLE*16-15)*Menu.SCALE) - metrics_lr.stringWidth(this.lettrerest.getText()+this.sac.nombreDeLettres),(int) (TAILLE*1.4*Menu.SCALE));
+		g.drawString(this.lettrerest.getText()+this.sac.nbLettre(),(int) ((VuePlateau.TAILLE*16-15)*Menu.SCALE) - metrics_lr.stringWidth(this.lettrerest.getText()+this.sac.size()),(int) (TAILLE*1.4*Menu.SCALE));
 
 		
 		//Affichage lettre sur chevalet
