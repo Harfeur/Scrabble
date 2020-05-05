@@ -2,13 +2,10 @@ package fr.scrabble.menu.vues;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.io.IOException;
 import java.util.ResourceBundle;
 
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
-import javax.swing.JTextArea;
-
 import fr.scrabble.menu.Menu;
 
 @SuppressWarnings("serial")
@@ -21,6 +18,7 @@ public class CommentJouer extends JFrame {
 		this.setTitle(strings.getString("commentjouer"));
 		
 		JEditorPane jText = new JEditorPane("text/html", strings.getString("tutoriel"));
+		jText.setEditable(false);
 		
 		this.add(jText);
 		

@@ -2,6 +2,7 @@ package fr.scrabble.game;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
@@ -9,6 +10,7 @@ import java.net.URLEncoder;
 
 import org.json.JSONObject;
 
+import fr.scrabble.menu.vues.ErrorFrame;
 import fr.scrabble.structures.Chevalet;
 import fr.scrabble.structures.Plateau;
 
@@ -16,6 +18,8 @@ public class Ordinateur {
 	
 	public static JSONObject solutions(Plateau plateau, Chevalet chevalet, String langue) {
 		JSONObject json = new JSONObject();
+		DataOutputStream dos = null;
+		BufferedReader bf = null;
 		try {
 			URL url = new URL("https://www.scrabble-word-finder.com/api/solver/getSolutions");
 			
@@ -53,15 +57,22 @@ public class Ordinateur {
 			conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
 			conn.setRequestProperty("Content-Length", Integer.toString(postData.length()));
 			
-			DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
+			dos = new DataOutputStream(conn.getOutputStream());
 			dos.writeBytes(postData);
 			
-			BufferedReader bf = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			bf = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 			String line;
 			while ((line = bf.readLine()) != null)
 				json = new JSONObject(line);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			new ErrorFrame("Connexion internet nécessaire pour jouer contre l'ordinateur.");
+		} finally {
+			try {
+				if (dos != null) dos.close();
+				if (bf != null) bf.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		return json;
 	}

@@ -1,8 +1,5 @@
 package fr.scrabble.online.vues;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -19,6 +16,7 @@ import fr.scrabble.menu.Menu;
 import fr.scrabble.online.Client;
 import fr.scrabble.structures.Couleur;
 
+@SuppressWarnings("serial")
 public class VueAttente extends JPanel implements ActionListener, Observer{
 
 	Client client;
@@ -71,8 +69,7 @@ public class VueAttente extends JPanel implements ActionListener, Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		if(o.getClass() == Couleur.class) {
+		if(o instanceof Couleur) {
 			this.c = (Couleur) o;
 			this.repaint();
 		}

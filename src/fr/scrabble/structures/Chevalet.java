@@ -48,13 +48,13 @@ public class Chevalet extends ArrayList<Lettre> implements Serializable{
 	
 	@Override
 	public String toString() {
-		String str = "";
+		StringBuffer buf = new StringBuffer();
 		for (Lettre lettre : this) {
 			if (lettre.lettre.equals("JOKER"))
-				str += "*";
+				buf.append('*');
 			else
-				str += lettre.lettre;
+				buf.append(lettre.lettre);
 		}
-		return str;
+		return buf.toString();
 	}
 }

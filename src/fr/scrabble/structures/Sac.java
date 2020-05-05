@@ -8,6 +8,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
+import fr.scrabble.menu.vues.ErrorFrame;
+
 public class Sac extends ArrayList<Lettre> implements Serializable {
 	
 	private static final long serialVersionUID = 8678217022591767923L;
@@ -31,8 +33,7 @@ public class Sac extends ArrayList<Lettre> implements Serializable {
 		    reader.close();
 
 		} catch(IOException e1) {
-			System.out.print("Erreur");
-			System.exit(0);
+			new ErrorFrame("Fichiers manquants");
 		}
 
 	}

@@ -37,7 +37,6 @@ public class VueConsole extends JPanel implements Observer {
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
 		if(arg.getClass() == String.class) {
 			this.txt = (String) arg;
 			this.JtxtA.append(this.txt);

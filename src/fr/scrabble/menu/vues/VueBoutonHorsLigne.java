@@ -44,7 +44,7 @@ public class VueBoutonHorsLigne  extends JPanel implements Observer, ActionListe
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		if(o.getClass() == Couleur.class) {
+		if(o instanceof Couleur) {
 			this.c = (Couleur) o;
 			this.repaint();
 		}

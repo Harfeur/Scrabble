@@ -49,7 +49,7 @@ public class ControleurBoutons implements ItemListener {
 		menu.vueHorsLigne(this.nbjoueur, this.langue,prenom,this.diff);
 	}
 
-	public void NombreJoueur(int nbjoueur) {
+	public void nombreJoueur(int nbjoueur) {
 		this.nbjoueur=nbjoueur;
 		menu.vueNomJoueurHorsLigne(this.nbjoueur);
 	}

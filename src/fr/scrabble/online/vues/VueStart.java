@@ -2,8 +2,6 @@ package fr.scrabble.online.vues;
 
 import javax.swing.JButton;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.*;
@@ -93,8 +91,7 @@ public class VueStart extends JPanel implements ActionListener, Observer {
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		if(o.getClass() == Couleur.class) {
+		if(o instanceof Couleur) {
 			this.c = (Couleur) o;
 			this.repaint();
 		}

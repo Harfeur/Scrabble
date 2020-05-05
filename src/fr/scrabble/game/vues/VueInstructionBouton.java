@@ -1,6 +1,5 @@
 package fr.scrabble.game.vues;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -15,7 +14,6 @@ import java.util.ResourceBundle;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -162,7 +160,7 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 			this.menu.vueHorsLigne();
 		}
 		if(e.getActionCommand().equals("Commencer")){
-			this.cb.NombreJoueur(getNbJoueur());
+			this.cb.nombreJoueur(getNbJoueur());
 		}
 	}
 	

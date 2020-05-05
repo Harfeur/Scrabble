@@ -84,7 +84,7 @@ public class UserThread extends Thread {
 			serveur.disconnected(username, this);
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			serveur.disconnected(username, this);
 		} finally {
 			this.serveur.disconnected(username, this);
 		}
