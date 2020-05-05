@@ -7,6 +7,7 @@ import java.util.Observer;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.text.DefaultCaret;
 
 import fr.scrabble.game.Modele;
 import fr.scrabble.menu.Menu;
@@ -23,6 +24,8 @@ public class VueConsole extends JPanel implements Observer {
 		this.modele = m;
 		
 		JtxtA = new JTextArea(20,20);
+		DefaultCaret caret = (DefaultCaret)JtxtA.getCaret();
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
 		JScrollPane scrollPane = new JScrollPane(JtxtA);
 		JtxtA.setEditable(false);
 
