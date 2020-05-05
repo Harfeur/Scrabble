@@ -196,7 +196,7 @@ public class Modele extends Observable{
 			for (Placement elem : this.placementEnCours) {
 				lig=lig+elem.getLine();
 				col=col+elem.getColumn();
-				if(this.premierTour==false && elem.getLine()==7 && elem.getColumn()==7 && this.placementEnCours.size()>1) {
+				if(premierTour==false && elem.getLine()==7 && elem.getColumn()==7 && this.placementEnCours.size()>1) {
 					autreLettre=100;
 					premierTour=true;
 				}
@@ -229,7 +229,6 @@ public class Modele extends Observable{
 							}
 						}
 					}
-
 					if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 						motbasOk++;
 					}
@@ -273,7 +272,7 @@ public class Modele extends Observable{
 						this.notifyObservers(String.format(strings.getString("pas_valide"), motDroite.toString())+"\n");
 					}
 
-					if(motbasOk==1 && motdroiteOk==1 && (motBas.nombreDeLettres()!=1 || motDroite.nombreDeLettres()!=1)) {
+					if(motbasOk==1 && motdroiteOk==1) {
 						Test1=true;
 						Test2=true;
 						autreLettre=2;
@@ -359,7 +358,7 @@ public class Modele extends Observable{
 							motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
 							present=false;
 							for(Placement tt: this.placementEnCours) {
-								if(tt.getLine()==premierLettre.getLine()+l && tt.getColumn()==premierLettre.getColumn()) {
+								if(tt.getLine()==premierLettre.getLine() && tt.getColumn()==premierLettre.getColumn()+c) {
 									present=true;
 								}
 							}
@@ -451,7 +450,6 @@ public class Modele extends Observable{
 									l++;
 
 									if(premierLettre.getLine()+l+1==15) {
-										System.out.println("stop");
 										break;
 									}
 								}
@@ -532,7 +530,6 @@ public class Modele extends Observable{
 					this.changementJoueur();
 				}
 				else {
-					System.out.println(autreLettre+" "+ lettrecotecote);
 					if(autreLettre==100) {
 						premierTour=false;
 					}
