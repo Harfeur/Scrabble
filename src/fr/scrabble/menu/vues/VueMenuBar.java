@@ -23,8 +23,8 @@ import fr.scrabble.structures.Couleur;
 @SuppressWarnings("serial")
 public class VueMenuBar extends JMenuBar {
 
-	JMenu appli,couleurJM,langue;
-	JMenuItem accueil,arreter,sauver,valider;
+	JMenu appli,couleurJM,langue,aide;
+	JMenuItem accueil,arreter,sauver,valider,jouer,propos;
 	JRadioButtonMenuItem jr1,jr2, l0,l1, l2;
 	ButtonGroup bg,bgl;
 	Menu menu;
@@ -40,16 +40,21 @@ public class VueMenuBar extends JMenuBar {
 		this.appli = new JMenu();
 		this.couleurJM = new JMenu();
 		this.langue = new JMenu();
+		this.aide = new JMenu();
 		
 		this.accueil = new JMenuItem();
 		this.arreter = new JMenuItem();
 		this.sauver = new JMenuItem();
 		this.valider=new JMenuItem();
+		this.jouer = new JMenuItem();
+		this.propos = new JMenuItem();
 		
 		this.arreter.addActionListener(new Quitte());
 		this.accueil.addActionListener(new Accueil());
 		this.valider.addActionListener(new Validation());
 		this.sauver.addActionListener(new Sauvegarde());
+		/////
+		/////
 		
 		//RadioButton Couleur
 		this.jr1 = new JRadioButtonMenuItem();
@@ -114,7 +119,12 @@ public class VueMenuBar extends JMenuBar {
 		
 		this.arreter.setAccelerator(KeyStroke.getKeyStroke('q'));
 		
+		//Ajout dans Aide
+		this.aide.add(this.jouer);
+		this.aide.add(this.propos);
+		
 		this.add(appli);
+		this.add(aide);
 		this.setVisible(true);
 		
 	}
@@ -130,16 +140,21 @@ public class VueMenuBar extends JMenuBar {
 		this.appli = new JMenu();
 		this.couleurJM = new JMenu();
 		this.langue = new JMenu();
+		this.aide = new JMenu();
 		
 		this.accueil = new JMenuItem();
 		this.arreter = new JMenuItem();
 		this.sauver = new JMenuItem();
 		this.valider=new JMenuItem();
+		this.jouer = new JMenuItem();
+		this.propos = new JMenuItem();
 		
 		this.arreter.addActionListener(new Quitte());
 		this.accueil.addActionListener(new Accueil());
 		this.sauver.addActionListener(new Sauvegarde());
 		this.valider.addActionListener(new Validation());
+		/////
+		/////
 		
 		//RadioButton Couleur
 		this.jr1 = new JRadioButtonMenuItem();
@@ -209,7 +224,12 @@ public class VueMenuBar extends JMenuBar {
 		this.sauver.setAccelerator(KeyStroke.getKeyStroke('s'));
 		this.valider.setAccelerator(KeyStroke.getKeyStroke(Event.ENTER,0));
 		
+
+		this.aide.add(this.jouer);
+		this.aide.add(this.propos);
+		
 		this.add(appli);
+		this.add(aide);
 		this.setVisible(true);
 		
 	}
@@ -231,6 +251,10 @@ public class VueMenuBar extends JMenuBar {
 		this.valider.setText(strings.getString("valider"));
 		this.arreter.setText(strings.getString("quitter"));
 		
+		this.aide.setText(strings.getString("aide"));
+		this.jouer.setText(strings.getString("commentjouer"));
+		this.propos.setText(strings.getString("asavoir"));
+		
 		this.jr1.setText(strings.getString("clair"));
 		this.jr2.setText(strings.getString("sombre"));
 		
@@ -251,6 +275,10 @@ public class VueMenuBar extends JMenuBar {
 			this.sauver.setText(strings.getString("sauvegarder"));
 			this.valider.setText(strings.getString("valider"));
 			this.arreter.setText(strings.getString("quitter"));
+			
+			this.aide.setText(strings.getString("aide"));
+			this.jouer.setText(strings.getString("jouer"));
+			this.propos.setText(strings.getString("propos"));
 			
 			this.jr1.setText(strings.getString("clair"));
 			this.jr2.setText(strings.getString("sombre"));
