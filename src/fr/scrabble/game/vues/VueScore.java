@@ -45,9 +45,9 @@ public class VueScore extends JPanel implements Observer {
 				}
 			}
 			g.setColor(this.c.getColorBouton());
-			g.fillRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*this.menu.zoom())-1);
+			g.fillRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*this.menu.zoom())+5);
 			g.setColor(this.c.getColorLettre());
-			g.drawRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*this.menu.zoom())-1);	
+			g.drawRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*this.menu.zoom())+5);
 			int j=0;
 			for (int i=0; i<score.length;i++) {	
 				Font font_score = new Font("Arial",Font.PLAIN,(int)(15*this.menu.zoom())) ;	
@@ -73,7 +73,6 @@ public class VueScore extends JPanel implements Observer {
 		}
 		if(arg.getClass() == Integer.class) {
 			this.numJoueur = (Integer) arg;
-			System.out.println(this.numJoueur);
 			this.repaint();
 		}
 	}

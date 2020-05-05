@@ -431,8 +431,7 @@ public class Menu extends JFrame implements Observer {
 		if (!enLigne)
 			this.modeleHorsLigne.suppFile();
 		
-		
-		containerScore.add(new VueScoreFin(this),0,0);
+		containerScore.add(new VueMenu(couleur, this),0,0);
 		containerScore.add(new VueScoreFin(score, this),1,0);
 		this.add(containerScore);
 		this.setVisible(true);

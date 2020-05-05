@@ -18,23 +18,7 @@ public class VueScoreFin extends JPanel {
 	Score[] score;
 	Score scr;
 	private Menu menu;
-	private JLabel txt;
-	
-	public VueScoreFin(Menu menu) {
-		super();
-		
-		this.menu = menu;
-
-		this.txt = new JLabel("Partie Terminée");
-		txt.setPreferredSize(new Dimension((int) (266*this.menu.zoom()),(int) (200*this.menu.zoom())));
-		txt.setBounds((int) (216*this.menu.zoom()),(int) (66*this.menu.zoom()),(int) (266*this.menu.zoom()),(int) (200*this.menu.zoom()));
-		txt.setFont(new Font("Arial",Font.BOLD,(int) (30*this.menu.zoom())));
-		txt.setForeground(new Color(255,191,0));
-		
-		this.setBounds(this.menu.decalageX(), this.menu.decalageY(), (int) (600*this.menu.zoom()), (int) (600*this.menu.zoom()));
-		this.setBackground(new Color(0,100,0));
-		this.add(txt);
-	}
+	int[] y= {325,375,425,475};
 	
 	public VueScoreFin(Score[] score, Menu menu) {
 		super();
@@ -49,13 +33,19 @@ public class VueScoreFin extends JPanel {
 				this.score[i-a]=scr;
 			}
 		}
-		this.setPreferredSize(new Dimension((int) (266*this.menu.zoom()), (int) (266*this.menu.zoom())));
-		this.setBounds((int) (200*this.menu.zoom()),(int) (166*this.menu.zoom()), (int) (266*this.menu.zoom()), (int) (266*this.menu.zoom()));
+		this.setPreferredSize(new Dimension((int) (666*this.menu.zoom()), (int) (666*this.menu.zoom())));
+		this.setBounds(0,0, (int) (666*this.menu.zoom()), (int) (666*this.menu.zoom()));
 		this.setOpaque(false);
 	}
 	
 	public void paint(Graphics g) {
 		super.paint(g);
+		g.setColor(new Color(0,100,0));
+		g.fillRoundRect(200, 200, 500, 400, 100,100);
+		g.setColor(new Color(253,200,72));
+		Font font_string = new Font("Arial",Font.BOLD,(int)(30*Menu.SCALE)) ;
+		g.setFont(font_string);
+		g.drawString("Partie terminée", 285, 250);
 		if(score!=null) {
 			this.setPreferredSize(new Dimension((int) (266*this.menu.zoom()), (int) (266*this.menu.zoom())));
 			this.setBounds((int) (200*this.menu.zoom()),(int) (166*this.menu.zoom()), (int) (266*this.menu.zoom()), (int) (266*this.menu.zoom()));
@@ -64,29 +54,18 @@ public class VueScoreFin extends JPanel {
 			for (int i=0; i<score.length;i++) {
 				if(i==0) {
 					Font font_score = new Font("Arial",Font.PLAIN,(int)(30*this.menu.zoom())) ;
-					FontMetrics metrics_score = getFontMetrics(font_score);
 					g.setFont(font_score);
 					g.setColor(new Color(253,200,72));
-					g.drawString(score[i].prenom + "  "+score[i].getScore()+" points",metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
+					g.drawString(score[i].prenom + "  "+score[i].getScore()+" points",360-10*score[i].prenom.length(),325);
 					j=j+2;
 				}
 				else {
 					Font font_score = new Font("Arial",Font.PLAIN,(int)(25*this.menu.zoom())) ;
-					FontMetrics metrics_score = getFontMetrics(font_score);
 					g.setFont(font_score);
 					g.setColor(new Color(255,255,255));
-					g.drawString("  "+score[i].prenom + "  "+score[i].getScore()+" points",metrics_score.getDescent()+2,(j+1)*metrics_score.getAscent());
-					j=j+2;
+					g.drawString("  "+score[i].prenom + "  "+score[i].getScore()+" points",360-10*score[i].prenom.length(),y[i]);
 				}
 			}
-		} else {
-			this.setBounds(this.menu.decalageX(), this.menu.decalageY(), (int) (600*this.menu.zoom()), (int) (600*this.menu.zoom()));
-			this.setBackground(new Color(0,100,0));
-
-			txt.setPreferredSize(new Dimension((int) (266*this.menu.zoom()),(int) (200*this.menu.zoom())));
-			txt.setBounds((int) (216*this.menu.zoom()),(int) (66*this.menu.zoom()),(int) (266*this.menu.zoom()),(int) (200*this.menu.zoom()));
-			txt.setFont(new Font("Arial",Font.BOLD,(int) (30*this.menu.zoom())));
-
 		}
 	}
 }
