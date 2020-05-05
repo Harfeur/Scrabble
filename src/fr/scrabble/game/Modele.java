@@ -260,7 +260,6 @@ public class Modele extends Observable{
 							}
 						}
 					}
-					System.out.println(motBas+" "+motDroite);
 					if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 						motdroiteOk++;
 					}
