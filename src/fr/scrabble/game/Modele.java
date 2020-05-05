@@ -182,7 +182,7 @@ public class Modele extends Observable{
 				lig=lig+elem.getLine();
 				col=col+elem.getColumn();
 				if(this.premierTour==false && elem.getLine()==7 && elem.getColumn()==7 && this.placementEnCours.size()>1) {
-					autreLettre=15;
+					autreLettre=100;
 					premierTour=true;
 				}
 			}
@@ -517,6 +517,9 @@ public class Modele extends Observable{
 					this.changementJoueur();
 				}
 				else {
+					if(autreLettre==100) {
+						premierTour=false;
+					}
 					if(autreLettre==0){
 						ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 						this.setChanged();
