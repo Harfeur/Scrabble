@@ -257,7 +257,7 @@ public class Menu extends JFrame implements Observer {
 		this.containerHorsLigne.add(vueChevalet,1,0);
 		this.containerHorsLigne.add(vueBouton,1,0);
 		this.containerHorsLigne.add(vueScore,1,0);
-		this.containerHorsLigne.add(vueConsole,1);
+		this.containerHorsLigne.add(vueConsole,1,0);
 
 		this.add(this.containerHorsLigne);
 
