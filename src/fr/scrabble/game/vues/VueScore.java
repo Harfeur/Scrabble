@@ -36,10 +36,16 @@ public class VueScore extends JPanel implements Observer {
 	public void paint(Graphics g) {
 		super.paint(g);
 		if(score!=null) {
+			int longueur=0;
+			for (int i=0; i<score.length;i++) {
+				if(score[i].prenom.length()>longueur) {
+					longueur=score[i].prenom.length();
+				}
+			}
 			g.setColor(this.c.getColorBouton());
-			g.fillRect(0, 0,(int) (VuePlateau.TAILLE*4*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);
+			g.fillRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);
 			g.setColor(this.c.getColorLettre());
-			g.drawRect(0, 0,(int) (VuePlateau.TAILLE*4*Menu.SCALE)-1,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);
+			g.drawRect(0, 0,(int) (longueur*20)+50,(int) (VuePlateau.TAILLE*score.length*Menu.SCALE)-1);	
 			int j=0;
 			for (int i=0; i<score.length;i++) {
 				Font font_score = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;
