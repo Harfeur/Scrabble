@@ -89,8 +89,6 @@ public class Client extends Observable implements Runnable {
 				}
             }
 		} catch (IOException e) {
-			this.menu.dispose();
-			new ErrorFrame("La connexion avec le serveur a été perdue.");
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			this.menu.dispose();
