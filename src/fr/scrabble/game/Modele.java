@@ -216,8 +216,8 @@ public class Modele extends Observable{
 					Case premB = this.plateauFictif.getCase(premierLettre.getLine()+l, premierLettre.getColumn());
 
 					motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
-
-					if(premierLettre.getLine()<14) {
+					
+					if(premierLettre.getLine()+l<14) {
 						while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
 							premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
 							motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
@@ -250,17 +250,17 @@ public class Modele extends Observable{
 
 					motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
 
-					if(premierLettre.getColumn()<14) {
+					if(premierLettre.getColumn()+c<14) {
 						while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
 							premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
 							motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
 							c++;
-
 							if(premierLettre.getColumn()+c+1==15) {
 								break;
 							}
 						}
 					}
+					System.out.println(motBas+" "+motDroite);
 					if(motDroite.valideMot(this.dico) || motDroite.nombreDeLettres()==1) {
 						motdroiteOk++;
 					}
@@ -270,7 +270,7 @@ public class Modele extends Observable{
 						this.notifyObservers(String.format(strings.getString("pas_valide"), motDroite.toString())+"\n");
 					}
 
-					if(motbasOk==1 && motdroiteOk==1) {
+					if(motbasOk==1 && motdroiteOk==1 && (motBas.nombreDeLettres()!=1 || motDroite.nombreDeLettres()!=1)) {
 						Test1=true;
 						Test2=true;
 						autreLettre=2;
@@ -306,7 +306,7 @@ public class Modele extends Observable{
 						else {
 							autreLettre++;
 						}
-						if(premierLettre.getLine()<14) {
+						if(premierLettre.getLine()+l<14) {
 							while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
 								present=false;
 								for(Placement elem: this.placementEnCours) {
@@ -364,7 +364,7 @@ public class Modele extends Observable{
 							else {
 								autreLettre++;
 							}
-							if(premierLettre.getColumn()<14) {
+							if(premierLettre.getColumn()+c<14) {
 								while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
 									present=false;
 									for(Placement tt: this.placementEnCours) {
@@ -428,7 +428,7 @@ public class Modele extends Observable{
 							else {
 								autreLettre++;
 							}
-							if(premierLettre.getLine()<14) {
+							if(premierLettre.getLine()+l<14) {
 								while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
 									present=false;
 									for(Placement tt: this.placementEnCours) {
@@ -461,7 +461,7 @@ public class Modele extends Observable{
 
 						//mot droite
 						int c=0;
-						if(premierLettre.getColumn()>0) {
+						if(premierLettre.getColumn()+c>0) {
 							while(this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c-1).lettre != null) {
 								c--;
 
