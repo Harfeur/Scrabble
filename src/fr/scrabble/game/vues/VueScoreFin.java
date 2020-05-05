@@ -32,21 +32,21 @@ public class VueScoreFin extends JPanel {
 			}
 		}
 		this.setPreferredSize(new Dimension((int) (666*this.menu.zoom()), (int) (666*this.menu.zoom())));
-		this.setBounds(0,0, (int) (666*this.menu.zoom()), (int) (666*this.menu.zoom()));
+		this.setBounds(this.menu.decalageX(),this.menu.decalageY(), (int) (666*this.menu.zoom()), (int) (666*this.menu.zoom()));
 		this.setOpaque(false);
 	}
 	
 	public void paint(Graphics g) {
 		super.paint(g);
 		g.setColor(new Color(0,100,0));
-		g.fillRoundRect(200, 200, 500, 400, 100,100);
+		g.fillRoundRect((int) (133*this.menu.zoom()), (int) (133*this.menu.zoom()), (int) (333*this.menu.zoom()), (int) (266*this.menu.zoom()), (int) (66*this.menu.zoom()),(int) (66*this.menu.zoom()));
 		g.setColor(new Color(253,200,72));
 		Font font_string = new Font("Arial",Font.BOLD,(int)(30*Menu.SCALE)) ;
 		g.setFont(font_string);
 		g.drawString("Partie terminée", 285, 250);
 		if(score!=null) {
-			this.setPreferredSize(new Dimension((int) (266*this.menu.zoom()), (int) (266*this.menu.zoom())));
-			this.setBounds((int) (200*this.menu.zoom()),(int) (166*this.menu.zoom()), (int) (266*this.menu.zoom()), (int) (266*this.menu.zoom()));
+			this.setPreferredSize(new Dimension((int) (666*this.menu.zoom()), (int) (666*this.menu.zoom())));
+			this.setBounds(this.menu.decalageX(),this.menu.decalageY(), (int) (666*this.menu.zoom()), (int) (666*this.menu.zoom()));
 
 			int j=0;
 			for (int i=0; i<score.length;i++) {
