@@ -5,7 +5,7 @@ import java.awt.Toolkit;
 import java.util.ResourceBundle;
 
 import javax.swing.JFrame;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
 import fr.scrabble.menu.Menu;
 
@@ -14,10 +14,13 @@ public class CommentJouer extends JFrame {
 	
 	public CommentJouer(Menu menu) {
 		super();
+		
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", menu.getLocale());
 		this.setTitle(strings.getString("commentjouer"));
 		
-		JTextField jText = new JTextField();
+		JTextArea jText = new JTextArea();
+		
+		jText.setText();
 		
 		this.add(jText);
 		

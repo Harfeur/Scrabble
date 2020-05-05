@@ -135,7 +135,8 @@ public class VueMenuBar extends JMenuBar {
 
 	}
 
-	public void afficherSauvegarde() {
+	public void afficherSauvegarde(Modele modele) {
+		this.m = modele;
 		this.appli.insert(this.sauver, 4);
 		this.appli.insert(this.valider, 5);
 		this.appli.insertSeparator(6);
