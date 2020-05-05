@@ -1,7 +1,6 @@
 package fr.scrabble.structures;
 
 import java.io.Serializable;
-import java.net.URL;
 
 public class Lettre implements Serializable {
 	
@@ -23,8 +22,7 @@ public class Lettre implements Serializable {
 	
 	@Override
 	public Lettre clone() {
-		Lettre l = new Lettre(this.lettre, this.valeur);
-		return l;
+		return new Lettre(this.lettre, this.valeur);
 	}
 	
 }

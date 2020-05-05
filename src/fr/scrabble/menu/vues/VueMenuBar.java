@@ -216,7 +216,7 @@ public class VueMenuBar extends JMenuBar {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			System.exit(0);
+			menu.dispose();
 		}	
 	}
 

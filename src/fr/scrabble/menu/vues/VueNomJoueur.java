@@ -1,6 +1,5 @@
 package fr.scrabble.menu.vues;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -17,7 +16,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import fr.scrabble.game.utils.JTextFieldLimit;
@@ -242,8 +240,7 @@ public class VueNomJoueur extends JPanel implements ActionListener, Observer{
 
 	@Override
 	public void update(Observable o, Object arg1) {
-		// TODO Auto-generated method stub
-		if(o.getClass() == Couleur.class) {
+		if(o instanceof Couleur) {
 			this.c = (Couleur) o;
 			this.repaint();
 		}

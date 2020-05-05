@@ -66,10 +66,10 @@ public class MotPlace {
 	
 	@Override
 	public String toString() {
-		String str = "";
+		StringBuffer buf = new StringBuffer();
 		for (Lettre lettre : mot) {
-			str += lettre.lettre;
+			buf.append(lettre.lettre);
 		}
-		return str;
+		return buf.toString();
 	}
 }

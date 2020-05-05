@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import fr.scrabble.game.Modele;
 import fr.scrabble.menu.Menu.Vues;
+import fr.scrabble.menu.vues.ErrorFrame;
 import fr.scrabble.structures.Chevalet;
 import fr.scrabble.structures.Score;
 import fr.scrabble.structures.SetDeChevalets;
@@ -48,6 +49,7 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 				this.add(user);
 			}
 		} catch (IOException e) {
+			new ErrorFrame(e.getLocalizedMessage());
 			e.printStackTrace();
 		}
 	}

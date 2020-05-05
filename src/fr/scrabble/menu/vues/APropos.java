@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 
 import fr.scrabble.menu.Menu;
 
+@SuppressWarnings("serial")
 public class APropos extends JFrame{
 	Menu menu;
 	public APropos(Menu menu) {
@@ -17,6 +18,7 @@ public class APropos extends JFrame{
 		this.setTitle(strings.getString("asavoir"));
 		
 		JEditorPane jText = new JEditorPane("text/html", strings.getString("pourquoi"));
+		jText.setEditable(false);
 		
 		this.add(jText);
 		

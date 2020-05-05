@@ -12,6 +12,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
 import fr.scrabble.menu.Menu;
+import fr.scrabble.menu.vues.ErrorFrame;
 
 public class Client extends Observable implements Runnable {
 	
@@ -49,10 +50,10 @@ public class Client extends Observable implements Runnable {
 	        	this.menu.vueRejete();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			this.menu.vueRejete();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.menu.dispose();
+			new ErrorFrame(e.getLocalizedMessage());
 		}
 	}
 	
@@ -88,9 +89,12 @@ public class Client extends Observable implements Runnable {
 				}
             }
 		} catch (IOException e) {
+			this.menu.dispose();
+			new ErrorFrame("La connexion avec le serveur a été perdue.");
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			this.menu.dispose();
+			new ErrorFrame(e.getLocalizedMessage());
 		}
 	}
 

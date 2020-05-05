@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.HashSet;
 
+import fr.scrabble.menu.vues.ErrorFrame;
+
 @SuppressWarnings("serial")
 public class Dictionnaire extends HashSet<String> {
 	
@@ -26,8 +28,7 @@ public class Dictionnaire extends HashSet<String> {
 		    reader.close();
 		
 		} catch(IOException e1) {
-			System.out.print("Erreur");
-			System.exit(0);
+			new ErrorFrame("Fichiers manquants");
 		}
 	}
 	

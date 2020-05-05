@@ -44,7 +44,7 @@ public class VueBoutonMulti extends JPanel implements Observer, ActionListener {
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		if(o.getClass() == Couleur.class) {
+		if(o instanceof Couleur) {
 			this.c = (Couleur) o;
 			this.repaint();
 		}

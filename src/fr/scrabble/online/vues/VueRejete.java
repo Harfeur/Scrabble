@@ -9,11 +9,11 @@ import java.util.Observer;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 
 import fr.scrabble.menu.Menu;
+import fr.scrabble.menu.vues.ErrorFrame;
 import fr.scrabble.structures.Couleur;
 
 import java.awt.Color;
@@ -39,14 +39,18 @@ public class VueRejete extends JPanel implements Observer{
 		//image clair
 		try {
 			this.im1 = ImageIO.read(Menu.class.getResource("/resources/images/triste.jpg"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e) {
+			this.menu.dispose();
+			new ErrorFrame("Images manquantes");
+			e.printStackTrace();
 		}	
 		//image sombre
 		try {
 			this.im2 = ImageIO.read(Menu.class.getResource("/resources/images/beauxgosses.jpg"));
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e) {
+			this.menu.dispose();
+			new ErrorFrame("Images manquantes");
+			e.printStackTrace();
 		}
 		
 		this.im[0] = this.im1;
@@ -76,8 +80,7 @@ public class VueRejete extends JPanel implements Observer{
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		if(o.getClass() == Couleur.class) {
+		if(o instanceof Couleur) {
 			this.c = (Couleur) o;
 			this.repaint();
 		}

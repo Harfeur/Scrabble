@@ -22,20 +22,18 @@ import fr.scrabble.structures.Case.Multiplicateur;
 public class Modele extends Observable{
 
 	public Sac sac;
-	File fichier;
 	public Plateau plateau;
 	public Plateau plateauFictif;
 	public SetDeChevalets chevalets;
 	public Integer numChevalet;
 	public Score[] score;
 	public int scoreAv;
-	ArrayList<MotPlace> motValide;
 	MotPlace motBas, motDroite;
 	ArrayList<Placement> placementEnCours;
 	Dictionnaire dico;
 	String lettreChoisi, langue;
 	int motbasOk, motdroiteOk, passe=0, difficulte;
-	boolean Test1, Test2, premierTour, colonne;
+	boolean Test1, Test2, premierTour;
 	public Menu menu;
 	
 	public Modele(Menu menu) {
@@ -284,7 +282,6 @@ public class Modele extends Observable{
 					Placement deuxiemLettre = this.placementEnCours.get(1);
 					// Si les lettres sont dans la meme colonne
 					if(premierLettre.getColumn()==deuxiemLettre.getColumn()) {
-						colonne=true;
 						//mot bas
 						int l=0;
 						if(premierLettre.getLine()>0) {
@@ -406,7 +403,6 @@ public class Modele extends Observable{
 					}
 					//lettre dans la meme ligne
 					if(this.placementEnCours.get(0).getLine()==deuxiemLettre.getLine()) {
-						colonne=false;
 						for(Placement elem : this.placementEnCours) {
 							//mot bas
 							int l=0;

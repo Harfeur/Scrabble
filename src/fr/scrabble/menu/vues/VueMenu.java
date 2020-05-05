@@ -23,13 +23,13 @@ public class VueMenu extends JPanel {
 		try {
 			im1 = ImageIO.read(Menu.class.getResource("/resources/images/scrabble.jpg"));
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			new ErrorFrame("Images manquantes");
 		}
 		
 		try {
 			im2 = ImageIO.read(Menu.class.getResource("/resources/images/beauxgosses.jpg"));
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			new ErrorFrame("Images manquantes");
 		}
 		
 		this.images[0] = im1;
@@ -48,7 +48,6 @@ public class VueMenu extends JPanel {
 	
 	@Override
 	public void update(Graphics g) {
-		System.out.println("update");
 		if ((int) this.getClientProperty("color") != this.c.getCouleur()) {
 			this.putClientProperty("color", this.c.getCouleur());
 			System.out.println("repaint");
