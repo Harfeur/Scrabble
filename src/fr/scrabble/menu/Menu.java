@@ -64,28 +64,13 @@ public class Menu extends JFrame implements Observer {
 	ModeleEnLigne modeleEnLigne;
 	
 	public Couleur couleur;
-	private boolean enLigne;
+	private boolean enLigne, langue=false;
 	
 
 	public Menu () {
 		super("Scrabble");
-
-		try {
-			Locale l = charger();
-			System.out.println("---"+l.getCountry());
-			this.setLocale(l);
-			FileInputStream fis = new FileInputStream(new File("Couleur.dat"));
-			ObjectInputStream ois = new ObjectInputStream(fis);
-			this.couleur = (Couleur)ois.readObject();
-			ois.close();
-			fis.close();
-		}
-		catch(IOException | ClassNotFoundException e) {
-			this.setLocale(Locale.getDefault());
-			this.couleur = new Couleur();
-		}
+		langue=true;
 		
-		this.couleur.addObserver(this);
 
 		// Initialisation des Containers
 		this.containerChargement = new Container();
@@ -109,6 +94,28 @@ public class Menu extends JFrame implements Observer {
 		this.setResizable(true);
 
 		this.pack();
+		
+		try {
+			//Locale
+			FileInputStream fis = new FileInputStream(new File("Locale.dat"));
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Locale l = (Locale)ois.readObject();
+			ois.close();
+			fis.close();
+			this.setLocale(l);
+			
+			FileInputStream fis1 = new FileInputStream(new File("Couleur.dat"));
+			ObjectInputStream ois1 = new ObjectInputStream(fis1);
+			this.couleur = (Couleur)ois1.readObject();
+			ois1.close();
+			fis1.close();
+		}
+		catch(IOException | ClassNotFoundException e) {
+			this.setLocale(Locale.getDefault());
+			this.couleur = new Couleur();
+		}
+		
+		this.couleur.addObserver(this);
 
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
@@ -119,7 +126,6 @@ public class Menu extends JFrame implements Observer {
 		JProgressBar loading = new JProgressBar(0, 10);
 		
 		this.vueChargement(loading);
-
 		// Barre de menu
 		VueMenuBar vueMenuBar = new VueMenuBar(this);
 		this.setJMenuBar(vueMenuBar);
@@ -154,7 +160,6 @@ public class Menu extends JFrame implements Observer {
 		
 		this.vueChevalet = new VueChevalet(this);
 		loading.setValue(10);
-
 		this.vueMenu();
 	}
 
@@ -469,28 +474,6 @@ public class Menu extends JFrame implements Observer {
 			e.printStackTrace();
 		}
 	}
-	
-	public void enregistrer(){
-		try {
-			FileOutputStream fos =  new FileOutputStream(new File("Locale.dat"));
-			ObjectOutputStream oos= new ObjectOutputStream(fos);
-			oos.writeObject(this.getLocale());
-			oos.close();
-			fos.close();
-		} catch (IOException e) {
-			throw new RuntimeException("Impossible d'écrire les données de langue");
-		}
-	}
-
-	public Locale charger() throws IOException, ClassNotFoundException {
-		//Locale
-		FileInputStream fis = new FileInputStream(new File("Locale.dat"));
-		ObjectInputStream ois = new ObjectInputStream(fis);
-		Locale l = (Locale)ois.readObject();
-		ois.close();
-		fis.close();
-		return l;
-	}
 
 	public static void main(String[] args) {
 		new Menu();
@@ -532,10 +515,19 @@ public class Menu extends JFrame implements Observer {
 
 	@Override
 	public void setLocale(Locale l) {
-		System.out.println(l.getCountry());
 		super.setLocale(l);
 		this.repaint();
-		this.enregistrer();
+		if (langue) {
+			try {
+				FileOutputStream fos =  new FileOutputStream(new File("Locale.dat"));
+				ObjectOutputStream oos= new ObjectOutputStream(fos);
+				oos.writeObject(this.getLocale());
+				oos.close();
+				fos.close();
+			} catch (IOException e) {
+				throw new RuntimeException("Impossible d'écrire les données de langue");
+			}
+		}
 	}
 
 	public void lettreJoker(String lettre) {
