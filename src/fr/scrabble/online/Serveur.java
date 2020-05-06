@@ -184,6 +184,11 @@ public class Serveur extends ArrayList<UserThread> implements Observer, Runnable
 			this.modele.ajoutLettre(col, lig);
 	}
 
+	public void melanger(String username) {
+		if (this.joueurs.get(this.joueurEnCours).equals(username))
+			this.modele.melanger();
+	}
+
 	@Override
 	public void run() {
 		this.ouvrirConnection();

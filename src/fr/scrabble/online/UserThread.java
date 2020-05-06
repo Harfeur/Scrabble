@@ -66,6 +66,8 @@ public class UserThread extends Thread {
 					case "ajoutLettre":
 						this.serveur.ajoutLettre(this.username, Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
 						break;
+					case "melanger":
+						this.serveur.melanger(this.username);
 					default:
 						this.serveur.modele.lettreJoker(inputLine);
 					}
