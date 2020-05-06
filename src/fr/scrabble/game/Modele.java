@@ -799,8 +799,10 @@ public class Modele extends Observable{
 				this.setChanged();
 				this.notifyObservers(this.plateau);
 				this.setChanged();
-				this.notifyObservers(this.numChevalet);
+				this.notifyObservers(this.score[this.numChevalet]);
 				if(!this.score[this.numChevalet].getPrenom().equals("PC")) {
+					this.setChanged();
+					this.notifyObservers(this.numChevalet);
 					this.setChanged();
 					this.notifyObservers(this.chevalets);
 				}

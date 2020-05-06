@@ -20,7 +20,7 @@ public class VueScore extends JPanel implements Observer {
 	Score[] score;
 	Menu menu;
 	Couleur c;
-	Integer numJoueur;
+	Score numJoueur=null;
 	
 	public VueScore(Menu menu) {
 		super();
@@ -52,7 +52,7 @@ public class VueScore extends JPanel implements Observer {
 			for (int i=0; i<score.length;i++) {	
 				Font font_score = new Font("Arial",Font.PLAIN,(int)(15*this.menu.zoom())) ;	
 				g.setColor(this.c.getColorLettre());
-				if(i==numJoueur) {
+				if(score[i]==numJoueur || (numJoueur==null && i==0)) {
 					font_score = new Font("Arial",Font.BOLD,(int)(15*this.menu.zoom())) ;
 					g.setColor(new Color(255,0,0));
 				}
@@ -71,8 +71,8 @@ public class VueScore extends JPanel implements Observer {
 			this.score = (Score []) arg;
 			this.repaint(0,0,(int) (VuePlateau.TAILLE*4*this.menu.zoom())-1,(int) (VuePlateau.TAILLE*score.length*this.menu.zoom())-1);
 		}
-		if(arg.getClass() == Integer.class) {
-			this.numJoueur = (Integer) arg;
+		if(arg.getClass() == Score.class) {
+			this.numJoueur = (Score) arg;
 			this.repaint();
 		}
 	}
