@@ -47,7 +47,8 @@ public class Menu extends JFrame implements Observer {
 	VueChevalet vueChevalet;
 	VueScore vueScore;
 
-	boolean vueHorsLigneSombre=true, fin=false;
+	boolean vueHorsLigneSombre=true;
+	public boolean fin=false;
 
 	Client client;
 	Serveur serveur;

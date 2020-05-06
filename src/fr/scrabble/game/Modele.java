@@ -29,9 +29,10 @@ public class Modele extends Observable{
 	public Score[] score;
 	public int scoreAv;
 	MotPlace motBas, motDroite;
-	ArrayList<Placement> placementEnCours;
-	Dictionnaire dico;
-	String lettreChoisi, langue;
+	public ArrayList<Placement> placementEnCours;
+	public Dictionnaire dico;
+	String lettreChoisi;
+	public String langue;
 	int motbasOk, motdroiteOk, passe=0, difficulte;
 	boolean Test1, Test2, premierTour;
 	public Menu menu;
@@ -910,12 +911,12 @@ public class Modele extends Observable{
 				else {
 					y=y+1;
 				}
-
+				/*
 				try {
 					TimeUnit.SECONDS.sleep(1);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}
+				}*/
 				this.setChanged();
 				this.notifyObservers(this.plateauFictif);
 			}

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import fr.scrabble.game.Modele;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Case;
+import fr.scrabble.structures.Dictionnaire;
 import fr.scrabble.structures.Lettre;
 import fr.scrabble.structures.Placement;
 
@@ -21,6 +22,7 @@ public class ModeleTest {
 	@BeforeEach
 	void setUp() throws Exception {
 		menu = new Menu();
+		menu.dispose();
 		m= new Modele(menu);
 		prenoms = new ArrayList();
 		prenoms.add("a");
@@ -122,6 +124,21 @@ public class ModeleTest {
 		assertEquals(m.numChevalet,num);	
 		
 		
+	}
+	
+	@Test
+	void testVerifMot2() {
+		ArrayList<String> pcs = new ArrayList<String>(4);
+		for (int i = 0; i < 4; ++i) pcs.add("Joueur");
+		m.nouvellePartie(4, "FR", pcs, 2);
+		int ancienJoueur;
+		while (!menu.fin) {
+			ancienJoueur = m.chevalets.joueurEnCours;
+			m.jouerPC();
+			System.out.println("Le joueur n°" + ancienJoueur + " a joué");
+			assertEquals(true, m.chevalets.joueurEnCours != ancienJoueur || menu.fin);
+			// Après avoir joué, le numéro du joueur a changé (sauf si c'était le dernier tour)
+		}
 	}
 
 }
