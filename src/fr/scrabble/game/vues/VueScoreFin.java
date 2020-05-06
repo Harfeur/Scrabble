@@ -16,7 +16,7 @@ public class VueScoreFin extends JPanel {
 	Score[] score;
 	Score scr;
 	private Menu menu;
-	int[] y= {325,375,425,475};
+	int[] y= {250,290,330,370};
 	
 	public VueScoreFin(Score[] score, Menu menu) {
 		super();
@@ -43,7 +43,7 @@ public class VueScoreFin extends JPanel {
 		g.setColor(new Color(253,200,72));
 		Font font_string = new Font("Arial",Font.BOLD,(int)(30*Menu.SCALE)) ;
 		g.setFont(font_string);
-		g.drawString("Partie terminée", 285, 250);
+		g.drawString("Partie terminée", (int) (195*menu.zoom()), (int) (180*menu.zoom()));
 		if(score!=null) {
 			this.setPreferredSize(new Dimension((int) (666*this.menu.zoom()), (int) (666*this.menu.zoom())));
 			this.setBounds(this.menu.decalageX(),this.menu.decalageY(), (int) (666*this.menu.zoom()), (int) (666*this.menu.zoom()));
@@ -54,14 +54,14 @@ public class VueScoreFin extends JPanel {
 					Font font_score = new Font("Arial",Font.PLAIN,(int)(30*this.menu.zoom())) ;
 					g.setFont(font_score);
 					g.setColor(new Color(253,200,72));
-					g.drawString(score[i].prenom + "  "+score[i].getScore()+" points",360-10*score[i].prenom.length(),325);
+					g.drawString(score[i].prenom + "  "+score[i].getScore()+" points",(int) (360-10*score[i].prenom.length()),(int) (230*menu.zoom()));
 					j=j+2;
 				}
 				else {
 					Font font_score = new Font("Arial",Font.PLAIN,(int)(25*this.menu.zoom())) ;
 					g.setFont(font_score);
 					g.setColor(new Color(255,255,255));
-					g.drawString("  "+score[i].prenom + "  "+score[i].getScore()+" points",360-10*score[i].prenom.length(),y[i]);
+					g.drawString("  "+score[i].prenom + "  "+score[i].getScore()+" points",(int) (360-10*score[i].prenom.length()),(int) (y[i]*menu.zoom()));
 				}
 			}
 		}
