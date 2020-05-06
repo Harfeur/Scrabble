@@ -15,11 +15,11 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.ResourceBundle;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -32,10 +32,7 @@ import fr.scrabble.menu.vues.*;
 import fr.scrabble.online.*;
 import fr.scrabble.online.vues.*;
 import fr.scrabble.structures.Couleur;
-import fr.scrabble.structures.Plateau;
-import fr.scrabble.structures.Sac;
 import fr.scrabble.structures.Score;
-import fr.scrabble.structures.SetDeChevalets;
 
 @SuppressWarnings("serial")
 public class Menu extends JFrame implements Observer {
@@ -69,8 +66,11 @@ public class Menu extends JFrame implements Observer {
 
 	public Menu () {
 		super("Scrabble");
+		
 		langue=true;
 		
+		ImageIcon img = new ImageIcon(Menu.class.getResource("/resources/images/lettre/letter_S.png"));
+		this.setIconImage(img.getImage());
 
 		// Initialisation des Containers
 		this.containerChargement = new Container();
