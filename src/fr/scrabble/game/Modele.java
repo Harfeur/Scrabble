@@ -872,7 +872,7 @@ public class Modele extends Observable{
 			int direction=Integer.parseInt(choix.getString("direction"));
 			//word
 			String word=choix.getString("word");
-
+			scoreAv=this.score[this.numChevalet].score;
 			this.score[this.numChevalet].majScore(value);
 
 			for (int i=0;i<word.length();i++) {
