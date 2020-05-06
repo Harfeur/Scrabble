@@ -4,11 +4,18 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.ResourceBundle;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -25,7 +32,10 @@ import fr.scrabble.menu.vues.*;
 import fr.scrabble.online.*;
 import fr.scrabble.online.vues.*;
 import fr.scrabble.structures.Couleur;
+import fr.scrabble.structures.Plateau;
+import fr.scrabble.structures.Sac;
 import fr.scrabble.structures.Score;
+import fr.scrabble.structures.SetDeChevalets;
 
 @SuppressWarnings("serial")
 public class Menu extends JFrame implements Observer {
@@ -60,9 +70,21 @@ public class Menu extends JFrame implements Observer {
 	public Menu () {
 		super("Scrabble");
 
-		this.setLocale(Locale.getDefault());
-
-		this.couleur = new Couleur();
+		try {
+			Locale l = charger();
+			System.out.println("---"+l.getCountry());
+			this.setLocale(l);
+			FileInputStream fis = new FileInputStream(new File("Couleur.dat"));
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			this.couleur = (Couleur)ois.readObject();
+			ois.close();
+			fis.close();
+		}
+		catch(IOException | ClassNotFoundException e) {
+			this.setLocale(Locale.getDefault());
+			this.couleur = new Couleur();
+		}
+		
 		this.couleur.addObserver(this);
 
 		// Initialisation des Containers
@@ -447,6 +469,28 @@ public class Menu extends JFrame implements Observer {
 			e.printStackTrace();
 		}
 	}
+	
+	public void enregistrer(){
+		try {
+			FileOutputStream fos =  new FileOutputStream(new File("Locale.dat"));
+			ObjectOutputStream oos= new ObjectOutputStream(fos);
+			oos.writeObject(this.getLocale());
+			oos.close();
+			fos.close();
+		} catch (IOException e) {
+			throw new RuntimeException("Impossible d'écrire les données de langue");
+		}
+	}
+
+	public Locale charger() throws IOException, ClassNotFoundException {
+		//Locale
+		FileInputStream fis = new FileInputStream(new File("Locale.dat"));
+		ObjectInputStream ois = new ObjectInputStream(fis);
+		Locale l = (Locale)ois.readObject();
+		ois.close();
+		fis.close();
+		return l;
+	}
 
 	public static void main(String[] args) {
 		new Menu();
@@ -472,6 +516,15 @@ public class Menu extends JFrame implements Observer {
 		else {
 			if(o.getClass() == Couleur.class) {
 				this.repaint();
+				try {
+					FileOutputStream fos =  new FileOutputStream(new File("Couleur.dat"));
+					ObjectOutputStream oos= new ObjectOutputStream(fos);
+					oos.writeObject(this.couleur);
+					oos.close();
+					fos.close();
+				} catch (IOException e) {
+					throw new RuntimeException("Impossible d'écrire les données de couleur");
+				}
 			}
 			
 		}
@@ -479,8 +532,10 @@ public class Menu extends JFrame implements Observer {
 
 	@Override
 	public void setLocale(Locale l) {
+		System.out.println(l.getCountry());
 		super.setLocale(l);
 		this.repaint();
+		this.enregistrer();
 	}
 
 	public void lettreJoker(String lettre) {
