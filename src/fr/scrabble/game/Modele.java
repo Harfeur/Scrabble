@@ -28,8 +28,8 @@ public class Modele extends Observable{
 	public Integer numChevalet;
 	public Score[] score;
 	public int scoreAv;
-	MotPlace motBas, motDroite;
-	ArrayList<Placement> placementEnCours;
+	public MotPlace motBas, motDroite;
+	public ArrayList<Placement> placementEnCours;
 	Dictionnaire dico;
 	String lettreChoisi, langue;
 	int motbasOk, motdroiteOk, passe=0, difficulte;
