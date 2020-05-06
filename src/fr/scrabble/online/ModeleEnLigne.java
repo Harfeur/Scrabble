@@ -34,4 +34,9 @@ public class ModeleEnLigne extends Modele {
 		this.client.message(String.valueOf(col));
 		this.client.message(String.valueOf(lig));
 	}
+	
+	@Override
+	public void melanger() {
+		this.client.message("melanger");
+	}
 }

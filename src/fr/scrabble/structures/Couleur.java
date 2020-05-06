@@ -1,9 +1,10 @@
 package fr.scrabble.structures;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Observable;
 
-public class Couleur extends Observable {
+public class Couleur extends Observable implements Serializable{
 
 	int couleur;
 	Color[] lettre = {Color.black,Color.LIGHT_GRAY};

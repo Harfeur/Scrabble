@@ -2,8 +2,6 @@ package fr.scrabble.online.vues;
 
 import javax.swing.JButton;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.*;
@@ -36,10 +34,10 @@ public class VueStart extends JPanel implements ActionListener, Observer {
 		this.c = c;
 		this.menu = menu;
 		
-		Font font = new Font("Arial",Font.BOLD,(int) (15*Menu.SCALE));
+		Font font = new Font("Arial",Font.BOLD,(int) (15*this.menu.zoom()));
 		
 		prenom_l = new JLabel();
-		ip_l = new JLabel("Adresse IP : ");	
+		ip_l = new JLabel();	
 		
 		this.prenom_t = new JTextField("Bernadette",10);	
 		this.ip_t = new JTextField("127.0.0.1",10);
@@ -56,7 +54,7 @@ public class VueStart extends JPanel implements ActionListener, Observer {
 		
 		valider.addActionListener(this);
 		
-        this.setBounds((int) (240*Menu.SCALE),(int) (240*Menu.SCALE),(int) (150*Menu.SCALE),(int) (120*Menu.SCALE));
+        this.setBounds((int) (240*this.menu.zoom()+this.menu.decalageX()),(int) (240*this.menu.zoom()+this.menu.decalageY()),(int) (150*this.menu.zoom()),(int) (120*this.menu.zoom()));
 		
 		this.add(prenom_l);
 		this.add(prenom_t);
@@ -69,6 +67,17 @@ public class VueStart extends JPanel implements ActionListener, Observer {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+        this.setBounds((int) (240*this.menu.zoom()+this.menu.decalageX()),(int) (240*this.menu.zoom()+this.menu.decalageY()),(int) (150*this.menu.zoom()),(int) (120*this.menu.zoom()));
+
+        Font font = new Font("Arial",Font.BOLD,(int) (15*this.menu.zoom()));
+		
+		prenom_l.setFont(font);
+		this.prenom_t.setFont(font);
+		ip_l.setFont(font);	
+		this.ip_t.setFont(font);
+		valider.setFont(font);
+        
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.prenom_l.setText(strings.getString("prenom"));
 		this.ip_l.setText(strings.getString("IP"));
@@ -93,8 +102,7 @@ public class VueStart extends JPanel implements ActionListener, Observer {
 	
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		if(o.getClass() == Couleur.class) {
+		if(o instanceof Couleur) {
 			this.c = (Couleur) o;
 			this.repaint();
 		}

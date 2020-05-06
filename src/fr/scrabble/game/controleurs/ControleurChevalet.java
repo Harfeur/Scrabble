@@ -11,15 +11,18 @@ import fr.scrabble.menu.Menu;
 public class ControleurChevalet implements MouseInputListener {
 
 	private Modele m;
+	private Menu menu;
 	
-	public ControleurChevalet(Modele m) {
+	
+	public ControleurChevalet(Modele m, Menu menu) {
 		super();
 		this.m = m;
+		this.menu = menu;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int num = (int) ((e.getX()-(20*Menu.SCALE)) / (VueChevalet.TAILLE*Menu.SCALE));
+		int num = (int) ((e.getX()-(22*this.menu.zoom())) / (VueChevalet.TAILLE*this.menu.zoom()*1.15));
 		m.selectLettre(num);
 	}
 

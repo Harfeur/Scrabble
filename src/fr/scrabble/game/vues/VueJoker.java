@@ -7,17 +7,13 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javax.imageio.ImageIO;
-import java.io.IOException;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import fr.scrabble.game.Modele;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.structures.Couleur;
 import fr.scrabble.structures.Sac;
@@ -101,13 +97,21 @@ public class VueJoker extends JFrame implements ListSelectionListener, ActionLis
 	
 	class JokerList extends DefaultListCellRenderer{
 		
+		@SuppressWarnings("rawtypes")
+		@Override
 		public Component getListCellRendererComponent(JList list, Object value, int index,boolean isSelected, boolean cellHasFocus) {
 			JLabel label = (JLabel) super.getListCellRendererComponent(
                     list, value, index, isSelected, cellHasFocus);
 			for(int i=0;i<lettre.size();i++) {
 	        	if(value.equals(lettre.get(i))) {
 	        		Image im = null;
-					im = new ImageIcon(getClass().getResource("/resources/images/lettre/letter_"+lettre.get(i)+".png")).getImage().getScaledInstance((int)(VuePlateau.TAILLE*Menu.SCALE), (int) (VuePlateau.TAILLE*Menu.SCALE), Image.SCALE_DEFAULT);
+	        		if (c.getCouleur() == 0) {
+						im = new ImageIcon(getClass().getResource("/resources/images/lettre/letter_"+lettre.get(i)+".png")).getImage().getScaledInstance((int)(VuePlateau.TAILLE*Menu.SCALE), (int) (VuePlateau.TAILLE*Menu.SCALE), Image.SCALE_DEFAULT);
+
+	        		}
+	        		else {
+						im = new ImageIcon(getClass().getResource("/resources/images/lettreSombre/letter_"+lettre.get(i)+".png")).getImage().getScaledInstance((int)(VuePlateau.TAILLE*Menu.SCALE), (int) (VuePlateau.TAILLE*Menu.SCALE), Image.SCALE_DEFAULT);
+	        		}
 	        		label.setIcon(new ImageIcon(im));
 	        		label.setText("");
 	        	}

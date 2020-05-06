@@ -4,11 +4,22 @@ import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
@@ -21,7 +32,6 @@ import fr.scrabble.menu.vues.*;
 import fr.scrabble.online.*;
 import fr.scrabble.online.vues.*;
 import fr.scrabble.structures.Couleur;
-import fr.scrabble.structures.Lettre;
 import fr.scrabble.structures.Score;
 
 @SuppressWarnings("serial")
@@ -30,7 +40,7 @@ public class Menu extends JFrame implements Observer {
 	public static double SCALE = 1.5;
 	public static Locale[] LOCALES = {new Locale("fr", "FR"), new Locale("en", "US"), new Locale("es", "MX")};
 	
-	public enum Vues { AFFICHER, MASQUER, FINALE }
+	public enum Vues { AFFICHER, JOKER, FINALE }
 
 	Container containerChargement, containerMenu, containerHorsLigne, containerNomJoueurHorsLigne, containerInstructionHorsLigne,
 	containerEnLigne, containerClient, containerServeur, containerAttente, containerRejete, containerScore;
@@ -51,16 +61,16 @@ public class Menu extends JFrame implements Observer {
 	ModeleEnLigne modeleEnLigne;
 	
 	public Couleur couleur;
-	private boolean enLigne;
+	private boolean enLigne, langue=false;
 	
 
 	public Menu () {
 		super("Scrabble");
-
-		this.setLocale(Locale.getDefault());
-
-		this.couleur = new Couleur();
-		this.couleur.addObserver(this);
+		
+		langue=true;
+		
+		ImageIcon img = new ImageIcon(Menu.class.getResource("/resources/images/lettre/letter_S.png"));
+		this.setIconImage(img.getImage());
 
 		// Initialisation des Containers
 		this.containerChargement = new Container();
@@ -77,12 +87,35 @@ public class Menu extends JFrame implements Observer {
 
 		// Création et paramétrage de la fenêtre
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setPreferredSize(new Dimension((int) (600*Menu.SCALE), (int) (600*Menu.SCALE)));
+		this.setPreferredSize(new Dimension(900, 900));
+		this.setMinimumSize(new Dimension(900, 900));
 		this.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		this.setAutoRequestFocus(false);
-		this.setResizable(false);
+		this.setResizable(true);
 
 		this.pack();
+		
+		try {
+			//Locale
+			FileInputStream fis = new FileInputStream(new File("Locale.dat"));
+			ObjectInputStream ois = new ObjectInputStream(fis);
+			Locale l = (Locale)ois.readObject();
+			ois.close();
+			fis.close();
+			this.setLocale(l);
+			
+			FileInputStream fis1 = new FileInputStream(new File("Couleur.dat"));
+			ObjectInputStream ois1 = new ObjectInputStream(fis1);
+			this.couleur = (Couleur)ois1.readObject();
+			ois1.close();
+			fis1.close();
+		}
+		catch(IOException | ClassNotFoundException e) {
+			this.setLocale(Locale.getDefault());
+			this.couleur = new Couleur();
+		}
+		
+		this.couleur.addObserver(this);
 
 		Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
 		int x = (int) ((dimension.getWidth() - this.getWidth()) / 2);
@@ -93,13 +126,12 @@ public class Menu extends JFrame implements Observer {
 		JProgressBar loading = new JProgressBar(0, 10);
 		
 		this.vueChargement(loading);
-
 		// Barre de menu
 		VueMenuBar vueMenuBar = new VueMenuBar(this);
 		this.setJMenuBar(vueMenuBar);
 
 		// Chargement des Vues
-		this.fondMenu = new VueMenu(this.couleur);
+		this.fondMenu = new VueMenu(this.couleur, this);
 		loading.setValue(1);
 		
 		this.vueBoutonHorsLigne = new VueBoutonHorsLigne(this, this.couleur);
@@ -128,7 +160,6 @@ public class Menu extends JFrame implements Observer {
 		
 		this.vueChevalet = new VueChevalet(this);
 		loading.setValue(10);
-
 		this.vueMenu();
 	}
 
@@ -164,6 +195,8 @@ public class Menu extends JFrame implements Observer {
 	public void vueMenu() {
 		this.removeAll();
 		
+		((VueMenuBar) this.getJMenuBar()).masquerSauvegarde();
+		
 		this.containerMenu = new JLayeredPane();
 
 		containerMenu.setBounds(0, 0, (int) (600*Menu.SCALE), (int) (600*Menu.SCALE));
@@ -184,17 +217,16 @@ public class Menu extends JFrame implements Observer {
 
 		this.modeleHorsLigne = new Modele(this);
 		
-		VueMenuBar vueMenuBar = new VueMenuBar(this,this.modeleHorsLigne);
-		this.setJMenuBar(vueMenuBar);
+		((VueMenuBar) this.getJMenuBar()).afficherSauvegarde(modeleHorsLigne);
 
-		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
-		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
+		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne, this);
+		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne, this);
 		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
 
 		this.vuePlateau.initialiser(cp);
 		this.vueChevalet.initialiser(cc);
 		VueBouton vueBouton = new VueBouton(cb,this);
-		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
+		VueConsole vueConsole = new VueConsole(modeleHorsLigne, this);
 
 		this.modeleHorsLigne.addObserver(vuePlateau);
 		this.modeleHorsLigne.addObserver(vueChevalet);
@@ -227,17 +259,16 @@ public class Menu extends JFrame implements Observer {
 
 		this.modeleHorsLigne = new Modele(this);
 		
-		VueMenuBar vueMenuBar = new VueMenuBar(this,this.modeleHorsLigne);
-		this.setJMenuBar(vueMenuBar);
+		((VueMenuBar) this.getJMenuBar()).afficherSauvegarde(modeleHorsLigne);
 
-		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne);
-		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne);
+		ControleurPlateau cp = new ControleurPlateau(modeleHorsLigne, this);
+		ControleurChevalet cc = new ControleurChevalet(modeleHorsLigne, this);
 		ControleurBouton cb = new ControleurBouton(modeleHorsLigne);
 
 		this.vuePlateau.initialiser(cp);
 		this.vueChevalet.initialiser(cc);
 		VueBouton vueBouton = new VueBouton(cb,this);
-		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
+		VueConsole vueConsole = new VueConsole(modeleHorsLigne, this);
 
 		this.modeleHorsLigne.addObserver(vuePlateau);
 		this.modeleHorsLigne.addObserver(vueChevalet);
@@ -254,7 +285,7 @@ public class Menu extends JFrame implements Observer {
 		this.containerHorsLigne.add(vueChevalet,1,0);
 		this.containerHorsLigne.add(vueBouton,1,0);
 		this.containerHorsLigne.add(vueScore,1,0);
-		this.containerHorsLigne.add(vueConsole,1);
+		this.containerHorsLigne.add(vueConsole,1,0);
 
 		this.add(this.containerHorsLigne);
 
@@ -306,14 +337,14 @@ public class Menu extends JFrame implements Observer {
 
 		this.modeleEnLigne = new ModeleEnLigne(this.client, this);
 
-		ControleurPlateau cp = new ControleurPlateau(modeleEnLigne);
-		ControleurChevalet cc = new ControleurChevalet(modeleEnLigne);
+		ControleurPlateau cp = new ControleurPlateau(modeleEnLigne, this);
+		ControleurChevalet cc = new ControleurChevalet(modeleEnLigne, this);
 		ControleurBouton cb = new ControleurBouton(modeleEnLigne);
 
 		this.vuePlateau.initialiser(cp);
 		this.vueChevalet.initialiser(cc);
 		VueBouton vueBouton = new VueBouton(cb,this);
-		VueConsole vueConsole = new VueConsole(modeleHorsLigne);
+		VueConsole vueConsole = new VueConsole(modeleHorsLigne, this);
 
 		this.client.addObserver(vuePlateau);
 		this.client.addObserver(vueChevalet);
@@ -427,11 +458,21 @@ public class Menu extends JFrame implements Observer {
 		if (!enLigne)
 			this.modeleHorsLigne.suppFile();
 		
-		
-		containerScore.add(new VueScoreFin(),0,0);
-		containerScore.add(new VueScoreFin(score),1,0);
+		containerScore.add(new VueMenu(couleur, this),0,0);
+		containerScore.add(new VueScoreFin(score, this),1,0);
 		this.add(containerScore);
 		this.setVisible(true);
+		this.fin=false;
+		
+		try {
+			URL url = Menu.class.getResource("/resources/sounds/end.wav");
+			Clip clip = AudioSystem.getClip();
+			AudioInputStream ais = AudioSystem.getAudioInputStream(url);
+			clip.open(ais);
+			clip.loop(0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public static void main(String[] args) {
@@ -442,12 +483,8 @@ public class Menu extends JFrame implements Observer {
 	public void update(Observable o, Object arg) {
 		if (arg != null && arg.getClass() == Vues.class) {
 			Vues vue = (Vues) arg;
-			if (vue.equals(Vues.MASQUER)) {
-				this.setVisible(false);
+			if (vue.equals(Vues.JOKER)) {
 				new VueJoker("FR", this);
-			}
-			if (vue.equals(Vues.AFFICHER)) {
-				this.setVisible(true);
 			}
 			if (vue.equals(Vues.FINALE)) {
 				this.fin=true;
@@ -462,6 +499,15 @@ public class Menu extends JFrame implements Observer {
 		else {
 			if(o.getClass() == Couleur.class) {
 				this.repaint();
+				try {
+					FileOutputStream fos =  new FileOutputStream(new File("Couleur.dat"));
+					ObjectOutputStream oos= new ObjectOutputStream(fos);
+					oos.writeObject(this.couleur);
+					oos.close();
+					fos.close();
+				} catch (IOException e) {
+					throw new RuntimeException("Impossible d'écrire les données de couleur");
+				}
 			}
 			
 		}
@@ -471,6 +517,17 @@ public class Menu extends JFrame implements Observer {
 	public void setLocale(Locale l) {
 		super.setLocale(l);
 		this.repaint();
+		if (langue) {
+			try {
+				FileOutputStream fos =  new FileOutputStream(new File("Locale.dat"));
+				ObjectOutputStream oos= new ObjectOutputStream(fos);
+				oos.writeObject(this.getLocale());
+				oos.close();
+				fos.close();
+			} catch (IOException e) {
+				throw new RuntimeException("Impossible d'écrire les données de langue");
+			}
+		}
 	}
 
 	public void lettreJoker(String lettre) {
@@ -478,6 +535,24 @@ public class Menu extends JFrame implements Observer {
 			client.message(lettre);
 		else
 			modeleHorsLigne.lettreJoker(lettre);
+	}
+
+	public int decalageX() {
+		if (this.getHeight() >= this.getWidth())
+			return 0;
+		return (this.getWidth()-this.getHeight())/2;
+	}
+	
+	public int decalageY() {
+		if (this.getHeight() <= this.getWidth())
+			return 0;
+		return (this.getHeight()-this.getWidth())/2;
+	}
+	
+	public double zoom() {
+		if (this.getHeight() <= this.getWidth())
+			return this.getHeight() / 600.0;
+		return this.getWidth() / 600.0;
 	}
 }
 

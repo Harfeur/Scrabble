@@ -44,7 +44,7 @@ public class VueBoutonServeur extends JPanel implements Observer, ActionListener
 
 	@Override
 	public void update(Observable o, Object arg) {
-		if(o.getClass() == Couleur.class) {
+		if(o instanceof Couleur) {
 			this.c = (Couleur) o;
 			this.repaint();
 		}
@@ -53,6 +53,9 @@ public class VueBoutonServeur extends JPanel implements Observer, ActionListener
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+		this.setBounds((int) (125*this.menu.zoom()+this.menu.decalageX()), (int) (350*this.menu.zoom()+this.menu.decalageY()), (int) (300*this.menu.zoom()), (int) (300*this.menu.zoom()));
+
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.b.setText(strings.getString("serveur"));
 		this.b.setForeground(this.c.getColorLettre());

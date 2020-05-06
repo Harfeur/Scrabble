@@ -7,9 +7,10 @@ import java.io.Serializable;
 import java.net.URL;
 import java.util.Arrays;
 
+import fr.scrabble.menu.vues.ErrorFrame;
 import fr.scrabble.structures.Case.Multiplicateur;
 
-public class Plateau implements Serializable{
+public class Plateau implements Serializable {
 
 	private static final long serialVersionUID = -8869397609730203863L;
 	
@@ -44,8 +45,7 @@ public class Plateau implements Serializable{
 			}
 			reader.close();
 		} catch(IOException e1) {
-			System.out.print("Erreur");
-			System.exit(0);
+			new ErrorFrame("Fichiers manquants");
 		}
 	}
 
@@ -55,16 +55,16 @@ public class Plateau implements Serializable{
 	
 	@Override
 	public String toString() {
-		String str = "";
+		StringBuffer buf = new StringBuffer();
 		for (Case[] cases : plateau) {
 			for (Case case1 : cases) {
 				if (case1.lettre != null)
-					str += case1.lettre.lettre;
+					buf.append(case1.lettre.lettre);
 				else
-					str += "-";
+					buf.append('-');
 			}
 		}
-		return str;
+		return buf.toString();
 	}
 	
 	@Override
@@ -79,6 +79,14 @@ public class Plateau implements Serializable{
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.deepHashCode(plateau);
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -87,8 +95,8 @@ public class Plateau implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Plateau other = (Plateau) obj;
-		if (other.toString().equals(this.toString()))
-			return true;
-		return false;
+		if (!Arrays.deepEquals(plateau, other.plateau))
+			return false;
+		return true;
 	}
 }

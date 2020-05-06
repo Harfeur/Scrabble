@@ -43,6 +43,7 @@ public class UserThread extends Thread {
 				if (serveur.gameStarted) {
 					out.writeObject("gameJoined");
 					out.writeObject("starting");
+					this.serveur.update(null, username + " s'est reconnecté");
 					serveur.getData(username);
 				}
 				else
@@ -65,6 +66,8 @@ public class UserThread extends Thread {
 					case "ajoutLettre":
 						this.serveur.ajoutLettre(this.username, Integer.parseInt(in.readLine()), Integer.parseInt(in.readLine()));
 						break;
+					case "melanger":
+						this.serveur.melanger(this.username);
 					default:
 						this.serveur.modele.lettreJoker(inputLine);
 					}
@@ -83,9 +86,9 @@ public class UserThread extends Thread {
 			serveur.disconnected(username, this);
 		}
 		catch (IOException e) {
-			e.printStackTrace();
+			serveur.disconnected(username, this);
 		} finally {
-			this.serveur.remove(this);
+			this.serveur.disconnected(username, this);
 		}
 	}
 

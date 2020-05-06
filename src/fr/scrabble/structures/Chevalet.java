@@ -23,6 +23,7 @@ public class Chevalet extends ArrayList<Lettre> implements Serializable{
 		this.add(l);
 	}
 	
+	
 	/**
 	 * Cette methode modifie l'attribut lettreSelectionee
 	 * @param num Lettre qui doit etre selectionee
@@ -47,13 +48,13 @@ public class Chevalet extends ArrayList<Lettre> implements Serializable{
 	
 	@Override
 	public String toString() {
-		String str = "";
+		StringBuffer buf = new StringBuffer();
 		for (Lettre lettre : this) {
 			if (lettre.lettre.equals("JOKER"))
-				str += "*";
+				buf.append('*');
 			else
-				str += lettre.lettre;
+				buf.append(lettre.lettre);
 		}
-		return str;
+		return buf.toString();
 	}
 }

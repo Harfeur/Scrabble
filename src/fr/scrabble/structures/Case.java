@@ -1,6 +1,5 @@
 package fr.scrabble.structures;
 
-import java.awt.Color;
 import java.io.Serializable;
 import java.net.URL;
 
@@ -11,24 +10,23 @@ public class Case implements Serializable{
 	
 	public enum Multiplicateur implements Serializable{
 		
-		SIMPLE (simple, "S"),
-		LETTRE_DOUBLE (ld, "LD"),
-		MOT_DOUBLE (md, "MD"),
-		LETTRE_TRIPLE (lt, "LT"),
-		MOT_TRIPLE (mt, "MT");
+		SIMPLE ("S"),
+		LETTRE_DOUBLE ("LD"),
+		MOT_DOUBLE ("MD"),
+		LETTRE_TRIPLE ("LT"),
+		MOT_TRIPLE ("MT");
 		
-		private URL couleur;
 		private String libelle;
 		
 		private static final long serialVersionUID = 315206622012546523L;
 		
-		private Multiplicateur(URL simple2, String l) {
-			this.couleur = simple2;
+		private Multiplicateur(String l) {
 			this.libelle = l;
 		}
 		
-		public String toString() { return this.libelle; }
-		public URL getCouleur() { return Multiplicateur.class.getResource("/resources/images/plateau/"+this.libelle+".png"); }
+		public String toString() {
+			return this.libelle;
+		}
 	};
 	
 	
@@ -41,7 +39,6 @@ public class Case implements Serializable{
 	
 	public void ajouterLettre(Lettre lettre) {
 		this.lettre =lettre;
-		// TODO: Exception
 	}
 
 	@Override

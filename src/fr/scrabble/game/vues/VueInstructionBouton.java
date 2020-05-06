@@ -1,6 +1,5 @@
 package fr.scrabble.game.vues;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -15,7 +14,6 @@ import java.util.ResourceBundle;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
@@ -40,6 +38,8 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 	ControleurBoutons cb;
 	Menu menu;
 	Couleur c;
+	private JPanel pan1;
+	private JPanel pan;
 	
 	public VueInstructionBouton(Menu menu, ControleurBoutons contb) {
 		super();
@@ -49,7 +49,7 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 		this.setLayout(null);
 		
 		this.liste_langues = new JComboBox<String>();
-		liste_langues.setPreferredSize(new Dimension(150, 50));
+		liste_langues.setPreferredSize(new Dimension((int) (100*this.menu.zoom()), (int) (33*this.menu.zoom())));
 		liste_langues.setEditable(false);
 		liste_langues.addItemListener(cb);
 		
@@ -73,36 +73,35 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 		groupe.add(this.deux);
 		groupe.add(this.trois);
 		groupe.add(this.quatre);
-        this.setPreferredSize(new Dimension(600,600));
-        this.setBounds(70, 50, (int) (500*Menu.SCALE), (int) (500*Menu.SCALE));
+        this.setPreferredSize(new Dimension((int) (400*this.menu.zoom()),(int) (400*this.menu.zoom())));
+        this.setBounds((int) (47*this.menu.zoom()+this.menu.decalageX()), (int) (33*this.menu.zoom()+this.menu.decalageY()), (int) (500*this.menu.zoom()), (int) (500*this.menu.zoom()));
         this.setOpaque(false);
         
-        JPanel pan1 = new JPanel();
+        this.pan1 = new JPanel();
         pan1.add(liste_langues);
         pan1.setOpaque(false);
-        pan1.setPreferredSize(new Dimension(150,50));
-        pan1.setBounds(450, 350, 150, 50);
+        pan1.setPreferredSize(new Dimension((int) (100*this.menu.zoom()),(int) (33*this.menu.zoom())));
+        pan1.setBounds((int) (300*this.menu.zoom()), (int) (233*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (33*this.menu.zoom()));
         
-        JPanel pan = new JPanel();
+        this.pan = new JPanel();
         pan.add(this.un);
         pan.add(this.deux);
         pan.add(this.trois);
         pan.add(this.quatre);
         pan.setOpaque(false);
-        pan.setPreferredSize(new Dimension(100,100));
-        pan.setBounds(150, 350,100, 150);
+        pan.setPreferredSize(new Dimension((int) (66*this.menu.zoom()),(int) (66*this.menu.zoom())));
+        pan.setBounds((int) (100*this.menu.zoom()), (int) (233*this.menu.zoom()),(int) (66*this.menu.zoom()), (int) (100*this.menu.zoom()));
         
         this.joueur = new JTextArea();
-        Font f = new Font("Arial",Font.BOLD,(int)(10*Menu.SCALE));
+        Font f = new Font("Arial",Font.BOLD,(int)(10*this.menu.zoom()));
         joueur.setFont(f);
-        joueur.setBounds(140,315,this.joueur.getText().length()*8,25);
+        joueur.setBounds((int) (93*this.menu.zoom()),(int) (210*this.menu.zoom()),(int) (this.joueur.getText().length()*5*this.menu.zoom()),(int) (16*this.menu.zoom()));
         joueur.setEditable(false);
         joueur.setOpaque(true);
         
         this.langue = new JTextArea();
-        Font fl = new Font("Arial",Font.BOLD,(int)(10*Menu.SCALE));
-        langue.setFont(fl);
-        langue.setBounds(470,315,this.langue.getText().length()*9,25);
+        langue.setFont(f);
+        langue.setBounds((int) (313*this.menu.zoom()),(int) (210*this.menu.zoom()), (int) (this.langue.getText().length()*6*this.menu.zoom()),(int) (16*this.menu.zoom()));
         langue.setEditable(false);
         langue.setOpaque(true);
         
@@ -113,15 +112,15 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         this.add(langue);
         
         if(testSauvegarde()) {
-            valide.setBounds(400, 550, 150,50);
+            valide.setBounds((int) (266*this.menu.zoom()), (int) (366*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (33*this.menu.zoom()));
             
-            sauver.setBounds(200, 550, 150,50);
+            sauver.setBounds((int) (133*this.menu.zoom()), (int) (366*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (33*this.menu.zoom()));
             
         	this.add(valide);
         	this.add(sauver);
         }
         else {
-        	valide.setBounds(300, 550, 150,50);
+        	valide.setBounds((int) (200*this.menu.zoom()), (int) (366*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (33*this.menu.zoom()));
             
         	this.add(valide);
         }
@@ -162,13 +161,41 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
 			this.menu.vueHorsLigne();
 		}
 		if(e.getActionCommand().equals("Commencer")){
-			this.cb.NombreJoueur(getNbJoueur());
+			this.cb.nombreJoueur(getNbJoueur());
 		}
 	}
 	
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+        this.setPreferredSize(new Dimension((int) (400*this.menu.zoom()),(int) (400*this.menu.zoom())));
+        this.setBounds((int) (47*this.menu.zoom()+this.menu.decalageX()), (int) (33*this.menu.zoom()+this.menu.decalageY()), (int) (500*this.menu.zoom()), (int) (500*this.menu.zoom()));
+		
+        pan1.setPreferredSize(new Dimension((int) (100*this.menu.zoom()),(int) (33*this.menu.zoom())));
+        pan1.setBounds((int) (300*this.menu.zoom()), (int) (233*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (33*this.menu.zoom()));
+
+        pan.setPreferredSize(new Dimension((int) (66*this.menu.zoom()),(int) (66*this.menu.zoom())));
+        pan.setBounds((int) (100*this.menu.zoom()), (int) (233*this.menu.zoom()),(int) (66*this.menu.zoom()), (int) (100*this.menu.zoom()));
+
+        Font f = new Font("Arial",Font.BOLD,(int)(10*this.menu.zoom()));
+        joueur.setFont(f);
+        langue.setFont(f);
+
+        if(testSauvegarde()) {
+            valide.setBounds((int) (266*this.menu.zoom()), (int) (366*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (33*this.menu.zoom()));
+            
+            sauver.setBounds((int) (133*this.menu.zoom()), (int) (366*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (33*this.menu.zoom()));
+            
+        	this.add(valide);
+        	this.add(sauver);
+        }
+        else {
+        	valide.setBounds((int) (200*this.menu.zoom()), (int) (366*this.menu.zoom()), (int) (100*this.menu.zoom()), (int) (33*this.menu.zoom()));
+            
+        	this.add(valide);
+        }
+        
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", menu.getLocale());
 		this.un.setText(String.format(strings.getString("x_joueurs"), 1));
 		this.deux.setText(String.format(strings.getString("x_joueurs"), 2));
@@ -201,8 +228,8 @@ public class VueInstructionBouton extends JPanel implements ActionListener{
         this.valide.setForeground(this.c.getColorLettre());
         this.sauver.setForeground(this.c.getColorLettre());
         
-        langue.setBounds(470,315,this.langue.getText().length()*9,25);
-        joueur.setBounds(140,315,this.joueur.getText().length()*8,25);
+        langue.setBounds((int) (313*this.menu.zoom()),(int) (210*this.menu.zoom()), (int) (this.langue.getText().length()*6*this.menu.zoom()), (int) (16*this.menu.zoom()));
+        joueur.setBounds((int) (93*this.menu.zoom()), (int) (210*this.menu.zoom()), (int) (this.joueur.getText().length()*6*this.menu.zoom()), (int) (16*this.menu.zoom()));
 	}
 }
 

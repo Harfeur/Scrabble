@@ -41,8 +41,8 @@ public class VueChevalet extends JPanel implements Observer {
 		this.menu = menu;
 		this.couleur = menu.couleur;
 		this.lettrerest = new JTextArea();
-		lettrerest.setPreferredSize(new Dimension(30,15));
-        lettrerest.setBounds(30,315,30,15);
+		lettrerest.setPreferredSize(new Dimension((int) (20*this.menu.zoom()),(int) (15*this.menu.zoom())));
+        lettrerest.setBounds((int) (20*this.menu.zoom()),(int) (210*this.menu.zoom()),(int) (20*this.menu.zoom()),(int) (10*this.menu.zoom()));
         lettrerest.setEditable(false);
         lettrerest.setOpaque(true);
         this.setOpaque(false);
@@ -98,7 +98,7 @@ public class VueChevalet extends JPanel implements Observer {
 				Character c = (char) ('A'+i-81);
 				lettre = c.toString();
 			}
-			Image img = Toolkit.getDefaultToolkit().getImage(Lettre.class.getResource("/resources/images/lettreSombreSelectionnee/letter_"+lettre+".png"));
+			Image img = Toolkit.getDefaultToolkit().getImage(Lettre.class.getResource("/resources/images/LettreSombreSelectionnee/letter_"+lettre+".png"));
 			mt.addImage(img, i);
 			this.images.add(img);
 		}
@@ -111,8 +111,8 @@ public class VueChevalet extends JPanel implements Observer {
 
 		this.putClientProperty("color", this.couleur.getCouleur());
 
-		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*15*Menu.SCALE),(int) (VuePlateau.TAILLE*3*Menu.SCALE)));
-		this.setBounds(0, (int) (VuePlateau.TAILLE*15*Menu.SCALE+(TAILLE*Menu.SCALE)), (int) (VuePlateau.TAILLE*15*Menu.SCALE), (int) (VuePlateau.TAILLE*3*Menu.SCALE));
+		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*16*this.menu.zoom()),(int) (VuePlateau.TAILLE*3*this.menu.zoom())));
+		this.setBounds(this.menu.decalageX(), (int) (VuePlateau.TAILLE*15*this.menu.zoom()+(TAILLE*this.menu.zoom())+this.menu.decalageY()), (int) (VuePlateau.TAILLE*16*this.menu.zoom()), (int) (VuePlateau.TAILLE*3*this.menu.zoom()));
 	}
 
 	public void initialiser(MouseInputListener l) {
@@ -125,36 +125,41 @@ public class VueChevalet extends JPanel implements Observer {
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+		this.setPreferredSize(new Dimension((int) (VuePlateau.TAILLE*16*this.menu.zoom()),(int) (VuePlateau.TAILLE*3*this.menu.zoom())));
+		this.setBounds(this.menu.decalageX(), (int) (VuePlateau.TAILLE*15*this.menu.zoom()+(TAILLE*this.menu.zoom())+this.menu.decalageY()), (int) (VuePlateau.TAILLE*16*this.menu.zoom()), (int) (VuePlateau.TAILLE*3*this.menu.zoom()));
 
 		if ((int) this.getClientProperty("color") != this.couleur.getCouleur())
 			this.putClientProperty("color", this.couleur.getCouleur());
 
 		//Fond chevalet
 		g.setColor(this.chevaletC[this.couleur.getCouleur()]);
-		int[] xPoints = {0, (int) (Menu.SCALE*20), (int) ((TAILLE*7+20)*Menu.SCALE), (int) ((40+TAILLE*7)*Menu.SCALE)};
-		int[] yPoints = {(int) (TAILLE*1.5*Menu.SCALE), (int) (TAILLE*0.5*Menu.SCALE), (int) (TAILLE*0.5*Menu.SCALE), (int) (TAILLE*1.5*Menu.SCALE)};
+		int[] xPoints = {0, (int) (this.menu.zoom()*20), (int) ((VuePlateau.TAILLE*16-20)*this.menu.zoom()), (int) (VuePlateau.TAILLE*16*this.menu.zoom())};
+		int[] yPoints = {(int) (TAILLE*1.5*this.menu.zoom()), (int) (TAILLE*0.5*this.menu.zoom()), (int) (TAILLE*0.5*this.menu.zoom()), (int) (TAILLE*1.5*this.menu.zoom())};
  		g.fillPolygon(xPoints, yPoints, 4);
 		//g.setColor(this.chevaletC[this.couleur.getCouleur()+1]);
 		//g.drawRect(115, (int) (TAILLE*Menu.SCALE), (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
 
 		//Nom joueur
 		if(this.score!=null) {
-			Font font_joueur = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;
+			Font font_joueur = new Font("Arial",Font.PLAIN,(int)(15*this.menu.zoom())) ;
 			//FontMetrics metrics_joueur = getFontMetrics(font_joueur);
 			g.setFont(font_joueur);
 			g.setColor(Color.WHITE);
 			//g.drawString(prenom.getPrenom(),metrics_joueur.getDescent(),metrics_joueur.getAscent());
-			g.drawString(score.getPrenom(),(int) (20*Menu.SCALE),(int) (TAILLE*1.4*Menu.SCALE));
+			g.drawString(score.getPrenom(),(int) (15*this.menu.zoom()),(int) (TAILLE*1.4*this.menu.zoom()));
 		}
 
 		//Lettre restante
-		Font font_lr = new Font("Arial",Font.PLAIN,(int)(15*Menu.SCALE)) ;
+		Font font_lr = new Font("Arial",Font.PLAIN,(int)(15*this.menu.zoom())) ;
 		FontMetrics metrics_lr = getFontMetrics(font_lr);
+		lettrerest.setPreferredSize(new Dimension((int) (20*this.menu.zoom()),(int) (15*this.menu.zoom())));
+        lettrerest.setBounds((int) (20*this.menu.zoom()),(int) (210*this.menu.zoom()),(int) (20*this.menu.zoom()),(int) (10*this.menu.zoom()));
 		this.lettrerest.setFont(font_lr);
 		this.lettrerest.setCaretColor(this.couleur.getColorLettre());
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.lettrerest.setText(strings.getString("lettres_restantes"));
-		g.drawString(this.lettrerest.getText()+this.sac.nombreDeLettres,(int) ((TAILLE*7+20)*Menu.SCALE) - metrics_lr.stringWidth(this.lettrerest.getText()+this.sac.nombreDeLettres),(int) (TAILLE*1.4*Menu.SCALE));
+		g.drawString(this.lettrerest.getText()+this.sac.nbLettre(),(int) ((VuePlateau.TAILLE*16-15)*this.menu.zoom()) - metrics_lr.stringWidth(this.lettrerest.getText()+this.sac.size()),(int) (TAILLE*1.4*this.menu.zoom()));
 
 		
 		//Affichage lettre sur chevalet
@@ -172,7 +177,7 @@ public class VueChevalet extends JPanel implements Observer {
 					index+=27;
 				if ((int) this.getClientProperty("color") == 1)
 					index+=54;
-				g.drawImage(this.images.get(index),(int) ((20+TAILLE*i)*Menu.SCALE), 0 ,(int) (TAILLE*Menu.SCALE),(int) (TAILLE*Menu.SCALE),null);
+				g.drawImage(this.images.get(index),(int) ((22+TAILLE*i*1.15)*this.menu.zoom()), 0 ,(int) (TAILLE*this.menu.zoom()),(int) (TAILLE*this.menu.zoom()),null);
 			}
 	}
 
@@ -181,11 +186,11 @@ public class VueChevalet extends JPanel implements Observer {
 		// Cette fonction change le chevalet selon le modèle
 		if (arg.getClass() == Chevalet.class) {
 			this.chevalet = (Chevalet) arg;
-			this.repaint((int) (20*Menu.SCALE), 0, (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+			this.repaint();
 		}
 		if (arg.getClass() == SetDeChevalets.class) {
 			this.chevalet = ((SetDeChevalets) arg).chevaletEnCours();
-			this.repaint((int) (20*Menu.SCALE), 0, (int) (TAILLE*7*Menu.SCALE),(int) (TAILLE*Menu.SCALE));
+			this.repaint();
 		}
 		//Numero Joueur
 		if (arg.getClass() == Integer.class) {

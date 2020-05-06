@@ -1,8 +1,5 @@
 package fr.scrabble.online.vues;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -19,6 +16,7 @@ import fr.scrabble.menu.Menu;
 import fr.scrabble.online.Client;
 import fr.scrabble.structures.Couleur;
 
+@SuppressWarnings("serial")
 public class VueAttente extends JPanel implements ActionListener, Observer{
 
 	Client client;
@@ -36,13 +34,13 @@ public class VueAttente extends JPanel implements ActionListener, Observer{
 		this.txt = new JLabel();
 		this.lancerPartie = new JButton();
 		
-		Font font = new Font("Arial",Font.BOLD,(int) (15*Menu.SCALE));
+		Font font = new Font("Arial",Font.BOLD,(int) (15*this.menu.zoom()));
 		txt.setFont(font);
 		lancerPartie.setFont(font);		
 		
 		lancerPartie.addActionListener(this);
 		
-        this.setBounds((int) (230*Menu.SCALE),(int) (240*Menu.SCALE),(int) (150*Menu.SCALE),(int) (60*Menu.SCALE));
+        this.setBounds((int) (230*this.menu.zoom()+this.menu.decalageX()),(int) (240*this.menu.zoom()+this.menu.decalageY()),(int) (150*this.menu.zoom()),(int) (60*this.menu.zoom()));
 		
 		this.add(txt);
 		this.add(lancerPartie);
@@ -53,6 +51,12 @@ public class VueAttente extends JPanel implements ActionListener, Observer{
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
+		
+        this.setBounds((int) (230*this.menu.zoom()+this.menu.decalageX()),(int) (240*this.menu.zoom()+this.menu.decalageY()),(int) (150*this.menu.zoom()),(int) (60*this.menu.zoom()));
+		
+        Font font = new Font("Arial",Font.BOLD,(int) (15*this.menu.zoom()));
+		txt.setFont(font);
+		
 		ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 		this.txt.setText(strings.getString("attente"));
 		this.lancerPartie.setText(strings.getString("lancerPartie"));
@@ -71,8 +75,7 @@ public class VueAttente extends JPanel implements ActionListener, Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
-		if(o.getClass() == Couleur.class) {
+		if(o instanceof Couleur) {
 			this.c = (Couleur) o;
 			this.repaint();
 		}

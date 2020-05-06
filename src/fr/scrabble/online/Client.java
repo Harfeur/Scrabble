@@ -4,9 +4,15 @@ import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.URL;
 import java.util.Observable;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+
 import fr.scrabble.menu.Menu;
+import fr.scrabble.menu.vues.ErrorFrame;
 
 public class Client extends Observable implements Runnable {
 	
@@ -44,10 +50,10 @@ public class Client extends Observable implements Runnable {
 	        	this.menu.vueRejete();
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			this.menu.vueRejete();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.menu.dispose();
+			new ErrorFrame(e.getLocalizedMessage());
 		}
 	}
 	
@@ -67,6 +73,16 @@ public class Client extends Observable implements Runnable {
                 if (inputObject.equals("starting")) {
                     System.out.println("La partie démarre");
         			this.menu.vueEnLigne();
+                } else if (inputObject.equals("your_turn")) {
+                	try {
+            			URL url = Client.class.getResource("/resources/sounds/turn.wav");
+            			Clip clip = AudioSystem.getClip();
+            			AudioInputStream ais = AudioSystem.getAudioInputStream(url);
+            			clip.open(ais);
+            			clip.loop(0);
+            		} catch (Exception e) {
+            			e.printStackTrace();
+            		}
                 } else {
                 	this.setChanged();
 					this.notifyObservers(inputObject);
@@ -75,7 +91,8 @@ public class Client extends Observable implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			this.menu.dispose();
+			new ErrorFrame(e.getLocalizedMessage());
 		}
 	}
 

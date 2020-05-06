@@ -3,8 +3,6 @@ package fr.scrabble.game.controleurs;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.SwingUtilities;
-
 import fr.scrabble.game.Modele;
 
 public class ControleurBouton implements ActionListener {
@@ -29,6 +27,13 @@ public class ControleurBouton implements ActionListener {
 			new Thread(new Runnable() {
 	            public void run() {
 	    			m.changementJoueur();
+	            }
+			}).start();
+		}
+		if (e.getActionCommand()=="Melanger") {
+			new Thread(new Runnable() {
+	            public void run() {
+	    			m.melanger();
 	            }
 			}).start();
 		}

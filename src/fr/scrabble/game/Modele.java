@@ -14,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import fr.scrabble.game.vues.VueJoker;
 import fr.scrabble.menu.Menu;
 import fr.scrabble.menu.Menu.Vues;
 import fr.scrabble.structures.*;
@@ -23,20 +22,18 @@ import fr.scrabble.structures.Case.Multiplicateur;
 public class Modele extends Observable{
 
 	public Sac sac;
-	File fichier;
 	public Plateau plateau;
 	public Plateau plateauFictif;
 	public SetDeChevalets chevalets;
 	public Integer numChevalet;
 	public Score[] score;
 	public int scoreAv;
-	ArrayList<MotPlace> motValide;
-	MotPlace motBas, motDroite;
-	ArrayList<Placement> placementEnCours;
+	public MotPlace motBas, motDroite;
+	public ArrayList<Placement> placementEnCours;
 	Dictionnaire dico;
 	String lettreChoisi, langue;
 	int motbasOk, motdroiteOk, passe=0, difficulte;
-	boolean Test1, Test2, premierTour, colonne;
+	boolean Test1, Test2, premierTour;
 	public Menu menu;
 	
 	public Modele(Menu menu) {
@@ -126,7 +123,7 @@ public class Modele extends Observable{
 			this.notifyObservers(this.chevalets);
 			if (this.chevalets.chevaletEnCours().get(num).valeur == 0) {
 				this.setChanged();
-				this.notifyObservers(Vues.MASQUER);
+				this.notifyObservers(Vues.JOKER);
 			}
 		}
 	}
@@ -166,6 +163,21 @@ public class Modele extends Observable{
 		this.setChanged();
 		this.notifyObservers(this.chevalets);
 	}
+	
+	public void melanger() {
+		if(this.placementEnCours.size()!=0) {
+			for(Placement elem: this.placementEnCours) {
+				this.chevalets.chevaletEnCours().remettreLettre(elem.getLetter());
+				elem.getCase().lettre=null;
+			}
+		}
+		for(int elem=0; elem<7;elem++) {
+			this.chevalets.chevaletEnCours().selectionnerLettre(0);
+			Lettre l = this.chevalets.chevaletEnCours().obtenirLettre();
+			this.sac.remettreLettre(l);
+		}
+		changementJoueur();
+	}
 
 	public void verificationMot() {
 		if(this.placementEnCours.size()==0) {
@@ -182,8 +194,8 @@ public class Modele extends Observable{
 			for (Placement elem : this.placementEnCours) {
 				lig=lig+elem.getLine();
 				col=col+elem.getColumn();
-				if(this.premierTour==false && elem.getLine()==7 && elem.getColumn()==7 && this.placementEnCours.size()>1) {
-					autreLettre=15;
+				if(premierTour==false && elem.getLine()==7 && elem.getColumn()==7 && this.placementEnCours.size()>1) {
+					autreLettre=100;
 					premierTour=true;
 				}
 			}
@@ -204,8 +216,8 @@ public class Modele extends Observable{
 					Case premB = this.plateauFictif.getCase(premierLettre.getLine()+l, premierLettre.getColumn());
 
 					motBas = new MotPlace( premB.lettre, premierLettre.getLine()+l, premierLettre.getColumn());
-
-					if(premierLettre.getLine()<14) {
+					
+					if(premierLettre.getLine()+l<14) {
 						while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
 							premB = this.plateauFictif.getCase(premierLettre.getLine()+l+1, premierLettre.getColumn());
 							motBas.ajoutLettre(premB.lettre, premierLettre.getLine()+l+1, premierLettre.getColumn());
@@ -215,7 +227,6 @@ public class Modele extends Observable{
 							}
 						}
 					}
-
 					if(motBas.valideMot(this.dico) || motBas.nombreDeLettres()==1) {
 						motbasOk++;
 					}
@@ -239,12 +250,11 @@ public class Modele extends Observable{
 
 					motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
 
-					if(premierLettre.getColumn()<14) {
+					if(premierLettre.getColumn()+c<14) {
 						while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
 							premD = this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c+1);
 							motDroite.ajoutLettre(premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c+1);
 							c++;
-
 							if(premierLettre.getColumn()+c+1==15) {
 								break;
 							}
@@ -270,7 +280,6 @@ public class Modele extends Observable{
 					Placement deuxiemLettre = this.placementEnCours.get(1);
 					// Si les lettres sont dans la meme colonne
 					if(premierLettre.getColumn()==deuxiemLettre.getColumn()) {
-						colonne=true;
 						//mot bas
 						int l=0;
 						if(premierLettre.getLine()>0) {
@@ -296,7 +305,7 @@ public class Modele extends Observable{
 						else {
 							autreLettre++;
 						}
-						if(premierLettre.getLine()<14) {
+						if(premierLettre.getLine()+l<14) {
 							while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
 								present=false;
 								for(Placement elem: this.placementEnCours) {
@@ -345,7 +354,7 @@ public class Modele extends Observable{
 							motDroite = new MotPlace( premD.lettre, premierLettre.getLine(), premierLettre.getColumn()+c);
 							present=false;
 							for(Placement tt: this.placementEnCours) {
-								if(tt.getLine()==premierLettre.getLine()+l && tt.getColumn()==premierLettre.getColumn()) {
+								if(tt.getLine()==premierLettre.getLine() && tt.getColumn()==premierLettre.getColumn()+c) {
 									present=true;
 								}
 							}
@@ -354,7 +363,7 @@ public class Modele extends Observable{
 							else {
 								autreLettre++;
 							}
-							if(premierLettre.getColumn()<14) {
+							if(premierLettre.getColumn()+c<14) {
 								while(this.plateauFictif.getCase(premierLettre.getLine(),premierLettre.getColumn()+c+1).lettre != null) {
 									present=false;
 									for(Placement tt: this.placementEnCours) {
@@ -392,7 +401,6 @@ public class Modele extends Observable{
 					}
 					//lettre dans la meme ligne
 					if(this.placementEnCours.get(0).getLine()==deuxiemLettre.getLine()) {
-						colonne=false;
 						for(Placement elem : this.placementEnCours) {
 							//mot bas
 							int l=0;
@@ -419,7 +427,7 @@ public class Modele extends Observable{
 							else {
 								autreLettre++;
 							}
-							if(premierLettre.getLine()<14) {
+							if(premierLettre.getLine()+l<14) {
 								while(this.plateauFictif.getCase(premierLettre.getLine()+l+1,premierLettre.getColumn()).lettre != null) {
 									present=false;
 									for(Placement tt: this.placementEnCours) {
@@ -437,7 +445,6 @@ public class Modele extends Observable{
 									l++;
 
 									if(premierLettre.getLine()+l+1==15) {
-										System.out.println("stop");
 										break;
 									}
 								}
@@ -453,7 +460,7 @@ public class Modele extends Observable{
 
 						//mot droite
 						int c=0;
-						if(premierLettre.getColumn()>0) {
+						if(premierLettre.getColumn()+c>0) {
 							while(this.plateauFictif.getCase(premierLettre.getLine(), premierLettre.getColumn()+c-1).lettre != null) {
 								c--;
 
@@ -518,6 +525,9 @@ public class Modele extends Observable{
 					this.changementJoueur();
 				}
 				else {
+					if(autreLettre==100) {
+						premierTour=false;
+					}
 					if(autreLettre==0){
 						ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 						this.setChanged();
@@ -735,29 +745,30 @@ public class Modele extends Observable{
 		for (Integer score : motsVerticaux.values()) {
 			this.score[this.numChevalet].majScore(score);
 		}
+		
+		if (placementEnCours.size()==7)
+			this.score[this.numChevalet].majScore(50);
 	}
 
 	/*met a jour les changements de Joueur */
 	public void changementJoueur() {
-		if(this.plateauFictif.equals(this.plateau)) {
-			this.passe=passe+1;
-			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
-			this.setChanged();
-			this.notifyObservers(String.format(strings.getString("passe"), this.score[this.numChevalet].getPrenom())+"\n");
+		if(this.placementEnCours.size()==0) {
+			if(this.chevalets.chevaletEnCours().size()!=0) {
+				this.passe=passe+1;
+				ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
+				this.setChanged();
+				this.notifyObservers(String.format(strings.getString("passe"), this.score[this.numChevalet].getPrenom())+"\n");
+			}
 		}
 		else {
-			this.chevalets.chevaletEnCours().remplir(sac);
 			this.passe=0;
 			ResourceBundle strings = ResourceBundle.getBundle("resources/i18n/strings", this.menu.getLocale());
 			this.setChanged();
 			this.notifyObservers(String.format(strings.getString("augmente"), (this.score[numChevalet].getScore()-this.scoreAv))+"\n");
 		}
-		if(this.passe==this.chevalets.size()) {
-			this.setChanged();
-			this.notifyObservers(Vues.FINALE);
-			this.setChanged();
-			this.notifyObservers(this.score);
-		}
+		this.chevalets.chevaletEnCours().remplir(sac);
+		if(this.passe==this.chevalets.size())
+			this.fin();
 		else {
 			if (this.numChevalet+1 == this.chevalets.size()) {
 				this.numChevalet=0;
@@ -765,6 +776,8 @@ public class Modele extends Observable{
 			else {
 				this.numChevalet++;
 			}
+			if (this.chevalets.chevaletEnCours().size()==0)
+				this.fin();
 			while(this.chevalets.chevaletEnCours().size()==0 && this.passe!=this.chevalets.size()) {
 				if (this.numChevalet+1 == this.chevalets.size()) {
 					this.numChevalet=0;
@@ -774,12 +787,8 @@ public class Modele extends Observable{
 				}
 				this.passe=this.passe+1;
 			}
-			if(this.passe==this.chevalets.size()) {
-				this.setChanged();
-				this.notifyObservers(Vues.FINALE);
-				this.setChanged();
-				this.notifyObservers(this.score);
-			}
+			if(this.passe==this.chevalets.size())
+				this.fin();
 			else {
 				this.chevalets.joueurSuivant();
 				this.motbasOk=0;
@@ -789,9 +798,9 @@ public class Modele extends Observable{
 				this.notifyObservers(this.sac);
 				this.setChanged();
 				this.notifyObservers(this.plateau);
+				this.setChanged();
+				this.notifyObservers(this.numChevalet);
 				if(!this.score[this.numChevalet].getPrenom().equals("PC")) {
-					this.setChanged();
-					this.notifyObservers(this.numChevalet);
 					this.setChanged();
 					this.notifyObservers(this.chevalets);
 				}
@@ -812,6 +821,27 @@ public class Modele extends Observable{
 		}
 	}
 	
+	private void fin() {
+		this.setChanged();
+		this.notifyObservers(Vues.FINALE);
+		int joueurAvecZeroTuiles = 0;
+		
+		while (joueurAvecZeroTuiles < this.chevalets.size() && this.chevalets.get(joueurAvecZeroTuiles).size() != 0) {
+			joueurAvecZeroTuiles++;
+		}
+		
+		if (joueurAvecZeroTuiles != this.chevalets.size()) {
+			for (Chevalet chevalet : this.chevalets) {
+				for (Lettre lettre : chevalet) {
+					this.score[joueurAvecZeroTuiles].majScore(lettre.valeur);
+				}
+			}
+		}
+		
+		this.setChanged();
+		this.notifyObservers(this.score);
+	}
+
 	public void jouerPC() {
 		JSONObject reponse = (JSONObject) Ordinateur.solutions(plateau, this.chevalets.chevaletEnCours(), this.langue);
 		//statue
@@ -854,9 +884,10 @@ public class Modele extends Observable{
 							if (this.chevalets.chevaletEnCours().get(t).valeur == 0) {
 								this.chevalets.chevaletEnCours().selectionnerLettre(t);
 								Lettre ajout=this.chevalets.chevaletEnCours().obtenirLettre();
-								ajout.lettre=lettre;
+								ajout.lettre=lettre.toUpperCase();
 								Case c =this.plateauFictif.getCase(y, x);
 								c.ajouterLettre(ajout);
+								this.placementEnCours.add(new Placement(ajout,c,y,x));
 							}
 						}
 					}
@@ -867,6 +898,7 @@ public class Modele extends Observable{
 								Lettre ajout=this.chevalets.chevaletEnCours().obtenirLettre();
 								Case c =this.plateauFictif.getCase(y, x);
 								c.ajouterLettre(ajout);
+								this.placementEnCours.add(new Placement(ajout,c,y,x));
 								break;
 							}
 						}
@@ -900,8 +932,6 @@ public class Modele extends Observable{
 		} else {
 			lettreChoisi=lettre;
 		}
-		this.setChanged();
-		this.notifyObservers(Vues.AFFICHER);
 	}
 
 	//Serialisation

@@ -11,16 +11,18 @@ import fr.scrabble.menu.Menu;
 public class ControleurPlateau implements MouseInputListener {
 	
 	private Modele m;
+	private Menu menu;
 	
-	public ControleurPlateau(Modele m) {
+	public ControleurPlateau(Modele m, Menu menu) {
 		super();
 		this.m = m;
+		this.menu = menu;
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		int col = (int) (e.getX() / (VuePlateau.TAILLE*Menu.SCALE));
-		int lig = (int) (e.getY() / (VuePlateau.TAILLE*Menu.SCALE));
+		int col = (int) (e.getX() / (VuePlateau.TAILLE*this.menu.zoom()));
+		int lig = (int) (e.getY() / (VuePlateau.TAILLE*this.menu.zoom()));
 		if (lig < 15 && col < 15)
 			m.ajoutLettre(col, lig);
 	}
