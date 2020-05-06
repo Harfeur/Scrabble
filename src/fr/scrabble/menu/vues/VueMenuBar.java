@@ -67,8 +67,6 @@ public class VueMenuBar extends JMenuBar {
 		this.propos.addActionListener(new Propos());
 		
 		this.full.addActionListener(new Full());
-		/////
-		/////
 
 		//RadioButton Couleur
 		this.jr1 = new JRadioButtonMenuItem();
@@ -184,7 +182,7 @@ public class VueMenuBar extends JMenuBar {
 		this.accueil.setText(strings.getString("accueil"));
 		this.sauver.setText(strings.getString("sauvegarder"));
 		this.valider.setText(strings.getString("valider"));
-		this.full.setText("Fullscreen");
+		this.full.setText(strings.getString("pleinEcran"));
 		this.arreter.setText(strings.getString("quitter"));
 
 		this.aide.setText(strings.getString("aide"));
@@ -210,6 +208,7 @@ public class VueMenuBar extends JMenuBar {
 			this.accueil.setText(strings.getString("accueil"));
 			this.sauver.setText(strings.getString("sauvegarder"));
 			this.valider.setText(strings.getString("valider"));
+			this.full.setText(strings.getString("pleinEcran"));
 			this.arreter.setText(strings.getString("quitter"));
 
 			this.aide.setText(strings.getString("aide"));

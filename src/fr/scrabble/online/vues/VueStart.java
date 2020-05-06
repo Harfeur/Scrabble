@@ -37,7 +37,7 @@ public class VueStart extends JPanel implements ActionListener, Observer {
 		Font font = new Font("Arial",Font.BOLD,(int) (15*this.menu.zoom()));
 		
 		prenom_l = new JLabel();
-		ip_l = new JLabel("Adresse IP : ");	
+		ip_l = new JLabel();	
 		
 		this.prenom_t = new JTextField("Bernadette",10);	
 		this.ip_t = new JTextField("127.0.0.1",10);
