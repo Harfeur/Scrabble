@@ -80,7 +80,11 @@ public class VueMenuBar extends JMenuBar {
 		this.bg = new ButtonGroup();
 		bg.add(this.jr1);
 		bg.add(this.jr2);
-		this.jr1.setSelected(true);
+		if(menu.couleur.getCouleur()==0) {
+			this.jr1.setSelected(true);
+		}
+		else { this.jr2.setSelected(true);}
+		
 
 		//RadioButton couleur ajout Listener
 		CouleurListener cl = new CouleurListener();
