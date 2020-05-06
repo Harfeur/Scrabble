@@ -44,6 +44,11 @@ public class VueLigne extends JPanel {
 			this.images.add(img);
 		}
 		
+		this.images.add(Toolkit.getDefaultToolkit().getImage(VuePlateau.class.getResource("/resources/images/Plateau/neutre.png")));
+		mt.addImage(this.images.get(this.images.size()-1), 31);
+		this.images.add(Toolkit.getDefaultToolkit().getImage(VuePlateau.class.getResource("/resources/images/Plateau/neutreS.png")));
+		mt.addImage(this.images.get(this.images.size()-1), 32);
+		
 		try {
 			mt.waitForAll();
 		} catch (InterruptedException e) {
@@ -66,7 +71,7 @@ public class VueLigne extends JPanel {
 		
 		if ((int) this.getClientProperty("color") != this.c.getCouleur())
 			this.putClientProperty("color", this.c.getCouleur());
-
+		g.drawImage(this.images.get(30+((int) this.getClientProperty("color"))),0,0,(int) (TAILLE*this.menu.zoom()),(int) (TAILLE*this.menu.zoom()),null);
 		for (int i = 1; i < 16; i++) {
 			g.drawImage(this.images.get(i-1+15*((int) this.getClientProperty("color"))),(int) (i*TAILLE*this.menu.zoom()),0,(int) (TAILLE*this.menu.zoom()),(int) (TAILLE*this.menu.zoom()),null);
 		}
