@@ -73,6 +73,9 @@ public class Modele extends Observable{
 
 		this.setChanged();
 		this.notifyObservers(this.score);
+		
+		this.setChanged();
+		this.notifyObservers(this.score[this.numChevalet]);
 
 		this.setChanged();
 		this.notifyObservers(this.plateau);

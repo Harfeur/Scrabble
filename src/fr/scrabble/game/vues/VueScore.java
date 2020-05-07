@@ -52,7 +52,7 @@ public class VueScore extends JPanel implements Observer {
 			for (int i=0; i<score.length;i++) {	
 				Font font_score = new Font("Arial",Font.PLAIN,(int)(15*this.menu.zoom())) ;	
 				g.setColor(this.c.getColorLettre());
-				if(score[i]==numJoueur || (numJoueur==null && i==0)) {
+				if(score[i]==numJoueur) {
 					font_score = new Font("Arial",Font.BOLD,(int)(15*this.menu.zoom())) ;
 					g.setColor(new Color(255,0,0));
 				}
