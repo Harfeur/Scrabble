@@ -3,6 +3,7 @@
 > Jeu réalisé en Gestion de Projet en Licence Informatique
 
 Vidéo :
+
 [![Vidéo de présentation](https://img.youtube.com/vi/zhuHkwEU6t8/0.jpg)](https://www.youtube.com/watch?v=zhuHkwEU6t8)
 
 [![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
