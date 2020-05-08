@@ -73,6 +73,9 @@ public class Modele extends Observable{
 
 		this.setChanged();
 		this.notifyObservers(this.score);
+		
+		this.setChanged();
+		this.notifyObservers(this.score[this.numChevalet]);
 
 		this.setChanged();
 		this.notifyObservers(this.plateau);
@@ -799,8 +802,10 @@ public class Modele extends Observable{
 				this.setChanged();
 				this.notifyObservers(this.plateau);
 				this.setChanged();
-				this.notifyObservers(this.numChevalet);
+				this.notifyObservers(this.score[this.numChevalet]);
 				if(!this.score[this.numChevalet].getPrenom().equals("PC")) {
+					this.setChanged();
+					this.notifyObservers(this.numChevalet);
 					this.setChanged();
 					this.notifyObservers(this.chevalets);
 				}
@@ -872,7 +877,7 @@ public class Modele extends Observable{
 			int direction=Integer.parseInt(choix.getString("direction"));
 			//word
 			String word=choix.getString("word");
-
+			scoreAv=this.score[this.numChevalet].score;
 			this.score[this.numChevalet].majScore(value);
 
 			for (int i=0;i<word.length();i++) {
